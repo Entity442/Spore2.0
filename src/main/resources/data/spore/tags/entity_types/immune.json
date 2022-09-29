@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:ghast",
+    "minecraft:iron_golem",
+    "minecraft:magma_cube",
+    "minecraft:mooshroom",
+    "minecraft:phantom",
+    "minecraft:skeleton_horse",
+    "minecraft:snow_golem",
+    "minecraft:stray",
+    "minecraft:wither",
+    "minecraft:skeleton"
+  ]
+}

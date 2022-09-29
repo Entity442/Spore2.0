@@ -1,0 +1,56 @@
+{
+  "block.spore.mycelium": "Mycelium",
+  "item.spore.claw": "Claw",
+  "item.spore.claw_fragment": "Claw Fragment",
+  "item.spore.armor_fragment": "Armor Fragment",
+  "item.spore.mutated_heart": "Mutated Heart",
+  "item.spore.mutated_fiber": "Mutated Fibre",
+  "item.spore.living_core": "Living Core",
+  "item.spore.fleshy_bone": "Fleshy Bone",
+  "item.spore.fleshy_claw": "Fleshy Claw",
+  "item.spore.hardened_bind": "Hardened Bind",
+  "item.spore.biomass": "Biomass",
+
+  "item.spore.saber": "Infected Saber",
+  "item.spore.infected_bow": "Infected Bow",
+  "item.spore.greatsword": "Infected Great Sword",
+  "item.spore.armads": "Infected Armads",
+  "item.spore.maul": "Infected Maul",
+  "item.spore.scythe": "Infected Scythe",
+  "item.spore.combat_shovel": "Infected Combat Shovel",
+
+  "item.spore.knight_spawnegg": "Knight",
+  "item.spore.infected_human_spawnegg": "Infected Human",
+  "item.spore.griefer_spawnegg": "Griefer",
+  "item.spore.braio_spawnegg": "Braiomil",
+  "item.spore.inf_villager_spawnegg": "Infected Villager",
+  "item.spore.inf_witch_spawnegg": "Infected Witch",
+
+  "entity.spore.knight": "Knight",
+  "entity.spore.griefer": "Griefer",
+  "entity.spore.infected_human": "Infected Human",
+  "entity.spore.braiomil": "Braiomil",
+  "entity.spore.inf_villager": "Infected Villager",
+  "entity.spore.inf_witch": "Infected Witch",
+
+  "effect.spore.mycelium": "Mycelium Infection",
+  "effect.spore.stunt": "Stunt",
+  "effect.spore.marker": "Marker",
+
+  "item.minecraft.splash_potion.effect.mycelium_potion": "Mycelium Infection Splash Potion",
+  "item.minecraft.potion.effect.mycelium_potion": "Mycelium Infection Potion",
+  "item.minecraft.lingering_potion.effect.mycelium_potion": "Mycelium Infection Lingering Potion",
+  "item.minecraft.tipped_arrow.effect.mycelium_potion": "Mycelium Arrow",
+
+  "item.minecraft.splash_potion.effect.marker_potion": "Marker Splash Potion",
+  "item.minecraft.potion.effect.marker_potion": "Marker Potion",
+  "item.minecraft.lingering_potion.effect.marker_potion": "Marker Lingering Potion",
+  "item.minecraft.tipped_arrow.effect.marker_potion": "Mycelium Arrow",
+
+  "itemGroup.spore": "Spore",
+
+
+
+  "advancements.spore.title": "Spore",
+  "advancements.spore.description" : "The Infection is here"
+}

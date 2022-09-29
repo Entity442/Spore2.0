@@ -1,0 +1,120 @@
+package com.Harbinger.Spore.Sentities;
+
+import com.Harbinger.Spore.Core.Seffects;
+import com.Harbinger.Spore.Module.SmobType;
+import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+
+public class Infected extends Monster {
+    public int kills;
+    protected Infected(EntityType<? extends Monster> type, Level level) {
+        super(type, level);
+        this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 16.0F);
+        this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.DANGER_OTHER, 16.0F);
+        this.setPathfindingMalus(BlockPathTypes.DANGER_OTHER, -1.0F);
+        this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, 16.0F);
+        this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
+    }
+
+    public boolean doHurtTarget(Entity p_32257_) {
+        if (super.doHurtTarget(p_32257_)) {
+            if (p_32257_ instanceof LivingEntity) {
+
+                    ((LivingEntity)p_32257_).addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(),  600, 0), this);
+
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public MobType getMobType() {
+        return SmobType.INFECTED;
+    }
+
+
+    public boolean isAlliedTo(Entity entity) {
+        if (super.isAlliedTo(entity)) {
+            return true;
+        } else if (entity instanceof LivingEntity && ((LivingEntity)entity).getMobType() == SmobType.INFECTED) {
+            return this.getTeam() == null && entity.getTeam() == null;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    protected void registerGoals() {
+        this.goalSelector.addGoal(3,(new HurtByTargetGoal(this)).setAlertOthers(Infected.class));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal
+                (this, Player.class,  true));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal
+                (this, Villager.class,  true));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal
+                (this, IronGolem.class,  true));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, true, (en) -> {
+            return en instanceof Enemy && !(en instanceof Creeper || en instanceof Infected);
+        }));
+        this.goalSelector.addGoal(4,new FloatGoal(this));
+
+        this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7));
+    }
+    public void aiStep() {
+        super.aiStep();
+        if (!this.level.isClientSide) {
+            int i = Mth.floor(this.getX());
+            int j = Mth.floor(this.getY());
+            int k = Mth.floor(this.getZ());
+            Entity entity = this;
+            BlockPos blockpos = new BlockPos(i, j, k);
+            Biome biome = this.level.getBiome(blockpos).value();
+            if ((biome.getBaseTemperature() <= 0.2) && (!entity.isOnFire())) {
+                this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 2, 1, false, false), Infected.this);
+
+            }
+        }
+    }
+
+    public boolean isFreazing(){
+        int i = Mth.floor(this.getX());
+        int j = Mth.floor(this.getY());
+        int k = Mth.floor(this.getZ());
+        Entity entity = this;
+        BlockPos blockpos = new BlockPos(i, j, k);
+        Biome biome = this.level.getBiome(blockpos).value();
+        return (biome.getBaseTemperature() <= 0.2) && (!entity.isOnFire());
+    }
+
+
+    @Override
+    public void awardKillScore(Entity entity, int i, DamageSource damageSource) {
+        this.addEffect(new MobEffectInstance(MobEffects.REGENERATION ,1,100));
+        super.awardKillScore(entity, i, damageSource);
+    }
+
+
+    public boolean CanFuse(){
+        return kills > 2;
+    }
+
+}

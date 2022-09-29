@@ -1,0 +1,46 @@
+package com.Harbinger.Spore;
+
+import com.Harbinger.Spore.Core.*;
+import com.Harbinger.Spore.util.SporeEntitySpawn;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
+
+
+@Mod(Spore.MODID)
+public class Spore
+{
+    public static final String MODID = "spore";
+
+    public Spore()
+    {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SConfig.SERVER_SPEC, "spore-newconfig.toml");
+        SConfig.loadConfig(SConfig.SERVER_SPEC,
+                FMLPaths.CONFIGDIR.get().resolve("spore-newconfig.toml").toString());
+
+
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onCommonSetup);
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        MinecraftForge.EVENT_BUS.register(this);
+
+        Sblocks.register(modEventBus);
+        Sitems.register(modEventBus);
+        Sentities.register(modEventBus);
+        Seffects.register(modEventBus);
+        Spotion.register(modEventBus);
+        SporeEntitySpawn.SERIALIZER.register(modEventBus);
+
+
+
+    }
+    private void onCommonSetup(FMLCommonSetupEvent event) {
+
+    }
+}
+
+

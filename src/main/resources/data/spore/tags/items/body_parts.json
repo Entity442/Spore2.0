@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "spore:claw_fragment",
+    "spore:armor_fragment",
+    "spore:mutated_heart",
+    "spore:mutated_fiber"
+  ]
+}

@@ -1,0 +1,113 @@
+package com.Harbinger.Spore.Sentities.AI;
+
+import com.Harbinger.Spore.Sentities.Infected;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.level.Level;
+
+import javax.annotation.Nullable;
+import java.util.EnumSet;
+import java.util.List;
+
+public class BuffAlliesGoal extends Goal {
+    protected final Level level;
+    private final Mob mob;
+    private final RangedBuff rangedAttackMob;
+    private static final TargetingConditions PARTNER_TARGETING = TargetingConditions.forNonCombat().range(8.0D);
+    private final Class<? extends Infected> partnerClass;
+    @Nullable
+    protected Infected partner;
+    private int attackTime = -1;
+    private final double speedModifier;
+    private int seeTime;
+    private final int attackIntervalMin;
+    private final int attackIntervalMax;
+    private final float attackRadius;
+
+
+    public BuffAlliesGoal(RangedBuff mob1, Class<? extends Infected> partnerClass, double speedModifier, int attackTime, int attackTime1, float attackRadius) {
+        this.partnerClass = partnerClass;
+        if (!(mob1 instanceof LivingEntity)) {
+            throw new IllegalArgumentException("ArrowAttackGoal requires Mob implements RangedAttackMob");
+        } else {
+            this.level =((LivingEntity) mob1).level;
+            this.rangedAttackMob = mob1;
+            this.mob = (Mob)mob1;
+            this.speedModifier = speedModifier;
+            this.attackIntervalMin = attackTime;
+            this.attackIntervalMax = attackTime1;
+            this.attackRadius = attackRadius;
+            this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+        }
+    }
+
+    public boolean canUse() {
+        if (mob.getTarget() != null || this.getFreePartner() == null){
+            return false;
+        } else {
+            this.partner = this.getFreePartner();
+            return this.partnerClass != null;
+        }
+
+    }
+
+    public boolean canContinueToUse() {
+        return this.partner.isAlive() || this.getFreePartner() != null;}
+
+    public void stop() {
+        this.partner = null;
+        this.seeTime = 0;
+        this.attackTime = -1;
+    }
+
+    public boolean requiresUpdateEveryTick() {
+        return true;
+    }
+
+    public void tick() {
+        assert this.partner != null;
+        double d0 = this.mob.distanceToSqr(this.partner.getX(), this.partner.getY(), this.partner.getZ());
+        boolean flag = this.mob.getSensing().hasLineOfSight(this.partner);
+        if (flag) {
+            ++this.seeTime;
+        } else {
+            this.seeTime = 0;
+        }
+
+            this.mob.getNavigation().moveTo(this.partner, this.speedModifier);
+
+        this.mob.getLookControl().setLookAt(this.partner, 30.0F, 30.0F);
+        if (--this.attackTime == 0) {
+            if (!flag) {
+                return;
+            }
+
+            float f = (float)Math.sqrt(d0) / this.attackRadius;
+            float f1 = Mth.clamp(f, 0.1F, 1.0F);
+            this.rangedAttackMob.performRangedBuff(this.partner, f1);
+            this.attackTime = Mth.floor(f * (float)(this.attackIntervalMax - this.attackIntervalMin) + (float)this.attackIntervalMin);
+        } else if (this.attackTime < 0) {
+            this.attackTime = Mth.floor(Mth.lerp(Math.sqrt(d0) / (double)this.attackRadius, (double)this.attackIntervalMin, (double)this.attackIntervalMax));
+        }
+
+    }
+
+    @Nullable
+    private Infected getFreePartner() {
+        List<? extends Infected> list = this.level.getNearbyEntities(this.partnerClass, PARTNER_TARGETING, this.mob, this.mob.getBoundingBox().inflate(8.0D));
+        double d0 = Double.MAX_VALUE;
+        Infected inf = null;
+
+        for(Infected inf1 : list) {
+            if ( this.mob.distanceToSqr(inf1) < d0) {
+                inf = inf1;
+                d0 = this.mob.distanceToSqr(inf1);
+            }
+        }
+
+        return inf;
+    }
+}
