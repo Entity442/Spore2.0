@@ -114,21 +114,7 @@ public class Griefer extends EvolvedInfected{
                 return getHealth() <= (getMaxHealth()/2);
             }
         });
-        this.goalSelector.addGoal(3, new RandomStrollGoal(this, 0.8));
-        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal
-                (this, Player.class,  true));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal
-                (this, Villager.class,  true));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal
-                (this, IronGolem.class,  true));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, true, (en) -> {
-            return en instanceof Enemy && !(en instanceof Creeper || en instanceof Infected);
-        }));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.5, true));
-        this.goalSelector.addGoal(6, new RestrictSunGoal(this));
-
-
         super.registerGoals();
     }
 

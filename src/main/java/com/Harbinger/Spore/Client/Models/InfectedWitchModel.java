@@ -82,6 +82,7 @@ public class InfectedWitchModel<T extends InfectedWitch> extends EntityModel<T> 
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
 
+
 		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
 			this.TopBody.getChild("RightArm").xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.TopBody.getChild("LeftArm").xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
@@ -91,6 +92,18 @@ public class InfectedWitchModel<T extends InfectedWitch> extends EntityModel<T> 
 			this.RightLeg.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
 			this.LeftLeg.getChild("leftForLeg").xRot = Mth.cos(limbSwing * 0.4F) * 0.4F * limbSwingAmount;
 			this.RightLeg.getChild("rightForLeg").xRot = Mth.cos(limbSwing * 0.4F) * -0.4F * limbSwingAmount;
+			if (entity.isPotionThrow()){
+				float j = 0;
+				j = j + 0.5F;
+				this.TopBody.getChild("RightArm").xRot = -90F + j;
+				this.TopBody.yRot = j;
+			}
+
+		}else{
+			this.TopBody.getChild("RightArm").zRot = Mth.sin(ageInTicks/8)/10;
+			this.TopBody.getChild("LeftArm").zRot = -Mth.sin(ageInTicks/8)/10;
+			this.LeftLeg.xRot = 0;
+			this.RightLeg.xRot = 0;
 		}
 
 		this.TopBody.getChild("head").yRot = netHeadYaw / (180F / (float) Math.PI);

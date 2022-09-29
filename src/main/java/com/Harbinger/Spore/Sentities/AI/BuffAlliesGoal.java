@@ -31,7 +31,7 @@ public class BuffAlliesGoal extends Goal {
     public BuffAlliesGoal(RangedBuff mob1, Class<? extends Infected> partnerClass, double speedModifier, int attackTime, int attackTime1, float attackRadius) {
         this.partnerClass = partnerClass;
         if (!(mob1 instanceof LivingEntity)) {
-            throw new IllegalArgumentException("ArrowAttackGoal requires Mob implements RangedAttackMob");
+            throw new IllegalArgumentException("Buff");
         } else {
             this.level =((LivingEntity) mob1).level;
             this.rangedAttackMob = mob1;

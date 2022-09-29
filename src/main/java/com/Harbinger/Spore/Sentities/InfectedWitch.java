@@ -29,6 +29,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class InfectedWitch extends Infected implements RangedAttackMob , RangedBuff {
 
+    private boolean PotionThrow;
 
     public InfectedWitch(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -55,10 +56,13 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
 
     }
 
-
+    public boolean isPotionThrow() {
+        return PotionThrow;
+    }
 
     @Override
     public void performRangedAttack(LivingEntity entity, float f) {
+            this.PotionThrow = true;
             Vec3 vec3 = entity.getDeltaMovement();
             double d0 = entity.getX() + vec3.x - this.getX();
             double d1 = entity.getEyeY() - (double)1.1F - this.getY();
@@ -89,6 +93,7 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
 
     @Override
     public void performRangedBuff(LivingEntity entity, float f) {
+        this.PotionThrow = true;
         Vec3 vec3 = entity.getDeltaMovement();
         double d0 = entity.getX() + vec3.x - this.getX();
         double d1 = entity.getEyeY() - (double)1.1F - this.getY();
