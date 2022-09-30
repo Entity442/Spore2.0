@@ -1,6 +1,5 @@
 package com.Harbinger.Spore.Sentities.AI;
 
-import com.Harbinger.Spore.Sentities.Infected;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -11,21 +10,25 @@ import java.util.EnumSet;
 import java.util.List;
 
 public class FollowOthersGoal extends Goal {
-    private static final TargetingConditions PARTNER_TARGETING = TargetingConditions.forNonCombat().range(32.0D);
+    protected boolean shouldLook;
+    private static final TargetingConditions PARTNER_TARGETING = TargetingConditions.forNonCombat().range(32);
     protected final Level level;
     protected final PathfinderMob mob;
-    private final Class<? extends Infected> partnerClass;
+    private final Class<? extends PathfinderMob> partnerClass;
+    protected final int range;
     @Nullable
-    protected Infected partner;
+    protected PathfinderMob partner;
     private final double speedModifier;
 
-    public  FollowOthersGoal(Infected mob , double speedModifier){
-        this(mob , speedModifier, mob.getClass());
+    public  FollowOthersGoal(PathfinderMob mob , double speedModifier , int range , boolean look){
+        this(mob , speedModifier, mob.getClass(),range, look);
     }
 
-    public  FollowOthersGoal( PathfinderMob mob, double speedModifier, Class<? extends Infected> partnerClass){
+    public  FollowOthersGoal( PathfinderMob mob, double speedModifier, Class<? extends PathfinderMob> partnerClass ,int range , boolean look){
+    this.shouldLook = look;
     this.level = mob.level;
     this.mob = mob;
+    this.range = range;
     this.speedModifier = speedModifier;
     this.partnerClass = partnerClass;
     this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
@@ -49,18 +52,20 @@ public class FollowOthersGoal extends Goal {
 
     public void tick() {
         assert this.partner != null;
+        if (shouldLook){
         this.mob.getLookControl().setLookAt(this.partner, 10.0F, (float)this.mob.getMaxHeadXRot());
+        }
         this.mob.getNavigation().moveTo(this.partner, this.speedModifier);
 }
 
 
     @Nullable
-    private Infected getFreePartner() {
-        List<? extends Infected> list = this.level.getNearbyEntities(this.partnerClass, PARTNER_TARGETING, this.mob, this.mob.getBoundingBox().inflate(32.0D));
+    private PathfinderMob getFreePartner() {
+        List<? extends PathfinderMob> list = this.level.getNearbyEntities(this.partnerClass, PARTNER_TARGETING, this.mob, this.mob.getBoundingBox().inflate(range));
         double d0 = Double.MAX_VALUE;
-        Infected inf = null;
+        PathfinderMob inf = null;
 
-        for(Infected inf1 : list) {
+        for(PathfinderMob inf1 : list) {
             if ( this.mob.distanceToSqr(inf1) < d0) {
                 inf = inf1;
                 d0 = this.mob.distanceToSqr(inf1);

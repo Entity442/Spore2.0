@@ -33,6 +33,7 @@ public class Spore
         Sentities.register(modEventBus);
         Seffects.register(modEventBus);
         Spotion.register(modEventBus);
+        Sparticles.register(modEventBus);
         SporeEntitySpawn.SERIALIZER.register(modEventBus);
 
 

@@ -25,7 +25,6 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<Double> braio_armor;
         public final ForgeConfigSpec.ConfigValue<Double> braio_hp;
-        public final ForgeConfigSpec.ConfigValue<Double> braio_melee_damage;
         public final ForgeConfigSpec.ConfigValue<Integer> poison_level;
         public final ForgeConfigSpec.ConfigValue<Integer> poison_duration;
         public final ForgeConfigSpec.ConfigValue<Integer> mycelium_level;
@@ -98,7 +97,6 @@ public class SConfig {
             builder.push("Braiomil");
             this.braio_hp = builder.comment("Default 25").defineInRange("Sets Braiomil Max health", 25, 1, Double.MAX_VALUE);
             this.braio_armor = builder.comment("Default 4").defineInRange("Sets Braiomil armor", 4, 1, Double.MAX_VALUE);
-            this.braio_melee_damage = builder.comment("Default 5").defineInRange("Sets Braio Melee Damage", 5, 1, Double.MAX_VALUE);
             this.poison_duration = builder.comment("Default 120").defineInRange("Poison duration", 120, 20, Integer.MAX_VALUE);
             this.poison_level = builder.comment("Default 0").defineInRange("Poison level", 0, 0, Integer.MAX_VALUE);
             this.mycelium_duration = builder.comment("Default 600").defineInRange("Mycelium Duration", 600, 20, Integer.MAX_VALUE);

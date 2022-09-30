@@ -38,6 +38,8 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.BRAIOMIL.get(), BraioRenderer::new);
         event.registerEntityRenderer(Sentities.INF_VILLAGER.get(), InfectedVillagerRenderer::new);
         event.registerEntityRenderer(Sentities.INF_WITCH.get(), InfectedWitchRenderer::new);
+
+        event.registerEntityRenderer(Sentities.SCENT.get(), ScentEntityRenderer::new);
     }
 
 

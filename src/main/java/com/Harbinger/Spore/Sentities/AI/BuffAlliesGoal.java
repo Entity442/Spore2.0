@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Objects;
 
 public class BuffAlliesGoal extends Goal {
     protected final Level level;

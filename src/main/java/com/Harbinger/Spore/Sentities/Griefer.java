@@ -1,27 +1,28 @@
 package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Sentities.AI.GrieferSwellGoal;
+import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 public class Griefer extends EvolvedInfected{
     private static final EntityDataAccessor<Integer> DATA_SWELL_DIR = SynchedEntityData.defineId(Griefer.class, EntityDataSerializers.INT);private int oldSwell;
@@ -89,18 +90,34 @@ public class Griefer extends EvolvedInfected{
             Explosion.BlockInteraction explosion$blockinteraction = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
             this.dead = true;
             this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)this.explosionRadius, explosion$blockinteraction);
-            this.discard();}
+            this.discard();
+                this.summonScent(this.level, this.getX(), this.getY(), this.getZ());}
             else {
                 Explosion.BlockInteraction explosion$blockinteraction = Explosion.BlockInteraction.NONE;
                 this.dead = true;
                 this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)this.explosionRadius, explosion$blockinteraction);
-                this.discard();}
+                this.discard();
+                this.summonScent(this.level, this.getX(), this.getY(), this.getZ());
+            }
         }
 
     }
 
 
-
+    private void summonScent(LevelAccessor world, double x, double y, double z) {
+        if (world instanceof ServerLevel _level) {
+            if (world.getEntitiesOfClass(ScentEntity.class, AABB.ofSize(new Vec3(x, y, z)
+                            , 32, 32, 32), e -> true).isEmpty()) {
+                {
+                    Mob entityToSpawn = new ScentEntity(Sentities.SCENT.get(), _level);
+                    entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
+                    entityToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null,
+                            null);
+                    world.addFreshEntity(entityToSpawn);
+                }
+            }
+        }
+    }
 
 
 

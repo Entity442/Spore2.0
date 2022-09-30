@@ -3,6 +3,7 @@ package com.Harbinger.Spore.Sentities;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Module.SmobType;
 import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
+import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -53,16 +54,6 @@ public class Infected extends Monster {
     }
 
 
-    public boolean isAlliedTo(Entity entity) {
-        if (super.isAlliedTo(entity)) {
-            return true;
-        } else if (entity instanceof LivingEntity && ((LivingEntity)entity).getMobType() == SmobType.INFECTED) {
-            return this.getTeam() == null && entity.getTeam() == null;
-        } else {
-            return false;
-        }
-    }
-
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(3,(new HurtByTargetGoal(this)).setAlertOthers(Infected.class));
@@ -77,7 +68,8 @@ public class Infected extends Monster {
         }));
         this.goalSelector.addGoal(4,new FloatGoal(this));
 
-        this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7));
+        this.goalSelector.addGoal(9,new FollowOthersGoal(this, 0.9,ScentEntity.class , 128 , false));
+        this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7 , 32, true));
     }
     public void aiStep() {
         super.aiStep();
@@ -112,9 +104,5 @@ public class Infected extends Monster {
         super.awardKillScore(entity, i, damageSource);
     }
 
-
-    public boolean CanFuse(){
-        return kills > 2;
-    }
 
 }
