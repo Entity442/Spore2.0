@@ -20,13 +20,15 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 
-public class Braionmil extends EvolvedInfected  {
+public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
     public Braionmil(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }
@@ -43,11 +45,6 @@ public class Braionmil extends EvolvedInfected  {
         super.addAdditionalSaveData(data);
 
         data.putShort("Fuse", (short)this.maxSwell);
-    }
-
-    @Override
-    public boolean isAggressive() {
-        return false;
     }
 
     public void tick() {
@@ -133,6 +130,7 @@ public class Braionmil extends EvolvedInfected  {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1,new BraionmilSwellGoal(this));
+        this.goalSelector.addGoal(2, new RangedAttackGoal(this,1,3,3,6));
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(3, new FollowTargetGoal(this, 1));
@@ -148,6 +146,11 @@ public class Braionmil extends EvolvedInfected  {
                 .add(Attributes.MOVEMENT_SPEED, 0.2)
                 .add(Attributes.FOLLOW_RANGE, 28)
                 .add(Attributes.ATTACK_DAMAGE, 1);
+
+    }
+
+    @Override
+    public void performRangedAttack(LivingEntity p_33317_, float p_33318_) {
 
     }
 }
