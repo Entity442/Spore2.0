@@ -22,6 +22,8 @@ public class SEvents {
         event.put(Sentities.BRAIOMIL.get(), Braionmil.createAttributes().build());
         event.put(Sentities.INF_VILLAGER.get(), InfectedVillager.createAttributes().build());
         event.put(Sentities.INF_WITCH.get(), InfectedWitch.createAttributes().build());
+        event.put(Sentities.LEAPER.get(), Leaper.createAttributes().build());
+
         event.put(Sentities.SCENT.get(), ScentEntity.createAttributes().build());
     }
 

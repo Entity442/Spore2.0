@@ -45,6 +45,11 @@ public class Braionmil extends EvolvedInfected  {
         data.putShort("Fuse", (short)this.maxSwell);
     }
 
+    @Override
+    public boolean isAggressive() {
+        return false;
+    }
+
     public void tick() {
 
         if (this.isAlive()) {
@@ -128,9 +133,9 @@ public class Braionmil extends EvolvedInfected  {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1,new BraionmilSwellGoal(this));
-        this.goalSelector.addGoal(3, new RandomStrollGoal(this, 0.8));
+        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(4, new FollowTargetGoal(this, 1));
+        this.goalSelector.addGoal(3, new FollowTargetGoal(this, 1));
 
 
         super.registerGoals();

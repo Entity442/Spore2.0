@@ -42,6 +42,9 @@ public class Sentities {
     public static final RegistryObject<EntityType<InfectedWitch>> INF_WITCH = SPORE_ENTITIES.register("inf_witch",
             () -> EntityType.Builder.of(InfectedWitch::new, MobCategory.MONSTER).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "inf_witch").toString()));
+    public static final RegistryObject<EntityType<Leaper>> LEAPER = SPORE_ENTITIES.register("leaper",
+            () -> EntityType.Builder.of(Leaper::new, MobCategory.MONSTER).sized(0.6f, 2f)
+                    .build(new ResourceLocation(Spore.MODID, "leaper").toString()));
     public static final RegistryObject<EntityType<ScentEntity>> SCENT = SPORE_ENTITIES.register("scent",
             () -> EntityType.Builder.of(ScentEntity::new, MobCategory.MISC).sized(0.2f,0.2f)
                     .build(new ResourceLocation(Spore.MODID, "scent").toString()));

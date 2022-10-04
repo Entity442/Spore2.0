@@ -68,7 +68,7 @@ public class Infected extends Monster {
         }));
         this.goalSelector.addGoal(4,new FloatGoal(this));
 
-        this.goalSelector.addGoal(9,new FollowOthersGoal(this, 0.9,ScentEntity.class , 128 , false));
+        this.goalSelector.addGoal(9,new FollowOthersGoal(this, 1.2,ScentEntity.class , 128 , false));
         this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7 , 32, true));
     }
     public void aiStep() {

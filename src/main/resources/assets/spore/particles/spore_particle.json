@@ -1,5 +1,7 @@
 {
   "textures": [
-    "spore:spore"
+    "spore:spore",
+    "spore:spore_2",
+    "spore:spore_3"
   ]
 }
