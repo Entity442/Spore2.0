@@ -164,8 +164,8 @@ public class LeaperModel<T extends Leaper> extends EntityModel<T> {
 			if (entity.swinging){
 				float f = 0;
 				f = f + 1F;
-				this.RightArm.xRot = -90F + f;
-				this.LeftArm.xRot = -90F + f;
+				this.RightArm.xRot = -89.5F + f;
+				this.LeftArm.xRot = -89.5F + f;
 
 			}
 		}else if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){

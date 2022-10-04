@@ -43,6 +43,11 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> knight_hp;
         public final ForgeConfigSpec.ConfigValue<Double> knight_damage;
         public final ForgeConfigSpec.ConfigValue<Double> knight_armor;
+
+        public final ForgeConfigSpec.ConfigValue<Double> leap_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> leap_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> leap_armor;
+
         public final ForgeConfigSpec.ConfigValue<Integer> evolution_age_human;
 
 
@@ -115,6 +120,11 @@ public class SConfig {
             this.knight_hp = builder.comment("Default 25").defineInRange("Sets Knight Max health", 25, 1, Double.MAX_VALUE);
             this.knight_damage = builder.comment("Default 10").defineInRange("Sets Knight Damage", 10, 1, Double.MAX_VALUE);
             this.knight_armor = builder.comment("Default 7").defineInRange("Sets Knight Armor", 7, 1, Double.MAX_VALUE);
+            builder.pop();
+            builder.push("Leaper");
+            this.leap_hp = builder.comment("Default 55").defineInRange("Sets Leaper Max health", 55, 1, Double.MAX_VALUE);
+            this.leap_damage = builder.comment("Default 10").defineInRange("Sets Leaper Damage", 10, 1, Double.MAX_VALUE);
+            this.leap_armor = builder.comment("Default 3").defineInRange("Sets Leaper Armor", 3, 1, Double.MAX_VALUE);
             builder.pop();
             builder.push("Griefer");
             this.griefer_armor = builder.comment("Default 3").defineInRange("Sets Griefer Armor", 3, 1, Double.MAX_VALUE);

@@ -41,6 +41,12 @@ public class LeapGoal extends Goal {
         return !this.mob.isOnGround();
     }
 
+    @Override
+    public void tick() {
+        if (this.mob.getTarget() != null){
+        this.mob.getLookControl().setLookAt(this.mob.getTarget(), 10.0F, (float) this.mob.getMaxHeadXRot());}
+    }
+
     public void start() {
         Vec3 vec3 = this.mob.getDeltaMovement();
         Vec3 vec31 = new Vec3(this.target.getX() - this.mob.getX(), 0.0D, this.target.getZ() - this.mob.getZ());

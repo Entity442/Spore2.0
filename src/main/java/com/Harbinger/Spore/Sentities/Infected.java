@@ -56,7 +56,7 @@ public class Infected extends Monster {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(3,(new HurtByTargetGoal(this)).setAlertOthers(Infected.class));
+        this.goalSelector.addGoal(3,(new HurtByTargetGoal(this , Infected.class)).setAlertOthers(Infected.class));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal
                 (this, Player.class,  true));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal
