@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Sentities.AI.PullGoal;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -20,11 +21,11 @@ public class Slasher extends EvolvedInfected{
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, SConfig.SERVER.leap_hp.get() * SConfig.SERVER.global_health.get())
-                .add(Attributes.MOVEMENT_SPEED, 0.2)
+                .add(Attributes.MOVEMENT_SPEED, 0.22)
                 .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.leap_damage.get() * SConfig.SERVER.global_damage.get())
                 .add(Attributes.ARMOR, SConfig.SERVER.leap_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.FOLLOW_RANGE, 20)
-                .add(Attributes.ATTACK_KNOCKBACK, 3);
+                .add(Attributes.ATTACK_KNOCKBACK, 0);
 
     }
 
@@ -33,7 +34,8 @@ public class Slasher extends EvolvedInfected{
 
 
 
-        this.goalSelector.addGoal(1, new SlasherAttackGoal());
+        this.goalSelector.addGoal(2, new SlasherAttackGoal());
+        this.goalSelector.addGoal(1, new PullGoal(this));
         this.goalSelector.addGoal(3, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 
@@ -43,16 +45,14 @@ public class Slasher extends EvolvedInfected{
 
 
     class SlasherAttackGoal extends MeleeAttackGoal{
-
         public SlasherAttackGoal() {
-            super(Slasher.this, 1, true);
+            super(Slasher.this, 1.2, true);
         }
 
         protected double getAttackReachSqr(LivingEntity entity) {
             float f = Slasher.this.getBbWidth() + 0.4F;
-            return (double)(f * 2.0F * f * 2.0F + (entity.getBbWidth() * 2));
+            return (double)(f * 3.0F * f * 3.0F + (entity.getBbWidth() * 2));
         }
-
 
     }
 }

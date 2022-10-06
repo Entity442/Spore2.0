@@ -131,7 +131,7 @@ public class SlasherModel<T extends Slasher> extends EntityModel<T> {
 		}
 		else if (entity.isAggressive()){
 			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
-			this.LeftArm.xRot = -90F + (Mth.sin(ageInTicks/4)/7);
+			this.LeftArm.xRot = -89F + (Mth.sin(ageInTicks/4)/7);
 			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.6F) * -1.2F * limbSwingAmount;
 			this.RightLeg.xRot = Mth.cos(limbSwing * 0.6F) * 1.2F * limbSwingAmount;
 
@@ -167,6 +167,12 @@ public class SlasherModel<T extends Slasher> extends EntityModel<T> {
 
 		this.HeadJoint.getChild("head").getChild("jaw").xRot = Mth.sin(ageInTicks/8)/10;
 		this.HeadJoint.zRot = Mth.sin(ageInTicks/10)/10;
+
+		this.flesh.z = Mth.cos(ageInTicks/5)/5;
+		this.flesh2.z = Mth.cos(ageInTicks/5)/6;
+		this.flesh3.z = Mth.cos(ageInTicks/7)/5;
+		this.flesh4.z = Mth.cos(ageInTicks/5)/8;
+		this.flesh5.z = Mth.cos(ageInTicks/9)/5;
 		}
 
 
