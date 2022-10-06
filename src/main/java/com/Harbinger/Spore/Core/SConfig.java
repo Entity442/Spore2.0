@@ -2,10 +2,12 @@ package com.Harbinger.Spore.Core;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
+import com.google.common.collect.Lists;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
+import java.util.List;
 
 public class SConfig {
     public static class Server {
@@ -80,6 +82,8 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Integer> bow_melee_damage;
         public final ForgeConfigSpec.ConfigValue<Double> bow_swing_speed;
 
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> stations;
+
         public Server(ForgeConfigSpec.Builder builder) {
             builder.push("Global Variables for Mobs");
             this.global_damage = builder.define("Global Damage Modifier",1.0);
@@ -93,6 +97,7 @@ public class SConfig {
             builder.push("Infected Villager");
             this.inf_vil_hp = builder.comment("Default 20").defineInRange("Sets Infected Human Max health", 20, 1, Double.MAX_VALUE);
             this.inf_vil_damage = builder.comment("Default 6").defineInRange("Sets Infected Human Damage", 6, 1, Double.MAX_VALUE);
+            this.stations = builder.defineList("Villager Work Stations", Lists.newArrayList("minecraft:barrel" ) , o -> o instanceof String);
             builder.pop();
 
             builder.push("Infected Witch");

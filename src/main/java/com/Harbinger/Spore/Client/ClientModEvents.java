@@ -25,6 +25,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(InfectedVillagerModel.LAYER_LOCATION, InfectedVillagerModel::createBodyLayer);
         event.registerLayerDefinition(InfectedWitchModel.LAYER_LOCATION, InfectedWitchModel::createBodyLayer);
         event.registerLayerDefinition(LeaperModel.LAYER_LOCATION, LeaperModel::createBodyLayer);
+        event.registerLayerDefinition(SlasherModel.LAYER_LOCATION, SlasherModel::createBodyLayer);
     }
 
 
@@ -39,6 +40,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.INF_VILLAGER.get(), InfectedVillagerRenderer::new);
         event.registerEntityRenderer(Sentities.INF_WITCH.get(), InfectedWitchRenderer::new);
         event.registerEntityRenderer(Sentities.LEAPER.get(), LeaperRenderer::new);
+        event.registerEntityRenderer(Sentities.SLASHER.get(), SlasherRenderer::new);
 
         event.registerEntityRenderer(Sentities.SCENT.get(), ScentEntityRenderer::new);
     }
