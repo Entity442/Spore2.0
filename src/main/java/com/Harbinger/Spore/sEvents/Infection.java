@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.sEvents;
 
+import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Sentities.Infected;
@@ -32,7 +33,7 @@ public class Infection {
     }
 
     private static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
-        if (entity instanceof Infected) {
+        if (entity instanceof Infected && SConfig.SERVER.scent_spawn.get()) {
             if (world instanceof ServerLevel _level) {
                 if (Math.random() < 0.1) {
                     {

@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Core;
 
 import com.Harbinger.Spore.Sentities.*;
+import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.resources.ResourceLocation;
@@ -48,6 +49,13 @@ public class Sentities {
     public static final RegistryObject<EntityType<Slasher>> SLASHER = SPORE_ENTITIES.register("slasher",
             () -> EntityType.Builder.of(Slasher::new, MobCategory.MONSTER).sized(0.6f, 2.2f)
                     .build(new ResourceLocation(Spore.MODID, "slasher").toString()));
+    public static final RegistryObject<EntityType<Spitter>> SPITTER = SPORE_ENTITIES.register("spitter",
+            () -> EntityType.Builder.of(Spitter::new, MobCategory.MONSTER).sized(0.6f, 1.9f)
+                    .build(new ResourceLocation(Spore.MODID, "spitter").toString()));
+
+    public static final RegistryObject<EntityType<AcidBall>> ACID_BALL = register("acid_ball",
+            EntityType.Builder.<AcidBall>of(AcidBall::new, MobCategory.MISC).setCustomClientFactory(AcidBall::new)
+                    .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
 
     public static final RegistryObject<EntityType<ScentEntity>> SCENT = SPORE_ENTITIES.register("scent",
             () -> EntityType.Builder.of(ScentEntity::new, MobCategory.MISC).sized(0.2f,0.2f)

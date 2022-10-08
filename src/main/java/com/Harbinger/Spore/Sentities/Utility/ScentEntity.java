@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.Sentities.Utility;
 
+import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.Module.SmobType;
 import net.minecraft.core.BlockPos;
@@ -55,17 +56,19 @@ public class ScentEntity extends PathfinderMob {
     public void aiStep() {
         super.aiStep();
         this.setNoGravity(true);
-        int i = Mth.floor(this.getX());
-        int j =Mth.floor(this.getY());
-        int k = Mth.floor(this.getZ());
-        Level world = this.level;
-        RandomSource randomSource = this.random;
-        BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
-        for(int l = 0; l < 14; ++l) {
-            blockpos$mutableblockpos.set(i + Mth.nextInt(randomSource, -6, 6), j + Mth.nextInt(randomSource, -6, 6), k + Mth.nextInt(randomSource, -6, 6));
-            BlockState blockstate = world.getBlockState(blockpos$mutableblockpos);
-            if (!blockstate.isCollisionShapeFullBlock(world, blockpos$mutableblockpos)) {
-                world.addParticle(Sparticles.SPORE_PARTICLE.get(), (double)blockpos$mutableblockpos.getX() + randomSource.nextDouble(), (double)blockpos$mutableblockpos.getY() + randomSource.nextDouble(), (double)blockpos$mutableblockpos.getZ() + randomSource.nextDouble(), 0.0D, 0.1D, 0.0D);
+        if (SConfig.SERVER.scent_particles.get()) {
+            int i = Mth.floor(this.getX());
+            int j = Mth.floor(this.getY());
+            int k = Mth.floor(this.getZ());
+            Level world = this.level;
+            RandomSource randomSource = this.random;
+            BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
+            for (int l = 0; l < 14; ++l) {
+                blockpos$mutableblockpos.set(i + Mth.nextInt(randomSource, -6, 6), j + Mth.nextInt(randomSource, -6, 6), k + Mth.nextInt(randomSource, -6, 6));
+                BlockState blockstate = world.getBlockState(blockpos$mutableblockpos);
+                if (!blockstate.isCollisionShapeFullBlock(world, blockpos$mutableblockpos)) {
+                    world.addParticle(Sparticles.SPORE_PARTICLE.get(), (double) blockpos$mutableblockpos.getX() + randomSource.nextDouble(), (double) blockpos$mutableblockpos.getY() + randomSource.nextDouble(), (double) blockpos$mutableblockpos.getZ() + randomSource.nextDouble(), 0.0D, 0.1D, 0.0D);
+                }
             }
         }
     }

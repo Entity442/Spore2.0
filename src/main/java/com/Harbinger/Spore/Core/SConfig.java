@@ -17,6 +17,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> global_armor;
 
 
+
+        public final ForgeConfigSpec.ConfigValue<Boolean> scent_spawn;
+        public final ForgeConfigSpec.ConfigValue<Boolean> scent_particles;
+
         public final ForgeConfigSpec.ConfigValue<Double> inf_human_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_human_damage;
 
@@ -49,6 +53,15 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> leap_hp;
         public final ForgeConfigSpec.ConfigValue<Double> leap_damage;
         public final ForgeConfigSpec.ConfigValue<Double> leap_armor;
+
+        public final ForgeConfigSpec.ConfigValue<Double> sla_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> sla_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> sla_armor;
+
+        public final ForgeConfigSpec.ConfigValue<Double> spit_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> spit_armor;
+        public final ForgeConfigSpec.ConfigValue<Double> spit_damage_l;
+        public final ForgeConfigSpec.ConfigValue<Double> spit_damage_c;
 
         public final ForgeConfigSpec.ConfigValue<Integer> evolution_age_human;
 
@@ -94,10 +107,15 @@ public class SConfig {
 
             builder.push("Mobs");
 
+            builder.push("Scent");
+            this.scent_spawn = builder.comment("Default true").define("Should scent spawn?",true);
+            this.scent_particles = builder.comment("Default true").define("Should scent have particles?",true);
+            builder.pop();
+
             builder.push("Infected Villager");
             this.inf_vil_hp = builder.comment("Default 20").defineInRange("Sets Infected Human Max health", 20, 1, Double.MAX_VALUE);
             this.inf_vil_damage = builder.comment("Default 6").defineInRange("Sets Infected Human Damage", 6, 1, Double.MAX_VALUE);
-            this.stations = builder.defineList("Villager Work Stations", Lists.newArrayList("minecraft:barrel" ) , o -> o instanceof String);
+            this.stations = builder.defineList("Villager Work Stations", Lists.newArrayList("work in progress" ) , o -> o instanceof String);
             builder.pop();
 
             builder.push("Infected Witch");
@@ -123,14 +141,28 @@ public class SConfig {
             builder.pop();
             builder.push("Knight");
             this.knight_hp = builder.comment("Default 25").defineInRange("Sets Knight Max health", 25, 1, Double.MAX_VALUE);
-            this.knight_damage = builder.comment("Default 10").defineInRange("Sets Knight Damage", 10, 1, Double.MAX_VALUE);
+            this.knight_damage = builder.comment("Default 7").defineInRange("Sets Knight Damage", 7, 1, Double.MAX_VALUE);
             this.knight_armor = builder.comment("Default 7").defineInRange("Sets Knight Armor", 7, 1, Double.MAX_VALUE);
             builder.pop();
             builder.push("Leaper");
             this.leap_hp = builder.comment("Default 55").defineInRange("Sets Leaper Max health", 55, 1, Double.MAX_VALUE);
-            this.leap_damage = builder.comment("Default 10").defineInRange("Sets Leaper Damage", 10, 1, Double.MAX_VALUE);
+            this.leap_damage = builder.comment("Default 8").defineInRange("Sets Leaper Damage", 8, 1, Double.MAX_VALUE);
             this.leap_armor = builder.comment("Default 3").defineInRange("Sets Leaper Armor", 3, 1, Double.MAX_VALUE);
             builder.pop();
+
+            builder.push("Slasher");
+            this.sla_hp = builder.comment("Default 35").defineInRange("Sets Slasher Max health", 35, 1, Double.MAX_VALUE);
+            this.sla_damage = builder.comment("Default 10").defineInRange("Sets Slasher Damage", 10, 1, Double.MAX_VALUE);
+            this.sla_armor = builder.comment("Default 2").defineInRange("Sets Slasher Armor", 2, 1, Double.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Spitter");
+            this.spit_hp = builder.comment("Default 15").defineInRange("Sets Spiter Max health", 15, 1, Double.MAX_VALUE);
+            this.spit_armor = builder.comment("Default 1").defineInRange("Sets Spitter Armor", 1, 1, Double.MAX_VALUE);
+            this.spit_damage_l = builder.comment("Default 6").defineInRange("Sets Spitter Damage at long range", 6, 1, Double.MAX_VALUE);
+            this.spit_damage_c = builder.comment("Default 1").defineInRange("Sets Spitter Damage at close range", 1, 1, Double.MAX_VALUE);
+            builder.pop();
+
             builder.push("Griefer");
             this.griefer_armor = builder.comment("Default 3").defineInRange("Sets Griefer Armor", 3, 1, Double.MAX_VALUE);
             this.griefer_hp = builder.comment("Default 45").defineInRange("Sets Griefer Max health", 45, 1, Double.MAX_VALUE);

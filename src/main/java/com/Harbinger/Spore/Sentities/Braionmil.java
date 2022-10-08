@@ -129,11 +129,10 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1,new BraionmilSwellGoal(this));
+        this.goalSelector.addGoal(1,new BraionmilSwellGoal(this, 1.1));
         this.goalSelector.addGoal(2, new RangedAttackGoal(this,1,3,3,6));
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(3, new FollowTargetGoal(this, 1));
 
 
         super.registerGoals();

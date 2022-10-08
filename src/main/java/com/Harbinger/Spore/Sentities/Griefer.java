@@ -97,7 +97,8 @@ public class Griefer extends EvolvedInfected{
                 this.dead = true;
                 this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)this.explosionRadius, explosion$blockinteraction);
                 this.discard();
-                this.summonScent(this.level, this.getX(), this.getY(), this.getZ());
+                if (SConfig.SERVER.scent_spawn.get()){
+                this.summonScent(this.level, this.getX(), this.getY(), this.getZ());}
             }
         }
 

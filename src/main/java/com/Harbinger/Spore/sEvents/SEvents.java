@@ -24,6 +24,7 @@ public class SEvents {
         event.put(Sentities.INF_WITCH.get(), InfectedWitch.createAttributes().build());
         event.put(Sentities.LEAPER.get(), Leaper.createAttributes().build());
         event.put(Sentities.SLASHER.get(), Slasher.createAttributes().build());
+        event.put(Sentities.SPITTER.get(), Spitter.createAttributes().build());
 
         event.put(Sentities.SCENT.get(), ScentEntity.createAttributes().build());
     }

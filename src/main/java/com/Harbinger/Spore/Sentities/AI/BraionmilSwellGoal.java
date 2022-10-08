@@ -1,10 +1,6 @@
 package com.Harbinger.Spore.Sentities.AI;
 
 import com.Harbinger.Spore.Sentities.Braionmil;
-import com.Harbinger.Spore.Sentities.Griefer;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 
@@ -15,9 +11,11 @@ public class BraionmilSwellGoal extends Goal {
     private final Braionmil griefer;
     @Nullable
     private LivingEntity target;
-
-    public BraionmilSwellGoal(Braionmil griefer1) {
+    private final double speedModifier;
+    public BraionmilSwellGoal(Braionmil griefer1, double speedModifier) {
+        this.target = griefer1.getTarget();
         this.griefer = griefer1;
+        this.speedModifier = speedModifier;
         this.setFlags(EnumSet.of(Flag.MOVE));
     }
 
@@ -41,9 +39,12 @@ public class BraionmilSwellGoal extends Goal {
     }
 
     public void tick() {
+        assert this.griefer.getTarget() != null;
+        this.griefer.getLookControl().setLookAt(this.griefer.getTarget(), 10.0F, (float) this.griefer.getMaxHeadXRot());
+        this.griefer.getNavigation().moveTo(this.griefer.getTarget(), this.speedModifier);
         if (this.target == null) {
             this.griefer.setSwellDir(-1);
-        } else if (this.griefer.distanceToSqr(this.target) > 100.0D) {
+        } else if (this.griefer.distanceToSqr(this.target) > 49.0D) {
             this.griefer.setSwellDir(-1);
         } else if (!this.griefer.getSensing().hasLineOfSight(this.target)) {
             this.griefer.setSwellDir(-1);
