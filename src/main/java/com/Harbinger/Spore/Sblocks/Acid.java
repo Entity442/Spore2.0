@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sblocks;
 
 import com.Harbinger.Spore.Core.Seffects;
+import com.Harbinger.Spore.Sentities.Infected;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -26,11 +27,16 @@ public class Acid extends FallingBlock {
             return box(0, 0, 0, 16, 1, 16).move(offset.x, offset.y, offset.z);
         }
     }
+    @Override
+    public void onPlace(BlockState blockstate, Level world, BlockPos pos, BlockState oldState, boolean moving) {
+        super.onPlace(blockstate, world, pos, oldState, moving);
+        world.scheduleTick(pos, this, 1);
+    }
 
 
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos pos, Entity entity) {
-        if (entity instanceof LivingEntity _entity)
+        if (entity instanceof LivingEntity _entity && !(entity instanceof Infected))
             _entity.addEffect(new MobEffectInstance(Seffects.CORROSION.get(), 100, 0));
         super.entityInside(blockState, level, pos, entity);
     }
