@@ -43,6 +43,7 @@
   "effect.spore.mycelium": "Mycelium Infection",
   "effect.spore.stunt": "Stunt",
   "effect.spore.marker": "Marker",
+  "effect.spore.corrosion": "Corrosion",
 
   "item.minecraft.splash_potion.effect.mycelium_potion": "Mycelium Infection Splash Potion",
   "item.minecraft.potion.effect.mycelium_potion": "Mycelium Infection Potion",

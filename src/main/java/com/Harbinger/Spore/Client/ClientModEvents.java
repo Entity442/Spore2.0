@@ -47,7 +47,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.SPITTER.get(), SpitterRenderer::new);
 
         event.registerEntityRenderer(Sentities.ACID_BALL.get(), ThrownItemRenderer::new);
-
+        event.registerEntityRenderer(Sentities.ACID.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.SCENT.get(), ScentEntityRenderer::new);
     }
 

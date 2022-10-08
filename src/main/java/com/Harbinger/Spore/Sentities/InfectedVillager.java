@@ -15,7 +15,9 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 
-public class InfectedVillager extends Infected{
+import java.util.List;
+
+public class InfectedVillager extends Infected {
     public InfectedVillager(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }

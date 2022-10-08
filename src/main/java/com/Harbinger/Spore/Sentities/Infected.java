@@ -3,6 +3,7 @@ package com.Harbinger.Spore.Sentities;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Module.SmobType;
 import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
+import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -105,4 +106,11 @@ public class Infected extends Monster {
     }
 
 
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (source.getDirectEntity() instanceof AcidBall){
+            return  false;
+        }
+        return super.hurt(source, amount);
+    }
 }

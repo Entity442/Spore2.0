@@ -13,6 +13,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 public class SpitterModel<T extends Spitter> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -138,7 +139,41 @@ public class SpitterModel<T extends Spitter> extends EntityModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
+			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
+			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
+			this.RightArm.zRot = 0;
+			this.LeftArm.zRot = 0;
+			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
+			this.RightLeg.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
+			this.LeftLeg.getChild("leftForLeg").xRot = Mth.cos(limbSwing * 0.4F) * 0.4F * limbSwingAmount;
+			this.RightLeg.getChild("rightForLeg").xRot = Mth.cos(limbSwing * 0.4F) * -0.4F * limbSwingAmount;
+		} else {
+			this.RightArm.zRot = Mth.sin(ageInTicks/8)/10;
+			this.LeftArm.zRot = -Mth.sin(ageInTicks/8)/10;
+			this.LeftLeg.xRot = 0;
+			this.RightLeg.xRot = 0;
+		}
 
+
+		this.neck.yRot = netHeadYaw / (180F / (float) Math.PI);
+		this.neck.xRot = headPitch /  ( 90F / (float) Math.PI);
+
+		this.neck.getChild("neckJoint").getChild("neck2").xRot = Mth.sin(ageInTicks/8)/8;
+		this.neck.getChild("mutated_tube").xRot = Mth.sin(ageInTicks/8)/10;
+		this.neck.getChild("neckJoint").getChild("neck2").getChild("RightMandible").xRot = Mth.sin(ageInTicks/5)/4;
+		this.neck.getChild("neckJoint").getChild("neck2").getChild("LeftMandible").xRot = Mth.sin(ageInTicks/5)/6;
+
+		this.neck.getChild("neckJoint").getChild("neck2").getChild("RightMandible").zRot = Mth.sin(ageInTicks/5)/4;
+		this.neck.getChild("neckJoint").getChild("neck2").getChild("LeftMandible").zRot = -Mth.sin(ageInTicks/4)/5;
+
+		this.neck.getChild("neckJoint").getChild("neck2").getChild("RightMandible").getChild("RMJ").getChild("RightMandible2").xRot = Mth.sin(ageInTicks/6)/5;
+		this.neck.getChild("neckJoint").getChild("neck2").getChild("LeftMandible").getChild("LMJ").getChild("LeftMandible2").xRot = Mth.sin(ageInTicks/5)/6;
+
+		this.neck.getChild("neckJoint").getChild("neck2").getChild("RightMandible").getChild("RMJ").getChild("RightMandible2").zRot = Mth.sin(ageInTicks/5)/6;
+		this.neck.getChild("neckJoint").getChild("neck2").getChild("LeftMandible").getChild("LMJ").getChild("LeftMandible2").zRot = -Mth.sin(ageInTicks/6)/5;
+
+		this.neck.getChild("neckJoint").getChild("neck2").getChild("neckJoint2").getChild("head").getChild("nose").xRot =1 + Mth.sin(ageInTicks/8)/8;
 	}
 
 	@Override

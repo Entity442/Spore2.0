@@ -7,11 +7,15 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.extensions.IForgeMobEffect;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Marker extends MobEffect {
+public class Marker extends MobEffect implements IForgeMobEffect {
     public Marker() {
         super(MobEffectCategory.HARMFUL, 8412043);
     }
@@ -32,6 +36,13 @@ public class Marker extends MobEffect {
 
         super.applyEffectTick(pLivingEntity, pAmplifier);
     }
+    }
+
+    @Override
+    public List<ItemStack> getCurativeItems() {
+        ArrayList<ItemStack> ret = new ArrayList<>();
+        ret.add(ItemStack.EMPTY);
+        return ret;
     }
 
     @Override

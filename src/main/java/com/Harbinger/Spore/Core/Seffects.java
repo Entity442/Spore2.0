@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.Core;
 
+import com.Harbinger.Spore.Effect.Corrosion;
 import com.Harbinger.Spore.Effect.Marker;
 import com.Harbinger.Spore.Effect.Mycelium;
 import com.Harbinger.Spore.Effect.Stunt;
@@ -26,6 +27,10 @@ public class Seffects {
     public static final RegistryObject<MobEffect> MARKER = MOB_EFFECTS.register("marker",
             () -> new Marker().addAttributeModifier(Attributes.FOLLOW_RANGE,
                     "91AEAA56-376B-4498-935B-2F7F68070635",0.5F ,AttributeModifier.Operation.MULTIPLY_TOTAL));
+
+    public static final RegistryObject<MobEffect> CORROSION = MOB_EFFECTS.register("corrosion",
+            () -> new Corrosion().addAttributeModifier(Attributes.ARMOR,
+                    "91AEAA56-376B-4498-935B-2F7F68070635",-0.1F ,AttributeModifier.Operation.MULTIPLY_TOTAL));
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);
     }

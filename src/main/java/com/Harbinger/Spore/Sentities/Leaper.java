@@ -85,8 +85,11 @@ public class Leaper extends EvolvedInfected{
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source == DamageSource.FALL)
-            return false;
+        if (source == DamageSource.FALL){
+            this.causeFallDamage(amount , 0.2F ,DamageSource.GENERIC);
+            return  false;
+        }
+
         return super.hurt(source, amount);
     }
 

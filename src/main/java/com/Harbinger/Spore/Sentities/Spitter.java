@@ -2,7 +2,9 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
+import com.Harbinger.Spore.Sentities.Projectile.Vomit;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -25,13 +27,25 @@ public class Spitter extends EvolvedInfected implements RangedAttackMob {
 
 
 
-        this.goalSelector.addGoal(1, new RangedAttackGoal(this,1.1, 20 , 16));
+        this.goalSelector.addGoal(1, new RangedAttackGoal(this,1.1, 40 , 16){
+            @Override
+            public boolean canUse() {
+                return super.canUse() && switchy();}});
 
-        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8));
-        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(3, new RangedAttackGoal(this,1.1, 5 , 5));
+        this.goalSelector.addGoal(4, new RandomStrollGoal(this, 0.8));
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 
 
         super.registerGoals();
+    }
+
+    private boolean switchy() {
+        if (this.getTarget() != null){
+            double ze = this.distanceToSqr(this.getTarget());
+            return !(ze < 32.0D);
+        }
+        return true ;
     }
 
 
@@ -52,8 +66,15 @@ public class Spitter extends EvolvedInfected implements RangedAttackMob {
     public void performRangedAttack(LivingEntity entity, float f) {
 
         if (this.getTarget() != null){
-        AcidBall.shoot(this , this.getTarget());
-        this.playSound(SoundEvents.SLIME_JUMP ,1,0.5f);
+         double ze = this.distanceToSqr(this.getTarget());
+         if (ze < 32.0D){
+             Vomit.shoot(this , this.getTarget());
+
+         }else {
+             AcidBall.shoot(this , this.getTarget());
+             this.playSound(SoundEvents.SLIME_JUMP ,1,0.5f);
+         }
+
         }
 
     }

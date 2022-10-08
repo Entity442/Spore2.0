@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 
 public class ScentEntity extends PathfinderMob {
 
-    private int dissipate = 6000;
+    private int dissipate = SConfig.SERVER.scent_life.get();
 
     public ScentEntity(EntityType<? extends PathfinderMob> mob, Level level) {
         super(mob, level);

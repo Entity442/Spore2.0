@@ -20,6 +20,7 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_spawn;
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_particles;
+        public final ForgeConfigSpec.ConfigValue<Integer> scent_life;
 
         public final ForgeConfigSpec.ConfigValue<Double> inf_human_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_human_damage;
@@ -110,6 +111,7 @@ public class SConfig {
             builder.push("Scent");
             this.scent_spawn = builder.comment("Default true").define("Should scent spawn?",true);
             this.scent_particles = builder.comment("Default true").define("Should scent have particles?",true);
+            this.scent_life = builder.comment("Default 6000").define("Scent life",6000);
             builder.pop();
 
             builder.push("Infected Villager");

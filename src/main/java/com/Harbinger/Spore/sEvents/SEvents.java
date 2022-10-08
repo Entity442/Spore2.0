@@ -2,6 +2,7 @@ package com.Harbinger.Spore.sEvents;
 
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Sparticles;
+import com.Harbinger.Spore.Particles.AcidParticle;
 import com.Harbinger.Spore.Particles.SporeParticle;
 import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
@@ -34,5 +35,8 @@ public class SEvents {
     public static void registerParticle(final RegisterParticleProvidersEvent event) {
         Minecraft.getInstance().particleEngine.register(Sparticles.SPORE_PARTICLE.get(),
                SporeParticle.Provider::new);
+
+        Minecraft.getInstance().particleEngine.register(Sparticles.ACID_PARTICLE.get(),
+                AcidParticle.Provider::new);
     }
 }
