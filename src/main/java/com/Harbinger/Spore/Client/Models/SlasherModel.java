@@ -168,11 +168,11 @@ public class SlasherModel<T extends Slasher> extends EntityModel<T> {
 		this.HeadJoint.getChild("head").getChild("jaw").xRot = Mth.sin(ageInTicks/8)/10;
 		this.HeadJoint.zRot = Mth.sin(ageInTicks/10)/10;
 
-		this.flesh.z = Mth.cos(ageInTicks/5)/5;
-		this.flesh2.z = Mth.cos(ageInTicks/5)/6;
-		this.flesh3.z = Mth.cos(ageInTicks/7)/5;
-		this.flesh4.z = Mth.cos(ageInTicks/5)/8;
-		this.flesh5.z = Mth.cos(ageInTicks/9)/5;
+		this.flesh.z =-1 +Mth.cos(ageInTicks/5)/5;
+		this.flesh2.z =-1 +Mth.cos(ageInTicks/5)/6;
+		this.flesh3.z =-1 +Mth.cos(ageInTicks/7)/5;
+		this.flesh4.z =-1 +Mth.cos(ageInTicks/5)/8;
+		this.flesh5.z =-1 +Mth.cos(ageInTicks/9)/5;
 		}
 
 

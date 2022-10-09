@@ -5,6 +5,7 @@ import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Sentities.AI.BreakBlockGoal;
 import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -116,5 +117,11 @@ public class InfectedVillager extends Infected {
     public boolean evolution() {
         int i = SConfig.SERVER.evolution_age_human.get() * 20;
         return ev >= (i / 4) * 3;
+    }
+
+    @Override
+    public void awardKillScore(Entity entity, int i, DamageSource damageSource) {
+        kills = kills + 1;
+        super.awardKillScore(entity, i, damageSource);
     }
 }

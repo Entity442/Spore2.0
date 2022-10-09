@@ -56,6 +56,11 @@
   "item.minecraft.lingering_potion.effect.marker_potion": "Marker Lingering Potion",
   "item.minecraft.tipped_arrow.effect.marker_potion": "Mycelium Arrow",
 
+  "item.minecraft.splash_potion.effect.corrosion_potion": "Corrosion Splash Potion",
+  "item.minecraft.potion.effect.corrosion_potion": "Corrosion Potion",
+  "item.minecraft.lingering_potion.effect.corrosion_potion": "Corrosion Lingering Potion",
+  "item.minecraft.tipped_arrow.effect.corrosion_potion": "Corrosion Arrow",
+
   "itemGroup.spore": "Spore",
 
 
