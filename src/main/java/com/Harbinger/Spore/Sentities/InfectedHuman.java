@@ -35,6 +35,7 @@ public class InfectedHuman extends Infected {
 
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+
         this.goalSelector.addGoal(7, new FollowOthersGoal(this , 1 , EvolvedInfected.class, 32, true));
 
 

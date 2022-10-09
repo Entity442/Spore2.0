@@ -4,6 +4,7 @@ import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Module.SmobType;
 import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
+import com.Harbinger.Spore.Sentities.AI.SwimGoal;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.core.BlockPos;
@@ -15,9 +16,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
@@ -71,7 +70,7 @@ public class Infected extends Monster {
             return (en instanceof Enemy && !(en instanceof Creeper || en instanceof Infected) && SConfig.SERVER.at_mob.get());
         }));
         this.goalSelector.addGoal(4,new FloatGoal(this));
-
+        this.goalSelector.addGoal(6, new SwimGoal(this , 1.3, 16));
         this.goalSelector.addGoal(9,new FollowOthersGoal(this, 1.2,ScentEntity.class , 128 , false));
         this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7 , 32, true));
     }

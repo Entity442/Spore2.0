@@ -23,7 +23,6 @@ public class BreakBlockGoal extends MoveToBlockGoal {
     private final Block blockToRemove;
     private final Mob removerMob;
     private int ticksSinceReachedGoal;
-    private static final int WAIT_AFTER_BLOCK_FOUND = 20;
 
     public BreakBlockGoal(Block block, PathfinderMob p_25841_, double p_25842_, int p_25843_) {
         super(p_25841_, p_25842_, 24, p_25843_);
