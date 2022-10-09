@@ -69,7 +69,7 @@ public class InfectedHuman extends Infected {
 
             if ((Math.random() < 0.5) && (kills >= 2)) {
                 {
-                    Mob entityToSpawn = new Knight(Sentities.BRAIOMIL.get(), _level);
+                    Mob entityToSpawn = new Braionmil(Sentities.BRAIOMIL.get(), _level);
                     entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
                     entityToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null,
                             null);
@@ -77,7 +77,7 @@ public class InfectedHuman extends Infected {
                 }
             } else if ((Math.random() < 0.5) && (kills >= 3)) {
                 {
-                    Mob entityToSpawn = new Knight(Sentities.GRIEFER.get(), _level);
+                    Mob entityToSpawn = new Griefer(Sentities.GRIEFER.get(), _level);
                     entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
                     entityToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.CONVERSION, null,
                             null);

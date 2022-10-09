@@ -39,6 +39,6 @@ public class InfectedVillagerRenderer <Type extends InfectedVillager> extends Mo
     }
     @Override
     protected boolean isShaking(Type type) {
-        return type.isFreazing();
+        return type.isFreazing() || type.evolution();
     }
 }
