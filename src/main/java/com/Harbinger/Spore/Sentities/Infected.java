@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.Sentities;
 
+import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Module.SmobType;
 import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
@@ -14,7 +15,9 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
@@ -58,14 +61,14 @@ public class Infected extends Monster {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(3,(new HurtByTargetGoal(this , Infected.class)).setAlertOthers(Infected.class));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
                 (this, Player.class,  true));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
                 (this, Villager.class,  true));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
                 (this, IronGolem.class,  true));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, true, (en) -> {
-            return en instanceof Enemy && !(en instanceof Creeper || en instanceof Infected);
+            return (en instanceof Enemy && !(en instanceof Creeper || en instanceof Infected) && SConfig.SERVER.at_mob.get());
         }));
         this.goalSelector.addGoal(4,new FloatGoal(this));
 

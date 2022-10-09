@@ -15,7 +15,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> global_damage;
         public final ForgeConfigSpec.ConfigValue<Double> global_health;
         public final ForgeConfigSpec.ConfigValue<Double> global_armor;
-
+        public final ForgeConfigSpec.ConfigValue<Boolean> at_mob;
 
 
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_spawn;
@@ -103,6 +103,7 @@ public class SConfig {
             this.global_damage = builder.define("Global Damage Modifier",1.0);
             this.global_health = builder.define("Global Health Modifier",1.0);
             this.global_armor = builder.define("Global Health Modifier",1.0);
+            this.at_mob = builder.comment("Default true").define("Should attack other mobs?",true);
             builder.pop();
 
 
