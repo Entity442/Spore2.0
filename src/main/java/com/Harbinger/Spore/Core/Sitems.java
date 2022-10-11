@@ -79,4 +79,12 @@ public class Sitems {
     public  static final RegistryObject<Item> COMBAT_SHOVEL = ITEMS.register("combat_shovel",
             () -> new InfectedCombatShovel());
 
+    public  static final RegistryObject<Item> INF_HELMET = ITEMS.register("inf_helmet",
+            () -> new InfectedHelmet());
+    public  static final RegistryObject<Item> INF_CHEST = ITEMS.register("inf_chest",
+            () -> new InfectedChestplate());
+    public  static final RegistryObject<Item> INF_PANTS = ITEMS.register("inf_pants",
+            () -> new InfectedLeggings());
+    public  static final RegistryObject<Item> INF_BOOTS = ITEMS.register("inf_boots",
+            () -> new InfectedBoots());
 }

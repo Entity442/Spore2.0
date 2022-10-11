@@ -4,8 +4,10 @@ import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Module.SmobType;
 import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
-import com.Harbinger.Spore.Sentities.AI.SwimGoal;
+import com.Harbinger.Spore.Sentities.AI.InfectedWaterMovementControl;
+import com.Harbinger.Spore.Sentities.AI.SwimToBlockGoal;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
+import com.Harbinger.Spore.Sentities.Projectile.Vomit;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -36,6 +38,8 @@ public class Infected extends Monster {
         this.setPathfindingMalus(BlockPathTypes.DANGER_OTHER, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, 16.0F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
+        this.moveControl =  new InfectedWaterMovementControl(this);
+        this.maxUpStep = 1.0F;
     }
 
     public boolean doHurtTarget(Entity p_32257_) {
@@ -69,8 +73,7 @@ public class Infected extends Monster {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, true, (en) -> {
             return (en instanceof Enemy && !(en instanceof Creeper || en instanceof Infected) && SConfig.SERVER.at_mob.get());
         }));
-        this.goalSelector.addGoal(4,new FloatGoal(this));
-        this.goalSelector.addGoal(6, new SwimGoal(this , 1.3, 16));
+        this.goalSelector.addGoal(5, new SwimToBlockGoal(this , 1.5, 8));
         this.goalSelector.addGoal(9,new FollowOthersGoal(this, 1.2,ScentEntity.class , 128 , false));
         this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7 , 32, true));
     }
@@ -110,9 +113,12 @@ public class Infected extends Monster {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source.getDirectEntity() instanceof AcidBall){
+        if (source.getDirectEntity() instanceof AcidBall || source.getDirectEntity() instanceof Vomit){
             return  false;
         }
         return super.hurt(source, amount);
     }
+
+
+
 }
