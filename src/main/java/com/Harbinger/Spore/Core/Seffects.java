@@ -1,9 +1,6 @@
 package com.Harbinger.Spore.Core;
 
-import com.Harbinger.Spore.Effect.Corrosion;
-import com.Harbinger.Spore.Effect.Marker;
-import com.Harbinger.Spore.Effect.Mycelium;
-import com.Harbinger.Spore.Effect.Stunt;
+import com.Harbinger.Spore.Effect.*;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -16,6 +13,12 @@ import net.minecraftforge.registries.RegistryObject;
 public class Seffects {
     public static final DeferredRegister<MobEffect> MOB_EFFECTS
             = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, Spore.MODID);
+    public static void register(IEventBus eventBus) {
+        MOB_EFFECTS.register(eventBus);
+    }
+
+
+
     public static final RegistryObject<MobEffect> MYCELIUM = MOB_EFFECTS.register("mycelium",
             Mycelium::new);
     public static final RegistryObject<MobEffect> STUNT = MOB_EFFECTS.register("stunt",() -> new
@@ -31,7 +34,15 @@ public class Seffects {
     public static final RegistryObject<MobEffect> CORROSION = MOB_EFFECTS.register("corrosion",
             () -> new Corrosion().addAttributeModifier(Attributes.ARMOR,
                     "91AEAA56-376B-4498-935B-2F7F68070635",-0.1F ,AttributeModifier.Operation.MULTIPLY_TOTAL));
-    public static void register(IEventBus eventBus) {
-        MOB_EFFECTS.register(eventBus);
-    }
+
+
+    public static final RegistryObject<MobEffect> SYMBIOSIS = MOB_EFFECTS.register("symbiosis",
+            () -> new Symbiosis().addAttributeModifier(Attributes.MOVEMENT_SPEED,
+                    "91AEAA56-376B-4498-935B-2F7F68070635", 0.2F, AttributeModifier.Operation.MULTIPLY_TOTAL)
+                    .addAttributeModifier(Attributes.ATTACK_SPEED,
+                            "91AEAA56-376B-4498-935B-2F7F68070635", 0.2F, AttributeModifier.Operation.MULTIPLY_TOTAL)
+                    .addAttributeModifier(Attributes.ATTACK_DAMAGE,
+                            "91AEAA56-376B-4498-935B-2F7F68070635", 4F, AttributeModifier.Operation.ADDITION)
+                    .addAttributeModifier(Attributes.MAX_HEALTH,
+                            "91AEAA56-376B-4498-935B-2F7F68070635", 6F, AttributeModifier.Operation.ADDITION));
 }

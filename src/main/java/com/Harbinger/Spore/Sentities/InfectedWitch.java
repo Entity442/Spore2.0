@@ -36,9 +36,9 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
     }
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(3, new BuffAlliesGoal(this,Infected.class,1.2,35,45,3));
-        this.goalSelector.addGoal(2, new BuffAlliesGoal(this,EvolvedInfected.class,1.2,35,45,3));
-        this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.0D, 40, 10.0F));
+        this.goalSelector.addGoal(2, new BuffAlliesGoal(this,Infected.class,1.2,35,45,3));
+        this.goalSelector.addGoal(1, new BuffAlliesGoal(this,EvolvedInfected.class,1.2,35,45,3));
+        this.goalSelector.addGoal(3, new RangedAttackGoal(this, 1.0D, 40, 10.0F));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
 
         this.goalSelector.addGoal(7, new FollowOthersGoal(this , 1 , EvolvedInfected.class, 32, true));

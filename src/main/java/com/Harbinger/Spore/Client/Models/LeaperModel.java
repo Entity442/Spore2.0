@@ -156,8 +156,8 @@ public class LeaperModel<T extends Leaper> extends EntityModel<T> {
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (entity.isAggressive()){
-			this.RightArm.xRot = -90F -Mth.sin(ageInTicks/10)/10;
-			this.LeftArm.xRot = -90F +Mth.sin(ageInTicks/10)/10;
+			this.RightArm.xRot = -90F + Mth.sin(ageInTicks/10)/10;
+			this.LeftArm.xRot = -90F + Mth.cos(ageInTicks/10)/10;
 			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.6F) * 0.6F * limbSwingAmount;
 			this.RightLeg.xRot = Mth.cos(limbSwing * 0.6F) * -0.6F * limbSwingAmount;
 
@@ -173,10 +173,6 @@ public class LeaperModel<T extends Leaper> extends EntityModel<T> {
 			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
 			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.RightLeg.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-
-		}else if (!entity.isOnGround() && !entity.isInWater() && !entity.isClimbing()){
-			this.RightArm.xRot = (ageInTicks/10)/6;
-			this.LeftArm.xRot = (ageInTicks/10)/6;
 
 		}else {
 

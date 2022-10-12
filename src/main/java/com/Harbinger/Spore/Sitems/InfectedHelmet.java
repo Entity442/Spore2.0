@@ -12,7 +12,7 @@ public class InfectedHelmet extends InfectedExoskeleton{
     }
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        return "spore:textures/entity/blank.png";
+        return "spore:textures/armor/infected_layer_1.png";
     }
 
 }
