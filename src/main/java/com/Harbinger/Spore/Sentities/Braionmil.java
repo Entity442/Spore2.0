@@ -4,6 +4,7 @@ import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Sentities.AI.BraionmilSwellGoal;
 import com.Harbinger.Spore.Sentities.AI.FollowTargetGoal;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -113,7 +114,7 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
         double y = this.getY();
         double z = this.getZ();
         Level world = this.level;
-        if (swell >= 25) {
+        if ((swell >= 25) && level instanceof ClientLevel) {
             for (int i = 0; i < 360; i++) {
                 if (i % 20 == 0) {
                     world.addParticle(ParticleTypes.SMOKE,

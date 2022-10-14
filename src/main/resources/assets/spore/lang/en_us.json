@@ -20,6 +20,11 @@
   "item.spore.scythe": "Infected Scythe",
   "item.spore.combat_shovel": "Infected Combat Shovel",
 
+  "item.spore.inf_helmet": "Infected Helmet",
+  "item.spore.inf_chest": "Infected Chestplate",
+  "item.spore.inf_pants": "Infected Leggings",
+  "item.spore.inf_boots": "Infected Boots",
+
   "item.spore.knight_spawnegg": "Knight",
   "item.spore.infected_human_spawnegg": "Infected Human",
   "item.spore.griefer_spawnegg": "Griefer",
@@ -45,6 +50,7 @@
   "effect.spore.stunt": "Stunt",
   "effect.spore.marker": "Marker",
   "effect.spore.corrosion": "Corrosion",
+  "effect.spore.symbiosis": "Symbiosis",
 
   "item.minecraft.splash_potion.effect.mycelium_potion": "Mycelium Infection Splash Potion",
   "item.minecraft.potion.effect.mycelium_potion": "Mycelium Infection Potion",

@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sentities.Projectile;
 
 import com.Harbinger.Spore.Core.*;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -51,12 +52,13 @@ public class Vomit extends AbstractArrow implements ItemSupplier {
     }
 
     private void spawnparticle(Level level, double x, double y, double z) {
-        level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0, 0, 0);
-        level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0.1, 0, 0);
-        level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0, 0, 0.1);
-        level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, -0.1, 0, -0.1);
-        level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0, -0.1, 0);
-
+        if (level instanceof ClientLevel) {
+            level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0, 0, 0);
+            level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0.1, 0, 0);
+            level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0, 0, 0.1);
+            level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, -0.1, 0, -0.1);
+            level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0, -0.1, 0);
+        }
     }
 
     public static Vomit shoot(Level world, LivingEntity entity, Random random, float power, double damage, int knockback) {

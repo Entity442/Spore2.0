@@ -3,6 +3,7 @@ package com.Harbinger.Spore.Sentities.Utility;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.Module.SmobType;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -56,7 +57,7 @@ public class ScentEntity extends PathfinderMob {
     public void aiStep() {
         super.aiStep();
         this.setNoGravity(true);
-        if (SConfig.SERVER.scent_particles.get()) {
+        if (SConfig.SERVER.scent_particles.get() && level instanceof ClientLevel) {
             int i = Mth.floor(this.getX());
             int j = Mth.floor(this.getY());
             int k = Mth.floor(this.getZ());

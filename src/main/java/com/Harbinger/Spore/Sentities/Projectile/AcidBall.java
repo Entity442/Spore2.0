@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sentities.Projectile;
 
 import com.Harbinger.Spore.Core.*;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -52,10 +53,11 @@ public class AcidBall extends AbstractArrow implements ItemSupplier {
             this.discard();
     }
     private void spawnparticle(Level level, double x, double y, double z) {
-        level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0, 0, 0);
-        level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0.1, 0, 0);
-        level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0, 0, 0.1);
-
+        if (level instanceof ClientLevel) {
+            level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0, 0, 0);
+            level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0.1, 0, 0);
+            level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0, 0, 0.1);
+        }
     }
     public static AcidBall shoot(Level world, LivingEntity entity, Random random, float power, double damage, int knockback) {
         AcidBall entityarrow = new AcidBall(Sentities.ACID_BALL.get(), entity, world);

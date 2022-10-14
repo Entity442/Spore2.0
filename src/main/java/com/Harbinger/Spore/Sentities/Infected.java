@@ -73,7 +73,7 @@ public class Infected extends Monster {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, true, (en) -> {
             return (en instanceof Enemy && !(en instanceof Creeper || en instanceof Infected) && SConfig.SERVER.at_mob.get());
         }));
-        this.goalSelector.addGoal(5, new SwimToBlockGoal(this , 1.5, 8));
+        this.goalSelector.addGoal(7, new SwimToBlockGoal(this , 1.5, 8));
         this.goalSelector.addGoal(9,new FollowOthersGoal(this, 1.2,ScentEntity.class , 128 , false));
         this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7 , 32, true));
     }
