@@ -34,6 +34,16 @@ public class Sitems {
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> LIVING_CORE = ITEMS.register("living_core",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> SPINE_FRAGMENT = ITEMS.register("spine_fragment",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> NERVES = ITEMS.register("nerves",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> CEREBRUM = ITEMS.register("cerebrum",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> SPINE = ITEMS.register("spine",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> ARMOR_PLATE = ITEMS.register("armor_plate",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> BIOMASS = ITEMS.register("biomass",
             () -> new Biomass());
 

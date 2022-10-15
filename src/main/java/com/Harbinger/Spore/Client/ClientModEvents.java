@@ -3,12 +3,17 @@ package com.Harbinger.Spore.Client;
 import com.Harbinger.Spore.Client.Models.*;
 import com.Harbinger.Spore.Client.Renderers.*;
 import com.Harbinger.Spore.Core.Sentities;
+import com.Harbinger.Spore.Core.Sparticles;
+import com.Harbinger.Spore.Particles.AcidParticle;
+import com.Harbinger.Spore.Particles.SporeParticle;
 import com.Harbinger.Spore.Spore;
 import com.Harbinger.Spore.sEvents.SItemProperties;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -57,5 +62,15 @@ public class ClientModEvents {
 
 
         SItemProperties.addCustomItemProperties();
+    }
+
+
+    @SubscribeEvent
+    public static void registerParticle(RegisterParticleProvidersEvent event) {
+        Minecraft.getInstance().particleEngine.register(Sparticles.SPORE_PARTICLE.get(),
+                SporeParticle.Provider::new);
+
+        Minecraft.getInstance().particleEngine.register(Sparticles.ACID_PARTICLE.get(),
+                AcidParticle.Provider::new);
     }
 }

@@ -3,10 +3,14 @@ package com.Harbinger.Spore.Sentities;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Spotion;
+import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.BuffAlliesGoal;
 import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
 import com.Harbinger.Spore.Sentities.AI.RangedBuff;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,6 +29,7 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 public class InfectedWitch extends Infected implements RangedAttackMob , RangedBuff {
@@ -122,5 +127,26 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
         }
 
         this.level.addFreshEntity(thrownpotion);
+    }
+
+
+    protected SoundEvent getAmbientSound() {
+        return Ssounds.INF_GROWL.get();
+    }
+
+    protected SoundEvent getHurtSound(DamageSource p_34327_) {
+        return Ssounds.INF_DAMAGE.get();
+    }
+
+    protected SoundEvent getDeathSound() {
+        return Ssounds.INF_DAMAGE.get();
+    }
+
+    protected SoundEvent getStepSound() {
+        return SoundEvents.ZOMBIE_STEP;
+    }
+
+    protected void playStepSound(BlockPos p_34316_, BlockState p_34317_) {
+        this.playSound(this.getStepSound(), 0.15F, 1.0F);
     }
 }

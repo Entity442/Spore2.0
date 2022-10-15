@@ -2,14 +2,18 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sentities;
+import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.GrieferSwellGoal;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
@@ -20,6 +24,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -148,4 +153,23 @@ public class Griefer extends EvolvedInfected{
     }
 
 
+    protected SoundEvent getAmbientSound() {
+        return Ssounds.INF_GROWL.get();
+    }
+
+    protected SoundEvent getHurtSound(DamageSource p_34327_) {
+        return Ssounds.INF_DAMAGE.get();
+    }
+
+    protected SoundEvent getDeathSound() {
+        return Ssounds.INF_DAMAGE.get();
+    }
+
+    protected SoundEvent getStepSound() {
+        return SoundEvents.ZOMBIE_STEP;
+    }
+
+    protected void playStepSound(BlockPos p_34316_, BlockState p_34317_) {
+        this.playSound(this.getStepSound(), 0.15F, 1.0F);
+    }
 }

@@ -2,15 +2,19 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
+import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.BraionmilSwellGoal;
 import com.Harbinger.Spore.Sentities.AI.FollowTargetGoal;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -25,6 +29,7 @@ import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
@@ -152,5 +157,26 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
     @Override
     public void performRangedAttack(LivingEntity p_33317_, float p_33318_) {
 
+    }
+
+
+    protected SoundEvent getAmbientSound() {
+        return Ssounds.INF_GROWL.get();
+    }
+
+    protected SoundEvent getHurtSound(DamageSource p_34327_) {
+        return Ssounds.INF_DAMAGE.get();
+    }
+
+    protected SoundEvent getDeathSound() {
+        return Ssounds.INF_DAMAGE.get();
+    }
+
+    protected SoundEvent getStepSound() {
+        return SoundEvents.ZOMBIE_STEP;
+    }
+
+    protected void playStepSound(BlockPos p_34316_, BlockState p_34317_) {
+        this.playSound(this.getStepSound(), 0.15F, 1.0F);
     }
 }

@@ -1,0 +1,16 @@
+{
+"inf_damage" :{
+  "subtitle": "sounds.spore.damage",
+  "sounds": [
+    "spore:slash"
+  ]
+},
+  "inf_growl" :{
+    "subtitle": "sounds.spore.growl",
+    "sounds": [
+      "spore:growl"
+    ]
+  }
+
+
+}

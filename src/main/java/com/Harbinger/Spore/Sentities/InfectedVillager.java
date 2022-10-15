@@ -2,9 +2,13 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sentities;
+import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.BreakBlockGoal;
 import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -16,6 +20,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
@@ -123,5 +128,26 @@ public class InfectedVillager extends Infected {
     public void awardKillScore(Entity entity, int i, DamageSource damageSource) {
         kills = kills + 1;
         super.awardKillScore(entity, i, damageSource);
+    }
+
+
+    protected SoundEvent getAmbientSound() {
+        return Ssounds.INF_GROWL.get();
+    }
+
+    protected SoundEvent getHurtSound(DamageSource p_34327_) {
+        return Ssounds.INF_DAMAGE.get();
+    }
+
+    protected SoundEvent getDeathSound() {
+        return Ssounds.INF_DAMAGE.get();
+    }
+
+    protected SoundEvent getStepSound() {
+        return SoundEvents.ZOMBIE_STEP;
+    }
+
+    protected void playStepSound(BlockPos p_34316_, BlockState p_34317_) {
+        this.playSound(this.getStepSound(), 0.15F, 1.0F);
     }
 }

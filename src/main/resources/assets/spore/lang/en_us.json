@@ -70,6 +70,8 @@
   "itemGroup.spore": "Spore",
 
 
+  "sounds.spore.damage": "Infected is being damaged",
+  "sounds.spore.growl": "Infected is growling",
 
   "advancements.spore.title": "Spore",
   "advancements.spore.description" : "The Infection is here"
