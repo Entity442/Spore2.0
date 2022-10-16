@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "R#R",
+    "R R",
+    "R R"
+  ],
+  "key": {
+    "R": {
+      "item": "spore:armor_plate"
+    },
+    "#": {
+      "item": "spore:spine_fragment"
+    }
+  },
+  "result": {
+    "item": "spore:inf_pants"
+  }
+}

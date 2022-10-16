@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "T#T",
+    "TRT",
+    "TTT"
+  ],
+  "key": {
+    "R": {
+      "item": "spore:living_core"
+    },
+    "#": {
+      "item": "spore:spine"
+    },
+    "T": {
+      "item": "spore:armor_plate"
+    }
+  },
+  "result": {
+    "item": "spore:inf_chest"
+  }
+}

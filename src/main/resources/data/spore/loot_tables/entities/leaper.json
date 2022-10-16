@@ -12,8 +12,8 @@
             {
               "function": "set_count",
               "count": {
-                "min": 1,
-                "max": 5
+                "min": 3,
+                "max": 9
               }
             },
             {
@@ -82,6 +82,30 @@
           "type": "minecraft:item",
           "name": "spore:spine_fragment",
           "weight": 15,
+          "functions": [
+            {
+              "function": "set_count",
+              "count": {
+                "min": 0,
+                "max": 2
+              }
+            },
+            {
+              "function": "minecraft:apply_bonus",
+              "enchantment": "minecraft:fortune",
+              "formula": "minecraft:ore_drops"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "spore:armor_fragment",
+          "weight": 35,
           "functions": [
             {
               "function": "set_count",

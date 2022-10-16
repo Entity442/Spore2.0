@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "TTT",
+    "TRT",
+    " # "
+  ],
+  "key": {
+    "R": {
+      "item": "spore:cerebrum"
+    },
+    "#": {
+      "item": "spore:spine_fragment"
+    },
+    "T": {
+      "item": "spore:armor_plate"
+    }
+  },
+  "result": {
+    "item": "spore:inf_helmet"
+  }
+}

@@ -105,7 +105,8 @@ public class Leaper extends EvolvedInfected{
                 .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.leap_damage.get() * SConfig.SERVER.global_damage.get())
                 .add(Attributes.ARMOR, SConfig.SERVER.leap_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.FOLLOW_RANGE, 64)
-                .add(Attributes.ATTACK_KNOCKBACK, 3);
+                .add(Attributes.ATTACK_KNOCKBACK, 3)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 1);
 
     }
 
