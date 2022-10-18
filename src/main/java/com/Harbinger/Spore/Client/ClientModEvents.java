@@ -34,6 +34,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(LeaperModel.LAYER_LOCATION, LeaperModel::createBodyLayer);
         event.registerLayerDefinition(SlasherModel.LAYER_LOCATION, SlasherModel::createBodyLayer);
         event.registerLayerDefinition(SpitterModel.LAYER_LOCATION, SpitterModel::createBodyLayer);
+        event.registerLayerDefinition(InfectedPillagerModel.LAYER_LOCATION, InfectedPillagerModel::createBodyLayer);
     }
 
 
@@ -50,6 +51,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.LEAPER.get(), LeaperRenderer::new);
         event.registerEntityRenderer(Sentities.SLASHER.get(), SlasherRenderer::new);
         event.registerEntityRenderer(Sentities.SPITTER.get(), SpitterRenderer::new);
+        event.registerEntityRenderer(Sentities.INF_PILLAGER.get(), InfectedPillagerRenderer::new);
 
         event.registerEntityRenderer(Sentities.ACID_BALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.ACID.get(), ThrownItemRenderer::new);
