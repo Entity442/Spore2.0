@@ -2,6 +2,9 @@ package com.Harbinger.Spore;
 
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.util.SporeEntitySpawn;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -24,7 +27,7 @@ public class Spore
                 FMLPaths.CONFIGDIR.get().resolve("spore-newconfig.toml").toString());
 
 
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onCommonSetup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -40,9 +43,35 @@ public class Spore
 
 
     }
-    private void onCommonSetup(FMLCommonSetupEvent event) {
 
-    }
+    private void setup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+
+            SpawnPlacements.register(Sentities.INFECTED_HUMAN.get(),
+                    SpawnPlacements.Type.ON_GROUND,
+                    Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    Monster::checkMonsterSpawnRules);
+
+            SpawnPlacements.register(Sentities.INF_VILLAGER.get(),
+                    SpawnPlacements.Type.ON_GROUND,
+                    Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    Monster::checkMonsterSpawnRules);
+
+            SpawnPlacements.register(Sentities.INF_PILLAGER.get(),
+                    SpawnPlacements.Type.ON_GROUND,
+                    Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    Monster::checkMonsterSpawnRules);
+
+            SpawnPlacements.register(Sentities.INF_WITCH.get(),
+                    SpawnPlacements.Type.ON_GROUND,
+                    Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    Monster::checkMonsterSpawnRules);
+
+            SpawnPlacements.register(Sentities.INF_PILLAGER.get(),
+                    SpawnPlacements.Type.ON_GROUND,
+                    Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    Monster::checkMonsterSpawnRules);
+        });}
 }
 
 

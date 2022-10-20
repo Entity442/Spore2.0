@@ -6,6 +6,7 @@ import com.Harbinger.Spore.Module.SmobType;
 import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
 import com.Harbinger.Spore.Sentities.AI.InfectedWaterMovementControl;
 import com.Harbinger.Spore.Sentities.AI.SwimToBlockGoal;
+import com.Harbinger.Spore.Sentities.AI.SwimToTarget;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
@@ -73,8 +74,9 @@ public class Infected extends Monster {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, true, (en) -> {
             return (en instanceof Enemy && !(en instanceof Creeper || en instanceof Infected) && SConfig.SERVER.at_mob.get());
         }));
+        this.goalSelector.addGoal(8, new SwimToTarget(this , 1.0));
         this.goalSelector.addGoal(7, new SwimToBlockGoal(this , 1.5, 8));
-        this.goalSelector.addGoal(9,new FollowOthersGoal(this, 1.2,ScentEntity.class , 128 , false));
+        this.goalSelector.addGoal(9,new FollowOthersGoal(this, 1.2, ScentEntity.class , 128 , false));
         this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7 , 32, true));
     }
     public void aiStep() {

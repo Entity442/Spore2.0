@@ -3,10 +3,7 @@ package com.Harbinger.Spore.sEvents;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sentities;
-import com.Harbinger.Spore.Sentities.Infected;
-import com.Harbinger.Spore.Sentities.InfectedHuman;
-import com.Harbinger.Spore.Sentities.InfectedVillager;
-import com.Harbinger.Spore.Sentities.InfectedWitch;
+import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -14,6 +11,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Pillager;
+import net.minecraft.world.entity.monster.Vindicator;
 import net.minecraft.world.entity.monster.Witch;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.npc.Villager;
@@ -57,6 +55,7 @@ public class Infection {
                     _mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.CONVERSION,
                             null, null);
                     world.addFreshEntity(entityToSpawn);
+                    entity.discard();
                 }
             }
 
@@ -69,18 +68,20 @@ public class Infection {
                     _mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.CONVERSION,
                             null, null);
                     world.addFreshEntity(entityToSpawn);
+                    entity.discard();
                 }
             }
 
 
             if (entity instanceof Pillager) {
                 if (world instanceof ServerLevel _level) {
-                    Entity entityToSpawn = new InfectedVillager(Sentities.INF_VILLAGER.get(), _level);
+                    Entity entityToSpawn = new InfectedPillager(Sentities.INF_PILLAGER.get(), _level);
                     entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
                     Mob _mobToSpawn = (Mob) entityToSpawn;
                     _mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.CONVERSION,
                             null, null);
                     world.addFreshEntity(entityToSpawn);
+                    entity.discard();
                 }
             }
             if (entity instanceof Witch) {
@@ -91,6 +92,18 @@ public class Infection {
                     _mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.CONVERSION,
                             null, null);
                     world.addFreshEntity(entityToSpawn);
+                    entity.discard();
+                }
+            }
+            if (entity instanceof Vindicator) {
+                if (world instanceof ServerLevel _level) {
+                    Entity entityToSpawn = new InfectedVendicator(Sentities.INF_VINDICATOR.get(), _level);
+                    entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
+                    Mob _mobToSpawn = (Mob) entityToSpawn;
+                    _mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.CONVERSION,
+                            null, null);
+                    world.addFreshEntity(entityToSpawn);
+                    entity.discard();
                 }
             }
         }

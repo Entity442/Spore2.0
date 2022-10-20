@@ -2,9 +2,9 @@
   "type": "spore:mobspawns",
   "biomes": "#minecraft:is_overworld",
   "spawn": {
-    "type": "spore:inf_villager",
-    "maxCount": 5,
+    "type": "spore:inf_pillager",
+    "maxCount": 4,
     "minCount": 1,
-    "weight": 14
+    "weight": 8
   }
 }

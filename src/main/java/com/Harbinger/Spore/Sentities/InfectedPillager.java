@@ -13,7 +13,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -58,16 +57,13 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
     }
 
     public void shootCrossbowProjectile(LivingEntity p_33275_, ItemStack p_33276_, Projectile p_33277_, float p_33278_) {
-        this.shootCrossbowProjectile(this, p_33275_, p_33277_, p_33278_, 1.6F);
+        this.shootCrossbowProjectile(this, p_33275_, p_33277_, p_33278_, SConfig.SERVER.inf_pil_range_damage.get());
     }
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(IS_CHARGING_CROSSBOW, false);
     }
 
-    public boolean hasCrossbow(){
-        return this.getItemInHand(InteractionHand.MAIN_HAND).equals(new ItemStack(Items.CROSSBOW));
-    }
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(1, new RangedCrossbowAttackGoal<>(this, 1.0D, 8.0F));
@@ -82,10 +78,10 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, SConfig.SERVER.knight_hp.get() * SConfig.SERVER.global_health.get())
+                .add(Attributes.MAX_HEALTH, SConfig.SERVER.inf_pil_hp.get() * SConfig.SERVER.global_health.get())
                 .add(Attributes.MOVEMENT_SPEED, 0.2)
-                .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.knight_damage.get() * SConfig.SERVER.global_damage.get())
-                .add(Attributes.ARMOR, SConfig.SERVER.knight_armor.get() * SConfig.SERVER.global_armor.get())
+                .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.inf_pil_damage.get() * SConfig.SERVER.global_damage.get())
+                .add(Attributes.ARMOR, SConfig.SERVER.inf_pil_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.FOLLOW_RANGE, 32)
                 .add(Attributes.ATTACK_KNOCKBACK, 1);
 

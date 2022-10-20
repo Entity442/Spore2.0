@@ -35,6 +35,8 @@ public class ClientModEvents {
         event.registerLayerDefinition(SlasherModel.LAYER_LOCATION, SlasherModel::createBodyLayer);
         event.registerLayerDefinition(SpitterModel.LAYER_LOCATION, SpitterModel::createBodyLayer);
         event.registerLayerDefinition(InfectedPillagerModel.LAYER_LOCATION, InfectedPillagerModel::createBodyLayer);
+        event.registerLayerDefinition(InfectedVindicatorModel.LAYER_LOCATION, InfectedVindicatorModel::createBodyLayer);
+        event.registerLayerDefinition(InfEvoClawModel.LAYER_LOCATION, InfEvoClawModel::createBodyLayer);
     }
 
 
@@ -52,6 +54,9 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.SLASHER.get(), SlasherRenderer::new);
         event.registerEntityRenderer(Sentities.SPITTER.get(), SpitterRenderer::new);
         event.registerEntityRenderer(Sentities.INF_PILLAGER.get(), InfectedPillagerRenderer::new);
+        event.registerEntityRenderer(Sentities.INF_VINDICATOR.get(), InfectedVindicatorRenderer::new);
+        event.registerEntityRenderer(Sentities.CLAW.get(), ClawRenderer::new);
+
 
         event.registerEntityRenderer(Sentities.ACID_BALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.ACID.get(), ThrownItemRenderer::new);

@@ -7,5 +7,11 @@ import net.minecraft.world.level.Level;
 public class EvolvedInfected extends Infected{
     public EvolvedInfected(EntityType<? extends Monster> type, Level level) {
         super(type, level);
+        setPersistenceRequired();
     }
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
 }

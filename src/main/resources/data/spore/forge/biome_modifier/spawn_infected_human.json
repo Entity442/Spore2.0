@@ -3,8 +3,8 @@
   "biomes": "#minecraft:is_overworld",
   "spawn": {
     "type": "spore:infected_human",
-    "maxCount": 5,
-    "minCount": 1,
-    "weight": 10
+    "maxCount": 6,
+    "minCount": 2,
+    "weight": 16
   }
 }

@@ -39,6 +39,8 @@
   "item.spore.spitter_spawnegg": "Spitter",
   "item.spore.leaper_spawnegg": "Leaper",
   "item.spore.slasher_spawnegg": "Slasher",
+  "item.spore.inf_pillager_spawnegg": "Infected Pillager",
+  "item.spore.inf_vind_spawnegg": "Infected Vindicator",
 
   "entity.spore.knight": "Knight",
   "entity.spore.griefer": "Griefer",
@@ -46,9 +48,11 @@
   "entity.spore.braiomil": "Braiomil",
   "entity.spore.inf_villager": "Infected Villager",
   "entity.spore.inf_witch": "Infected Witch",
+  "entity.spore.inf_pillager": "Infected Pillager",
   "entity.spore.spitter": "Spitter",
   "entity.spore.leaper": "Leaper",
   "entity.spore.slasher": "Slasher",
+  "entity.spore.inf_vindicator": "Infected Vindicator",
 
 
   "effect.spore.mycelium": "Mycelium Infection",

@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
-public class ScentEntity extends PathfinderMob {
+public class ScentEntity extends UtilityEntity {
 
     private int dissipate = SConfig.SERVER.scent_life.get();
 

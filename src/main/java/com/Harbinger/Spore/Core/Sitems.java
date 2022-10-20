@@ -50,16 +50,24 @@ public class Sitems {
 
     public  static final RegistryObject<Item> INFECTED_HUMAN_SPAWNEGG = ITEMS.register("infected_human_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.INFECTED_HUMAN,-9357608, -16724788, new Item.Properties().tab(ScreativeTab.SPORE)));
+   public  static final RegistryObject<Item> INF_VILLAGER_SPAWNEGG = ITEMS.register("inf_villager_spawnegg",
+            () -> new ForgeSpawnEggItem(Sentities.INF_VILLAGER,-6639718,-97141773, new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> INF_WITCH_SPAWNEGG = ITEMS.register("inf_witch_spawnegg",
+            () -> new ForgeSpawnEggItem(Sentities.INF_WITCH,-8512718,-95711773, new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> INF_PILLAGER_SPAWNEGG = ITEMS.register("inf_pillager_spawnegg",
+            () -> new ForgeSpawnEggItem(Sentities.INF_PILLAGER,-2312718,-15211773, new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> INF_VIND_SPAWNEGG = ITEMS.register("inf_vind_spawnegg",
+            () -> new ForgeSpawnEggItem(Sentities.INF_VINDICATOR,-984718,-95171773, new Item.Properties().tab(ScreativeTab.SPORE)));
+
+
+
     public  static final RegistryObject<Item> KNIGHT_SPAWNEGG = ITEMS.register("knight_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.KNIGHT,-7681208, -16777012, new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> GRIEFER_SPAWNEGG = ITEMS.register("griefer_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.GRIEFER,-5750208,-10092442, new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> BRAIO_SPAWNEGG = ITEMS.register("braio_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.BRAIOMIL,-6124508,-13421773, new Item.Properties().tab(ScreativeTab.SPORE)));
-    public  static final RegistryObject<Item> INF_VILLAGER_SPAWNEGG = ITEMS.register("inf_villager_spawnegg",
-            () -> new ForgeSpawnEggItem(Sentities.INF_VILLAGER,-6639718,-97141773, new Item.Properties().tab(ScreativeTab.SPORE)));
-    public  static final RegistryObject<Item> INF_WITCH_SPAWNEGG = ITEMS.register("inf_witch_spawnegg",
-            () -> new ForgeSpawnEggItem(Sentities.INF_WITCH,-8512718,-95711773, new Item.Properties().tab(ScreativeTab.SPORE)));
+
     public  static final RegistryObject<Item> LEAPER_SPAWNEGG = ITEMS.register("leaper_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.LEAPER,-9762718,-12345773, new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> SLASHER_SPAWNEGG = ITEMS.register("slasher_spawnegg",

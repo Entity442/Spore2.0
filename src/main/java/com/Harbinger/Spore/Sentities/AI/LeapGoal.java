@@ -20,9 +20,14 @@ public class LeapGoal extends Goal {
 
     public boolean canUse() {
             this.target = this.mob.getTarget();
-            if (this.target == null) {
+            if (this.target == null)
+            {
                 return false;
-            } else {
+            } else if (this.mob.isInWater())
+            {
+                return false;
+            } else
+            {
                 double d0 = this.mob.distanceToSqr(this.target);
                 if (d0 > 32.0D) {
                     if (!this.mob.isOnGround()) {

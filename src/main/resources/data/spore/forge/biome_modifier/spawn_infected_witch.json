@@ -5,6 +5,6 @@
     "type": "spore:inf_witch",
     "maxCount": 1,
     "minCount": 1,
-    "weight": 3
+    "weight": 6
   }
 }
