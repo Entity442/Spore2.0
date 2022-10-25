@@ -25,9 +25,4 @@ public class ClawRenderer <Type extends InfEvoClaw> extends MobRenderer<Type , I
         return TEXTURE;
     }
 
-
-    @Override
-    protected boolean isShaking(Type type) {
-       return type.riseShake();
-    }
 }

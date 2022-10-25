@@ -5,6 +5,7 @@ import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.BraionmilSwellGoal;
 import com.Harbinger.Spore.Sentities.AI.FollowTargetGoal;
+import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -104,7 +105,7 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
         List<Entity> entities = pLivingEntity.level.getEntities(pLivingEntity, boundingBox);
 
         for (Entity entity : entities) {
-            if ((entity instanceof LivingEntity livingEntity) && !(entity instanceof Infected)) {
+            if ((entity instanceof LivingEntity livingEntity) && !(entity instanceof Infected || entity instanceof UtilityEntity)) {
                 livingEntity.addEffect(new MobEffectInstance(Seffects.MARKER.get(), SConfig.SERVER.marker_duration.get(), SConfig.SERVER.marker_level.get(), false, false));
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, SConfig.SERVER.poison_duration.get(), SConfig.SERVER.poison_level.get()));
                 livingEntity.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(), SConfig.SERVER.mycelium_duration.get(), SConfig.SERVER.mycelium_level.get()));

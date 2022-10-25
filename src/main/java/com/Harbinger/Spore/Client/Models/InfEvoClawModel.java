@@ -87,8 +87,6 @@ public class InfEvoClawModel<T extends InfEvoClaw> extends EntityModel<T> {
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
-		base.y = -(entity.getRise()/8f);
-		base.visible = !entity.isIs_underground();
 	}
 
 	@Override

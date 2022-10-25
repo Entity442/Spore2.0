@@ -12,9 +12,13 @@ import java.util.EnumSet;
 public class PullGoal extends Goal {
     private final Mob mob;
     private LivingEntity target;
+    private final double range;
+    private final double range_min;
 
-    public PullGoal(Mob mob) {
+    public PullGoal(Mob mob, double range, double range_min) {
         this.mob = mob;
+        this.range = range;
+        this.range_min = range_min;
         this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
     }
 
@@ -24,7 +28,7 @@ public class PullGoal extends Goal {
             return false;
         } else {
             double d0 = this.mob.distanceToSqr(this.target);
-            if ((d0 < (mob.getBbWidth() + 32.0D)) && (d0 > (mob.getBbWidth() + 16.0D))) {
+            if ((d0 < (mob.getBbWidth() + range)) && (d0 > (mob.getBbWidth() + range_min))) {
                 if (!this.target.isOnGround()) {
                     return false;
                 } else {

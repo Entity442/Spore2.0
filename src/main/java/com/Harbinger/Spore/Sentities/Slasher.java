@@ -41,7 +41,7 @@ public class Slasher extends EvolvedInfected{
 
 
         this.goalSelector.addGoal(2, new SlasherAttackGoal());
-        this.goalSelector.addGoal(1, new PullGoal(this));
+        this.goalSelector.addGoal(1, new PullGoal(this, 32, 16));
         this.goalSelector.addGoal(3, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 

@@ -2,12 +2,16 @@ package com.Harbinger.Spore.Sentities.AI;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
+import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -76,6 +80,10 @@ public class BreakBlockGoal extends MoveToBlockGoal {
             if (this.ticksSinceReachedGoal > 0) {
                 Vec3 vec3 = this.removerMob.getDeltaMovement();
                 this.removerMob.setDeltaMovement(vec3.x, 0.3D, vec3.z);
+                if (!level.isClientSide) {
+                    ((ServerLevel)level).sendParticles(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(level.getBlockState(blockpos).getBlock())), (double)blockpos1.getX() + 0.5D, (double)blockpos1.getY() + 0.7D, (double)blockpos1.getZ() + 0.5D, 3, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, (double)0.15F);
+                }
+                this.mob.swing(InteractionHand.MAIN_HAND);
             }
 
             if (this.ticksSinceReachedGoal % 2 == 0) {

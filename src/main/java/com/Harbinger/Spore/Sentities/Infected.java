@@ -10,6 +10,7 @@ import com.Harbinger.Spore.Sentities.AI.SwimToTarget;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
+import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -72,7 +73,7 @@ public class Infected extends Monster {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
                 (this, IronGolem.class,  true));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, true, (en) -> {
-            return (en instanceof Enemy && !(en instanceof Creeper || en instanceof Infected) && SConfig.SERVER.at_mob.get());
+            return (en instanceof Enemy && !(en instanceof Creeper || en instanceof Infected || en instanceof UtilityEntity) && SConfig.SERVER.at_mob.get());
         }));
         this.goalSelector.addGoal(8, new SwimToTarget(this , 1.0));
         this.goalSelector.addGoal(7, new SwimToBlockGoal(this , 1.5, 8));
