@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class ClawRenderer <Type extends InfEvoClaw> extends MobRenderer<Type , InfEvoClawModel<Type>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Spore.MODID,
-            "textures/entity/blank.png");
+            "textures/entity/claw.png");
 
 
     public ClawRenderer(EntityRendererProvider.Context context) {

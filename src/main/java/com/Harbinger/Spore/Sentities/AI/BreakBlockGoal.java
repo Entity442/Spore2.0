@@ -81,9 +81,8 @@ public class BreakBlockGoal extends MoveToBlockGoal {
                 Vec3 vec3 = this.removerMob.getDeltaMovement();
                 this.removerMob.setDeltaMovement(vec3.x, 0.3D, vec3.z);
                 if (!level.isClientSide) {
-                    ((ServerLevel)level).sendParticles(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(level.getBlockState(blockpos).getBlock())), (double)blockpos1.getX() + 0.5D, (double)blockpos1.getY() + 0.7D, (double)blockpos1.getZ() + 0.5D, 3, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, (double)0.15F);
+                    ((ServerLevel)level).sendParticles(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(level.getBlockState(new BlockPos(blockpos.getX(), blockpos.getY() - 1, blockpos.getZ())).getBlock())), (double)blockpos1.getX() + 0.5D, (double)blockpos1.getY() + 0.7D, (double)blockpos1.getZ() + 0.5D, 3, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, (double)0.15F);
                 }
-                this.mob.swing(InteractionHand.MAIN_HAND);
             }
 
             if (this.ticksSinceReachedGoal % 2 == 0) {

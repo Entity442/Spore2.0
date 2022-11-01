@@ -8,11 +8,9 @@ import com.Harbinger.Spore.Sentities.Infected;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
@@ -28,11 +26,8 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
-
-import javax.annotation.Nullable;
 
 public class InfEvoClaw extends UtilityEntity{
     public InfEvoClaw(EntityType<? extends PathfinderMob> type, Level level) {
@@ -62,7 +57,7 @@ public class InfEvoClaw extends UtilityEntity{
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, SConfig.SERVER.sla_hp.get() * SConfig.SERVER.global_health.get())
                 .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.sla_damage.get() * SConfig.SERVER.global_damage.get())
-                .add(Attributes.FOLLOW_RANGE, 16)
+                .add(Attributes.FOLLOW_RANGE, 8)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1);
 
     }

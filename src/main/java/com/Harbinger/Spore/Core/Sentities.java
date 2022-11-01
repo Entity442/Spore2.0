@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Core;
 
 import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
+import com.Harbinger.Spore.Sentities.Projectile.ThrownSpear;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
 import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
@@ -69,6 +70,11 @@ public class Sentities {
     public static final RegistryObject<EntityType<Vomit>> ACID = register("acid",
             EntityType.Builder.<Vomit>of(Vomit::new, MobCategory.MISC).setCustomClientFactory(Vomit::new)
                     .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
+
+    public static final RegistryObject<EntityType<ThrownSpear>> THROWN_SPEAR = register("thrown_spear",
+            EntityType.Builder.<ThrownSpear>of(ThrownSpear::new, MobCategory.MISC).setCustomClientFactory(ThrownSpear::new)
+                    .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
+
 
     public static final RegistryObject<EntityType<ScentEntity>> SCENT = SPORE_ENTITIES.register("scent",
             () -> EntityType.Builder.of(ScentEntity::new, MobCategory.MISC).sized(0.2f,0.2f)

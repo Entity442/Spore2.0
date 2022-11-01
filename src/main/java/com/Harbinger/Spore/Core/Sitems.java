@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Core;
 
 import com.Harbinger.Spore.Sitems.*;
 import com.Harbinger.Spore.Spore;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -61,6 +62,8 @@ public class Sitems {
 
 
 
+
+
     public  static final RegistryObject<Item> KNIGHT_SPAWNEGG = ITEMS.register("knight_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.KNIGHT,-7681208, -16777012, new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> GRIEFER_SPAWNEGG = ITEMS.register("griefer_spawnegg",
@@ -75,11 +78,18 @@ public class Sitems {
     public  static final RegistryObject<Item> SPITTER_SPAWNEGG = ITEMS.register("spitter_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.SPITTER,-8164818,-68590173, new Item.Properties().tab(ScreativeTab.SPORE)));
 
+
+    public  static final RegistryObject<Item> SCENT_SPAWNEGG = ITEMS.register("scent_spawnegg",
+            () -> new ForgeSpawnEggItem(Sentities.SCENT,-16777216, -3355648, new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> CLAW_SPAWNEGG = ITEMS.register("claw_spawnegg",
+            () -> new ForgeSpawnEggItem(Sentities.CLAW,-16777216, -3394816, new Item.Properties().tab(ScreativeTab.SPORE)));
+
+
+
     public  static final RegistryObject<Item> ACID = ITEMS.register("acid",
             () -> new Item( new Item.Properties()));
     public  static final RegistryObject<Item> ACID_BALL = ITEMS.register("acid_ball",
             () -> new Item( new Item.Properties()));
-
 
 
     public  static final RegistryObject<Item> SABER = ITEMS.register("saber",
@@ -96,6 +106,8 @@ public class Sitems {
             () -> new InfectedScythe());
     public  static final RegistryObject<Item> COMBAT_SHOVEL = ITEMS.register("combat_shovel",
             () -> new InfectedCombatShovel());
+    public  static final RegistryObject<Item> INFECTED_SPEAR = ITEMS.register("infected_spear",
+            () -> new SpearItem(new Item.Properties().tab(ScreativeTab.SPORE)));
 
     public  static final RegistryObject<Item> INF_HELMET = ITEMS.register("inf_helmet",
             () -> new InfectedHelmet());

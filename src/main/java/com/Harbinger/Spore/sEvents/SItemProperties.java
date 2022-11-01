@@ -4,10 +4,12 @@ import com.Harbinger.Spore.Core.Sitems;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 public class SItemProperties {
     public static void addCustomItemProperties() {
         makeBow(Sitems.INFECTED_BOW.get());
+        makeTrident(Sitems.INFECTED_SPEAR.get());
     }
     private static void makeBow(Item item) {
         ItemProperties.register(item, new ResourceLocation("pull"), (p_174635_, p_174636_, p_174637_, p_174638_) -> {
@@ -23,4 +25,19 @@ public class SItemProperties {
             return p_174632_ != null && p_174632_.isUsingItem() && p_174632_.getUseItem() == p_174630_ ? 1.0F : 0.0F;
         });
     }
+    private static void makeTrident(Item item) {
+        ItemProperties.register(item, new ResourceLocation("throw"), (p_174635_, p_174636_, p_174637_, p_174638_) -> {
+            if (p_174637_ == null) {
+                return 0.0F;
+            } else {
+                return p_174637_.getUseItem() != p_174635_ ? 0.0F : (float)(p_174635_.getUseDuration() -
+                        p_174637_.getUseItemRemainingTicks()) / 20.0F;
+            }
+        });
+        ItemProperties.register(item, new ResourceLocation("throwing"), (p_174585_, p_174586_, p_174587_, p_174588_) -> {
+            return p_174587_ != null && p_174587_.isUsingItem() && p_174587_.getUseItem() == p_174585_ ? 1.0F : 0.0F;
+        });
+
+    }
+
 }

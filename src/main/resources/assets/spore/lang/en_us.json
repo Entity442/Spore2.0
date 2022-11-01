@@ -42,6 +42,9 @@
   "item.spore.inf_pillager_spawnegg": "Infected Pillager",
   "item.spore.inf_vind_spawnegg": "Infected Vindicator",
 
+  "item.spore.scent_spawnegg": "Scent",
+  "item.spore.claw_spawnegg": "Claw",
+
   "entity.spore.knight": "Knight",
   "entity.spore.griefer": "Griefer",
   "entity.spore.infected_human": "Infected Human",
@@ -53,7 +56,8 @@
   "entity.spore.leaper": "Leaper",
   "entity.spore.slasher": "Slasher",
   "entity.spore.inf_vindicator": "Infected Vindicator",
-
+  "entity.spore.scent": "Scent",
+  "entity.spore.claw": "Claw",
 
   "effect.spore.mycelium": "Mycelium Infection",
   "effect.spore.stunt": "Stunt",

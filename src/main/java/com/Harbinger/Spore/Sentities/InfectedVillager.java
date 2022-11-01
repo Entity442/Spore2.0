@@ -22,8 +22,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.List;
-
 public class InfectedVillager extends Infected {
     private int ev;
 
@@ -150,4 +148,5 @@ public class InfectedVillager extends Infected {
     protected void playStepSound(BlockPos p_34316_, BlockState p_34317_) {
         this.playSound(this.getStepSound(), 0.15F, 1.0F);
     }
+
 }
