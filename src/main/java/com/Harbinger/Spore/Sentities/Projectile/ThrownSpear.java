@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.Sentities.Projectile;
 
+import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Sitems;
 import net.minecraft.nbt.CompoundTag;
@@ -112,9 +113,9 @@ public class ThrownSpear extends AbstractArrow {
         return this.dealtDamage ? null : super.findHitEntity(p_37575_, p_37576_);
     }
 
-    protected void onHitEntity(EntityHitResult p_37573_) {
-        Entity entity = p_37573_.getEntity();
-        float f = 8.0F;
+    protected void onHitEntity(EntityHitResult hit) {
+        Entity entity = hit.getEntity();
+        float f = SConfig.SERVER.spear_range.get() + (0.5F * EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS , this.tridentItem));
         if (entity instanceof LivingEntity livingentity) {
             f += EnchantmentHelper.getDamageBonus(this.tridentItem, livingentity.getMobType());
         }
@@ -138,6 +139,7 @@ public class ThrownSpear extends AbstractArrow {
                     int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, this.tridentItem);
                     entity.setSecondsOnFire(4 * j);
                 }
+
                 this.doPostHurtEffects(livingentity1);
             }
         }

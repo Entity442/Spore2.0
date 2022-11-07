@@ -1,8 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "RR#",
-    "RXC",
+    " RR",
+    "T#R",
     "XT "
   ],
   "key": {
@@ -17,12 +17,9 @@
     },
     "X": {
       "item": "spore:fleshy_bone"
-    },
-    "C": {
-      "item": "spore:claw"
     }
 },
   "result": {
-    "item": "spore:armads"
+    "item": "spore:infected_spear"
   }
 }

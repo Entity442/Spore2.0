@@ -1,8 +1,11 @@
 package com.Harbinger.Spore.Sblocks;
 
 import com.Harbinger.Spore.Core.Seffects;
+import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.Sentities.Infected;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,6 +18,8 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class Acid extends FallingBlock {
     public Acid() {
@@ -40,4 +45,22 @@ public class Acid extends FallingBlock {
             _entity.addEffect(new MobEffectInstance(Seffects.CORROSION.get(), 100, 0));
         super.entityInside(blockState, level, pos, entity);
     }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public void animateTick(BlockState blockstate, Level world, BlockPos pos, RandomSource random) {
+        super.animateTick(blockstate, world, pos, random);
+        int x = pos.getX();
+        int y = pos.getY();
+        int z = pos.getZ();
+        for (int l = 0; l < 2; ++l) {
+            double x0 = x + random.nextFloat();
+            double z0 = z + random.nextFloat();
+            double dx = (random.nextFloat() - 0.5D) * 0.5D;
+            double dy = (random.nextFloat() - 0.5D) * 0.5D;
+            double dz = (random.nextFloat() - 0.5D) * 0.5D;
+            world.addParticle(Sparticles.ACID_PARTICLE.get(), x0, y, z0, dx, dy, dz);
+        }
+    }
+
 }

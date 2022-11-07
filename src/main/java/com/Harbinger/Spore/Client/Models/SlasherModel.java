@@ -122,13 +122,14 @@ public class SlasherModel<T extends Slasher> extends EntityModel<T> {
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
-		if (entity.swinging){
+		if(entity.swinging){
 			float f = 0;
 			{if (f <= 20)
 				f = f + 1;}
 			this.Marm.xRot = f * 0.5F;
 			this.Marm.getChild("MarmJoint").getChild("MArm2").xRot = -f;
 		}
+
 		else if (entity.isAggressive()){
 			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.LeftArm.xRot = -89F + (Mth.sin(ageInTicks/4)/7);

@@ -75,6 +75,10 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<Integer> evolution_age_human;
 
+        public final ForgeConfigSpec.ConfigValue<Integer> spear_durability;
+        public final ForgeConfigSpec.ConfigValue<Integer> spear_damage;
+        public final ForgeConfigSpec.ConfigValue<Integer> spear_swing;
+        public final ForgeConfigSpec.ConfigValue<Integer> spear_range;
 
         public final ForgeConfigSpec.ConfigValue<Integer> saber_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> saber_damage;
@@ -99,6 +103,9 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Integer> shovel_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> shovel_damage;
         public final ForgeConfigSpec.ConfigValue<Integer> shovel_swing;
+
+        public final ForgeConfigSpec.ConfigValue<Integer> crossbow_durability;
+        public final ForgeConfigSpec.ConfigValue<Double> crossbow_arrow_damage_multiplier;
 
         public final ForgeConfigSpec.ConfigValue<Integer> bow_durability;
         public final ForgeConfigSpec.ConfigValue<Double> bow_arrow_damage_multiplier;
@@ -125,16 +132,16 @@ public class SConfig {
             builder.push("Global Variables for Mobs");
             this.global_damage = builder.define("Global Damage Modifier",1.0);
             this.global_health = builder.define("Global Health Modifier",1.0);
-            this.global_armor = builder.define("Global Health Modifier",1.0);
+            this.global_armor = builder.define("Global Armor Modifier",1.0);
             this.at_mob = builder.comment("Default true").define("Should attack other mobs?",true);
             builder.pop();
 
 
             builder.push("Mobs");
             builder.push("Infected Vindicator");
-            this.inf_vin_hp = builder.comment("Default 28").defineInRange("Sets Infected Pillager Max health", 28, 1, Double.MAX_VALUE);
-            this.inf_vin_damage = builder.comment("Default 7").defineInRange("Sets Infected Pillager Damage", 7, 1, Double.MAX_VALUE);
-            this.inf_vin_armor = builder.comment("Default 4").defineInRange("Sets Infected Pillager Armor", 4, 1, Double.MAX_VALUE);
+            this.inf_vin_hp = builder.comment("Default 28").defineInRange("Sets Infected Vindicator Max health", 28, 1, Double.MAX_VALUE);
+            this.inf_vin_damage = builder.comment("Default 7").defineInRange("Sets Infected Vindicator Damage", 7, 1, Double.MAX_VALUE);
+            this.inf_vin_armor = builder.comment("Default 4").defineInRange("Sets Infected Vindicator Armor", 4, 1, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Infected Pillager");
@@ -151,8 +158,8 @@ public class SConfig {
             builder.pop();
 
             builder.push("Infected Villager");
-            this.inf_vil_hp = builder.comment("Default 20").defineInRange("Sets Infected Human Max health", 20, 1, Double.MAX_VALUE);
-            this.inf_vil_damage = builder.comment("Default 6").defineInRange("Sets Infected Human Damage", 6, 1, Double.MAX_VALUE);
+            this.inf_vil_hp = builder.comment("Default 20").defineInRange("Sets Infected Villager Max health", 20, 1, Double.MAX_VALUE);
+            this.inf_vil_damage = builder.comment("Default 6").defineInRange("Sets Infected Villager Damage", 6, 1, Double.MAX_VALUE);
             this.stations = builder.defineList("Villager Work Stations", Lists.newArrayList("work in progress" ) , o -> o instanceof String);
             builder.pop();
 
@@ -211,8 +218,14 @@ public class SConfig {
             builder.pop();
 
 
-            builder.push("Weapons and Tools");
-            builder.push("Saber").comment("Keep the values whole , values like 6.5 might crash");
+            builder.push("Weapons and Tools OwO");
+            builder.push("Spear");
+            this.spear_durability = builder.comment("Default 800").define("Durability",800);
+            this.spear_damage = builder.comment("Default 11").defineInRange("Melee Damage", 11, 1, Integer.MAX_VALUE);
+            this.spear_swing = builder.comment("Default -3").define("Swing",-3);
+            this.spear_range = builder.comment("Default 12").define("Ranged Damage",12);
+            builder.pop();
+            builder.push("Saber");
             this.saber_durability = builder.comment("Default 1000").define("Durability",1000);
             this.saber_damage = builder.comment("Default 8").defineInRange("Damage", 8, 1, Integer.MAX_VALUE);
             this.saber_swing = builder.comment("Default 2").define("Swing",2);
@@ -222,9 +235,13 @@ public class SConfig {
             this.greatsword_damage = builder.comment("Default 12").defineInRange("Damage", 12, 1, Integer.MAX_VALUE);
             this.greatsword_swing = builder.comment("Default 3").define("Swing",3);
             builder.pop();
+            builder.push("Crossbow");
+            this.crossbow_durability = builder.comment("Default 700").define("Crossbow Durability",700);
+            this.crossbow_arrow_damage_multiplier = builder.comment("Default 1.0").define("Crossbow Range Damage Modifier",1.0);
+             builder.pop();
             builder.push("Bow");
             this.bow_durability = builder.comment("Default 700").define("Bow Durability",700);
-            this.bow_arrow_damage_multiplier = builder.comment("Default 1.0").define("Bow Range Damage",1.0);
+            this.bow_arrow_damage_multiplier = builder.comment("Default 1.0").define("Bow Range Damage Modifier",1.0);
             this.bow_melee_damage = builder.comment("Default 5").defineInRange("Damage", 5, 1, Integer.MAX_VALUE);
             this.bow_swing_speed = builder.comment("Default -2.4").define("Bow Swing",-2.4);
             builder.pop();
@@ -248,6 +265,7 @@ public class SConfig {
             this.shovel_damage = builder.comment("Default 6").defineInRange("Damage", 6, 1, Integer.MAX_VALUE);
             this.shovel_swing = builder.comment("Default 3").define("Swing",3);
             builder.pop();
+            builder.pop();
             builder.push("Armor");
             builder.push("Helmet");
             this.helmet_durability = builder.comment("Default 350").defineInRange("Helmet Durability", 350, 1, Integer.MAX_VALUE);
@@ -267,7 +285,6 @@ public class SConfig {
             builder.pop();
             this.armor_toughness = builder.comment("Default 1").defineInRange("Armor Toughness", 1, 0, Integer.MAX_VALUE);
             this.knockback_resistance = builder.comment("Default 0").defineInRange("Armor Knockback Resistance", 0, 0, Integer.MAX_VALUE);
-            builder.pop();
             builder.pop();
         }
     }

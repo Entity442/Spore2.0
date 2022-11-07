@@ -2,7 +2,6 @@ package com.Harbinger.Spore.Core;
 
 import com.Harbinger.Spore.Sitems.*;
 import com.Harbinger.Spore.Spore;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -107,7 +106,9 @@ public class Sitems {
     public  static final RegistryObject<Item> COMBAT_SHOVEL = ITEMS.register("combat_shovel",
             () -> new InfectedCombatShovel());
     public  static final RegistryObject<Item> INFECTED_SPEAR = ITEMS.register("infected_spear",
-            () -> new SpearItem(new Item.Properties().tab(ScreativeTab.SPORE)));
+            () -> new InfectedSpearItem(new Item.Properties().tab(ScreativeTab.SPORE).durability(SConfig.SERVER.spear_durability.get())));
+    public  static final RegistryObject<Item> INFECTED_CROSSBOW = ITEMS.register("infected_crossbow",
+            () -> new InfectedCrossbow());
 
     public  static final RegistryObject<Item> INF_HELMET = ITEMS.register("inf_helmet",
             () -> new InfectedHelmet());

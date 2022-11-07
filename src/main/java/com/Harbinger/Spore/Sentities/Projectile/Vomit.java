@@ -45,20 +45,9 @@ public class Vomit extends AbstractArrow implements ItemSupplier {
 
     @Override
     public void tick() {
-        spawnparticle(this.level, this.getX(), this.getY(), this.getZ());
         super.tick();
         if (this.inGround)
             this.discard();
-    }
-
-    private void spawnparticle(Level level, double x, double y, double z) {
-        if (level instanceof ClientLevel) {
-            level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0, 0, 0);
-            level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0.1, 0, 0);
-            level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0, 0, 0.1);
-            level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, -0.1, 0, -0.1);
-            level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0, -0.1, 0);
-        }
     }
 
     public static Vomit shoot(Level world, LivingEntity entity, Random random, float power, double damage, int knockback) {

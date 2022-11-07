@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sitems;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Sitems;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.sounds.SoundEvents;
@@ -21,10 +22,16 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
+import java.util.List;
+
 public class InfectedGreatBow extends BowItem{
     public InfectedGreatBow(Properties properties) {
         super(properties);
 
+    }
+    @Override
+    public boolean isValidRepairItem(ItemStack itemstack, ItemStack repairitem) {
+        return List.of(Sitems.BIOMASS.get()).contains(repairitem.getItem());
     }
 
     @Override

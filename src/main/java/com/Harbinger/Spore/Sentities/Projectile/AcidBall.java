@@ -1,7 +1,6 @@
 package com.Harbinger.Spore.Sentities.Projectile;
 
 import com.Harbinger.Spore.Core.*;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -11,7 +10,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ItemSupplier;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -47,18 +45,12 @@ public class AcidBall extends AbstractArrow implements ItemSupplier {
 
     @Override
     public void tick() {
-        spawnparticle(this.level, this.getX(), this.getY(), this.getZ());
         super.tick();
         if (this.inGround)
             this.discard();
     }
-    private void spawnparticle(Level level, double x, double y, double z) {
-        if (level instanceof ClientLevel) {
-            level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0, 0, 0);
-            level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0.1, 0, 0);
-            level.addParticle(Sparticles.ACID_PARTICLE.get(), x, y, z, 0, 0, 0.1);
-        }
-    }
+
+
     public static AcidBall shoot(Level world, LivingEntity entity, Random random, float power, double damage, int knockback) {
         AcidBall entityarrow = new AcidBall(Sentities.ACID_BALL.get(), entity, world);
         entityarrow.shoot(entity.getViewVector(1).x, entity.getViewVector(1).y, entity.getViewVector(1).z, power * 2, 0);

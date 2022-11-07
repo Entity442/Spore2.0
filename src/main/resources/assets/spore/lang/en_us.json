@@ -24,6 +24,7 @@
   "item.spore.maul": "Infected Maul",
   "item.spore.scythe": "Infected Scythe",
   "item.spore.combat_shovel": "Infected Combat Shovel",
+  "item.spore.infected_spear": "Infected Spear",
 
   "item.spore.inf_helmet": "Infected Helmet",
   "item.spore.inf_chest": "Infected Chestplate",
@@ -58,6 +59,12 @@
   "entity.spore.inf_vindicator": "Infected Vindicator",
   "entity.spore.scent": "Scent",
   "entity.spore.claw": "Claw",
+
+
+  "entity.spore.thrown_spear": "Infected Spear",
+  "entity.spore.acid_ball": "Acid Ball",
+  "entity.spore.acid": "Acid",
+
 
   "effect.spore.mycelium": "Mycelium Infection",
   "effect.spore.stunt": "Stunt",
