@@ -5,9 +5,6 @@ import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.Module.SmobType;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -15,31 +12,24 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.Turtle;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
 public class ScentEntity extends UtilityEntity {
-    private static final EntityDataAccessor<Integer> DISSIPATE= SynchedEntityData.defineId(ScentEntity.class, EntityDataSerializers.INT);
-    private int dissipate = this.entityData.get(DISSIPATE);
+    private int dissipate = 0;
 
     public ScentEntity(EntityType<? extends PathfinderMob> mob, Level level) {
         super(mob, level);
         this.noPhysics = true;
     }
 
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-    this.entityData.define(DISSIPATE, SConfig.SERVER.scent_life.get());
-
-    }
     @Override
     public void tick() {
         super.tick();
-        dissipate = dissipate - 1;
-        if (dissipate <= 0) {
+        dissipate = dissipate + 1;
+        if (dissipate >= SConfig.SERVER.scent_life.get()) {
             this.discard();
         }
 
