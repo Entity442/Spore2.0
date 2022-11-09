@@ -19,15 +19,13 @@ public class SwimToTarget extends Goal {
         mob.getNavigation().setCanFloat(true);
     }
 
-    @Override
-    public void stop() {
-        super.stop();
-        this.mob.isOnGround();
+    public boolean requiresUpdateEveryTick() {
+        return true;
     }
 
     @Override
     public boolean canUse() {
-        return this.mob.getTarget() != null && this.mob.isInWater();
+        return this.mob.getTarget() != null && this.mob.isInWater() && !this.mob.isOnGround();
     }
 
     public void tick() {
@@ -37,5 +35,6 @@ public class SwimToTarget extends Goal {
         if (this.mob.getRandom().nextFloat() < 0.4F) {
             this.mob.getJumpControl().jump();
         }
+
     }
 }

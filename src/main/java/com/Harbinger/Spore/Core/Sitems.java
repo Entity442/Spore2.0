@@ -58,6 +58,9 @@ public class Sitems {
             () -> new ForgeSpawnEggItem(Sentities.INF_PILLAGER,-2312718,-15211773, new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> INF_VIND_SPAWNEGG = ITEMS.register("inf_vind_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.INF_VINDICATOR,-984718,-95171773, new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> INF_EVO_SPAWNEGG = ITEMS.register("inf_evo_spawnegg",
+            () -> new ForgeSpawnEggItem(Sentities.INF_EVOKER,-254718,-45671773, new Item.Properties().tab(ScreativeTab.SPORE)));
+
 
 
 

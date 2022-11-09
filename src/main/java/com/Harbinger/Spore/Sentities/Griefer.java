@@ -30,7 +30,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class Griefer extends EvolvedInfected{
-    private static final EntityDataAccessor<Integer> DATA_SWELL_DIR = SynchedEntityData.defineId(Griefer.class, EntityDataSerializers.INT);private int oldSwell;
+    private static final EntityDataAccessor<Integer> DATA_SWELL_DIR = SynchedEntityData.defineId(Griefer.class, EntityDataSerializers.INT);
+    private int oldSwell;
     private int swell;
     private final int maxSwell = 30;
     private final int explosionRadius = SConfig.SERVER.explosion.get();

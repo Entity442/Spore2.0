@@ -61,6 +61,9 @@ public class Sentities {
     public static final RegistryObject<EntityType<InfectedVendicator>> INF_VINDICATOR = SPORE_ENTITIES.register("inf_vindicator",
             () -> EntityType.Builder.of(InfectedVendicator::new, MobCategory.MONSTER).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "inf_vindicator").toString()));
+    public static final RegistryObject<EntityType<InfectedEvoker>> INF_EVOKER = SPORE_ENTITIES.register("inf_evoker",
+            () -> EntityType.Builder.of(InfectedEvoker::new, MobCategory.MONSTER).sized(0.6f, 1.9f)
+                    .build(new ResourceLocation(Spore.MODID, "inf_evoker").toString()));
 
 
     public static final RegistryObject<EntityType<AcidBall>> ACID_BALL = register("acid_ball",

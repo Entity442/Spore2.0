@@ -2,14 +2,16 @@ package com.Harbinger.Spore.Sentities.Utility;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sparticles;
-import com.Harbinger.Spore.Module.SmobType;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
@@ -18,7 +20,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 public class ScentEntity extends UtilityEntity {
-    private int dissipate = 0;
 
     public ScentEntity(EntityType<? extends PathfinderMob> mob, Level level) {
         super(mob, level);
@@ -27,17 +28,15 @@ public class ScentEntity extends UtilityEntity {
 
     @Override
     public void tick() {
-        super.tick();
-        dissipate = dissipate + 1;
-        if (dissipate >= SConfig.SERVER.scent_life.get()) {
-            this.discard();
+        if (this.isAlive()){
+            this.getPersistentData().putInt("dissipate", 1 + this.getPersistentData().getInt("dissipate"));
+            if (this.getPersistentData().getInt("dissipate") >= SConfig.SERVER.scent_life.get()) {
+                this.discard();
+            }
         }
-
+        super.tick();
     }
 
-    public MobType getMobType() {
-        return SmobType.INFECTED;
-    }
 
     @Override
     public void setNoGravity(boolean ignored) {
@@ -55,8 +54,7 @@ public class ScentEntity extends UtilityEntity {
 
     public void aiStep() {
         super.aiStep();
-        this.setNoGravity(true);
-        if (SConfig.SERVER.scent_particles.get() && level instanceof ClientLevel) {
+        if (SConfig.SERVER.scent_particles.get()) {
             int i = Mth.floor(this.getX());
             int j = Mth.floor(this.getY());
             int k = Mth.floor(this.getZ());

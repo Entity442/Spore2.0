@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.phys.Vec3;
 
 public class SwimToBlockGoal extends MoveToBlockGoal {
     public SwimToBlockGoal(PathfinderMob mob, double speed, int range) {
@@ -32,6 +33,5 @@ public class SwimToBlockGoal extends MoveToBlockGoal {
     protected boolean isValidTarget(LevelReader reader, BlockPos pos) {
         return reader.isEmptyBlock(pos.above()) && reader.getBlockState(pos).canOcclude();
     }
-
 
 }

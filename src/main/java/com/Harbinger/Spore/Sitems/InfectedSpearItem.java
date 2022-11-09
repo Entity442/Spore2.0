@@ -131,5 +131,7 @@ public class InfectedSpearItem extends Item implements Vanishable {
     public int getEnchantmentValue() {
         return 2;
     }
+
+
 }
 

@@ -4,6 +4,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.phys.Vec3;
 
 public class InfectedWaterMovementControl  extends MoveControl {
     private final Mob mob;
@@ -23,6 +24,12 @@ public class InfectedWaterMovementControl  extends MoveControl {
 
     public void tick() {
         this.updateSpeed();
+        if (mob.horizontalCollision) {
+            Vec3 initialVec = mob.getDeltaMovement();
+            Vec3 climbVec = new Vec3(initialVec.x, 0.2D, initialVec.z);
+            mob.setDeltaMovement(climbVec.x * 0.91D,
+                    climbVec.y * 0.98D, climbVec.z * 0.91D);
+        }
         if (this.operation == MoveControl.Operation.MOVE_TO && !this.mob.getNavigation().isDone()) {
             double d0 = this.wantedX - this.mob.getX();
             double d1 = this.wantedY - this.mob.getY();

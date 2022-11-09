@@ -46,7 +46,7 @@ public class Vomit extends AbstractArrow implements ItemSupplier {
     @Override
     public void tick() {
         super.tick();
-        if (this.inGround)
+        if (this.inGround || this.isInWater())
             this.discard();
     }
 

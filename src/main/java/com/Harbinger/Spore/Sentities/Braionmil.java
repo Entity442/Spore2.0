@@ -4,7 +4,6 @@ import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.BraionmilSwellGoal;
-import com.Harbinger.Spore.Sentities.AI.FollowTargetGoal;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
@@ -39,7 +38,7 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
     public Braionmil(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }
-    private static final EntityDataAccessor<Integer> DATA_SWELL_DIR = SynchedEntityData.defineId(Griefer.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DATA_SWELL_DIR = SynchedEntityData.defineId(Braionmil.class, EntityDataSerializers.INT);
     private int swell;
     private final int maxSwell = 40;
 
@@ -71,7 +70,7 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
             if (this.swell >= this.maxSwell) {
                 this.swell = this.maxSwell;
                 this.setSwellDir(-1);
-                this.chemAttack();
+                this.chemAttack(this);
             }
         }
         super.tick();
@@ -92,15 +91,7 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
 
     public int BraioSwell(){return swell;}
 
-    private void chemAttack() {
-        if (!this.level.isClientSide) {
-        execute(this);
-        }
-    }
-
-
-    private static void execute(LivingEntity pLivingEntity){
-
+    private void chemAttack(LivingEntity pLivingEntity) {
         AABB boundingBox = pLivingEntity.getBoundingBox().inflate(8);
         List<Entity> entities = pLivingEntity.level.getEntities(pLivingEntity, boundingBox);
 
@@ -120,7 +111,7 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
         double y = this.getY();
         double z = this.getZ();
         Level world = this.level;
-        if ((swell >= 25) && level instanceof ClientLevel) {
+        if ((swell >= 25)) {
             for (int i = 0; i < 360; i++) {
                 if (i % 20 == 0) {
                     world.addParticle(ParticleTypes.SMOKE,
