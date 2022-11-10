@@ -11,7 +11,6 @@ import java.util.EnumSet;
 
 public class PullGoal extends Goal {
     private final Mob mob;
-    private LivingEntity target;
     private final double range;
     private final double range_min;
 
@@ -23,26 +22,24 @@ public class PullGoal extends Goal {
     }
 
     public boolean canUse() {
-        this.target = this.mob.getTarget();
-        if (this.target == null) {
-            return false;
-        } else {
-            double d0 = this.mob.distanceToSqr(this.target);
+        if (this.mob.getTarget() != null) {
+            double d0 = this.mob.distanceToSqr(this.mob.getTarget());
             if ((d0 < (mob.getBbWidth() + range)) && (d0 > (mob.getBbWidth() + range_min))) {
-                if (!this.target.isOnGround()) {
+                if (!this.mob.getTarget().isOnGround()) {
                     return false;
                 } else {
-                    return this.target.getRandom().nextInt(reducedTickDelay(5)) == 0;
+                    return this.mob.getTarget().getRandom().nextInt(reducedTickDelay(5)) == 0;
                 }
-            } else {
-                return false;
             }
         }
-
+        return false;
     }
 
     public boolean canContinueToUse() {
-        return !this.target.isOnGround();
+        if (this.mob.getTarget() != null){
+        return !this.mob.getTarget().isOnGround();
+        }
+        return false;
     }
 
     @Override
@@ -54,15 +51,15 @@ public class PullGoal extends Goal {
 
 
     public void start() {
-        assert  this.target != null;
-        Vec3 vec3 = this.target.getDeltaMovement();
-        Vec3 vec31 = new Vec3(this.mob.getX() - this.target.getX(), 0.4D,this.mob.getZ() - this.target.getZ() );
+        if (this.mob.getTarget() != null){
+        Vec3 vec3 = this.mob.getTarget().getDeltaMovement();
+        Vec3 vec31 = new Vec3(this.mob.getX() - this.mob.getTarget().getX(), 0.4D,this.mob.getZ() - this.mob.getTarget().getZ() );
         if (vec31.lengthSqr() > 1.0E-7D) {
             vec31 = vec31.normalize().scale(1.5D).add(vec3.scale(0.75D));
         }
         this.mob.swing(InteractionHand.MAIN_HAND);
-        this.target.setDeltaMovement(vec31.x, vec31.y, vec31.z);
-        if (target instanceof Player){
-        target.hurtMarked = true;}
+            this.mob.getTarget().setDeltaMovement(vec31.x, vec31.y, vec31.z);
+        if (this.mob.getTarget() instanceof Player){
+            this.mob.getTarget().hurtMarked = true;}}
     }
 }

@@ -14,6 +14,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 
 public class InfectedEvokerModel<T extends InfectedEvoker> extends EntityModel<T> implements ArmedModel {
@@ -138,7 +139,28 @@ public class InfectedEvokerModel<T extends InfectedEvoker> extends EntityModel<T
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+		if (entity.swinging){
+			this.RightArm.xRot = -140f;
+			this.LeftArm.xRot = -140f;
+			this.RightArm.yRot = Mth.sin(ageInTicks/6)/8;
+			this.LeftArm.yRot = -Mth.sin(ageInTicks/6)/8;
+		}
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
+			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
+			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
+			this.RightArm.zRot = 0;
+			this.LeftArm.zRot = 0;
+			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
+			this.RightLeg.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
+			this.LeftLeg.getChild("leftForLeg").xRot = Mth.cos(limbSwing * 0.4F) * 0.4F * limbSwingAmount;
+			this.RightLeg.getChild("rightForLeg").xRot = Mth.cos(limbSwing * 0.4F) * -0.4F * limbSwingAmount;
+		} else {
+			this.RightArm.zRot = Mth.sin(ageInTicks/8)/10;
+			this.LeftArm.zRot = -Mth.sin(ageInTicks/8)/10;
+			this.LeftLeg.xRot = 0;
+			this.RightLeg.xRot = 0;
+		}
+		this.LeftArm.visible = entity.setHas_arm();
 	}
 
 	@Override

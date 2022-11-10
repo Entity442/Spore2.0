@@ -67,7 +67,11 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(1, new RangedCrossbowAttackGoal<>(this, 1.0D, 8.0F));
-        this.goalSelector.addGoal(2 , new MeleeAttackGoal(this ,1.4,true));
+        this.goalSelector.addGoal(2 , new MeleeAttackGoal(this ,1.4,true){
+            @Override
+            protected double getAttackReachSqr(LivingEntity entity) {
+            return 4.0 + entity.getBbWidth() * entity.getBbWidth();
+        }});
         this.goalSelector.addGoal(3, new FollowOthersGoal(this , 1.1 , EvolvedInfected.class,32 , true));
 
 
