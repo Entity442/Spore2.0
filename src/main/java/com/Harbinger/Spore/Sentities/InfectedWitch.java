@@ -56,6 +56,7 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, SConfig.SERVER.inf_witch_hp.get() * SConfig.SERVER.global_health.get())
+                .add(Attributes.ARMOR, SConfig.SERVER.inf_witch_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.MOVEMENT_SPEED, 0.2)
                 .add(Attributes.FOLLOW_RANGE, 16);
 

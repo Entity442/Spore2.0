@@ -10,10 +10,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.monster.Pillager;
-import net.minecraft.world.entity.monster.Vindicator;
-import net.minecraft.world.entity.monster.Witch;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -98,6 +95,17 @@ public class Infection {
             if (entity instanceof Vindicator) {
                 if (world instanceof ServerLevel _level) {
                     Entity entityToSpawn = new InfectedVendicator(Sentities.INF_VINDICATOR.get(), _level);
+                    entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
+                    Mob _mobToSpawn = (Mob) entityToSpawn;
+                    _mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.CONVERSION,
+                            null, null);
+                    world.addFreshEntity(entityToSpawn);
+                    entity.discard();
+                }
+            }
+            if (entity instanceof Evoker) {
+                if (world instanceof ServerLevel _level) {
+                    Entity entityToSpawn = new InfectedEvoker(Sentities.INF_EVOKER.get(), _level);
                     entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
                     Mob _mobToSpawn = (Mob) entityToSpawn;
                     _mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.CONVERSION,

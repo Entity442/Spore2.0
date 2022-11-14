@@ -24,9 +24,11 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<Double> inf_human_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_human_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_human_armor;
 
         public final ForgeConfigSpec.ConfigValue<Double> inf_vil_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_vil_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_vil_armor;
 
         public final ForgeConfigSpec.ConfigValue<Double> inf_vin_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_vin_damage;
@@ -37,7 +39,15 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> inf_pil_armor;
         public final ForgeConfigSpec.ConfigValue<Float> inf_pil_range_damage;
 
+        public final ForgeConfigSpec.ConfigValue<Double> inf_evo_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_evo_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_evo_armor;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_claw_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_claw_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_claw_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> inf_witch_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_witch_armor;
 
         public final ForgeConfigSpec.ConfigValue<Double> braio_armor;
         public final ForgeConfigSpec.ConfigValue<Double> braio_hp;
@@ -138,6 +148,15 @@ public class SConfig {
 
 
             builder.push("Mobs");
+            builder.push("Infected Evoker");
+            this.inf_evo_hp = builder.comment("Default 35").defineInRange("Sets Infected Evoker Max health", 35, 1, Double.MAX_VALUE);
+            this.inf_evo_damage = builder.comment("Default 7").defineInRange("Sets Infected Evoker Damage", 7, 1, Double.MAX_VALUE);
+            this.inf_evo_armor = builder.comment("Default 4").defineInRange("Sets Infected Evoker Armor", 4, 1, Double.MAX_VALUE);
+            this.inf_claw_hp = builder.comment("Default 15").defineInRange("Sets Infected Evoker Max health", 15, 1, Double.MAX_VALUE);
+            this.inf_claw_damage = builder.comment("Default 7").defineInRange("Sets Infected Evoker Damage", 7, 1, Double.MAX_VALUE);
+            this.inf_claw_armor = builder.comment("Default 3").defineInRange("Sets Infected Evoker Armor", 3, 1, Double.MAX_VALUE);
+            builder.pop();
+
             builder.push("Infected Vindicator");
             this.inf_vin_hp = builder.comment("Default 28").defineInRange("Sets Infected Vindicator Max health", 28, 1, Double.MAX_VALUE);
             this.inf_vin_damage = builder.comment("Default 7").defineInRange("Sets Infected Vindicator Damage", 7, 1, Double.MAX_VALUE);
@@ -160,11 +179,13 @@ public class SConfig {
             builder.push("Infected Villager");
             this.inf_vil_hp = builder.comment("Default 20").defineInRange("Sets Infected Villager Max health", 20, 1, Double.MAX_VALUE);
             this.inf_vil_damage = builder.comment("Default 6").defineInRange("Sets Infected Villager Damage", 6, 1, Double.MAX_VALUE);
+            this.inf_vil_armor = builder.comment("Default 0").defineInRange("Sets Infected Villager Armor", 1, 0, Double.MAX_VALUE);
             this.stations = builder.defineList("Villager Work Stations", Lists.newArrayList("work in progress" ) , o -> o instanceof String);
             builder.pop();
 
             builder.push("Infected Witch");
             this.inf_witch_hp = builder.comment("Default 25").defineInRange("Sets Infected Witch Max health", 25, 1, Double.MAX_VALUE);
+            this.inf_witch_armor = builder.comment("Default 1").defineInRange("Sets Infected Witch Max health", 1, 0, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Braiomil");
@@ -182,7 +203,8 @@ public class SConfig {
             builder.push("Infected Human");
             this.inf_human_hp = builder.comment("Default 15").defineInRange("Sets Infected Human Max health", 15, 1, Double.MAX_VALUE);
             this.inf_human_damage = builder.comment("Default 6").defineInRange("Sets Infected Human Damage", 6, 1, Double.MAX_VALUE);
-            this.evolution_age_human = builder.comment("Default 300").define("Evolution Timer in seconds",300);
+            this.inf_human_armor = builder.comment("Default 1").defineInRange("Sets Infected Human Armor", 1, 0, Double.MAX_VALUE);
+            this.evolution_age_human = builder.comment("Default 150").define("Evolution Timer in seconds",150);
             builder.pop();
             builder.push("Knight");
             this.knight_hp = builder.comment("Default 25").defineInRange("Sets Knight Max health", 25, 1, Double.MAX_VALUE);

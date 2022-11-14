@@ -55,8 +55,9 @@ public class InfEvoClaw extends UtilityEntity{
     }
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, SConfig.SERVER.sla_hp.get() * SConfig.SERVER.global_health.get())
-                .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.sla_damage.get() * SConfig.SERVER.global_damage.get())
+                .add(Attributes.MAX_HEALTH, SConfig.SERVER.inf_claw_hp.get() * SConfig.SERVER.global_health.get())
+                .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.inf_claw_damage.get() * SConfig.SERVER.global_damage.get())
+                .add(Attributes.ARMOR, SConfig.SERVER.inf_claw_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.FOLLOW_RANGE, 8)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1);
 

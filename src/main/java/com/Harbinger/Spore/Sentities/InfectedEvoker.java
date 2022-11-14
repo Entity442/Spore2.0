@@ -45,10 +45,10 @@ public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier 
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, SConfig.SERVER.inf_pil_hp.get() * SConfig.SERVER.global_health.get())
+                .add(Attributes.MAX_HEALTH, SConfig.SERVER.inf_evo_hp.get() * SConfig.SERVER.global_health.get())
                 .add(Attributes.MOVEMENT_SPEED, 0.2)
-                .add(Attributes.ATTACK_DAMAGE, 6 * SConfig.SERVER.global_damage.get())
-                .add(Attributes.ARMOR, SConfig.SERVER.inf_pil_armor.get() * SConfig.SERVER.global_armor.get())
+                .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.inf_evo_damage.get() * SConfig.SERVER.global_damage.get())
+                .add(Attributes.ARMOR, SConfig.SERVER.inf_evo_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.FOLLOW_RANGE, 64)
                 .add(Attributes.ATTACK_KNOCKBACK, 1);
 

@@ -161,6 +161,26 @@ public class InfectedEvokerModel<T extends InfectedEvoker> extends EntityModel<T
 			this.RightLeg.xRot = 0;
 		}
 		this.LeftArm.visible = entity.setHas_arm();
+
+
+		this.LeftArm.getChild("base").getChild("middleF").xRot = Mth.sin(ageInTicks/8)/6;
+		this.LeftArm.getChild("base").getChild("middleF").getChild("middleF2").xRot = Mth.sin(ageInTicks/8)/6;
+		this.LeftArm.getChild("base").getChild("middleF").getChild("middleF2").getChild("middleF3").xRot = Mth.sin(ageInTicks/8)/6;
+
+		this.LeftArm.getChild("base").getChild("fingerT").yRot = Mth.sin(ageInTicks/8)/6;
+		this.LeftArm.getChild("base").getChild("fingerT2").yRot = Mth.sin(ageInTicks/8)/6;
+		this.LeftArm.getChild("base").getChild("fingerT3").yRot = -Mth.sin(ageInTicks/8)/6;
+		this.LeftArm.getChild("base").getChild("fingerT4").yRot = -Mth.sin(ageInTicks/8)/6;
+
+		this.LeftArm.getChild("base").getChild("fingerT").zRot = -Mth.sin(ageInTicks/8)/8;
+		this.LeftArm.getChild("base").getChild("fingerT2").zRot = -Mth.sin(ageInTicks/8)/7;
+		this.LeftArm.getChild("base").getChild("fingerT3").zRot = Mth.sin(ageInTicks/8)/9;
+		this.LeftArm.getChild("base").getChild("fingerT4").zRot = Mth.sin(ageInTicks/8)/6;
+
+		this.LeftArm.getChild("base").getChild("fingerT").getChild("jointT").getChild("fingerG").yRot = Mth.sin(ageInTicks/8)/6;
+		this.LeftArm.getChild("base").getChild("fingerT2").getChild("jointT2").getChild("fingerG2").yRot = Mth.sin(ageInTicks/8)/6;
+		this.LeftArm.getChild("base").getChild("fingerT3").getChild("jointT3").getChild("fingerG3").yRot = -Mth.sin(ageInTicks/8)/6;
+		this.LeftArm.getChild("base").getChild("fingerT4").getChild("jointT4").getChild("fingerG4").yRot = -Mth.sin(ageInTicks/8)/6;
 	}
 
 	@Override

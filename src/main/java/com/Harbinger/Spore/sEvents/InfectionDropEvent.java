@@ -3,9 +3,7 @@ package com.Harbinger.Spore.sEvents;
 import com.Harbinger.Spore.Core.Seffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Pillager;
-import net.minecraft.world.entity.monster.Witch;
-import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -23,7 +21,8 @@ public class InfectionDropEvent {
         }
     }
     private static void execute(@Nullable Event event, Entity entity) {
-        if ((entity instanceof Zombie || entity instanceof Villager || entity instanceof Pillager || entity instanceof Witch)) {
+        if ((entity instanceof Zombie || entity instanceof Villager || entity instanceof Pillager ||
+                entity instanceof Witch || entity instanceof  Vindicator || entity instanceof Evoker)) {
             LivingEntity _livEnt = (LivingEntity) entity;
             if (_livEnt.hasEffect(Seffects.MYCELIUM.get())) {
                 if (event != null && event.isCancelable()) {
