@@ -152,9 +152,9 @@ public class SConfig {
             this.inf_evo_hp = builder.comment("Default 35").defineInRange("Sets Infected Evoker Max health", 35, 1, Double.MAX_VALUE);
             this.inf_evo_damage = builder.comment("Default 7").defineInRange("Sets Infected Evoker Damage", 7, 1, Double.MAX_VALUE);
             this.inf_evo_armor = builder.comment("Default 4").defineInRange("Sets Infected Evoker Armor", 4, 1, Double.MAX_VALUE);
-            this.inf_claw_hp = builder.comment("Default 15").defineInRange("Sets Infected Evoker Max health", 15, 1, Double.MAX_VALUE);
-            this.inf_claw_damage = builder.comment("Default 7").defineInRange("Sets Infected Evoker Damage", 7, 1, Double.MAX_VALUE);
-            this.inf_claw_armor = builder.comment("Default 3").defineInRange("Sets Infected Evoker Armor", 3, 1, Double.MAX_VALUE);
+            this.inf_claw_hp = builder.comment("Default 15").defineInRange("Sets Infected Claw Max health", 15, 1, Double.MAX_VALUE);
+            this.inf_claw_damage = builder.comment("Default 7").defineInRange("Sets Infected Claw Damage", 7, 1, Double.MAX_VALUE);
+            this.inf_claw_armor = builder.comment("Default 3").defineInRange("Sets Infected Claw Armor", 3, 1, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Infected Vindicator");

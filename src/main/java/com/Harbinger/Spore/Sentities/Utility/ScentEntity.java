@@ -2,7 +2,6 @@ package com.Harbinger.Spore.Sentities.Utility;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sparticles;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -23,7 +22,7 @@ public class ScentEntity extends UtilityEntity {
 
     public ScentEntity(EntityType<? extends PathfinderMob> mob, Level level) {
         super(mob, level);
-        this.noPhysics = true;
+        this.isNoGravity();
     }
 
     @Override
@@ -54,6 +53,7 @@ public class ScentEntity extends UtilityEntity {
 
     public void aiStep() {
         super.aiStep();
+        this.setNoGravity(true);
         if (SConfig.SERVER.scent_particles.get()) {
             int i = Mth.floor(this.getX());
             int j = Mth.floor(this.getY());

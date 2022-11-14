@@ -16,6 +16,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -63,6 +65,14 @@ public class InfectedVillager extends Infected {
         super.registerGoals();
     }
 
+
+    protected void customServerAiStep() {
+        if (!this.isNoAi() && GoalUtils.hasGroundPathNavigation(this)) {
+            ((GroundPathNavigation)this.getNavigation()).setCanOpenDoors(true);
+        }
+
+        super.customServerAiStep();
+    }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()

@@ -50,7 +50,7 @@
 
   "entity.spore.knight": "Knight",
   "entity.spore.griefer": "Griefer",
-  "entity.spore.infected_human": "Infected Human",
+  "entity.spore.inf_human": "Infected Human",
   "entity.spore.braiomil": "Braiomil",
   "entity.spore.inf_villager": "Infected Villager",
   "entity.spore.inf_witch": "Infected Witch",
@@ -94,8 +94,6 @@
 
 
   "sounds.spore.damage": "Infected is being damaged",
-  "sounds.spore.growl": "Infected is growling",
+  "sounds.spore.growl": "Infected is growling"
 
-  "advancements.spore.title": "Spore",
-  "advancements.spore.description" : "The Infection is here"
 }

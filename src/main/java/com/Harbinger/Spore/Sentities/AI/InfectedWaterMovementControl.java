@@ -24,7 +24,7 @@ public class InfectedWaterMovementControl  extends MoveControl {
 
     public void tick() {
         this.updateSpeed();
-        if (mob.horizontalCollision) {
+        if (mob.horizontalCollision && mob.isInWater()) {
             Vec3 initialVec = mob.getDeltaMovement();
             Vec3 climbVec = new Vec3(initialVec.x, 0.2D, initialVec.z);
             mob.setDeltaMovement(climbVec.x * 0.91D,

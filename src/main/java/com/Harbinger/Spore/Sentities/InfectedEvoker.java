@@ -128,13 +128,13 @@ public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier 
 
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(1, new PullGoal(this, 32, 4){
+        this.goalSelector.addGoal(2, new PullGoal(this, 32, 8){
             @Override
             public boolean canUse() {
                 return entityData.get(HAS_ARM);
             }
         });
-        this.goalSelector.addGoal(2 , new MeleeAttackGoal(this ,1.4,true){
+        this.goalSelector.addGoal(1 , new MeleeAttackGoal(this ,1.4,true){
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 return 8.0 + entity.getBbWidth() * entity.getBbWidth();

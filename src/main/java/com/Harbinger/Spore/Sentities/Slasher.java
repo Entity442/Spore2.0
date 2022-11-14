@@ -60,6 +60,7 @@ public class Slasher extends EvolvedInfected{
             return (double)(f * 3.0F * f * 3.0F + (entity.getBbWidth() * 2));
         }
 
+
     }
 
     protected SoundEvent getAmbientSound() {

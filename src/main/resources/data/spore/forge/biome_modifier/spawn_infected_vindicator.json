@@ -1,0 +1,10 @@
+{
+  "type": "spore:mobspawns",
+  "biomes": "#minecraft:is_overworld",
+  "spawn": {
+    "type": "spore:inf_vindicator",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 1
+  }
+}
