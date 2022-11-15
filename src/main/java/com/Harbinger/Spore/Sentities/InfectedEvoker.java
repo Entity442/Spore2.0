@@ -99,7 +99,11 @@ public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier 
         RandomSource randomsource = p_33282_.getRandom();
         this.populateDefaultEquipmentSlots(randomsource, p_33283_);
         this.populateDefaultEquipmentEnchantments(randomsource, p_33283_);
+        nowater(this);
         return super.finalizeSpawn(p_33282_, p_33283_, p_33284_, p_33285_, p_33286_);
+    }
+    public static  boolean nowater(Entity entity){
+        return !entity.isInWaterOrBubble();
     }
     public SlotAccess getSlot(int p_149743_) {
         int i = p_149743_ - 300;

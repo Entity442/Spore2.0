@@ -5,6 +5,6 @@
     "type": "spore:inf_vindicator",
     "maxCount": 1,
     "minCount": 1,
-    "weight": 1
+    "weight": 16
   }
 }

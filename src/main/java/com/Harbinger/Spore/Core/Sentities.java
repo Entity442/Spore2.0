@@ -31,36 +31,47 @@ public class Sentities {
     public static final RegistryObject<EntityType<InfectedHuman>> INFECTED_HUMAN = SPORE_ENTITIES.register("inf_human",
             () -> EntityType.Builder.of(InfectedHuman::new, MobCategory.MONSTER).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "inf_human").toString()));
+
     public static final RegistryObject<EntityType<Knight>> KNIGHT = SPORE_ENTITIES.register("knight",
             () -> EntityType.Builder.of(Knight::new, MobCategory.MONSTER).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "knight").toString()));
+
     public static final RegistryObject<EntityType<Griefer>> GRIEFER = SPORE_ENTITIES.register("griefer",
             () -> EntityType.Builder.of(Griefer::new, MobCategory.MONSTER).sized(0.8f, 2.1f)
                     .build(new ResourceLocation(Spore.MODID, "griefer").toString()));
+
     public static final RegistryObject<EntityType<Braionmil>> BRAIOMIL = SPORE_ENTITIES.register("braiomil",
             () -> EntityType.Builder.of(Braionmil::new, MobCategory.MONSTER).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "braiomil").toString()));
+
     public static final RegistryObject<EntityType<InfectedVillager>> INF_VILLAGER = SPORE_ENTITIES.register("inf_villager",
             () -> EntityType.Builder.of(InfectedVillager::new, MobCategory.MONSTER).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "inf_villager").toString()));
+
     public static final RegistryObject<EntityType<InfectedWitch>> INF_WITCH = SPORE_ENTITIES.register("inf_witch",
             () -> EntityType.Builder.of(InfectedWitch::new, MobCategory.MONSTER).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "inf_witch").toString()));
+
     public static final RegistryObject<EntityType<Leaper>> LEAPER = SPORE_ENTITIES.register("leaper",
             () -> EntityType.Builder.of(Leaper::new, MobCategory.MONSTER).sized(0.6f, 2.3f)
                     .build(new ResourceLocation(Spore.MODID, "leaper").toString()));
+
     public static final RegistryObject<EntityType<Slasher>> SLASHER = SPORE_ENTITIES.register("slasher",
             () -> EntityType.Builder.of(Slasher::new, MobCategory.MONSTER).sized(0.6f, 2.2f)
                     .build(new ResourceLocation(Spore.MODID, "slasher").toString()));
+
     public static final RegistryObject<EntityType<Spitter>> SPITTER = SPORE_ENTITIES.register("spitter",
             () -> EntityType.Builder.of(Spitter::new, MobCategory.MONSTER).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "spitter").toString()));
+
     public static final RegistryObject<EntityType<InfectedPillager>> INF_PILLAGER = SPORE_ENTITIES.register("inf_pillager",
             () -> EntityType.Builder.of(InfectedPillager::new, MobCategory.MONSTER).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "inf_pillager").toString()));
+
     public static final RegistryObject<EntityType<InfectedVendicator>> INF_VINDICATOR = SPORE_ENTITIES.register("inf_vindicator",
             () -> EntityType.Builder.of(InfectedVendicator::new, MobCategory.MONSTER).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "inf_vindicator").toString()));
+
     public static final RegistryObject<EntityType<InfectedEvoker>> INF_EVOKER = SPORE_ENTITIES.register("inf_evoker",
             () -> EntityType.Builder.of(InfectedEvoker::new, MobCategory.MONSTER).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "inf_evoker").toString()));

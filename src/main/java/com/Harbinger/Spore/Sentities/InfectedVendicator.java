@@ -58,7 +58,11 @@ public class InfectedVendicator extends EvolvedInfected{
         RandomSource randomsource = p_34088_.getRandom();
         this.populateDefaultEquipmentSlots(randomsource, p_34089_);
         this.populateDefaultEquipmentEnchantments(randomsource, p_34089_);
+        nowater(this);
         return spawngroupdata;
+    }
+    public static  boolean nowater(Entity entity){
+        return !entity.isInWaterOrBubble();
     }
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes().add(Attributes.MOVEMENT_SPEED, (double)0.35F)

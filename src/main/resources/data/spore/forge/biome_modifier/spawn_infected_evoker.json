@@ -5,6 +5,6 @@
     "type": "spore:inf_evoker",
     "maxCount": 1,
     "minCount": 1,
-    "weight": 1
+    "weight": 16
   }
 }

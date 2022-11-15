@@ -3,7 +3,7 @@
   "biomes": "#minecraft:is_overworld",
   "spawn": {
     "type": "spore:inf_witch",
-    "maxCount": 1,
+    "maxCount": 2,
     "minCount": 1,
     "weight": 6
   }

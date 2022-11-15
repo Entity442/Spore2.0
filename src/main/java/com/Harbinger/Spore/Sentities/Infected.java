@@ -12,12 +12,13 @@ import com.Harbinger.Spore.Sentities.Projectile.Vomit;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
@@ -27,8 +28,11 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+
+import javax.annotation.Nullable;
 
 public class Infected extends Monster {
     public int kills;
@@ -43,6 +47,8 @@ public class Infected extends Monster {
         this.moveControl =  new InfectedWaterMovementControl(this);
         this.maxUpStep = 1.0F;
     }
+
+
 
     public boolean doHurtTarget(Entity p_32257_) {
         if (super.doHurtTarget(p_32257_)) {
@@ -105,7 +111,17 @@ public class Infected extends Monster {
         Biome biome = this.level.getBiome(blockpos).value();
         return (biome.getBaseTemperature() <= 0.2) && (!entity.isOnFire());
     }
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason,
+                                        @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
+        SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
+        nowater(this);
+        return retval;
+    }
 
+    public static  boolean nowater(Entity entity){
+        return !entity.isInWaterOrBubble();
+    }
 
     @Override
     public void awardKillScore(Entity entity, int i, DamageSource damageSource) {
