@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "RRT",
-    "R#T",
-    "XXT"
+    " RR",
+    "T#R",
+    "XT "
   ],
   "key": {
     "R": {
@@ -20,6 +20,6 @@
     }
 },
   "result": {
-    "item": "spore:armads"
+    "item": "spore:infected_spear"
   }
 }

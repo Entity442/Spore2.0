@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class InfectedEvokerRenderer<Type extends InfectedEvoker> extends MobRenderer<Type , InfectedEvokerModel<Type>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Spore.MODID,
-            "textures/entity/inf_evo.png");
+            "textures/entity/inf_evoker.png");
 
     public InfectedEvokerRenderer(EntityRendererProvider.Context context) {
         super(context, new InfectedEvokerModel<>(context.bakeLayer(InfectedEvokerModel.LAYER_LOCATION)), 0.5f);
@@ -25,8 +25,8 @@ public class InfectedEvokerRenderer<Type extends InfectedEvoker> extends MobRend
         this.addLayer(new ItemInHandLayer<>(this, context.getItemInHandRenderer()));
     }
 
-    private class Eyes<Type extends InfectedEvoker, M extends InfectedEvokerModel<Type>> extends EyesLayer<Type, M> {
-        private static final RenderType EYES = RenderType.eyes(new ResourceLocation(Spore.MODID, "textures/entity/eyes/inf_evo.png"));
+    private static class Eyes<Type extends InfectedEvoker, M extends InfectedEvokerModel<Type>> extends EyesLayer<Type, M> {
+        private static final RenderType EYES = RenderType.eyes(new ResourceLocation(Spore.MODID, "textures/entity/eyes/inf_evoker.png"));
 
         public Eyes(RenderLayerParent layer) {
             super(layer);
