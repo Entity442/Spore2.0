@@ -29,7 +29,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
-public class InfEvoClaw extends UtilityEntity{
+public class InfEvoClaw extends UtilityEntity implements Enemy{
     public InfEvoClaw(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
     }
@@ -109,4 +109,5 @@ public class InfEvoClaw extends UtilityEntity{
                     ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, (double)0.15F);
         }
     }
+
 }

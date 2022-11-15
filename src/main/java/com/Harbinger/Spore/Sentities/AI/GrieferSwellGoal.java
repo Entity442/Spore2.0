@@ -19,11 +19,11 @@ public class GrieferSwellGoal extends Goal {
 
     public boolean canUse() {
         LivingEntity livingentity = this.griefer.getTarget();
-        return this.griefer.getSwellDir() > 0 || livingentity != null && this.griefer.distanceToSqr(livingentity) < 9.0D;
+        return this.griefer.getSwellDir() > 0 || livingentity != null && this.griefer.distanceToSqr(livingentity) < 9.0D
+                && griefer.getHealth() <= (griefer.getMaxHealth()/2);
     }
 
     public void start() {
-        this.griefer.getNavigation().stop();
         this.target = this.griefer.getTarget();
     }
 
@@ -45,5 +45,6 @@ public class GrieferSwellGoal extends Goal {
         } else {
             this.griefer.setSwellDir(1);
         }
+
     }
 }
