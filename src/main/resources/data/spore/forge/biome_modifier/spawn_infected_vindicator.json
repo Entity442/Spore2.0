@@ -1,11 +1,14 @@
 {
   "type": "forge:add_spawns",
   "biomes": {
-    "type": "forge:any"
+    "type": "forge:and",
+    "values":[
+      "#minecraft:is_overworld"
+    ]
   },
   "spawners": {
     "type": "spore:inf_vindicator",
-    "weight": 6,
+    "weight": 12,
     "minCount": 1,
     "maxCount": 1
   }

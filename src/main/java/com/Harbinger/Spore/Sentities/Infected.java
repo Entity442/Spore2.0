@@ -132,8 +132,8 @@ public class Infected extends Monster {
         return super.hurt(source, amount);
     }
 
-    public static boolean checkMonsterInfectedRules(EntityType<? extends Infected> p_219014_, ServerLevelAccessor levelAccessor, MobSpawnType p_219016_, BlockPos pos, RandomSource p_219018_) {
-        return (levelAccessor.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(levelAccessor, pos, p_219018_) && checkMobSpawnRules(p_219014_, levelAccessor, p_219016_, pos, p_219018_ ) && levelAccessor.getBlockState(pos.below()).canOcclude())
+    public static boolean checkMonsterInfectedRules(EntityType<? extends Infected> p_219014_, ServerLevelAccessor levelAccessor, MobSpawnType p_219016_, BlockPos pos, RandomSource source) {
+        return (levelAccessor.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(levelAccessor, pos, source) && checkMobSpawnRules(p_219014_, levelAccessor, p_219016_, pos, source ) && levelAccessor.getBlockState(pos.below()).canOcclude())
                 || (levelAccessor.getDifficulty() != Difficulty.PEACEFUL && levelAccessor.getBlockState(pos.below()).is(BlockTags.MOOSHROOMS_SPAWNABLE_ON));
     }
 }
