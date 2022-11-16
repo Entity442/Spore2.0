@@ -12,9 +12,11 @@ import com.Harbinger.Spore.Sentities.Projectile.Vomit;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.DifficultyInstance;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -31,8 +33,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-
-import javax.annotation.Nullable;
+import net.minecraftforge.network.NetworkHooks;
 
 public class Infected extends Monster {
     public int kills;
@@ -66,6 +67,10 @@ public class Infected extends Monster {
 
     public MobType getMobType() {
         return SmobType.INFECTED;
+    }
+    @Override
+    public Packet<?> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
 
@@ -111,17 +116,6 @@ public class Infected extends Monster {
         Biome biome = this.level.getBiome(blockpos).value();
         return (biome.getBaseTemperature() <= 0.2) && (!entity.isOnFire());
     }
-    @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason,
-                                        @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
-        SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-        nowater(this);
-        return retval;
-    }
-
-    public static  boolean nowater(Entity entity){
-        return !entity.isInWaterOrBubble();
-    }
 
     @Override
     public void awardKillScore(Entity entity, int i, DamageSource damageSource) {
@@ -138,6 +132,8 @@ public class Infected extends Monster {
         return super.hurt(source, amount);
     }
 
-
-
+    public static boolean checkMonsterInfectedRules(EntityType<? extends Infected> p_219014_, ServerLevelAccessor levelAccessor, MobSpawnType p_219016_, BlockPos pos, RandomSource p_219018_) {
+        return (levelAccessor.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(levelAccessor, pos, p_219018_) && checkMobSpawnRules(p_219014_, levelAccessor, p_219016_, pos, p_219018_ ) && levelAccessor.getBlockState(pos.below()).canOcclude())
+                || (levelAccessor.getDifficulty() != Difficulty.PEACEFUL && levelAccessor.getBlockState(pos.below()).is(BlockTags.MOOSHROOMS_SPAWNABLE_ON));
+    }
 }

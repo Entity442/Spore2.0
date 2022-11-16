@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 public class SEvents {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
-        event.put(Sentities.INFECTED_HUMAN.get(), InfectedHuman.createAttributes().build());
+        event.put(Sentities.INF_HUMAN.get(), InfectedHuman.createAttributes().build());
         event.put(Sentities.KNIGHT.get(), Knight.createAttributes().build());
         event.put(Sentities.GRIEFER.get(), Griefer.createAttributes().build());
         event.put(Sentities.BRAIOMIL.get(), Braionmil.createAttributes().build());

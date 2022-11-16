@@ -98,13 +98,9 @@ public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier 
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_33282_, DifficultyInstance p_33283_, MobSpawnType p_33284_, @Nullable SpawnGroupData p_33285_, @Nullable CompoundTag p_33286_) {
         RandomSource randomsource = p_33282_.getRandom();
         this.populateDefaultEquipmentSlots(randomsource, p_33283_);
-        this.populateDefaultEquipmentEnchantments(randomsource, p_33283_);
-        nowater(this);
         return super.finalizeSpawn(p_33282_, p_33283_, p_33284_, p_33285_, p_33286_);
     }
-    public static  boolean nowater(Entity entity){
-        return !entity.isInWaterOrBubble();
-    }
+
     public SlotAccess getSlot(int p_149743_) {
         int i = p_149743_ - 300;
         return i >= 0 && i < this.inventory.getContainerSize() ? SlotAccess.forContainer(this.inventory, i) : super.getSlot(p_149743_);

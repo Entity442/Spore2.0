@@ -46,7 +46,7 @@ public class ClientModEvents {
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(Sentities.INFECTED_HUMAN.get(), InfectedHumanRenderer::new);
+        event.registerEntityRenderer(Sentities.INF_HUMAN.get(), InfectedHumanRenderer::new);
         event.registerEntityRenderer(Sentities.KNIGHT.get(), KnightRenderer::new);
         event.registerEntityRenderer(Sentities.GRIEFER.get(), GrieferRenderer::new);
         event.registerEntityRenderer(Sentities.BRAIOMIL.get(), BraioRenderer::new);

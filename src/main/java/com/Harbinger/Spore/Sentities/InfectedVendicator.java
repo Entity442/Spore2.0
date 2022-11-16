@@ -57,17 +57,14 @@ public class InfectedVendicator extends EvolvedInfected{
         ((GroundPathNavigation)this.getNavigation()).setCanOpenDoors(true);
         RandomSource randomsource = p_34088_.getRandom();
         this.populateDefaultEquipmentSlots(randomsource, p_34089_);
-        this.populateDefaultEquipmentEnchantments(randomsource, p_34089_);
-        nowater(this);
         return spawngroupdata;
     }
-    public static  boolean nowater(Entity entity){
-        return !entity.isInWaterOrBubble();
-    }
+
+
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes().add(Attributes.MOVEMENT_SPEED, (double)0.35F)
-                .add(Attributes.FOLLOW_RANGE, 28.0D).add(Attributes.MAX_HEALTH, SConfig.SERVER.inf_vin_hp.get())
-                .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.inf_vin_damage.get()).add(Attributes.ARMOR,SConfig.SERVER.inf_vin_armor.get());
+                .add(Attributes.FOLLOW_RANGE, 28.0D).add(Attributes.MAX_HEALTH, SConfig.SERVER.inf_vin_hp.get() * SConfig.SERVER.global_health.get())
+                .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.inf_vin_damage.get() *SConfig.SERVER.global_damage.get()).add(Attributes.ARMOR,SConfig.SERVER.inf_vin_armor.get() * SConfig.SERVER.global_health.get());
     }
     protected void populateDefaultEquipmentSlots(RandomSource p_219149_, DifficultyInstance p_219150_) {
             this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_AXE));

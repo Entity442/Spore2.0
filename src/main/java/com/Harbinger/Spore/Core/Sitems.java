@@ -49,7 +49,7 @@ public class Sitems {
 
 
     public  static final RegistryObject<Item> INFECTED_HUMAN_SPAWNEGG = ITEMS.register("infected_human_spawnegg",
-            () -> new ForgeSpawnEggItem(Sentities.INFECTED_HUMAN,-9357608, -16724788, new Item.Properties().tab(ScreativeTab.SPORE)));
+            () -> new ForgeSpawnEggItem(Sentities.INF_HUMAN,-9357608, -16724788, new Item.Properties().tab(ScreativeTab.SPORE)));
    public  static final RegistryObject<Item> INF_VILLAGER_SPAWNEGG = ITEMS.register("inf_villager_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.INF_VILLAGER,-6639718,-97141773, new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> INF_WITCH_SPAWNEGG = ITEMS.register("inf_witch_spawnegg",

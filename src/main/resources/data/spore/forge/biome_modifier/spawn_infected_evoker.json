@@ -1,10 +1,12 @@
 {
-  "type": "spore:mobspawns",
-  "biomes": "#minecraft:is_overworld",
-  "spawn": {
+  "type": "forge:add_spawns",
+  "biomes": {
+    "type": "forge:any"
+  },
+  "spawners": {
     "type": "spore:inf_evoker",
-    "maxCount": 1,
+    "weight": 8,
     "minCount": 1,
-    "weight": 16
+    "maxCount": 1
   }
 }

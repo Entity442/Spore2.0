@@ -46,7 +46,7 @@ public class Infection {
 
             if (entity instanceof Zombie && !((Zombie) entity).isBaby()) {
                 if (world instanceof ServerLevel _level) {
-                    Entity entityToSpawn = new InfectedHuman(Sentities.INFECTED_HUMAN.get(), _level);
+                    Entity entityToSpawn = new InfectedHuman(Sentities.INF_HUMAN.get(), _level);
                     entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
                     Mob _mobToSpawn = (Mob) entityToSpawn;
                     _mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.CONVERSION,

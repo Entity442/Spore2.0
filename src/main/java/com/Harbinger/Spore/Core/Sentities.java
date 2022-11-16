@@ -28,7 +28,7 @@ public class Sentities {
     }
 
 
-    public static final RegistryObject<EntityType<InfectedHuman>> INFECTED_HUMAN = SPORE_ENTITIES.register("inf_human",
+    public static final RegistryObject<EntityType<InfectedHuman>> INF_HUMAN = SPORE_ENTITIES.register("inf_human",
             () -> EntityType.Builder.of(InfectedHuman::new, MobCategory.MONSTER).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "inf_human").toString()));
 
