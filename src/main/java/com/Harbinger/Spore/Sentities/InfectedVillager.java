@@ -1,16 +1,18 @@
 package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.BreakBlockGoal;
 import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
@@ -20,13 +22,16 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.List;
+import java.util.Random;
+import java.util.SplittableRandom;
 
 public class InfectedVillager extends Infected {
     private int ev;
-
     public InfectedVillager(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }
@@ -90,40 +95,24 @@ public class InfectedVillager extends Infected {
             this.ev = ev + 1;
         }
         if (ev >= (20 * SConfig.SERVER.evolution_age_human.get()) && kills >= 1) {
-            sosu(this.level, this.getX(), this.getY(), this.getZ(), this);
+            Evolve(this);
         }
     }
 
 
-    public void sosu(LevelAccessor world, double x, double y, double z, Entity entity) {
-        if (world instanceof ServerLevel _level) {
-
-            if ((Math.random() < 0.5) && (kills >= 2)) {
-                {
-                    Mob entityToSpawn = new Spitter(Sentities.SPITTER.get(), _level);
-                    entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
-                    entityToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null,
-                            null);
-                    world.addFreshEntity(entityToSpawn);
-                }
-            } else if ((Math.random() < 0.5) && (kills >= 3)) {
-                {
-                    Mob entityToSpawn = new Leaper(Sentities.LEAPER.get(), _level);
-                    entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
-                    entityToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.CONVERSION, null,
-                            null);
-                    world.addFreshEntity(entityToSpawn);
-                }
-            } else {
-                Mob entityToSpawn = new Slasher(Sentities.SLASHER.get(), _level);
-                entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
-                entityToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.CONVERSION, null,
-                        null);
-                world.addFreshEntity(entityToSpawn);
-            }
-
+    public void Evolve(LivingEntity entity) {
+        Random rand = new Random();
+        List<? extends String> ev = SConfig.SERVER.villager_ev.get();
+        SplittableRandom random = new SplittableRandom();
+        for (int i = 0; i < 1; ++i) {
+            int randomIndex = rand.nextInt(ev.size());
+            ResourceLocation randomElement1 = new ResourceLocation(ev.get(randomIndex));
+            EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
+            Entity waveentity = randomElement.create(level);
+            waveentity.setPos(entity.getX(), entity.getY() + 0.5D, entity.getZ());
+            level.addFreshEntity(waveentity);
+            entity.discard();
         }
-        entity.discard();
     }
 
 
@@ -132,11 +121,6 @@ public class InfectedVillager extends Infected {
         return ev >= (i / 4) * 3;
     }
 
-    @Override
-    public void awardKillScore(Entity entity, int i, DamageSource damageSource) {
-        kills = kills + 1;
-        super.awardKillScore(entity, i, damageSource);
-    }
 
 
     protected SoundEvent getAmbientSound() {

@@ -136,7 +136,9 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<Integer> knockback_resistance;
 
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> stations;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> human_ev;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> villager_ev;
+
 
         public Server(ForgeConfigSpec.Builder builder) {
             builder.push("Global Variables for Mobs");
@@ -144,6 +146,11 @@ public class SConfig {
             this.global_health = builder.define("Global Health Modifier",1.0);
             this.global_armor = builder.define("Global Armor Modifier",1.0);
             this.at_mob = builder.comment("Default true").define("Should attack other mobs?",true);
+            builder.pop();
+
+            builder.push("Mob Evolutions");
+            this.human_ev = builder.defineList("Infected Human Evolutions", Lists.newArrayList("spore:knight","spore:griefer","spore:braiomil" ) , o -> o instanceof String);
+            this.villager_ev = builder.defineList("Infected Villager Evolutions", Lists.newArrayList("spore:slasher","spore:leaper","spore:spitter" ) , o -> o instanceof String);
             builder.pop();
 
 
@@ -180,7 +187,6 @@ public class SConfig {
             this.inf_vil_hp = builder.comment("Default 20").defineInRange("Sets Infected Villager Max health", 20, 1, Double.MAX_VALUE);
             this.inf_vil_damage = builder.comment("Default 6").defineInRange("Sets Infected Villager Damage", 6, 1, Double.MAX_VALUE);
             this.inf_vil_armor = builder.comment("Default 0").defineInRange("Sets Infected Villager Armor", 1, 0, Double.MAX_VALUE);
-            this.stations = builder.defineList("Villager Work Stations", Lists.newArrayList("work in progress" ) , o -> o instanceof String);
             builder.pop();
 
             builder.push("Infected Witch");

@@ -5,6 +5,7 @@ import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -17,6 +18,11 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.List;
+import java.util.Random;
+import java.util.SplittableRandom;
 
 public class InfectedHuman extends Infected {
     private int ev;
@@ -66,42 +72,27 @@ public class InfectedHuman extends Infected {
             this.ev = ev + 1;
         }
         if (ev >= (20 * SConfig.SERVER.evolution_age_human.get()) && kills >= 1) {
-            sosu(this.level, this.getX(), this.getY(), this.getZ(), this);
+           Evolve(this);
         }
     }
 
 
-    public void sosu(LevelAccessor world, double x, double y, double z, Entity entity) {
-        if (world instanceof ServerLevel _level) {
 
-            if ((Math.random() < 0.5) && (kills >= 2)) {
-                {
-                    Mob entityToSpawn = new Braionmil(Sentities.BRAIOMIL.get(), _level);
-                    entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
-                    entityToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null,
-                            null);
-                    world.addFreshEntity(entityToSpawn);
-                }
-            } else if ((Math.random() < 0.5) && (kills >= 3)) {
-                {
-                    Mob entityToSpawn = new Griefer(Sentities.GRIEFER.get(), _level);
-                    entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
-                    entityToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.CONVERSION, null,
-                            null);
-                    world.addFreshEntity(entityToSpawn);
-                }
-            } else {
-                Mob entityToSpawn = new Knight(Sentities.KNIGHT.get(), _level);
-                entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
-                entityToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.CONVERSION, null,
-                        null);
-                world.addFreshEntity(entityToSpawn);
+    public void Evolve(LivingEntity entity) {
+        Random rand = new Random();
+        List<? extends String> ev = SConfig.SERVER.human_ev.get();
+        SplittableRandom random = new SplittableRandom();
+
+            for (int i = 0; i < 1; ++i) {
+                int randomIndex = rand.nextInt(ev.size());
+                ResourceLocation randomElement1 = new ResourceLocation(ev.get(randomIndex));
+                EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
+                Entity waveentity = randomElement.create(level);
+                waveentity.setPos(entity.getX(), entity.getY() + 0.5D, entity.getZ());
+                level.addFreshEntity(waveentity);
+                entity.discard();
             }
-
-        }
-        entity.discard();
     }
-
 
     public boolean evolution() {
         int i = SConfig.SERVER.evolution_age_human.get() * 20;
@@ -112,11 +103,6 @@ public class InfectedHuman extends Infected {
         return kills;
     }
 
-    @Override
-    public void awardKillScore(Entity entity, int i, DamageSource damageSource) {
-        kills = kills + 1;
-        super.awardKillScore(entity, i, damageSource);
-    }
 
 
     protected SoundEvent getAmbientSound() {
