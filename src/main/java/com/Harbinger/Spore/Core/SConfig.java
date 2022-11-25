@@ -139,6 +139,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> human_ev;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> villager_ev;
 
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_human;
 
         public Server(ForgeConfigSpec.Builder builder) {
             builder.push("Global Variables for Mobs");
@@ -148,9 +149,15 @@ public class SConfig {
             this.at_mob = builder.comment("Default true").define("Should attack other mobs?",true);
             builder.pop();
 
-            builder.push("Mob Evolutions");
-            this.human_ev = builder.defineList("Infected Human Evolutions", Lists.newArrayList("spore:knight","spore:griefer","spore:braiomil" ) , o -> o instanceof String);
-            this.villager_ev = builder.defineList("Infected Villager Evolutions", Lists.newArrayList("spore:slasher","spore:leaper","spore:spitter" ) , o -> o instanceof String);
+            builder.push("Mob Evolutions and Infection System");
+            this.human_ev = builder.defineList("Infected Human Evolutions",
+                    Lists.newArrayList("spore:knight","spore:griefer","spore:braiomil" ) , o -> o instanceof String);
+            this.villager_ev = builder.defineList("Infected Villager Evolutions",
+                    Lists.newArrayList("spore:slasher","spore:leaper","spore:spitter" ) , o -> o instanceof String);
+
+            this.inf_human = builder.defineList("Mobs that can become infected humans",
+                    Lists.newArrayList("minecraft:husk","minecraft:drowned","minecraft:zombie" ) , o -> o instanceof String);
+
             builder.pop();
 
 

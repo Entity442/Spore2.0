@@ -74,12 +74,17 @@ public class Leaper extends EvolvedInfected{
 
 
 
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.5, false) {
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 return 4.0 + entity.getBbWidth() * entity.getBbWidth();}});
 
-        this.goalSelector.addGoal(1, new LeapGoal(this,0.8F));
+        this.goalSelector.addGoal(2, new LeapGoal(this,0.8F){
+            @Override
+            public boolean canContinueToUse() {
+                return (onClimbable() && onGround);
+            }
+        });
         this.goalSelector.addGoal(3, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 

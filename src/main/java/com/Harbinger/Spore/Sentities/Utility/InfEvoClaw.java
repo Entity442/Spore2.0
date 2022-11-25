@@ -42,7 +42,7 @@ public class InfEvoClaw extends UtilityEntity implements Enemy{
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
                 (this, IronGolem.class,  true));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, true, (en) -> {
-            return (en instanceof Enemy && !(en instanceof Creeper || en instanceof Infected) && SConfig.SERVER.at_mob.get());
+            return (en instanceof Enemy && !(en instanceof Creeper || en instanceof Infected || en instanceof UtilityEntity) && SConfig.SERVER.at_mob.get());
         }));
         this.goalSelector.addGoal(3,new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this ,0 ,false){

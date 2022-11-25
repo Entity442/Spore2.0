@@ -28,7 +28,7 @@ public class Mycelium extends MobEffect {
 
     public boolean isDurationEffectTick(int duration, int intensity) {
         if (this == Seffects.MYCELIUM.get()) {
-            int i = 60 >> intensity;
+            int i = 100 >> intensity;
             if (i > 0) {
                 return duration % i == 0;
             } else {

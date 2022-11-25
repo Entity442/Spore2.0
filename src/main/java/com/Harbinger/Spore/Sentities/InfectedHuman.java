@@ -81,9 +81,8 @@ public class InfectedHuman extends Infected {
     public void Evolve(LivingEntity entity) {
         Random rand = new Random();
         List<? extends String> ev = SConfig.SERVER.human_ev.get();
-        SplittableRandom random = new SplittableRandom();
 
-            for (int i = 0; i < 1; ++i) {
+        for (int i = 0; i < 1; ++i) {
                 int randomIndex = rand.nextInt(ev.size());
                 ResourceLocation randomElement1 = new ResourceLocation(ev.get(randomIndex));
                 EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);

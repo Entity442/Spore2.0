@@ -14,4 +14,5 @@ public class InfectedBoots extends InfectedExoskeleton{
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
         return "spore:textures/armor/infected_layer_1.png";
     }
+
 }

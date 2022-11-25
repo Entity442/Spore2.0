@@ -4,6 +4,7 @@ import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sitems;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownSpear;
 import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -11,7 +12,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -23,12 +23,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.Vanishable;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -46,6 +45,7 @@ public class InfectedSpearItem extends Item implements Vanishable {
     public boolean isValidRepairItem(ItemStack itemstack, ItemStack repairitem) {
         return List.of(Sitems.BIOMASS.get()).contains(repairitem.getItem());
     }
+
 
 
     public UseAnim getUseAnimation(ItemStack stack) {
@@ -92,6 +92,7 @@ public class InfectedSpearItem extends Item implements Vanishable {
                 if (k > 0) {
                     thrownSpear.setKnockback(k);
                 }
+
             }
 
                     player.awardStat(Stats.ITEM_USED.get(this));
@@ -120,18 +121,15 @@ public class InfectedSpearItem extends Item implements Vanishable {
     public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot slot) {
         return slot == EquipmentSlot.MAINHAND ? this.defaultModifiers : super.getDefaultAttributeModifiers(slot);
     }
-    @Override
-    public @NotNull AABB getSweepHitBox(@NotNull ItemStack stack, @NotNull Player player, @NotNull Entity target) {
-        return target.getBoundingBox().inflate(1);
-    }
-    @Override
-    public boolean canPerformAction(ItemStack stack, net.minecraftforge.common.ToolAction toolAction) {
-        return net.minecraftforge.common.ToolActions.DEFAULT_SWORD_ACTIONS.contains(toolAction);
-    }
+
     public int getEnchantmentValue() {
         return 2;
     }
 
 
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return super.canApplyAtEnchantingTable(stack, enchantment) || ImmutableSet.of(Enchantments.SHARPNESS, Enchantments.FIRE_ASPECT, Enchantments.LOYALTY).contains(enchantment);
+    }
 }
 

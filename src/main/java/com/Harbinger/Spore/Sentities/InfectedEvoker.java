@@ -150,7 +150,7 @@ public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier 
     private boolean switchy() {
         if (this.getTarget() != null){
             double ze = this.distanceToSqr(this.getTarget());
-            return (ze > 40.0D) && entityData.get(HAS_ARM);
+            return (ze > 40.0D) && (ze < 800.0D) && entityData.get(HAS_ARM);
         }
         return false;
     }

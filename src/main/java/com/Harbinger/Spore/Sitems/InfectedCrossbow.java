@@ -35,7 +35,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class InfectedCrossbow extends ProjectileWeaponItem implements Vanishable {
+public class InfectedCrossbow extends CrossbowItem {
     public static final int DEFAULT_RANGE = 8;
     private boolean startSoundPlayed = false;
     private boolean midLoadSoundPlayed = false;
