@@ -36,6 +36,7 @@ public class Seffects {
                     "91AEAA56-376B-4498-935B-2F7F68070635",-0.1F ,AttributeModifier.Operation.MULTIPLY_TOTAL));
 
 
+
     public static final RegistryObject<MobEffect> SYMBIOSIS = MOB_EFFECTS.register("symbiosis",
             () -> new Symbiosis().addAttributeModifier(Attributes.MOVEMENT_SPEED,
                     "91AEAA56-376B-4498-935B-2F7F68070635", 0.2F, AttributeModifier.Operation.MULTIPLY_TOTAL)

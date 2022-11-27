@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.Effect;
 
+import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
@@ -12,7 +13,7 @@ public class Corrosion extends MobEffect {
         super(MobEffectCategory.HARMFUL, -13369549);
     }
     public void applyEffectTick(LivingEntity entity, int p_19468_) {
-        if ( entity instanceof IronGolem){
+        if (SConfig.SERVER.corrosion.get().contains(entity.getEncodeId())){
             if (this == Seffects.CORROSION.get()) {
                 entity.hurt(DamageSource.GENERIC.bypassArmor(), 1.0F);
             }

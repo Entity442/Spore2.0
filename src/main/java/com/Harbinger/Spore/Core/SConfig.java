@@ -16,6 +16,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> global_health;
         public final ForgeConfigSpec.ConfigValue<Double> global_armor;
         public final ForgeConfigSpec.ConfigValue<Boolean> at_mob;
+        public final ForgeConfigSpec.ConfigValue<Boolean> at_an;
 
 
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_spawn;
@@ -139,7 +140,19 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> human_ev;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> villager_ev;
 
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_human;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_summon;
+
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
+
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> mycelium;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> corrosion;
+
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_human_conv;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_villager_conv;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_witch_conv;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_pillager_conv;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_evoker_conv;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_vindi_conv;
 
         public Server(ForgeConfigSpec.Builder builder) {
             builder.push("Global Variables for Mobs");
@@ -147,19 +160,84 @@ public class SConfig {
             this.global_health = builder.define("Global Health Modifier",1.0);
             this.global_armor = builder.define("Global Armor Modifier",1.0);
             this.at_mob = builder.comment("Default true").define("Should attack other mobs?",true);
+            this.at_an = builder.comment("Default true").define("Should attack Animals?",false);
+
+            this.blacklist = builder.defineList("Mobs Not Targeted",
+                    Lists.newArrayList(
+                            "minecraft:creeper") , o -> o instanceof String);
             builder.pop();
+
+
+
+
 
             builder.push("Mob Evolutions and Infection System");
-            this.human_ev = builder.defineList("Infected Human Evolutions",
-                    Lists.newArrayList("spore:knight","spore:griefer","spore:braiomil" ) , o -> o instanceof String);
-            this.villager_ev = builder.defineList("Infected Villager Evolutions",
-                    Lists.newArrayList("spore:slasher","spore:leaper","spore:spitter" ) , o -> o instanceof String);
+            this.inf_summon = builder.defineList("Mobs that can be summoned by the Scent",
+                    Lists.newArrayList(
+                            "spore:inf_human"
+                            ,"spore:inf_villager"
+                            ,"spore:inf_pillager" ) , o -> o instanceof String);
 
-            this.inf_human = builder.defineList("Mobs that can become infected humans",
-                    Lists.newArrayList("minecraft:husk","minecraft:drowned","minecraft:zombie" ) , o -> o instanceof String);
+            builder.push("Evolutions");
+            this.human_ev = builder.defineList("Infected Human Evolutions",
+                    Lists.newArrayList(
+                            "spore:knight"
+                            ,"spore:griefer"
+                            ,"spore:braiomil" ) , o -> o instanceof String);
+
+            this.villager_ev = builder.defineList("Infected Villager Evolutions",
+                    Lists.newArrayList(
+                            "spore:slasher"
+                            ,"spore:leaper"
+                            ,"spore:spitter" ) , o -> o instanceof String);
+
+            this.evolution_age_human = builder.comment("Default 150").define("Evolution Timer in seconds",150);
 
             builder.pop();
+            builder.push("Infections");
+            this.inf_human_conv = builder.defineList("Mobs that can become infected humans",
+                    Lists.newArrayList(
+                            "minecraft:zombie"
+                            ,"minecraft:husk"
+                            ,"minecraft:drowned" ) , o -> o instanceof String);
+            this.inf_villager_conv = builder.defineList("Mobs that can become infected villagers",
+                    Lists.newArrayList(
+                            "minecraft:villager"
+                            ,"minecraft:wandering_trader",
+                            "guardvillagers:guard") , o -> o instanceof String);
+            this.inf_witch_conv = builder.defineList("Mobs that can become infected witches",
+                    Lists.newArrayList(
+                            "minecraft:witch" ) , o -> o instanceof String);
+            this.inf_evoker_conv = builder.defineList("Mobs that can become infected evokers",
+                    Lists.newArrayList(
+                            "minecraft:evoker") , o -> o instanceof String);
+            this.inf_pillager_conv = builder.defineList("Mobs that can become infected pillagers",
+                    Lists.newArrayList(
+                            "minecraft:pillager" ) , o -> o instanceof String);
+            this.inf_vindi_conv = builder.defineList("Mobs that can become infected vindicators",
+                    Lists.newArrayList(
+                            "minecraft:vindicator","hunterillager:hunterillager" ) , o -> o instanceof String);
+            builder.pop();
+            builder.pop();
 
+
+            builder.push("Effects");
+            this.mycelium = builder.defineList("Mobs that are immune to the mycelium infection",
+                    Lists.newArrayList(
+                            "minecraft:ghast"
+                            , "minecraft:iron_golem"
+                            , "minecraft:magma_cube"
+                            , "minecraft:mooshroom"
+                            , "minecraft:phantom"
+                            , "minecraft:skeleton_horse"
+                            , "minecraft:snow_golem"
+                            , "minecraft:stray"
+                            , "minecraft:wither"
+                            , "minecraft:skeleton" ) , o -> o instanceof String);
+
+            this.corrosion = builder.defineList("Mobs that are damaged by corrosion",
+                    Lists.newArrayList("minecraft:iron_golem" ) , o -> o instanceof String);
+            builder.pop();
 
             builder.push("Mobs");
             builder.push("Infected Evoker");
@@ -217,7 +295,6 @@ public class SConfig {
             this.inf_human_hp = builder.comment("Default 15").defineInRange("Sets Infected Human Max health", 15, 1, Double.MAX_VALUE);
             this.inf_human_damage = builder.comment("Default 6").defineInRange("Sets Infected Human Damage", 6, 1, Double.MAX_VALUE);
             this.inf_human_armor = builder.comment("Default 1").defineInRange("Sets Infected Human Armor", 1, 0, Double.MAX_VALUE);
-            this.evolution_age_human = builder.comment("Default 150").define("Evolution Timer in seconds",150);
             builder.pop();
             builder.push("Knight");
             this.knight_hp = builder.comment("Default 25").defineInRange("Sets Knight Max health", 25, 1, Double.MAX_VALUE);

@@ -3,10 +3,7 @@ package com.Harbinger.Spore.Sentities;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Module.SmobType;
-import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
-import com.Harbinger.Spore.Sentities.AI.InfectedWaterMovementControl;
-import com.Harbinger.Spore.Sentities.AI.SwimToBlockGoal;
-import com.Harbinger.Spore.Sentities.AI.SwimToTarget;
+import com.Harbinger.Spore.Sentities.AI.*;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
@@ -23,16 +20,19 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.animal.AbstractGolem;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.network.NetworkHooks;
 
 public class Infected extends Monster {
@@ -46,7 +46,6 @@ public class Infected extends Monster {
         this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, 16.0F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
         this.moveControl =  new InfectedWaterMovementControl(this);
-        this.maxUpStep = 1.0F;
     }
 
 
@@ -80,12 +79,18 @@ public class Infected extends Monster {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
                 (this, Player.class,  true));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
-                (this, Villager.class,  true));
+                (this, AbstractGolem.class,  true));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
-                (this, IronGolem.class,  true));
+                (this, AbstractVillager.class,  true));
+
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, true, (en) -> {
-            return (en instanceof Enemy && !(en instanceof Creeper || en instanceof Infected || en instanceof UtilityEntity) && SConfig.SERVER.at_mob.get());
+            return en instanceof Enemy && !(en instanceof Infected || en instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(en.getEncodeId())) && SConfig.SERVER.at_mob.get();
         }));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Animal.class, 5, false, true, (en) -> {
+            return !SConfig.SERVER.blacklist.get().contains(en.getEncodeId()) && SConfig.SERVER.at_an.get();
+        }));
+
+        this.goalSelector.addGoal(7 , new InfectedPanicGoal(this , 1.5));
         this.goalSelector.addGoal(8, new SwimToTarget(this , 1.0));
         this.goalSelector.addGoal(7, new SwimToBlockGoal(this , 1.5, 8));
         this.goalSelector.addGoal(9,new FollowOthersGoal(this, 1.2, ScentEntity.class , 128 , false));
@@ -103,6 +108,21 @@ public class Infected extends Monster {
             if ((biome.getBaseTemperature() <= 0.2) && (!entity.isOnFire())) {
                 this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 2, 1, false, false), Infected.this);
 
+            }
+        }
+        if (this.horizontalCollision && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) {
+            boolean flag = false;
+            AABB aabb = this.getBoundingBox().inflate(0.2D);
+
+            for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
+                BlockState blockstate = this.level.getBlockState(blockpos);
+                if (blockstate.getMaterial() == Material.GLASS) {
+                    flag = this.level.destroyBlock(blockpos, true, this) || flag;
+                }
+            }
+
+            if (!flag && this.onGround) {
+                this.jumpFromGround();
             }
         }
     }

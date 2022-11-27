@@ -3,20 +3,21 @@ package com.Harbinger.Spore.Sentities.Utility;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sparticles;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Random;
 
 public class ScentEntity extends UtilityEntity {
 
@@ -31,6 +32,11 @@ public class ScentEntity extends UtilityEntity {
             this.getPersistentData().putInt("dissipate", 1 + this.getPersistentData().getInt("dissipate"));
             if (this.getPersistentData().getInt("dissipate") >= SConfig.SERVER.scent_life.get()) {
                 this.discard();
+            }
+            this.getPersistentData().putInt("summon", 1 + this.getPersistentData().getInt("summon"));
+            if (this.getPersistentData().getInt("summon") >= 300) {
+                this.getPersistentData().putInt("summon", 0);
+                this.Summon(this);
             }
         }
         super.tick();
@@ -71,6 +77,22 @@ public class ScentEntity extends UtilityEntity {
         }
     }
 
+    public void Summon(LivingEntity entity) {
+        Level level = entity.level;
+        Random rand = new Random();
+        int d = random.nextInt(0 ,3);
+        int r = random.nextInt(-12, 12);
+        List<? extends String> ev = SConfig.SERVER.inf_summon.get();
+
+        for (int i = 0; i < 1; ++i) {
+            int randomIndex = rand.nextInt(ev.size());
+            ResourceLocation randomElement1 = new ResourceLocation(ev.get(randomIndex));
+            EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
+            Entity waveentity = randomElement.create(level);
+            waveentity.setPos(entity.getX() + r, entity.getY() + 0.5D + d, entity.getZ() + r);
+            level.addFreshEntity(waveentity);
+        }
+    }
     public boolean addEffect(MobEffectInstance p_182397_, @Nullable Entity p_182398_) {
         return false;
     }

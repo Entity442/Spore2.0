@@ -8,4 +8,7 @@ public class UtilityEntity extends PathfinderMob {
     protected UtilityEntity(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
     }
+    protected boolean shouldDespawnInPeaceful() {
+        return true;
+    }
 }
