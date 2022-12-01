@@ -13,10 +13,13 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
@@ -119,5 +122,29 @@ public class Infection {
             }
         }
     }
+
+
+
+
+    @SubscribeEvent
+    public static void onEntityDeath(LivingDropsEvent event) {
+        if (event != null && event.getEntity() != null) {
+            drop(event, event.getEntity());
+        }
+    }
+    public static void drop(@Nullable Event event, Entity entity) {
+        if ((SConfig.SERVER.inf_human_conv.get().contains(entity.getEncodeId()) || SConfig.SERVER.inf_villager_conv.get().contains(entity.getEncodeId())
+                || SConfig.SERVER.inf_pillager_conv.get().contains(entity.getEncodeId()) || SConfig.SERVER.inf_witch_conv.get().contains(entity.getEncodeId())
+                || SConfig.SERVER.inf_evoker_conv.get().contains(entity.getEncodeId())) || SConfig.SERVER.inf_vindi_conv.get().contains(entity.getEncodeId())) {
+            LivingEntity _livEnt = (LivingEntity) entity;
+            if (_livEnt.hasEffect(Seffects.MYCELIUM.get())) {
+                if (event != null && event.isCancelable()) {
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
+
+
 
 }

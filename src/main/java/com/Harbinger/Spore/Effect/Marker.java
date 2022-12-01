@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Effect;
 
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Sentities.Infected;
+import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -23,7 +24,7 @@ public class Marker extends MobEffect implements IForgeMobEffect {
     @Override
     public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
         j = pLivingEntity.getEffect(Seffects.MARKER.get()).getDuration();
-        if (!(pLivingEntity instanceof Infected)){
+        if (!(pLivingEntity instanceof Infected || pLivingEntity instanceof UtilityEntity)){
         AABB boundingBox = pLivingEntity.getBoundingBox().inflate(32);
         List<Entity> entities = pLivingEntity.level.getEntities(pLivingEntity, boundingBox);
 

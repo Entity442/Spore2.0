@@ -19,9 +19,9 @@ public class InfectedPanicGoal extends Goal {
     protected double posY;
     protected double posZ;
 
-    public InfectedPanicGoal(PathfinderMob p_25691_, double p_25692_) {
-        this.mob = p_25691_;
-        this.speedModifier = p_25692_;
+    public InfectedPanicGoal(PathfinderMob mob, double s) {
+        this.mob = mob;
+        this.speedModifier = s;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));
     }
 
@@ -35,14 +35,6 @@ public class InfectedPanicGoal extends Goal {
             this.posY = (double)blockpos.getY();
             this.posZ = (double)blockpos.getZ();
             return true;}
-        } else {
-            BlockPos blockpos = this.lookForDarkness(this.mob.level, this.mob, 15);
-            if (blockpos != null) {
-                this.posX = (double) blockpos.getX();
-                this.posY = (double) blockpos.getY();
-                this.posZ = (double) blockpos.getZ();
-                return true;
-            }
         }
             return this.findRandomPosition();
     }
@@ -74,18 +66,11 @@ public class InfectedPanicGoal extends Goal {
     }
 
     @Nullable
-    protected BlockPos lookForWater(BlockGetter p_198173_, Entity p_198174_, int p_198175_) {
-        BlockPos blockpos = p_198174_.blockPosition();
-        return !p_198173_.getBlockState(blockpos).getCollisionShape(p_198173_, blockpos).isEmpty() ? null : BlockPos.findClosestMatch(p_198174_.blockPosition(), p_198175_, 1, (p_196649_) -> {
-            return p_198173_.getFluidState(p_196649_).is(FluidTags.WATER);
+    protected BlockPos lookForWater(BlockGetter getter, Entity entity, int s) {
+        BlockPos blockpos = entity.blockPosition();
+        return !getter.getBlockState(blockpos).getCollisionShape(getter, blockpos).isEmpty() ? null : BlockPos.findClosestMatch(entity.blockPosition(), s, 1, (p_196649_) -> {
+            return getter.getFluidState(p_196649_).is(FluidTags.WATER);
         }).orElse((BlockPos)null);
     }
 
-    @Nullable
-    protected BlockPos lookForDarkness(BlockGetter getter, Entity entity, int p_198175_) {
-        BlockPos blockpos = entity.blockPosition();
-        return !getter.getBlockState(blockpos).getCollisionShape(getter, blockpos).isEmpty() ? null : BlockPos.findClosestMatch(entity.blockPosition(), p_198175_, 1, (p_196649_) -> {
-            return getter.getMaxLightLevel() < 15;
-        }).orElse((BlockPos)null);
-    }
 }

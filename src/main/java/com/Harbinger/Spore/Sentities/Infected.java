@@ -18,11 +18,11 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.FleeSunGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
@@ -84,13 +84,14 @@ public class Infected extends Monster {
                 (this, AbstractVillager.class,  true));
 
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, true, (en) -> {
-            return en instanceof Enemy && !(en instanceof Infected || en instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(en.getEncodeId())) && SConfig.SERVER.at_mob.get();
+            return !(en instanceof Animal || en instanceof Infected || en instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(en.getEncodeId())) && SConfig.SERVER.at_mob.get();
         }));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Animal.class, 5, false, true, (en) -> {
             return !SConfig.SERVER.blacklist.get().contains(en.getEncodeId()) && SConfig.SERVER.at_an.get();
         }));
 
         this.goalSelector.addGoal(7 , new InfectedPanicGoal(this , 1.5));
+        this.goalSelector.addGoal(8 , new FleeSunGoal(this , 1.2));
         this.goalSelector.addGoal(8, new SwimToTarget(this , 1.0));
         this.goalSelector.addGoal(7, new SwimToBlockGoal(this , 1.5, 8));
         this.goalSelector.addGoal(9,new FollowOthersGoal(this, 1.2, ScentEntity.class , 128 , false));
