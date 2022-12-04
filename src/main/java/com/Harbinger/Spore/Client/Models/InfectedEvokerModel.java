@@ -162,6 +162,8 @@ public class InfectedEvokerModel<T extends InfectedEvoker> extends EntityModel<T
 		}
 		this.LeftArm.visible = entity.setHas_arm();
 
+		this.head.yRot = netHeadYaw / (180F / (float) Math.PI);
+		this.head.xRot = headPitch /  ( 90F / (float) Math.PI);
 
 		this.LeftArm.getChild("base").getChild("middleF").xRot = Mth.sin(ageInTicks/8)/6;
 		this.LeftArm.getChild("base").getChild("middleF").getChild("middleF2").xRot = Mth.sin(ageInTicks/8)/6;

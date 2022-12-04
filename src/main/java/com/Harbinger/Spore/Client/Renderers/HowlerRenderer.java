@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class HowlerRenderer<Type extends Howler> extends MobRenderer<Type , HowlerModel<Type>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Spore.MODID,
-            "textures/entity/blank.png");
+            "textures/entity/howler.png");
 
 
     public HowlerRenderer(EntityRendererProvider.Context context) {
@@ -25,7 +25,7 @@ public class HowlerRenderer<Type extends Howler> extends MobRenderer<Type , Howl
     }
 
     private  class Eyes<Type extends Howler,M extends HowlerModel<Type>> extends EyesLayer<Type,M>{
-        private static final RenderType EYES = RenderType.eyes(new ResourceLocation(Spore.MODID,"textures/entity/blank.png"));
+        private static final RenderType EYES = RenderType.eyes(new ResourceLocation(Spore.MODID,"textures/entity/eyes/howler.png"));
         public Eyes(RenderLayerParent layer) {
             super(layer);
         }

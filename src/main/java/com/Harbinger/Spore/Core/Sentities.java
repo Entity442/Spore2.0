@@ -90,7 +90,7 @@ public class Sentities {
                     .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
 
     public static final RegistryObject<EntityType<Howler>> HOWLER = SPORE_ENTITIES.register("howler",
-            () -> EntityType.Builder.of(Howler::new, MobCategory.MONSTER).sized(0.6f, 2.3f)
+            () -> EntityType.Builder.of(Howler::new, MobCategory.MONSTER).sized(0.6f, 2.1f)
                     .build(new ResourceLocation(Spore.MODID, "howler").toString()));
 
     public static final RegistryObject<EntityType<ScentEntity>> SCENT = SPORE_ENTITIES.register("scent",
