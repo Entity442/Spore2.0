@@ -78,16 +78,12 @@ public class BreakBlockGoal extends MoveToBlockGoal {
         RandomSource randomsource = this.removerMob.getRandom();
         if (this.isReachedTarget() && blockpos1 != null) {
             if (this.ticksSinceReachedGoal > 0) {
-                Vec3 vec3 = this.removerMob.getDeltaMovement();
-                this.removerMob.setDeltaMovement(vec3.x, 0.3D, vec3.z);
                 if (!level.isClientSide) {
-                    ((ServerLevel)level).sendParticles(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(level.getBlockState(new BlockPos(blockpos.getX(), blockpos.getY() - 1, blockpos.getZ())).getBlock())), (double)blockpos1.getX() + 0.5D, (double)blockpos1.getY() + 0.7D, (double)blockpos1.getZ() + 0.5D, 3, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, (double)0.15F);
+                    ((ServerLevel)level).sendParticles(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(blockToRemove)), (double)blockpos1.getX() + 0.5D, (double)blockpos1.getY() + 0.7D, (double)blockpos1.getZ() + 0.5D, 3, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, (double)0.15F);
                 }
             }
 
             if (this.ticksSinceReachedGoal % 2 == 0) {
-                Vec3 vec31 = this.removerMob.getDeltaMovement();
-                this.removerMob.setDeltaMovement(vec31.x, -0.3D, vec31.z);
                 if (this.ticksSinceReachedGoal % 6 == 0) {
                     this.playDestroyProgressSound(level, this.blockPos);
                 }
@@ -100,7 +96,7 @@ public class BreakBlockGoal extends MoveToBlockGoal {
                         double d3 = randomsource.nextGaussian() * 0.02D;
                         double d1 = randomsource.nextGaussian() * 0.02D;
                         double d2 = randomsource.nextGaussian() * 0.02D;
-                        ((ServerLevel)level).sendParticles(ParticleTypes.POOF, (double)blockpos1.getX() + 0.5D, (double)blockpos1.getY(), (double)blockpos1.getZ() + 0.5D, 1, d3, d1, d2, (double)0.15F);
+                        ((ServerLevel)level).sendParticles(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(blockToRemove)), (double)blockpos1.getX() + 0.5D, (double)blockpos1.getY(), (double)blockpos1.getZ() + 0.5D, 1, d3, d1, d2, (double)0.15F);
                     }
 
                     this.playBreakSound(level, blockpos1);

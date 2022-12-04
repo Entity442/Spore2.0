@@ -79,6 +79,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> sla_damage;
         public final ForgeConfigSpec.ConfigValue<Double> sla_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> how_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> how_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> how_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> spit_hp;
         public final ForgeConfigSpec.ConfigValue<Double> spit_armor;
         public final ForgeConfigSpec.ConfigValue<Double> spit_damage_l;
@@ -141,8 +145,11 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> villager_ev;
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_summon;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> howler_summon;
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
+
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> howler_effects_buff;
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> mycelium;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> corrosion;
@@ -155,6 +162,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_vindi_conv;
 
         public Server(ForgeConfigSpec.Builder builder) {
+
             builder.push("Global Variables for Mobs");
             this.global_damage = builder.define("Global Damage Modifier",1.0);
             this.global_health = builder.define("Global Health Modifier",1.0);
@@ -255,11 +263,22 @@ public class SConfig {
             this.inf_vin_armor = builder.comment("Default 4").defineInRange("Sets Infected Vindicator Armor", 4, 1, Double.MAX_VALUE);
             builder.pop();
 
+            builder.push("Howler");
+            this.how_hp = builder.comment("Default 32").defineInRange("Sets Howler Max health", 32, 1, Double.MAX_VALUE);
+            this.how_damage = builder.comment("Default 5").defineInRange("Sets Howler Damage", 5, 1, Double.MAX_VALUE);
+            this.how_armor = builder.comment("Default 4").defineInRange("Sets Howler Armor", 4, 1, Double.MAX_VALUE);
+            this.howler_effects_buff = builder.defineList("Howler buff effect list",
+                    Lists.newArrayList("minecraft:regeneration","minecraft:speed","minecraft:health_boost","minecraft:strength","minecraft:resistance" ) , o -> o instanceof String);
+            this.howler_summon = builder.defineList("Mobs that can be summoned by the Howler",
+                    Lists.newArrayList("spore:inf_human","spore:inf_villager","spore:inf_pillager","spore:knight" ) , o -> o instanceof String);
+            builder.pop();
+
             builder.push("Infected Pillager");
             this.inf_pil_hp = builder.comment("Default 20").defineInRange("Sets Infected Pillager Max health", 20, 1, Double.MAX_VALUE);
             this.inf_pil_damage = builder.comment("Default 6").defineInRange("Sets Infected Pillager Damage", 6, 1, Double.MAX_VALUE);
             this.inf_pil_armor = builder.comment("Default 2").defineInRange("Sets Infected Pillager Armor", 2, 1, Double.MAX_VALUE);
             this.inf_pil_range_damage = builder.comment("Default 1.6f").define("Sets Infected Pillager Range Damage",1.6f);
+
             builder.pop();
 
             builder.push("Scent");

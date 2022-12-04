@@ -25,7 +25,7 @@ public class Marker extends MobEffect implements IForgeMobEffect {
     public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
         j = pLivingEntity.getEffect(Seffects.MARKER.get()).getDuration();
         if (!(pLivingEntity instanceof Infected || pLivingEntity instanceof UtilityEntity)){
-        AABB boundingBox = pLivingEntity.getBoundingBox().inflate(32);
+        AABB boundingBox = pLivingEntity.getBoundingBox().inflate(32 * (pAmplifier + 1));
         List<Entity> entities = pLivingEntity.level.getEntities(pLivingEntity, boundingBox);
 
         for (Entity entity : entities) {
