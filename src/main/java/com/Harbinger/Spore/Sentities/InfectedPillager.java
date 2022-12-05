@@ -9,6 +9,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -31,14 +32,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Random;
 
 public class InfectedPillager extends Infected implements CrossbowAttackMob , InventoryCarrier {
     private static final EntityDataAccessor<Boolean> IS_CHARGING_CROSSBOW = SynchedEntityData.defineId(InfectedPillager.class, EntityDataSerializers.BOOLEAN);
     private static final int INVENTORY_SIZE = 5;
     private static final int SLOT_OFFSET = 300;
     private final SimpleContainer inventory = new SimpleContainer(5);
+    private int ev;
 
     public InfectedPillager(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -163,7 +168,7 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
         return Ssounds.INF_GROWL.get();
     }
 
-    protected SoundEvent getHurtSound(DamageSource p_34327_) {
+    protected SoundEvent getHurtSound() {
         return Ssounds.INF_DAMAGE.get();
     }
 
@@ -175,7 +180,34 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
         return SoundEvents.ZOMBIE_STEP;
     }
 
-    protected void playStepSound(BlockPos p_34316_, BlockState p_34317_) {
+    protected void playStepSound() {
         this.playSound(this.getStepSound(), 0.15F, 1.0F);
+    }
+    @Override
+    public void baseTick() {
+        super.baseTick();
+        if (!isFreazing() && kills >= 1) {
+            this.ev = ev + 1;
+        }
+        if (ev >= (20 * SConfig.SERVER.evolution_age_human.get()) && kills >= 1) {
+            Evolve(this);
+        }
+    }
+
+
+
+    public void Evolve(LivingEntity entity) {
+        Random rand = new Random();
+        List<? extends String> ev = SConfig.SERVER.pil_ev.get();
+
+        for (int i = 0; i < 1; ++i) {
+            int randomIndex = rand.nextInt(ev.size());
+            ResourceLocation randomElement1 = new ResourceLocation(ev.get(randomIndex));
+            EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
+            Entity waveentity = randomElement.create(level);
+            waveentity.setPos(entity.getX(), entity.getY() + 0.5D, entity.getZ());
+            level.addFreshEntity(waveentity);
+            entity.discard();
+        }
     }
 }

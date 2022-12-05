@@ -136,7 +136,6 @@ public class HowlerModel<T extends Howler> extends EntityModel<T> {
 			this.LeftLeg.xRot = 0;
 			this.RightLeg.xRot = 0;
 		}
-		this.Head.yRot = netHeadYaw / (180F / (float) Math.PI);
 		this.Head.xRot = headPitch /  ( 90F / (float) Math.PI);
 
 		this.Head.getChild("tooth").xRot = Mth.sin(ageInTicks/6)/8;

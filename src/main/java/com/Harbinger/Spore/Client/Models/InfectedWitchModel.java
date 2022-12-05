@@ -1,4 +1,4 @@
-package com.Harbinger.Spore.Client.Models;// Made with Blockbench 4.4.1
+package com.Harbinger.Spore.Client.Models;// Made with Blockbench 4.5.2
 // Exported for Minecraft version 1.17 - 1.18 with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
@@ -7,6 +7,7 @@ import com.Harbinger.Spore.Sentities.InfectedWitch;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -14,20 +15,25 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.HumanoidArm;
 
-public class InfectedWitchModel<T extends InfectedWitch> extends EntityModel<T> {
+public class InfectedWitchModel<T extends InfectedWitch> extends EntityModel<T> implements ArmedModel {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Spore.MODID, "infectedwitchmodel"), "main");
 	private final ModelPart body;
 	private final ModelPart LeftLeg;
 	private final ModelPart RightLeg;
 	private final ModelPart TopBody;
+	private final ModelPart RightArm;
+	private final ModelPart LeftArm;
 
 	public InfectedWitchModel(ModelPart root) {
 		this.body = root.getChild("body");
 		this.LeftLeg = root.getChild("LeftLeg");
 		this.RightLeg = root.getChild("RightLeg");
 		this.TopBody = root.getChild("TopBody");
+		this.RightArm = root.getChild("RightArm");
+		this.LeftArm = root.getChild("LeftArm");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -48,16 +54,6 @@ public class InfectedWitchModel<T extends InfectedWitch> extends EntityModel<T> 
 		PartDefinition TopBody = partdefinition.addOrReplaceChild("TopBody", CubeListBuilder.create().texOffs(28, 0).addBox(-4.0F, -6.0F, -3.0F, 8.0F, 6.0F, 6.0F, new CubeDeformation(0.0F))
 		.texOffs(0, 0).addBox(-4.0F, -6.0F, -3.0F, 8.0F, 10.0F, 6.0F, new CubeDeformation(0.25F)), PartPose.offset(0.0F, 6.0F, 0.0F));
 
-		PartDefinition RightArm = TopBody.addOrReplaceChild("RightArm", CubeListBuilder.create().texOffs(14, 55).addBox(-2.0F, -2.0F, -1.5F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-5.0F, -3.0F, 0.0F));
-
-		PartDefinition RightForArm = RightArm.addOrReplaceChild("RightForArm", CubeListBuilder.create().texOffs(52, 54).addBox(-1.0F, 0.0F, -1.5F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(-1.0F, 4.0F, 0.0F, -0.0873F, 0.0F, 0.0F));
-
-		PartDefinition LeftArm = TopBody.addOrReplaceChild("LeftArm", CubeListBuilder.create().texOffs(57, 34).addBox(-1.0F, -2.0F, -1.5F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(5.0F, -3.0F, 0.0F));
-
-		PartDefinition LeftForArm = LeftArm.addOrReplaceChild("LeftForArm", CubeListBuilder.create(), PartPose.offset(0.0F, 4.0F, 0.0F));
-
-		PartDefinition cube_r1 = LeftForArm.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(56, 0).addBox(-1.0F, 0.0F, -1.5F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.0873F, 0.0F, 0.0F));
-
 		PartDefinition head = TopBody.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 48).addBox(-4.0F, -2.0F, 0.0F, 8.0F, 2.0F, 4.0F, new CubeDeformation(0.0F))
 		.texOffs(0, 26).addBox(-4.0F, -10.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F))
 		.texOffs(48, 12).addBox(-4.0F, -2.25F, -3.75F, 8.0F, 1.0F, 4.0F, new CubeDeformation(-0.1F)), PartPose.offset(0.0F, -6.0F, -2.0F));
@@ -75,6 +71,18 @@ public class InfectedWitchModel<T extends InfectedWitch> extends EntityModel<T> 
 
 		PartDefinition hat4 = hat3.addOrReplaceChild("hat4", CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, 0.0F, 0.0F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.25F)), PartPose.offsetAndRotation(1.75F, -2.0F, 2.0F, -0.2094F, 0.0F, 0.1047F));
 
+		PartDefinition RightArm = partdefinition.addOrReplaceChild("RightArm", CubeListBuilder.create().texOffs(14, 55).addBox(-2.0F, -2.0F, -1.5F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-5.0F, 3.0F, 0.0F));
+
+		PartDefinition RightForArm = RightArm.addOrReplaceChild("RightForArm", CubeListBuilder.create().texOffs(52, 54).addBox(-1.0F, 0.0F, -1.5F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(-1.0F, 4.0F, 0.0F, -0.0873F, 0.0F, 0.0F));
+
+		PartDefinition LeftArm = partdefinition.addOrReplaceChild("LeftArm", CubeListBuilder.create().texOffs(57, 34).addBox(-1.0F, -2.0F, -1.5F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(5.0F, 3.0F, 0.0F));
+
+		PartDefinition LeftForArm = LeftArm.addOrReplaceChild("LeftForArm", CubeListBuilder.create(), PartPose.offset(0.0F, 4.0F, 0.0F));
+
+		PartDefinition cube_r1 = LeftForArm.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(56, 0).addBox(-1.0F, 0.0F, -1.5F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.0873F, 0.0F, 0.0F));
+
+		PartDefinition item = LeftForArm.addOrReplaceChild("item", CubeListBuilder.create(), PartPose.offset(0.0F, 5.0F, 0.0F));
+
 		return LayerDefinition.create(meshdefinition, 128, 128);
 	}
 
@@ -84,24 +92,20 @@ public class InfectedWitchModel<T extends InfectedWitch> extends EntityModel<T> 
 
 
 		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
-			this.TopBody.getChild("RightArm").xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
-			this.TopBody.getChild("LeftArm").xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-			this.TopBody.getChild("RightArm").zRot = 0;
-			this.TopBody.getChild("LeftArm").zRot = 0;
+			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
+			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
+			this.RightArm.zRot = 0;
+			this.LeftArm.zRot = 0;
 			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.RightLeg.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-			this.LeftLeg.getChild("leftForLeg").xRot = Mth.cos(limbSwing * 0.4F) * 0.4F * limbSwingAmount;
-			this.RightLeg.getChild("rightForLeg").xRot = Mth.cos(limbSwing * 0.4F) * -0.4F * limbSwingAmount;
-			if (entity.isPotionThrow()){
-				float j = 0;
-				j = j + 0.5F;
-				this.TopBody.getChild("RightArm").xRot = -90F + j;
-				this.TopBody.yRot = j;
-			}
+			if (LeftLeg.xRot < 0){
+				this.LeftLeg.getChild("leftForLeg").xRot = -LeftLeg.xRot;}
+			if (RightLeg.xRot < 0){
+				this.RightLeg.getChild("rightForLeg").xRot = -RightLeg.xRot;}
 
 		}else{
-			this.TopBody.getChild("RightArm").zRot = Mth.sin(ageInTicks/8)/10;
-			this.TopBody.getChild("LeftArm").zRot = -Mth.sin(ageInTicks/8)/10;
+			this.RightArm.zRot = Mth.sin(ageInTicks/8)/10;
+			this.LeftArm.zRot = -Mth.sin(ageInTicks/8)/10;
 			this.LeftLeg.xRot = 0;
 			this.RightLeg.xRot = 0;
 		}
@@ -119,5 +123,15 @@ public class InfectedWitchModel<T extends InfectedWitch> extends EntityModel<T> 
 		LeftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		RightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		TopBody.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		RightArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		LeftArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	}
+
+	private ModelPart getArm(HumanoidArm arm) {
+		return arm == HumanoidArm.RIGHT ? this.LeftArm : this.LeftArm.getChild("LeftForArm").getChild("item");
+	}
+	@Override
+	public void translateToHand(HumanoidArm arm, PoseStack stack) {
+		this.getArm(arm).translateAndRotate(stack);
 	}
 }

@@ -44,6 +44,7 @@
   "item.spore.inf_pillager_spawnegg": "Infected Pillager",
   "item.spore.inf_vind_spawnegg": "Infected Vindicator",
   "item.spore.inf_evo_spawnegg": "Infected Evoker",
+  "item.spore.howler_spawnegg": "Howler",
 
   "item.spore.scent_spawnegg": "Scent",
   "item.spore.claw_spawnegg": "Claw",
@@ -60,6 +61,7 @@
   "entity.spore.slasher": "Slasher",
   "entity.spore.inf_vindicator": "Infected Vindicator",
   "entity.spore.inf_evoker": "Infected Evoker",
+  "entity.spore.howler": "Howler",
   "entity.spore.scent": "Scent",
   "entity.spore.claw": "Claw",
 

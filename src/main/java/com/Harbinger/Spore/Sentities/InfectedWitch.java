@@ -19,6 +19,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.world.entity.ai.goal.UseItemGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
@@ -41,6 +42,9 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
     }
     protected void registerGoals() {
         super.registerGoals();
+        this.goalSelector.addGoal(0, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.HEALING), SoundEvents.WITCH_DRINK, (p_35882_) -> {
+            return this.getHealth() < this.getMaxHealth();
+        }));
         this.goalSelector.addGoal(2, new BuffAlliesGoal(this,Infected.class,1.2,35,45,3));
         this.goalSelector.addGoal(1, new BuffAlliesGoal(this,EvolvedInfected.class,1.2,35,45,3));
         this.goalSelector.addGoal(3, new RangedAttackGoal(this, 1.0D, 40, 10.0F));

@@ -130,8 +130,10 @@ public class BraionmilModel<T extends Braionmil> extends EntityModel<T> {
 			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
 			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.RightLeg.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-			this.LeftLeg.getChild("leftForLeg").xRot = Mth.cos(limbSwing * 0.4F) * 0.4F * limbSwingAmount;
-			this.RightLeg.getChild("rightForLeg").xRot = Mth.cos(limbSwing * 0.4F) * -0.4F * limbSwingAmount;
+			 if (LeftLeg.xRot < 0){
+				 this.LeftLeg.getChild("leftForLeg").xRot = -LeftLeg.xRot;}
+			 if (RightLeg.xRot < 0){
+				 this.RightLeg.getChild("rightForLeg").xRot = -RightLeg.xRot;}
 
 			if (entity.BraioAttack()){
 				this.lungs.zScale = (1F + (0.03F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);

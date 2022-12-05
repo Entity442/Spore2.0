@@ -39,16 +39,9 @@ public class Howler extends EvolvedInfected{
     @Override
     protected void registerGoals() {
 
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this,1.1,true){
-            @Override
-            public boolean canUse() {
-                if (mob.getTarget() != null){
-                double ze = mob.distanceToSqr(mob.getTarget());
-                return ze < 50;
-            }return false;}
-        });
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this,1.1,true));
         this.goalSelector.addGoal(1, new HowlerAttackGoal( this,1.5));
-        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8));
+        this.goalSelector.addGoal(3, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(7, new FollowOthersGoal(this , 1 , EvolvedInfected.class, 32 , true));
 
@@ -59,7 +52,7 @@ public class Howler extends EvolvedInfected{
     @Override
     public void tick() {
         if (isAlive() && scream){
-            this.playSound(SoundEvents.GHAST_SCREAM,1,1);
+            this.playSound(Ssounds.HOWLER_GROWL.get());
             scream = false;
         }
         super.tick();
@@ -91,7 +84,7 @@ public class Howler extends EvolvedInfected{
             assert this.mob.getTarget() != null;
             double ze = mob.distanceToSqr(mob.getTarget());
             this.mob.getLookControl().setLookAt(this.mob.getTarget(), 10.0F, (float) this.mob.getMaxHeadXRot());
-            if (ze > 100.0D){
+            if (ze > 120.0D){
             this.mob.getNavigation().moveTo(this.mob.getTarget(),this.speedModifier);
             }else if (checkForInfected(this.mob) && screamTimer >= 40){
                 ScreamAOE(this.mob);
@@ -100,8 +93,9 @@ public class Howler extends EvolvedInfected{
             } else {
                 this.mob.getNavigation().stop();
                 if (screamTimer >= 80){
+                    int r = random.nextInt(1,3);
                     ScreamAOE(this.mob);
-                    for (int index0 = 0; index0 < 3; index0++) {
+                    for (int index0 = 0; index0 < r; index0++) {
                         SummonScream(this.mob);}
                 this.screamTimer = 0;
                }
@@ -116,7 +110,7 @@ public class Howler extends EvolvedInfected{
                 .add(Attributes.MOVEMENT_SPEED, 0.1)
                 .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.how_damage.get() * SConfig.SERVER.global_damage.get())
                 .add(Attributes.ARMOR, SConfig.SERVER.how_armor.get() * SConfig.SERVER.global_armor.get())
-                .add(Attributes.FOLLOW_RANGE, 16)
+                .add(Attributes.FOLLOW_RANGE, 24)
                 .add(Attributes.ATTACK_KNOCKBACK, 3);
 
     }
@@ -143,7 +137,7 @@ public class Howler extends EvolvedInfected{
     }
 
     public void ScreamAOE(Entity entity){
-            AABB boundingBox = entity.getBoundingBox().inflate(16);
+            AABB boundingBox = entity.getBoundingBox().inflate(8);
             List<Entity> entities = entity.level.getEntities(entity, boundingBox);
 
             for (Entity entity1 : entities) {
@@ -152,8 +146,9 @@ public class Howler extends EvolvedInfected{
                 }
             }
              for (Entity entity1 : entities) {
-            if(entity1 instanceof Player livingEntity) {
-                livingEntity.addEffect( new MobEffectInstance(MobEffects.CONFUSION ,  200, 1));
+            if (entity1 instanceof Player  livingEntity) {
+                livingEntity.addEffect( new MobEffectInstance(MobEffects.CONFUSION ,  200, 0));
+                livingEntity.addEffect( new MobEffectInstance(MobEffects.WEAKNESS ,  200, 1));
                 }
             }
     }

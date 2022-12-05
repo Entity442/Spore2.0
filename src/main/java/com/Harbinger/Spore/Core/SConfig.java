@@ -143,6 +143,7 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> human_ev;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> villager_ev;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> pil_ev;
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_summon;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> howler_summon;
@@ -198,6 +199,9 @@ public class SConfig {
                             "spore:slasher"
                             ,"spore:leaper"
                             ,"spore:spitter" ) , o -> o instanceof String);
+            this.pil_ev = builder.defineList("Infected Pillager Evolutions",
+                    Lists.newArrayList(
+                            "spore:howler") , o -> o instanceof String);
 
             this.evolution_age_human = builder.comment("Default 150").define("Evolution Timer in seconds",150);
 

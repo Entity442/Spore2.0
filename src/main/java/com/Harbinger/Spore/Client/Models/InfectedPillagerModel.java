@@ -100,8 +100,10 @@ public class InfectedPillagerModel<T extends InfectedPillager> extends EntityMod
 			this.LeftArm.zRot = 0;
 			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.RightLeg.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-			this.LeftLeg.getChild("leftForLeg").xRot = Mth.cos(limbSwing * 0.4F) * 0.4F * limbSwingAmount;
-			this.RightLeg.getChild("rightForLeg").xRot = Mth.cos(limbSwing * 0.4F) * -0.4F * limbSwingAmount;
+			if (LeftLeg.xRot < 0){
+				this.LeftLeg.getChild("leftForLeg").xRot = -LeftLeg.xRot;}
+			if (RightLeg.xRot < 0){
+				this.RightLeg.getChild("rightForLeg").xRot = -RightLeg.xRot;}
 		} else {
 			this.RightArm.zRot = Mth.sin(ageInTicks/8)/10;
 			this.LeftArm.zRot = -Mth.sin(ageInTicks/8)/10;

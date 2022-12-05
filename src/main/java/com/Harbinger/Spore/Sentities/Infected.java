@@ -117,7 +117,7 @@ public class Infected extends Monster {
 
             for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
                 BlockState blockstate = this.level.getBlockState(blockpos);
-                if (blockstate.getMaterial() == Material.GLASS) {
+                if (blockstate.getMaterial() == Material.GLASS || blockstate.getMaterial() == Material.LEAVES) {
                     flag = this.level.destroyBlock(blockpos, true, this) || flag;
                 }
             }

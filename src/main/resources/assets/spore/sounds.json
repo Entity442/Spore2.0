@@ -10,6 +10,12 @@
     "sounds": [
       "spore:growl"
     ]
+  },
+  "howler_growl" :{
+    "subtitle": "sounds.spore.growl",
+    "sounds": [
+      "spore:howler"
+    ]
   }
 
 
