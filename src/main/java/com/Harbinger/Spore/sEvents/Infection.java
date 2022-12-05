@@ -120,6 +120,17 @@ public class Infection {
                     entity.discard();
                 }
             }
+            if (SConfig.SERVER.inf_van_conv.get().contains(entity.getEncodeId())) {
+                if (world instanceof ServerLevel _level) {
+                    Entity entityToSpawn = new InfectedWanderingTrader(Sentities.INF_WANDERER.get(), _level);
+                    entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
+                    Mob _mobToSpawn = (Mob) entityToSpawn;
+                    _mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.CONVERSION,
+                            null, null);
+                    world.addFreshEntity(entityToSpawn);
+                    entity.discard();
+                }
+            }
         }
     }
 
@@ -135,7 +146,8 @@ public class Infection {
     public static void drop(@Nullable Event event, Entity entity) {
         if ((SConfig.SERVER.inf_human_conv.get().contains(entity.getEncodeId()) || SConfig.SERVER.inf_villager_conv.get().contains(entity.getEncodeId())
                 || SConfig.SERVER.inf_pillager_conv.get().contains(entity.getEncodeId()) || SConfig.SERVER.inf_witch_conv.get().contains(entity.getEncodeId())
-                || SConfig.SERVER.inf_evoker_conv.get().contains(entity.getEncodeId())) || SConfig.SERVER.inf_vindi_conv.get().contains(entity.getEncodeId())) {
+                || SConfig.SERVER.inf_evoker_conv.get().contains(entity.getEncodeId())) || SConfig.SERVER.inf_vindi_conv.get().contains(entity.getEncodeId())
+                || SConfig.SERVER.inf_van_conv.get().contains(entity.getEncodeId())) {
             LivingEntity _livEnt = (LivingEntity) entity;
             if (_livEnt.hasEffect(Seffects.MYCELIUM.get())) {
                 if (event != null && event.isCancelable()) {

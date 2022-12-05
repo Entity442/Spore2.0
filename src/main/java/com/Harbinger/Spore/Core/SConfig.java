@@ -31,6 +31,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> inf_vil_damage;
         public final ForgeConfigSpec.ConfigValue<Double> inf_vil_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> inf_van_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_van_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_van_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> inf_vin_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_vin_damage;
         public final ForgeConfigSpec.ConfigValue<Double> inf_vin_armor;
@@ -161,6 +165,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_pillager_conv;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_evoker_conv;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_vindi_conv;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_van_conv;
 
         public Server(ForgeConfigSpec.Builder builder) {
 
@@ -215,7 +220,7 @@ public class SConfig {
             this.inf_villager_conv = builder.defineList("Mobs that can become infected villagers",
                     Lists.newArrayList(
                             "minecraft:villager"
-                            ,"minecraft:wandering_trader",
+                            ,"minecraft:zombie_villager",
                             "guardvillagers:guard") , o -> o instanceof String);
             this.inf_witch_conv = builder.defineList("Mobs that can become infected witches",
                     Lists.newArrayList(
@@ -229,6 +234,10 @@ public class SConfig {
             this.inf_vindi_conv = builder.defineList("Mobs that can become infected vindicators",
                     Lists.newArrayList(
                             "minecraft:vindicator","hunterillager:hunterillager" ) , o -> o instanceof String);
+            this.inf_van_conv = builder.defineList("Mobs that can become infected wandering traders",
+                    Lists.newArrayList(
+                            "minecraft:wandering_trader" ) , o -> o instanceof String);
+
             builder.pop();
             builder.pop();
 
@@ -294,12 +303,18 @@ public class SConfig {
             builder.push("Infected Villager");
             this.inf_vil_hp = builder.comment("Default 20").defineInRange("Sets Infected Villager Max health", 20, 1, Double.MAX_VALUE);
             this.inf_vil_damage = builder.comment("Default 6").defineInRange("Sets Infected Villager Damage", 6, 1, Double.MAX_VALUE);
-            this.inf_vil_armor = builder.comment("Default 0").defineInRange("Sets Infected Villager Armor", 1, 0, Double.MAX_VALUE);
+            this.inf_vil_armor = builder.comment("Default 1").defineInRange("Sets Infected Villager Armor", 1, 0, Double.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Infected Wandering Trader");
+            this.inf_van_hp = builder.comment("Default 20").defineInRange("Sets Infected Wandering Trader Max health", 20, 1, Double.MAX_VALUE);
+            this.inf_van_damage = builder.comment("Default 6").defineInRange("Sets Infected Wandering Trader Damage", 6, 1, Double.MAX_VALUE);
+            this.inf_van_armor = builder.comment("Default 1").defineInRange("Sets Infected Wandering Trader Armor", 1, 0, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Infected Witch");
             this.inf_witch_hp = builder.comment("Default 25").defineInRange("Sets Infected Witch Max health", 25, 1, Double.MAX_VALUE);
-            this.inf_witch_armor = builder.comment("Default 1").defineInRange("Sets Infected Witch Max health", 1, 0, Double.MAX_VALUE);
+            this.inf_witch_armor = builder.comment("Default 1").defineInRange("Sets Infected Witch Armor", 1, 0, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Braiomil");

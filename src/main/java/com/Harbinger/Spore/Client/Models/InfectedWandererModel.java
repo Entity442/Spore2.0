@@ -3,7 +3,7 @@ package com.Harbinger.Spore.Client.Models;// Made with Blockbench 4.4.1
 // Paste this class into your mod and generate all required imports
 
 
-import com.Harbinger.Spore.Sentities.InfectedVillager;
+import com.Harbinger.Spore.Sentities.InfectedWanderingTrader;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -17,7 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 
-public class InfectedVillagerModel<T extends InfectedVillager> extends EntityModel<T> {
+public class InfectedWandererModel<T extends InfectedWanderingTrader> extends EntityModel<T> implements ArmedModel {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Spore.MODID, "infectedvillagermodel"), "main");
 	private final ModelPart head;
@@ -28,7 +28,7 @@ public class InfectedVillagerModel<T extends InfectedVillager> extends EntityMod
 	private final ModelPart RightLeg;
 	private final ModelPart LeftLeg;
 
-	public InfectedVillagerModel(ModelPart root) {
+	public InfectedWandererModel(ModelPart root) {
 		this.head = root.getChild("head");
 		this.body = root.getChild("body");
 		this.bodywear = root.getChild("bodywear");
@@ -131,5 +131,13 @@ public class InfectedVillagerModel<T extends InfectedVillager> extends EntityMod
 		LeftArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		RightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		LeftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	}
+
+	private ModelPart getArm(HumanoidArm p_102923_) {
+		return p_102923_ == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
+	}
+	@Override
+	public void translateToHand(HumanoidArm arm, PoseStack stack) {
+		this.getArm(arm).translateAndRotate(stack);
 	}
 }

@@ -46,6 +46,7 @@ public class Infected extends Monster {
         this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, 16.0F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
         this.moveControl =  new InfectedWaterMovementControl(this);
+        this.xpReward = 5;
     }
 
 

@@ -99,10 +99,10 @@ public class KnightModel<T extends Knight> extends EntityModel<T> {
 			this.body.getChild("RightLeg").xRot = Mth.cos(limbSwing * 0.6F) * 1.2F * limbSwingAmount;
 			this.body.zRot = Mth.cos(limbSwing/4)/10;
 
-			 this.body.getChild("tendril").yRot = 1;
-			 this.body.getChild("tendril2").yRot = 1;
-			 this.body.getChild("tendril3").yRot = 1;
-			 this.body.getChild("tendril4").yRot = 1;
+			 this.body.getChild("tendril").yRot = -1;
+			 this.body.getChild("tendril2").yRot = -1;
+			 this.body.getChild("tendril3").yRot = -1;
+			 this.body.getChild("tendril4").yRot = -1;
 			 if (entity.swinging){
 
 				 float f = 0;

@@ -119,13 +119,13 @@ public class HowlerModel<T extends Howler> extends EntityModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
+		if (!(limbSwingAmount > -0.05F && limbSwingAmount < 0.15F)){
 			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
 			this.RightArm.zRot = 0;
 			this.LeftArm.zRot = 0;
-			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
-			this.RightLeg.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
+			this.LeftLeg.xRot = Mth.cos(limbSwing ) * limbSwingAmount;
+			this.RightLeg.xRot = Mth.cos(limbSwing ) * -1F * limbSwingAmount;
 			if (LeftLeg.xRot < 0){
 			this.LeftLeg.getChild("leftForLeg").xRot = -LeftLeg.xRot;}
 			if (RightLeg.xRot < 0){

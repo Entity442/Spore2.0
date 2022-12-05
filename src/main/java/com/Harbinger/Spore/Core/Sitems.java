@@ -50,7 +50,7 @@ public class Sitems {
 
     public  static final RegistryObject<Item> INFECTED_HUMAN_SPAWNEGG = ITEMS.register("infected_human_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.INF_HUMAN,-9357608, -16724788, new Item.Properties().tab(ScreativeTab.SPORE)));
-   public  static final RegistryObject<Item> INF_VILLAGER_SPAWNEGG = ITEMS.register("inf_villager_spawnegg",
+    public  static final RegistryObject<Item> INF_VILLAGER_SPAWNEGG = ITEMS.register("inf_villager_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.INF_VILLAGER,-6639718,-97141773, new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> INF_WITCH_SPAWNEGG = ITEMS.register("inf_witch_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.INF_WITCH,-8512718,-95711773, new Item.Properties().tab(ScreativeTab.SPORE)));
@@ -60,6 +60,8 @@ public class Sitems {
             () -> new ForgeSpawnEggItem(Sentities.INF_VINDICATOR,-984718,-95171773, new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> INF_EVO_SPAWNEGG = ITEMS.register("inf_evo_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.INF_EVOKER,-254718,-45671773, new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> INF_WANDERER_SPAWNEGG = ITEMS.register("inf_wanderer_spawnegg",
+            () -> new ForgeSpawnEggItem(Sentities.INF_WANDERER,-6639718,-97141773, new Item.Properties().tab(ScreativeTab.SPORE)));
 
 
 

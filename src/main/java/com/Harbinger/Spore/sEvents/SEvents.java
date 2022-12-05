@@ -27,6 +27,7 @@ public class SEvents {
         event.put(Sentities.CLAW.get(), InfEvoClaw.createAttributes().build());
         event.put(Sentities.INF_EVOKER.get(), InfectedEvoker.createAttributes().build());
         event.put(Sentities.HOWLER.get(), Howler.createAttributes().build());
+        event.put(Sentities.INF_WANDERER.get(), InfectedWanderingTrader.createAttributes().build());
 
         event.put(Sentities.SCENT.get(), ScentEntity.createAttributes().build());
     }

@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -35,14 +36,17 @@ import net.minecraft.world.phys.Vec3;
 
 public class InfectedWitch extends Infected implements RangedAttackMob , RangedBuff {
 
-    private boolean PotionThrow;
+    private Potion potion = null;
 
     public InfectedWitch(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(0, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.HEALING), SoundEvents.WITCH_DRINK, (p_35882_) -> {
+        this.goalSelector.addGoal(0, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.LONG_FIRE_RESISTANCE), SoundEvents.WITCH_DRINK, (p_35882_) -> {
+            return (this.isOnFire() || this.getLastDamageSource() != null && this.getLastDamageSource().isFire()) && !this.hasEffect(MobEffects.FIRE_RESISTANCE);
+        }));
+        this.goalSelector.addGoal(0, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRONG_HEALING), SoundEvents.WITCH_DRINK, (p_35882_) -> {
             return this.getHealth() < this.getMaxHealth();
         }));
         this.goalSelector.addGoal(2, new BuffAlliesGoal(this,Infected.class,1.2,35,45,3));
@@ -52,10 +56,15 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
 
         this.goalSelector.addGoal(7, new FollowOthersGoal(this , 1 , EvolvedInfected.class, 32, true));
 
-
-
     }
 
+    @Override
+    public void tick() {
+        if (isAlive() && potion != null && this.getHealth() == this.getMaxHealth()){
+            this.setItemSlot(EquipmentSlot.MAINHAND,PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), potion));
+        }
+        super.tick();
+    }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
@@ -66,19 +75,13 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
 
     }
 
-    public boolean isPotionThrow() {
-        return PotionThrow;
-    }
-
     @Override
     public void performRangedAttack(LivingEntity entity, float f) {
-            this.PotionThrow = true;
-            Vec3 vec3 = entity.getDeltaMovement();
+        Vec3 vec3 = entity.getDeltaMovement();
             double d0 = entity.getX() + vec3.x - this.getX();
             double d1 = entity.getEyeY() - (double)1.1F - this.getY();
             double d2 = entity.getZ() + vec3.z - this.getZ();
             double d3 = Math.sqrt(d0 * d0 + d2 * d2);
-            Potion potion = Potions.HARMING;
              if (d3 >= 8.0D && !entity.hasEffect(Seffects.MARKER.get())) {
                 potion = Spotion.MARKER_POTION.get();
             } else if (entity.getHealth() >= 8.0F && !entity.hasEffect(Seffects.MYCELIUM.get())) {
@@ -87,8 +90,9 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
                 potion = Potions.WEAKNESS;
             }else if (entity.getHealth() >= 8.0F && !entity.hasEffect(MobEffects.POISON)) {
                 potion = Potions.POISON;
-            }
-
+            }else {
+                 potion = Potions.HARMING;
+             }
             ThrownPotion thrownpotion = new ThrownPotion(this.level, this);
             thrownpotion.setItem(PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), potion));
             thrownpotion.setXRot(thrownpotion.getXRot() - -20.0F);
@@ -103,13 +107,11 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
 
     @Override
     public void performRangedBuff(LivingEntity entity, float f) {
-        this.PotionThrow = true;
         Vec3 vec3 = entity.getDeltaMovement();
         double d0 = entity.getX() + vec3.x - this.getX();
         double d1 = entity.getEyeY() - (double)1.1F - this.getY();
         double d2 = entity.getZ() + vec3.z - this.getZ();
         double d3 = Math.sqrt(d0 * d0 + d2 * d2);
-        Potion potion = null;
         if ((entity.getHealth() < entity.getMaxHealth()) && !entity.isOnFire()) {
             potion = Potions.REGENERATION;
         }else if (entity.isOnFire() && !entity.hasEffect(MobEffects.FIRE_RESISTANCE)) {
@@ -120,10 +122,10 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
             potion = Potions.INVISIBILITY;
         }else if (d3 <= 2.0D && !entity.hasEffect(MobEffects.MOVEMENT_SPEED) && this.random.nextFloat() < 0.25F) {
             potion = Potions.SWIFTNESS;
+        }else {
+            potion = Potions.STRONG_HEALING;
         }
-
         ThrownPotion thrownpotion = new ThrownPotion(this.level, this);
-        assert potion != null;
         thrownpotion.setItem(PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), potion));
         thrownpotion.setXRot(thrownpotion.getXRot() - -20.0F);
         thrownpotion.shoot(d0, d1 + d3 * 0.2D, d2, 0.75F, 8.0F);
