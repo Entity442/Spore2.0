@@ -7,8 +7,8 @@
     ]
   },
   "spawners": {
-    "type": "spore:inf_vindicator",
-    "weight": 6,
+    "type": "spore:inf_wanderer",
+    "weight": 12,
     "minCount": 1,
     "maxCount": 1
   }

@@ -116,6 +116,10 @@ public class GrieferModel<T extends Griefer> extends EntityModel<T> {
 			this.LeftArm.xRot = -89.5F + (Mth.sin(ageInTicks/4)/7);
 			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.6F) * -1.2F * limbSwingAmount;
 			this.RightLeg.xRot = Mth.cos(limbSwing * 0.6F) * 1.2F * limbSwingAmount;
+			 if (LeftLeg.xRot < 0){
+				 this.LeftLeg.getChild("leftForLeg").xRot = -LeftLeg.xRot;}
+			 if (RightLeg.xRot < 0){
+				 this.RightLeg.getChild("rightForLeg").xRot = -RightLeg.xRot;}
 			if (entity.swinging){
 				this.RightArm.xRot = -88.5F;
 				this.LeftArm.xRot = -88.5F;}

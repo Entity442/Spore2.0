@@ -84,6 +84,10 @@ public class InfectedModel<T extends InfectedHuman> extends EntityModel<T> {
 			this.body.getChild("LeftArm").xRot = -90F + (Mth.sin(ageInTicks/4)/7);
 			this.body.getChild("LeftLeg").xRot = Mth.cos(limbSwing * 0.6F) * -1.2F * limbSwingAmount;
 			this.body.getChild("RightLeg").xRot = Mth.cos(limbSwing * 0.6F) * 1.2F * limbSwingAmount;
+			if (body.getChild("LeftLeg").xRot < 0){
+				this.body.getChild("LeftLeg").getChild("leftForLeg").xRot = -body.getChild("LeftLeg").xRot;}
+			if (body.getChild("RightLeg").xRot < 0){
+				this.body.getChild("RightLeg").getChild("rightForLeg").xRot = -body.getChild("RightLeg").xRot;}
 			this.body.zRot = Mth.cos(limbSwing/2)/10;
 
 			if (entity.swinging){

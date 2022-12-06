@@ -19,7 +19,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.FleeSunGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.animal.Animal;
@@ -37,7 +36,7 @@ import net.minecraftforge.network.NetworkHooks;
 
 public class Infected extends Monster {
     public int kills;
-    protected Infected(EntityType<? extends Monster> type, Level level) {
+    public Infected(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 16.0F);
         this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, -1.0F);
@@ -76,7 +75,7 @@ public class Infected extends Monster {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(3,(new HurtByTargetGoal(this , Infected.class)).setAlertOthers(Infected.class));
+        this.goalSelector.addGoal(3,(new HurtTargetGoal(this , Infected.class)).setAlertOthers(Infected.class));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
                 (this, Player.class,  true));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>

@@ -24,8 +24,6 @@ public class Knight extends EvolvedInfected{
     @Override
     protected void registerGoals() {
 
-
-
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {

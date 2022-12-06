@@ -137,17 +137,21 @@ public class Howler extends EvolvedInfected{
     }
 
     public void ScreamAOE(Entity entity){
-            AABB boundingBox = entity.getBoundingBox().inflate(8);
+            AABB boundingBox = entity.getBoundingBox().inflate(16);
             List<Entity> entities = entity.level.getEntities(entity, boundingBox);
 
             for (Entity entity1 : entities) {
                 if(entity1 instanceof Infected livingEntity) {
                     livingEntity.addEffect( new MobEffectInstance(Seffects.MARKER.get() ,  400, 0));
+                    if (this.getTarget() != null){
+                        livingEntity.setTarget(this.getTarget());
+                        livingEntity.setLastHurtByMob(this.getTarget());
+                    }
                 }
             }
              for (Entity entity1 : entities) {
             if (entity1 instanceof Player  livingEntity) {
-                livingEntity.addEffect( new MobEffectInstance(MobEffects.CONFUSION ,  200, 0));
+                livingEntity.addEffect( new MobEffectInstance(MobEffects.CONFUSION ,  100, 0));
                 livingEntity.addEffect( new MobEffectInstance(MobEffects.WEAKNESS ,  200, 1));
                 }
             }

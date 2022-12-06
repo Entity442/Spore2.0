@@ -8,7 +8,7 @@
   },
   "spawners": {
     "type": "spore:inf_evoker",
-    "weight": 12,
+    "weight": 6,
     "minCount": 1,
     "maxCount": 1
   }
