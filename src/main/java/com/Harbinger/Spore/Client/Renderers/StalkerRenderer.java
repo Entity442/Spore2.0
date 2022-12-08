@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class StalkerRenderer<Type extends Stalker> extends MobRenderer<Type , StalkerModel<Type>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Spore.MODID,
-            "textures/entity/baio.png");
+            "textures/entity/stalker.png");
 
 
     public StalkerRenderer(EntityRendererProvider.Context context) {
@@ -24,8 +24,8 @@ public class StalkerRenderer<Type extends Stalker> extends MobRenderer<Type , St
         this.addLayer(new Eyes<>(this));
     }
 
-    private  class Eyes<Type extends Stalker,M extends StalkerModel<Type>> extends EyesLayer<Type,M>{
-        private static final RenderType EYES = RenderType.eyes(new ResourceLocation(Spore.MODID,"textures/entity/eyes/baio.png"));
+    private static class Eyes<Type extends Stalker,M extends StalkerModel<Type>> extends EyesLayer<Type,M>{
+        private static final RenderType EYES = RenderType.eyes(new ResourceLocation(Spore.MODID,"textures/entity/eyes/stalker.png"));
         public Eyes(RenderLayerParent layer) {
             super(layer);
         }

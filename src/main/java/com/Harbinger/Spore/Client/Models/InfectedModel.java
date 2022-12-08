@@ -127,10 +127,7 @@ public class InfectedModel<T extends InfectedHuman> extends EntityModel<T> {
 		this.body.getChild("tendril2").zRot = Mth.sin(ageInTicks/8)/10;
 
 
-
-		if (entity.stomac() >= 6){
-			 i = 6;}
-		else { i = entity.stomac();}
+		i = Math.min(entity.stomac(), 6);
 		this.body.getChild("spine").xScale = 1 + (0.02F + i);
 	}
 

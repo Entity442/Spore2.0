@@ -31,8 +31,6 @@ public class Marker extends MobEffect implements IForgeMobEffect {
         for (Entity entity : entities) {
             if(entity instanceof Infected livingEntity) {
                 livingEntity.addEffect( new MobEffectInstance(Seffects.MARKER.get() , j * 2,pAmplifier + 1, false,false));
-                livingEntity.setLastHurtByMob(pLivingEntity);
-                livingEntity.setTarget(pLivingEntity);
             }
         }
 

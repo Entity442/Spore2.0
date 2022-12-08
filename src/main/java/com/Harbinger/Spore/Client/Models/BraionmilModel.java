@@ -142,7 +142,6 @@ public class BraionmilModel<T extends Braionmil> extends EntityModel<T> {
 				this.lungs2.zScale = (1F + (0.03F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
 				this.lungs2.yScale = (1F + (0.03F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
 				this.lungs2.xScale = (1F + (-0.005F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
-				this.head.yRot = Mth.sin(ageInTicks/4)/2;
 
 
 			}
@@ -155,9 +154,8 @@ public class BraionmilModel<T extends Braionmil> extends EntityModel<T> {
 			 this.lungs2.zScale = (1F + (0.03F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
 			 this.lungs2.yScale = (1F + (0.03F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
 			 this.lungs2.xScale = (1F + (-0.005F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
-			 this.head.yRot = Mth.sin(ageInTicks/4)/2;
 
-		}
+		 }
 		 else{
 			this.RightArm.xRot = Mth.sin(ageInTicks/8)/10;
 			this.LeftArm.xRot = -Mth.sin(ageInTicks/8)/10;

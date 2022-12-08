@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
+import com.Harbinger.Spore.Sentities.AI.InfectedWallMovementControl;
 import com.Harbinger.Spore.Sentities.AI.LeapGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -26,49 +27,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class Leaper extends EvolvedInfected{
-    private static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(Leaper.class, EntityDataSerializers.BYTE);
     public Leaper(EntityType<? extends Monster> type, Level level) {
         super(type, level);
-    }
-    protected PathNavigation createNavigation(Level level) {
-        return new WallClimberNavigation(this, level);
-    }
-
-    public void tick() {
-        super.tick();
-        if (!this.level.isClientSide) {
-            this.setClimbing(this.horizontalCollision);
-        }
+        this.moveControl = new InfectedWallMovementControl(this);
 
     }
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_FLAGS_ID, (byte)0);
-    }
-    public boolean isClimbing() {
-        return (this.entityData.get(DATA_FLAGS_ID) & 1) != 0;
-    }
-
-    public void setClimbing(boolean p_33820_) {
-        byte b0 = this.entityData.get(DATA_FLAGS_ID);
-        if (p_33820_) {
-            b0 = (byte)(b0 | 1);
-        } else {
-            b0 = (byte)(b0 & -2);
-        }
-
-        this.entityData.set(DATA_FLAGS_ID, b0);
-    }
-
-    public boolean onClimbable() {
-        return this.isClimbing();
-    }
-
-
-
-
-
-
 
     @Override
     protected void registerGoals() {
