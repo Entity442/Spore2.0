@@ -30,7 +30,7 @@ public class Leaper extends EvolvedInfected{
     public Leaper(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         this.moveControl = new InfectedWallMovementControl(this);
-
+        this.navigation = new WallClimberNavigation(this,level);
     }
 
     @Override

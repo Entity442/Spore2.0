@@ -75,6 +75,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> knight_damage;
         public final ForgeConfigSpec.ConfigValue<Double> knight_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> stalker_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> stalker_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> stalker_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> leap_hp;
         public final ForgeConfigSpec.ConfigValue<Double> leap_damage;
         public final ForgeConfigSpec.ConfigValue<Double> leap_armor;
@@ -154,7 +158,6 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
 
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> enemies;
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> howler_effects_buff;
 
@@ -181,9 +184,6 @@ public class SConfig {
             this.blacklist = builder.defineList("Mobs Not Targeted",
                     Lists.newArrayList(
                             "minecraft:creeper") , o -> o instanceof String);
-
-            this.enemies = builder.defineList("Mobs That Target Infected",
-                    Lists.newArrayList("minecraft:iron_golem","minecraft:pillager") , o -> o instanceof String);
             builder.pop();
 
 
@@ -211,7 +211,8 @@ public class SConfig {
                             ,"spore:spitter" ) , o -> o instanceof String);
             this.pil_ev = builder.defineList("Infected Pillager Evolutions",
                     Lists.newArrayList(
-                            "spore:howler") , o -> o instanceof String);
+                            "spore:howler",
+                                     "spore:stalker") , o -> o instanceof String);
 
             this.evolution_age_human = builder.comment("Default 150").define("Evolution Timer in seconds",150);
 
@@ -309,6 +310,12 @@ public class SConfig {
             this.inf_vil_hp = builder.comment("Default 20").defineInRange("Sets Infected Villager Max health", 20, 1, Double.MAX_VALUE);
             this.inf_vil_damage = builder.comment("Default 6").defineInRange("Sets Infected Villager Damage", 6, 1, Double.MAX_VALUE);
             this.inf_vil_armor = builder.comment("Default 1").defineInRange("Sets Infected Villager Armor", 1, 0, Double.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Stalker");
+            this.stalker_hp = builder.comment("Default 35").defineInRange("Sets Stalker Max health", 35, 1, Double.MAX_VALUE);
+            this.stalker_damage = builder.comment("Default 10").defineInRange("Sets Stalker Damage", 10, 1, Double.MAX_VALUE);
+            this.stalker_armor = builder.comment("Default 3").defineInRange("Sets Stalker Armor", 3, 0, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Infected Wandering Trader");
