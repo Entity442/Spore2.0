@@ -25,6 +25,9 @@ public class Ssounds {
             "howler_growl",
             () -> new SoundEvent(new ResourceLocation(Spore.MODID, "howler_growl")));
 
+    public static final RegistryObject<SoundEvent> BRAIOMIL_ATTACK = SOUNDS.register(
+            "braiomil_attack",
+            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "braiomil_attack")));
     private Ssounds() {
     }
 }

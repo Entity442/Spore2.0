@@ -2,13 +2,15 @@
 "inf_damage" :{
   "subtitle": "sounds.spore.damage",
   "sounds": [
-    "spore:slash"
+    "spore:slash",
+    "spore:slash2"
   ]
 },
   "inf_growl" :{
     "subtitle": "sounds.spore.growl",
     "sounds": [
-      "spore:growl"
+      "spore:growl",
+      "spore:growl2"
     ]
   },
   "howler_growl" :{
@@ -16,7 +18,12 @@
     "sounds": [
       "spore:howler"
     ]
+  },
+  "braiomil_attack" :{
+    "subtitle": "sounds.spore.braiomil_attack",
+    "sounds": [
+      "spore:braiomil_attack"
+    ]
   }
-
 
 }

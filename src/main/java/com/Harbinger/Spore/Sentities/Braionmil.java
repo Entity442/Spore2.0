@@ -59,7 +59,7 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
 
             int i = this.getSwellDir();
             if (i > 0 && this.swell == 0) {
-                this.playSound(SoundEvents.SOUL_ESCAPE, 1.0F, 0.5F);
+                this.playSound(Ssounds.BRAIOMIL_ATTACK.get(), 1.0F, 0.5F);
             }
 
             this.swell += i;
