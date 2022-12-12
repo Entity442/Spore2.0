@@ -88,6 +88,10 @@ public class Sentities {
             () -> EntityType.Builder.of(Stalker::new, MobCategory.MONSTER).sized(0.6f, 2.3f)
                     .build(new ResourceLocation(Spore.MODID, "stalker").toString()));
 
+    public static final RegistryObject<EntityType<Brute>> BRUTE = SPORE_ENTITIES.register("brute",
+            () -> EntityType.Builder.of(Brute::new, MobCategory.MONSTER).sized(2f,2.3f)
+                    .build(new ResourceLocation(Spore.MODID, "stalker").toString()));
+
 
 
 

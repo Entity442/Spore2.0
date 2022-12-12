@@ -27,6 +27,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
@@ -143,10 +144,7 @@ public class Howler extends EvolvedInfected{
             for (Entity entity1 : entities) {
                 if(entity1 instanceof Infected livingEntity) {
                     livingEntity.addEffect( new MobEffectInstance(Seffects.MARKER.get() ,  400, 0));
-                    if (this.getTarget() != null){
-                        livingEntity.setTarget(this.getTarget());
-                        livingEntity.setLastHurtByMob(this.getTarget());
-                    }
+
                 }
             }
              for (Entity entity1 : entities) {
@@ -182,7 +180,7 @@ public class Howler extends EvolvedInfected{
         List<Entity> entities = entity.level.getEntities(entity, boundingBox);
 
         for (Entity en : entities) {
-            if (en instanceof Infected){
+            if (en instanceof Infected && !(en instanceof InfectedWitch || en instanceof Howler)){
                 return true;
             }
         }

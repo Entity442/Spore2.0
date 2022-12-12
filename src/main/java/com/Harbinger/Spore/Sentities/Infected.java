@@ -90,7 +90,7 @@ public class Infected extends Monster {
             return !SConfig.SERVER.blacklist.get().contains(en.getEncodeId()) && SConfig.SERVER.at_an.get();
         }));
 
-        this.goalSelector.addGoal(7 , new InfectedPanicGoal(this , 1.5));
+        this.goalSelector.addGoal(5 , new InfectedPanicGoal(this , 1.5));
         this.goalSelector.addGoal(8 , new FleeSunGoal(this , 1.2));
         this.goalSelector.addGoal(8, new SwimToTarget(this , 1.0));
         this.goalSelector.addGoal(7, new SwimToBlockGoal(this , 1.5, 8));
@@ -125,6 +125,9 @@ public class Infected extends Monster {
             if (!flag && this.onGround) {
                 this.jumpFromGround();
             }
+        }
+        if (this.getLastDamageSource() == DamageSource.IN_WALL && this.isOnGround()){
+            this.jumpFromGround();
         }
     }
 

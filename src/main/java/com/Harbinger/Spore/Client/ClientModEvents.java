@@ -41,6 +41,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(HowlerModel.LAYER_LOCATION, HowlerModel::createBodyLayer);
         event.registerLayerDefinition(InfectedWandererModel.LAYER_LOCATION, InfectedWandererModel::createBodyLayer);
         event.registerLayerDefinition(StalkerModel.LAYER_LOCATION, StalkerModel::createBodyLayer);
+        event.registerLayerDefinition(BruteModel.LAYER_LOCATION, BruteModel::createBodyLayer);
     }
 
 
@@ -65,6 +66,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.HOWLER.get(), HowlerRenderer::new);
         event.registerEntityRenderer(Sentities.INF_WANDERER.get(), InfectedWandererRenderer::new);
         event.registerEntityRenderer(Sentities.STALKER.get(), StalkerRenderer::new);
+        event.registerEntityRenderer(Sentities.BRUTE.get(), BruteRenderer::new);
 
 
         event.registerEntityRenderer(Sentities.ACID_BALL.get(), ThrownItemRenderer::new);

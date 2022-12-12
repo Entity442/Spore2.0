@@ -28,15 +28,19 @@ public class InfectedPanicGoal extends Goal {
     public boolean canUse() {
         if (!this.shouldPanic()) {
             return false;
-        } else if (this.mob.isOnFire()){
-        BlockPos blockpos = this.lookForWater(this.mob.level, this.mob, 15);
-        if (blockpos != null) {
-            this.posX = (double)blockpos.getX();
-            this.posY = (double)blockpos.getY();
-            this.posZ = (double)blockpos.getZ();
-            return true;}
-        }
+        } else {
+            if (this.mob.isOnFire()) {
+                BlockPos blockpos = this.lookForWater(this.mob.level, this.mob, 5);
+                if (blockpos != null) {
+                    this.posX = (double)blockpos.getX();
+                    this.posY = (double)blockpos.getY();
+                    this.posZ = (double)blockpos.getZ();
+                    return true;
+                }
+            }
+
             return this.findRandomPosition();
+        }
     }
 
     protected boolean shouldPanic() {
@@ -66,10 +70,10 @@ public class InfectedPanicGoal extends Goal {
     }
 
     @Nullable
-    protected BlockPos lookForWater(BlockGetter getter, Entity entity, int s) {
-        BlockPos blockpos = entity.blockPosition();
-        return !getter.getBlockState(blockpos).getCollisionShape(getter, blockpos).isEmpty() ? null : BlockPos.findClosestMatch(entity.blockPosition(), s, 1, (p_196649_) -> {
-            return getter.getFluidState(p_196649_).is(FluidTags.WATER);
+    protected BlockPos lookForWater(BlockGetter p_198173_, Entity p_198174_, int p_198175_) {
+        BlockPos blockpos = p_198174_.blockPosition();
+        return !p_198173_.getBlockState(blockpos).getCollisionShape(p_198173_, blockpos).isEmpty() ? null : BlockPos.findClosestMatch(p_198174_.blockPosition(), p_198175_, 1, (p_196649_) -> {
+            return p_198173_.getFluidState(p_196649_).is(FluidTags.WATER);
         }).orElse((BlockPos)null);
     }
 
