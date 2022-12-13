@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Core;
 
 import com.Harbinger.Spore.Sblocks.Acid;
+import com.Harbinger.Spore.Sblocks.Container;
 import com.Harbinger.Spore.Sblocks.Mycelium;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.world.item.BlockItem;
@@ -33,5 +34,6 @@ public class Sblocks {
             Mycelium::new);
     public static final RegistryObject<Block> ACID = registerBlockWithoutBlockItem("acid",
             Acid::new);
-
+    public static final RegistryObject<Block> CONTAINER = registerBlock("container",
+            Container::new);
 }

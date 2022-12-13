@@ -104,7 +104,11 @@ public class StalkerModel<T extends Stalker> extends EntityModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
+		if (entity.swinging){
+			this.arm.xRot = -89.5f + (headPitch /  ( 90F / (float) Math.PI));
+			this.arm2.xRot = this.arm.xRot;
+		}
+		else if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
 			this.arm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.arm2.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
 			this.leg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;

@@ -88,12 +88,12 @@ public class InfectedPillagerModel<T extends InfectedPillager> extends EntityMod
 			this.LeftArm.xRot = -89.5f + (headPitch /  ( 90F / (float) Math.PI));
 			this.LeftArm.yRot = 88.5f;
 		}
-		else if (entity.swinging){
+		else if (entity.swinging && !entity.isChargingCrossbow()){
 			this.RightArm.xRot = -89.5f + (headPitch /  ( 90F / (float) Math.PI));
 			this.LeftArm.xRot = -89.5f + (headPitch /  ( 90F / (float) Math.PI));
 			}
 
-		else if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
+		else if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F) && !entity.isChargingCrossbow()){
 			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
 			this.RightArm.zRot = 0;
