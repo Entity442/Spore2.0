@@ -100,6 +100,14 @@
 
 
   "sounds.spore.damage": "Infected is being damaged",
-  "sounds.spore.growl": "Infected is growling"
+  "sounds.spore.growl": "Infected is growling",
+
+  "item.line.shift": "A nutrient soup made out of animal matter.",
+  "item.line.normal": "Press shift for more info.",
+
+  "container.biohazard": "BCU",
+  "block.spore.container": "BCU",
+  "container.line.normal": "Press shift for more info.",
+  "container.line.shift": "The Biohazard Storage Unit is the perfect new addition to storing your organic materials."
 
 }

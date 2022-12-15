@@ -2,13 +2,17 @@ package com.Harbinger.Spore.Client;
 
 import com.Harbinger.Spore.Client.Models.*;
 import com.Harbinger.Spore.Client.Renderers.*;
+import com.Harbinger.Spore.Core.SMenu;
+import com.Harbinger.Spore.Core.SblockEntities;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.Particles.AcidParticle;
 import com.Harbinger.Spore.Particles.SporeParticle;
+import com.Harbinger.Spore.Screens.ContainerScreen;
 import com.Harbinger.Spore.Spore;
 import com.Harbinger.Spore.sEvents.SItemProperties;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -48,7 +52,7 @@ public class ClientModEvents {
 
 
     @SubscribeEvent
-    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+    public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(Sentities.INF_HUMAN.get(), InfectedHumanRenderer::new);
         event.registerEntityRenderer(Sentities.KNIGHT.get(), KnightRenderer::new);
         event.registerEntityRenderer(Sentities.GRIEFER.get(), GrieferRenderer::new);
@@ -72,14 +76,21 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.ACID_BALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.ACID.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.SCENT.get(), ScentEntityRenderer::new);
-    }
 
+
+        event.registerBlockEntityRenderer(SblockEntities.CONTAINER.get() , ContainerItemRenderer::new);
+    }
 
     @SubscribeEvent
     public static void clientSetup(final FMLClientSetupEvent event) {
 
 
         SItemProperties.addCustomItemProperties();
+
+        event.enqueueWork(() -> {
+            MenuScreens.register(SMenu.CONTAINER.get(), ContainerScreen::new);
+        });
+
     }
 
 

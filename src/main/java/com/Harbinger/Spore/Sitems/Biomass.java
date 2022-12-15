@@ -21,9 +21,9 @@ public class Biomass extends Item {
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
 
         if (Screen.hasShiftDown()){
-            components.add(Component.literal("A nutrient soup made out of animal matter").withStyle(ChatFormatting.DARK_RED));
+            components.add(Component.translatable("item.line.shift").withStyle(ChatFormatting.DARK_RED));
         } else {
-            components.add(Component.literal("Press SHIFT for more info").withStyle(ChatFormatting.GOLD));
+            components.add(Component.translatable("item.line.normal").withStyle(ChatFormatting.GOLD));
         }
         super.appendHoverText(itemStack, level, components, tooltipFlag);
     }
