@@ -37,7 +37,7 @@ public class InfectedSpearItem extends Item implements Vanishable {
         super(properties);
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", SConfig.SERVER.spear_damage.get() - 1, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", SConfig.SERVER.spear_swing.get(), AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", -SConfig.SERVER.spear_swing.get(), AttributeModifier.Operation.ADDITION));
 
         this.defaultModifiers = builder.build();
     }

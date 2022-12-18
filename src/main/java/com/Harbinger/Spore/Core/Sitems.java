@@ -44,8 +44,7 @@ public class Sitems {
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> ARMOR_PLATE = ITEMS.register("armor_plate",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
-    public  static final RegistryObject<Item> BIOMASS = ITEMS.register("biomass",
-            () -> new Biomass());
+
 
 
     public  static final RegistryObject<Item> INFECTED_HUMAN_SPAWNEGG = ITEMS.register("infected_human_spawnegg",
@@ -128,4 +127,16 @@ public class Sitems {
             () -> new InfectedLeggings());
     public  static final RegistryObject<Item> INF_BOOTS = ITEMS.register("inf_boots",
             () -> new InfectedBoots());
+
+
+
+
+    public  static final RegistryObject<Item> BIOMASS = ITEMS.register("biomass",
+            () -> new Biomass());
+    public  static final RegistryObject<Item> AMETHYST_DUST = ITEMS.register("amethyst_dust",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE_T)));
+    public  static final RegistryObject<Item> COMPOUND = ITEMS.register("compound",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE_T)));
+    public  static final RegistryObject<Item> COMPOUND_PLATE = ITEMS.register("compound_plate",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE_T)));
 }

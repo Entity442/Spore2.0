@@ -174,7 +174,7 @@ public class SConfig {
 
         public Server(ForgeConfigSpec.Builder builder) {
 
-            builder.push("Global Variables for Mobs");
+            builder.push("Global Variables");
             this.global_damage = builder.define("Global Damage Modifier",1.0);
             this.global_health = builder.define("Global Health Modifier",1.0);
             this.global_armor = builder.define("Global Armor Modifier",1.0);
@@ -384,7 +384,7 @@ public class SConfig {
             builder.push("Spear");
             this.spear_durability = builder.comment("Default 800").define("Durability",800);
             this.spear_damage = builder.comment("Default 11").defineInRange("Melee Damage", 11, 1, Integer.MAX_VALUE);
-            this.spear_swing = builder.comment("Default -3").define("Swing",-3);
+            this.spear_swing = builder.comment("Default 3").define("Swing",3);
             this.spear_range = builder.comment("Default 12").define("Ranged Damage",12);
             builder.pop();
             builder.push("Saber");
@@ -405,7 +405,7 @@ public class SConfig {
             this.bow_durability = builder.comment("Default 700").define("Bow Durability",700);
             this.bow_arrow_damage_multiplier = builder.comment("Default 1.0").define("Bow Range Damage Modifier",1.0);
             this.bow_melee_damage = builder.comment("Default 5").defineInRange("Damage", 5, 1, Integer.MAX_VALUE);
-            this.bow_swing_speed = builder.comment("Default -2.4").define("Bow Swing",-2.4);
+            this.bow_swing_speed = builder.comment("Default 2.4").define("Bow Swing",2.4);
             builder.pop();
             builder.push("Armads");
             this.armads_durability = builder.comment("Default 2500").define("Durability",2500);
@@ -459,8 +459,7 @@ public class SConfig {
     }
 
     public static void loadConfig(ForgeConfigSpec config, String path) {
-        final CommentedFileConfig file = CommentedFileConfig.builder(new File(path)).sync().autosave()
-                .writingMode(WritingMode.REPLACE).build();
+        final CommentedFileConfig file = CommentedFileConfig.builder(new File(path)).sync().autosave().build();
         file.load();
         config.setConfig(file);
     }

@@ -25,7 +25,7 @@ public class ContainerItemRenderer implements BlockEntityRenderer<ContainerBlock
     public void render(ContainerBlockEntity entity, float p_112308_, PoseStack poseStack, MultiBufferSource source, int d1, int d2) {
 
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-        ItemStack itemStack = entity.getRenderStack();
+        ItemStack itemStack = entity.getItem(0);
         poseStack.pushPose();
         poseStack.translate(0.5f , 0.65f,0.5f);
         poseStack.scale(0.5f,0.5f,0.5f);

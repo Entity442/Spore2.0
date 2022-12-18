@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Biomass extends Item {
     public Biomass() {
-        super(new Item.Properties().tab(ScreativeTab.SPORE));
+        super(new Item.Properties().tab(ScreativeTab.SPORE_T));
     }
 
     @Override
