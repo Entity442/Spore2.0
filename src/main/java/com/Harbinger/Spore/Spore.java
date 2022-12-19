@@ -21,9 +21,9 @@ public class Spore
 
     public Spore()
     {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SConfig.SERVER_SPEC, "spore-newconfig.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SConfig.SERVER_SPEC, Spore.MODID + "config.toml");
         SConfig.loadConfig(SConfig.SERVER_SPEC,
-                FMLPaths.CONFIGDIR.get().resolve("spore-newconfig.toml").toString());
+                FMLPaths.CONFIGDIR.get().resolve(Spore.MODID + "config.toml").toString());
 
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -63,7 +63,9 @@ public class Spore
             SpawnPlacements.register(Sentities.INF_WITCH.get(),
                     SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                     Infected::checkMonsterInfectedRules);
-
+            SpawnPlacements.register(Sentities.INF_WANDERER.get(),
+                    SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    Infected::checkMonsterInfectedRules);
         });
     }
 

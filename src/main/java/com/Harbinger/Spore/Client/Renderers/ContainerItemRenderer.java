@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.Client.Renderers;
 
+import com.Harbinger.Spore.Core.Sitems;
 import com.Harbinger.Spore.SBlockEntities.ContainerBlockEntity;
 import com.Harbinger.Spore.Sblocks.Container;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -25,7 +26,7 @@ public class ContainerItemRenderer implements BlockEntityRenderer<ContainerBlock
     public void render(ContainerBlockEntity entity, float p_112308_, PoseStack poseStack, MultiBufferSource source, int d1, int d2) {
 
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-        ItemStack itemStack = entity.getItem(0);
+        ItemStack itemStack = new ItemStack(Sitems.LIVING_CORE.get());
         poseStack.pushPose();
         poseStack.translate(0.5f , 0.65f,0.5f);
         poseStack.scale(0.5f,0.5f,0.5f);

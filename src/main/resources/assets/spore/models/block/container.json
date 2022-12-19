@@ -3,10 +3,10 @@
 	"ambientocclusion": true,
 	"textures": {
 		"1": "minecraft:block/glass",
-		"2": "minecraft:block/white_concrete",
+		"2": "spore:block/laboratory_block",
 		"3": "spore:block/chem",
 		"4": "minecraft:block/water_flow",
-		"particle": "minecraft:block/white_concrete"
+		"particle": "spore:block/laboratory_block"
 	},
 	"elements": [
 		{

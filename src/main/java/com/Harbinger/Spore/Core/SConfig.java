@@ -157,6 +157,8 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> howler_summon;
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> flee;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> attack;
 
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> howler_effects_buff;
@@ -184,6 +186,16 @@ public class SConfig {
             this.blacklist = builder.defineList("Mobs Not Targeted",
                     Lists.newArrayList(
                             "minecraft:creeper") , o -> o instanceof String);
+
+            this.attack = builder.defineList("Mobs that will target infected",
+                    Lists.newArrayList(
+                            "minecraft:iron_golem",
+                                     "guardvillagers:guard") , o -> o instanceof String);
+
+            this.flee = builder.defineList("Mobs that will run from infected",
+                    Lists.newArrayList(
+                            "minecraft:villager",
+                                     "minecraft:wandering_trader") , o -> o instanceof String);
             builder.pop();
 
 

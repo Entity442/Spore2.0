@@ -27,6 +27,10 @@
   "item.spore.infected_spear": "Infected Spear",
   "item.spore.infected_crossbow": "Infected Crossbow",
 
+  "item.spore.amethyst_dust": "Amethyst Dust",
+  "item.spore.compound": "Compound",
+  "item.spore.compound_plate": "Compound Plate",
+
   "item.spore.inf_helmet": "Infected Helmet",
   "item.spore.inf_chest": "Infected Chestplate",
   "item.spore.inf_pants": "Infected Leggings",
@@ -108,6 +112,7 @@
 
   "container.biohazard": "BCU",
   "block.spore.container": "BCU",
+  "block.spore.lab_block": "Laboratory Block",
   "container.line.normal": "Press shift for more info.",
   "container.line.shift": "The Biohazard Storage Unit is the perfect new addition to storing your organic materials."
 
