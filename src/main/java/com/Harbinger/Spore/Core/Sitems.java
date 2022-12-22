@@ -85,6 +85,8 @@ public class Sitems {
             () -> new ForgeSpawnEggItem(Sentities.HOWLER,-32464818,-85290173, new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> STALKER_SPAWNEGG = ITEMS.register("stalker_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.STALKER,-42364818,-21390173, new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> BRUTE_SPAWNEGG = ITEMS.register("brute_spawnegg",
+            () -> new ForgeSpawnEggItem(Sentities.BRUTE,-1235818,-9423173, new Item.Properties().tab(ScreativeTab.SPORE)));
 
 
     public  static final RegistryObject<Item> SCENT_SPAWNEGG = ITEMS.register("scent_spawnegg",

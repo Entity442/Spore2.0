@@ -53,7 +53,7 @@ public class PullGoal extends Goal {
     public void start() {
         if (this.mob.getTarget() != null){
         Vec3 vec3 = this.mob.getTarget().getDeltaMovement();
-        Vec3 vec31 = new Vec3(this.mob.getX() - this.mob.getTarget().getX(), 0.4D,this.mob.getZ() - this.mob.getTarget().getZ() );
+        Vec3 vec31 = new Vec3(this.mob.getX() - this.mob.getTarget().getX(), this.mob.getY() - this.mob.getTarget().getY(),this.mob.getZ() - this.mob.getTarget().getZ() );
         if (vec31.lengthSqr() > 1.0E-7D) {
             vec31 = vec31.normalize().scale(1.5D).add(vec3.scale(0.75D));
         }

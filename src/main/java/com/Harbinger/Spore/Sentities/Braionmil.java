@@ -34,7 +34,7 @@ import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 
-public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
+public class Braionmil extends EvolvedInfected  implements RangedAttackMob ,Support{
     public Braionmil(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }

@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class BruteRenderer<Type extends Brute> extends MobRenderer<Type , BruteModel<Type>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Spore.MODID,
-            "textures/entity/stalker.png");
+            "textures/entity/brute.png");
 
 
     public BruteRenderer(EntityRendererProvider.Context context) {
@@ -27,7 +27,7 @@ public class BruteRenderer<Type extends Brute> extends MobRenderer<Type , BruteM
     }
 
     private static class Eyes<Type extends Brute,M extends BruteModel<Type>> extends EyesLayer<Type,M>{
-        private static final RenderType EYES = RenderType.eyes(new ResourceLocation(Spore.MODID,"textures/entity/eyes/stalker.png"));
+        private static final RenderType EYES = RenderType.eyes(new ResourceLocation(Spore.MODID,"textures/entity/eyes/brute.png"));
         public Eyes(RenderLayerParent layer) {
             super(layer);
         }

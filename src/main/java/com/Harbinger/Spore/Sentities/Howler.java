@@ -31,7 +31,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class Howler extends EvolvedInfected{
+public class Howler extends EvolvedInfected implements Support{
     public Howler(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }
@@ -180,7 +180,7 @@ public class Howler extends EvolvedInfected{
         List<Entity> entities = entity.level.getEntities(entity, boundingBox);
 
         for (Entity en : entities) {
-            if (en instanceof Infected && !(en instanceof InfectedWitch || en instanceof Howler)){
+            if (en instanceof Infected && !(en instanceof Support)){
                 return true;
             }
         }

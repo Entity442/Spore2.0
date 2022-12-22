@@ -79,6 +79,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> stalker_damage;
         public final ForgeConfigSpec.ConfigValue<Double> stalker_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> brute_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> brute_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> brute_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> leap_hp;
         public final ForgeConfigSpec.ConfigValue<Double> leap_damage;
         public final ForgeConfigSpec.ConfigValue<Double> leap_armor;
@@ -224,7 +228,8 @@ public class SConfig {
             this.pil_ev = builder.defineList("Infected Pillager Evolutions",
                     Lists.newArrayList(
                             "spore:howler",
-                                     "spore:stalker") , o -> o instanceof String);
+                                     "spore:stalker",
+                                     "spore:brute") , o -> o instanceof String);
 
             this.evolution_age_human = builder.comment("Default 150").define("Evolution Timer in seconds",150);
 
@@ -292,6 +297,12 @@ public class SConfig {
             this.inf_vin_hp = builder.comment("Default 28").defineInRange("Sets Infected Vindicator Max health", 28, 1, Double.MAX_VALUE);
             this.inf_vin_damage = builder.comment("Default 7").defineInRange("Sets Infected Vindicator Damage", 7, 1, Double.MAX_VALUE);
             this.inf_vin_armor = builder.comment("Default 4").defineInRange("Sets Infected Vindicator Armor", 4, 1, Double.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Brute");
+            this.brute_hp = builder.comment("Default 70").defineInRange("Sets Brute Max health", 70, 1, Double.MAX_VALUE);
+            this.brute_damage = builder.comment("Default 7").defineInRange("Sets Brute Damage", 7, 1, Double.MAX_VALUE);
+            this.brute_armor = builder.comment("Default 15").defineInRange("Sets Brute Armor", 15, 1, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Howler");

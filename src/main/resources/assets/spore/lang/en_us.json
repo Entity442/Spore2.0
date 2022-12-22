@@ -51,6 +51,7 @@
   "item.spore.inf_evo_spawnegg": "Infected Evoker",
   "item.spore.howler_spawnegg": "Howler",
   "item.spore.stalker_spawnegg": "Stalker",
+  "item.spore.brute_spawnegg": "Brute",
 
   "item.spore.scent_spawnegg": "Scent",
   "item.spore.claw_spawnegg": "Claw",
@@ -70,6 +71,7 @@
   "entity.spore.inf_evoker": "Infected Evoker",
   "entity.spore.howler": "Howler",
   "entity.spore.stalker": "Stalker",
+  "entity.spore.brute": "Brute",
   "entity.spore.scent": "Scent",
   "entity.spore.claw": "Claw",
 
@@ -104,8 +106,13 @@
   "itemGroup.spore_t": "Spore Tech",
 
 
+  "item.armor.shift": "Holding shift activates the wall climbing ability.",
+  "item.armor.normal": "Press shift for more info.",
+
   "sounds.spore.damage": "Infected is being damaged",
   "sounds.spore.growl": "Infected is growling",
+  "sounds.spore.braiomil_attack": "The Braiomil is attacking",
+  "sounds.spore.howler_growl": "The Howler is calling",
 
   "item.line.shift": "A nutrient soup made out of animal matter.",
   "item.line.normal": "Press shift for more info.",

@@ -1,6 +1,11 @@
 package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Ssounds;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -14,6 +19,7 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -42,10 +48,10 @@ public class Brute extends EvolvedInfected {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, SConfig.SERVER.knight_hp.get() * SConfig.SERVER.global_health.get())
+                .add(Attributes.MAX_HEALTH, SConfig.SERVER.brute_hp.get() * SConfig.SERVER.global_health.get())
                 .add(Attributes.MOVEMENT_SPEED, 0.2)
-                .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.knight_damage.get() * SConfig.SERVER.global_damage.get())
-                .add(Attributes.ARMOR, SConfig.SERVER.knight_armor.get() * SConfig.SERVER.global_armor.get())
+                .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.brute_damage.get() * SConfig.SERVER.global_damage.get())
+                .add(Attributes.ARMOR, SConfig.SERVER.brute_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.FOLLOW_RANGE, 32)
                 .add(Attributes.ATTACK_KNOCKBACK, 1);
 
@@ -53,12 +59,19 @@ public class Brute extends EvolvedInfected {
 
     @Override
     public void tick() {
-        if (this.isAlive() && this.getTarget() != null && checkForInfected(this)){performRangedAttack(this);}
+        if (this.isAlive() && this.getTarget() != null && checkForInfected(this) && !switchy()){performRangedAttack(this);}
         super.tick();
+    }
+    private boolean switchy() {
+        if (this.getTarget() != null){
+            double ze = this.distanceToSqr(this.getTarget());
+            return (ze < 40.0D);
+        }
+        return false;
     }
 
     boolean checkForInfected(Entity entity){
-        AABB boundingBox = entity.getBoundingBox().inflate(1);
+        AABB boundingBox = entity.getBoundingBox().inflate(2);
         List<Entity> entities = entity.level.getEntities(entity, boundingBox);
 
 
@@ -76,7 +89,7 @@ public class Brute extends EvolvedInfected {
         double d1 = entity.getEyeY() - (double)1.1F - this.getY();
         double d2 = entity.getZ() + vec3.z - this.getTarget().getZ();
         double d3 = Math.sqrt(d0 * d0 + d2 * d2);
-        AABB boundingBox = entity.getBoundingBox().inflate(1);
+        AABB boundingBox = entity.getBoundingBox().inflate(2);
         List<Entity> entities = entity.level.getEntities(entity, boundingBox);
 
         for (Entity en : entities) {
@@ -86,5 +99,24 @@ public class Brute extends EvolvedInfected {
             }
         }
 
+    }
+    protected SoundEvent getAmbientSound() {
+        return Ssounds.INF_GROWL.get();
+    }
+
+    protected SoundEvent getHurtSound(DamageSource p_34327_) {
+        return Ssounds.INF_DAMAGE.get();
+    }
+
+    protected SoundEvent getDeathSound() {
+        return Ssounds.INF_DAMAGE.get();
+    }
+
+    protected SoundEvent getStepSound() {
+        return SoundEvents.ZOMBIE_STEP;
+    }
+
+    protected void playStepSound(BlockPos p_34316_, BlockState p_34317_) {
+        this.playSound(this.getStepSound(), 0.15F, 1.0F);
     }
 }

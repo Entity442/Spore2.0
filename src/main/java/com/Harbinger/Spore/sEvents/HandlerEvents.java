@@ -21,6 +21,7 @@ public class HandlerEvents {
             Mob mob = (Mob) event.getEntity();
             mob.targetSelector.addGoal(1 , new NearestAttackableTargetGoal<>(mob , Infected.class, false));
         }
+
         if (SConfig.SERVER.flee.get().contains(event.getEntity().getEncodeId())){
             PathfinderMob mob = (PathfinderMob) event.getEntity();
             mob.goalSelector.addGoal(2, new AvoidEntityGoal<>(mob , Infected.class,6.0F, 1.0D, 0.9D));
