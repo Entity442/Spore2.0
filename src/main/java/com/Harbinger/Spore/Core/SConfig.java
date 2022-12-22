@@ -20,6 +20,8 @@ public class SConfig {
 
 
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_spawn;
+        public final ForgeConfigSpec.ConfigValue<Boolean> scent_summon;
+        public final ForgeConfigSpec.ConfigValue<Integer> scent_summon_cooldown;
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_particles;
         public final ForgeConfigSpec.ConfigValue<Integer> scent_life;
 
@@ -207,12 +209,6 @@ public class SConfig {
 
 
             builder.push("Mob Evolutions and Infection System");
-            this.inf_summon = builder.defineList("Mobs that can be summoned by the Scent",
-                    Lists.newArrayList(
-                            "spore:inf_human"
-                            ,"spore:inf_villager"
-                            ,"spore:inf_pillager" ) , o -> o instanceof String);
-
             builder.push("Evolutions");
             this.human_ev = builder.defineList("Infected Human Evolutions",
                     Lists.newArrayList(
@@ -327,6 +323,13 @@ public class SConfig {
             this.scent_spawn = builder.comment("Default true").define("Should scent spawn?",true);
             this.scent_particles = builder.comment("Default true").define("Should scent have particles?",true);
             this.scent_life = builder.comment("Default 6000").define("Scent life",6000);
+            this.inf_summon = builder.defineList("Mobs that can be summoned by the Scent",
+                    Lists.newArrayList(
+                            "spore:inf_human"
+                            ,"spore:inf_villager"
+                            ,"spore:inf_pillager" ) , o -> o instanceof String);
+            this.scent_summon = builder.comment("Default true").define("Should scent summon entities?",true);
+            this.scent_summon_cooldown = builder.comment("Default 300").define("The average amount of time it will take for a mob to be summoned",300);
             builder.pop();
 
             builder.push("Infected Villager");

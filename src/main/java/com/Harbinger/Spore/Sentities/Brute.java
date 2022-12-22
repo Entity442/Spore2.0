@@ -65,13 +65,13 @@ public class Brute extends EvolvedInfected {
     private boolean switchy() {
         if (this.getTarget() != null){
             double ze = this.distanceToSqr(this.getTarget());
-            return (ze < 40.0D);
+            return (ze < 60.0D);
         }
         return false;
     }
 
     boolean checkForInfected(Entity entity){
-        AABB boundingBox = entity.getBoundingBox().inflate(2);
+        AABB boundingBox = entity.getBoundingBox().inflate(1.2);
         List<Entity> entities = entity.level.getEntities(entity, boundingBox);
 
 
@@ -89,7 +89,7 @@ public class Brute extends EvolvedInfected {
         double d1 = entity.getEyeY() - (double)1.1F - this.getY();
         double d2 = entity.getZ() + vec3.z - this.getTarget().getZ();
         double d3 = Math.sqrt(d0 * d0 + d2 * d2);
-        AABB boundingBox = entity.getBoundingBox().inflate(2);
+        AABB boundingBox = entity.getBoundingBox().inflate(1.2);
         List<Entity> entities = entity.level.getEntities(entity, boundingBox);
 
         for (Entity en : entities) {

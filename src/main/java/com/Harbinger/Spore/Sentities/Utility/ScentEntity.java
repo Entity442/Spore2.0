@@ -33,11 +33,12 @@ public class ScentEntity extends UtilityEntity {
             if (this.getPersistentData().getInt("dissipate") >= SConfig.SERVER.scent_life.get()) {
                 this.discard();
             }
+            if (SConfig.SERVER.scent_summon.get()){
             this.getPersistentData().putInt("summon", 1 + this.getPersistentData().getInt("summon"));
-            if (this.getPersistentData().getInt("summon") >= 300) {
+            if (this.getPersistentData().getInt("summon") >= SConfig.SERVER.scent_summon_cooldown.get()) {
                 this.getPersistentData().putInt("summon", 0);
                 this.Summon(this);
-            }
+            }}
         }
         super.tick();
     }
@@ -82,6 +83,7 @@ public class ScentEntity extends UtilityEntity {
         Random rand = new Random();
         int d = random.nextInt(0 ,3);
         int r = random.nextInt(-12, 12);
+        int c = random.nextInt(-12, 12);
         List<? extends String> ev = SConfig.SERVER.inf_summon.get();
 
         for (int i = 0; i < 1; ++i) {
@@ -89,7 +91,7 @@ public class ScentEntity extends UtilityEntity {
             ResourceLocation randomElement1 = new ResourceLocation(ev.get(randomIndex));
             EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
             Entity waveentity = randomElement.create(level);
-            waveentity.setPos(entity.getX() + r, entity.getY() + 0.5D + d, entity.getZ() + r);
+            waveentity.setPos(entity.getX() + r, entity.getY() + 0.5D + d, entity.getZ() + c);
             level.addFreshEntity(waveentity);
         }
     }

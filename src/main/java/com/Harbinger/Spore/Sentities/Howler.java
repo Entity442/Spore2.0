@@ -161,6 +161,7 @@ public class Howler extends EvolvedInfected implements Support{
         Random rand = new Random();
         int d = random.nextInt(0 ,2);
         int r = random.nextInt(-12, 12);
+        int c = random.nextInt(-12, 12);
         List<? extends String> ev = SConfig.SERVER.howler_summon.get();
 
         for (int i = 0; i < 1; ++i) {
@@ -168,7 +169,7 @@ public class Howler extends EvolvedInfected implements Support{
             ResourceLocation randomElement1 = new ResourceLocation(ev.get(randomIndex));
             EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
             Entity waveentity = randomElement.create(level);
-            waveentity.setPos(entity.getX() + r, entity.getY() + 0.5D + d, entity.getZ() + r);
+            waveentity.setPos(entity.getX() + r, entity.getY() + 0.5D + d, entity.getZ() + c);
             level.addFreshEntity(waveentity);
             this.scream = true;
         }

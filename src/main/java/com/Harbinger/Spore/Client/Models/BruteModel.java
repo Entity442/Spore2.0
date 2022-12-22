@@ -137,14 +137,14 @@ public class BruteModel<T extends Brute> extends EntityModel<T> {
 		this.head.getChild("jaw").xRot = Mth.sin(ageInTicks/8)/10;
 
 		this.tendril.xRot = -1f + Mth.sin(ageInTicks/8)/10;
-		this.tendril.getChild("tendril2").xRot = 1f + Mth.sin(ageInTicks/8)/10;
-		this.tendril.getChild("tendril2").getChild("tendril3").xRot = 1f + Mth.sin(ageInTicks/8)/10;
+		this.tendril.getChild("tendril2").xRot = 1f + Mth.sin(ageInTicks/6)/6;
+		this.tendril.getChild("tendril2").getChild("tendril3").xRot = 1f + Mth.sin(ageInTicks/4)/5;
 
-		this.tendril4.getChild("tendril5").zRot = -1f + Mth.sin(ageInTicks/8)/10;
-		this.tendril4.getChild("tendril5").getChild("tendril6").zRot = -1f + Mth.sin(ageInTicks/8)/10;
+		this.tendril4.getChild("tendril5").zRot = -1f + Mth.sin(ageInTicks/6)/7;
+		this.tendril4.getChild("tendril5").getChild("tendril6").zRot = -1f + Mth.sin(ageInTicks/5)/4;
 
-		this.tendril7.getChild("tendril8").zRot = 1f + Mth.sin(ageInTicks/8)/10;
-		this.tendril7.getChild("tendril8").getChild("tendril9").zRot = 1f + Mth.sin(ageInTicks/8)/10;
+		this.tendril7.getChild("tendril8").zRot = 1f + Mth.sin(ageInTicks/7)/6;
+		this.tendril7.getChild("tendril8").getChild("tendril9").zRot = 1f + Mth.sin(ageInTicks/5)/6;
 	}
 
 	@Override
