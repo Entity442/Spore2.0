@@ -1,14 +1,17 @@
 package com.Harbinger.Spore.Core;
 
+import com.Harbinger.Spore.Spore;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.google.common.collect.Lists;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
 import java.util.List;
 
+@Mod.EventBusSubscriber(modid = Spore.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class SConfig {
     public static class Server {
 
@@ -339,7 +342,7 @@ public class SConfig {
             builder.pop();
 
             builder.push("Stalker");
-            this.stalker_hp = builder.comment("Default 35").defineInRange("Sets Stalker Max health", 35, 1, Double.MAX_VALUE);
+            this.stalker_hp = builder.comment("Default 55").defineInRange("Sets Stalker Max health", 55, 1, Double.MAX_VALUE);
             this.stalker_damage = builder.comment("Default 10").defineInRange("Sets Stalker Damage", 10, 1, Double.MAX_VALUE);
             this.stalker_armor = builder.comment("Default 3").defineInRange("Sets Stalker Armor", 3, 0, Double.MAX_VALUE);
             builder.pop();
@@ -485,8 +488,9 @@ public class SConfig {
     }
 
     public static void loadConfig(ForgeConfigSpec config, String path) {
-        final CommentedFileConfig file = CommentedFileConfig.builder(new File(path)).sync().autosave().build();
+        final CommentedFileConfig file = CommentedFileConfig.builder(new File(path)).sync().autosave().writingMode(WritingMode.REPLACE).build();
         file.load();
         config.setConfig(file);
     }
+
 }
