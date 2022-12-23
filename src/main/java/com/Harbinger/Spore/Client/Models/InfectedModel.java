@@ -82,14 +82,7 @@ public class InfectedModel<T extends InfectedHuman> extends EntityModel<T> {
 			this.body.xRot = 0.2F;
 			this.body.getChild("RightArm").xRot = -90F - (Mth.sin(ageInTicks/4)/7);
 			this.body.getChild("LeftArm").xRot = -90F + (Mth.sin(ageInTicks/4)/7);
-			this.body.getChild("LeftLeg").xRot = Mth.cos(limbSwing * 0.6F) * -1.2F * limbSwingAmount;
-			this.body.getChild("RightLeg").xRot = Mth.cos(limbSwing * 0.6F) * 1.2F * limbSwingAmount;
-			if (body.getChild("LeftLeg").xRot < 0){
-				this.body.getChild("LeftLeg").getChild("leftForLeg").xRot = -body.getChild("LeftLeg").xRot;}
-			if (body.getChild("RightLeg").xRot < 0){
-				this.body.getChild("RightLeg").getChild("rightForLeg").xRot = -body.getChild("RightLeg").xRot;}
 			this.body.zRot = Mth.cos(limbSwing/2)/10;
-
 			if (entity.swinging){
 				float j = 0;
 				j = j + 0.5F;
@@ -102,21 +95,20 @@ public class InfectedModel<T extends InfectedHuman> extends EntityModel<T> {
 			this.body.getChild("LeftArm").xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
 			this.body.getChild("RightArm").zRot = 0;
 			this.body.getChild("LeftArm").zRot = 0;
-			this.body.getChild("LeftLeg").xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
-			this.body.getChild("RightLeg").xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-			if (body.getChild("LeftLeg").xRot < 0){
-				this.body.getChild("LeftLeg").getChild("leftForLeg").xRot = -body.getChild("LeftLeg").xRot;}
-			if (body.getChild("RightLeg").xRot < 0){
-				this.body.getChild("RightLeg").getChild("rightForLeg").xRot = -body.getChild("RightLeg").xRot;}
 		}
 		else {
 			this.body.zRot = 0F;
 			this.body.xRot = 0F;
 			this.body.getChild("RightArm").zRot = Mth.sin(ageInTicks/8)/10;
 			this.body.getChild("LeftArm").zRot = -Mth.sin(ageInTicks/8)/10;
-			this.body.getChild("LeftLeg").xRot = 0;
-			this.body.getChild("RightLeg").xRot = 0;
 		}
+		this.body.getChild("LeftLeg").xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
+		this.body.getChild("RightLeg").xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
+		if (body.getChild("LeftLeg").xRot < 0){
+			this.body.getChild("LeftLeg").getChild("leftForLeg").xRot = -body.getChild("LeftLeg").xRot;}
+		if (body.getChild("RightLeg").xRot < 0){
+			this.body.getChild("RightLeg").getChild("rightForLeg").xRot = -body.getChild("RightLeg").xRot;}
+
 		this.body.getChild("head").yRot = netHeadYaw / (180F / (float) Math.PI);
 		this.body.getChild("head").xRot = headPitch /  ( 90F / (float) Math.PI);
 		this.body.getChild("head").getChild("jaw").xRot = Mth.sin(ageInTicks/8)/10;

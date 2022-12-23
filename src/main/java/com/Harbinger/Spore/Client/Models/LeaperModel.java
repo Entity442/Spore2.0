@@ -158,9 +158,6 @@ public class LeaperModel<T extends Leaper> extends EntityModel<T> {
 		if (entity.isAggressive()){
 			this.RightArm.xRot = -90F + Mth.sin(ageInTicks/10)/10;
 			this.LeftArm.xRot = -90F + Mth.cos(ageInTicks/10)/10;
-			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.6F) * 0.6F * limbSwingAmount;
-			this.RightLeg.xRot = Mth.cos(limbSwing * 0.6F) * -0.6F * limbSwingAmount;
-
 			if (entity.swinging){
 				float f = 0;
 				f = f + 1F;
@@ -171,17 +168,15 @@ public class LeaperModel<T extends Leaper> extends EntityModel<T> {
 		}else if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
 			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
-			this.RightLeg.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
 
 		}else {
-
-
 			this.RightArm.xRot = Mth.sin(ageInTicks/8)/10;
 			this.LeftArm.xRot = -Mth.sin(ageInTicks/8)/10;
-			this.LeftLeg.xRot = 0;
-			this.RightLeg.xRot = 0;
 		}
+
+		this.LeftLeg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
+		this.RightLeg.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
+
 		this.head.getChild("jaw").xRot = Mth.sin(ageInTicks/8)/10;
 		this.head.getChild("tendrils2").xRot = Mth.sin(ageInTicks/8)/10;
 		this.head.yRot = netHeadYaw / (180F / (float) Math.PI);

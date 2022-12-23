@@ -124,17 +124,9 @@ public class HowlerModel<T extends Howler> extends EntityModel<T> {
 			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
 			this.RightArm.zRot = 0;
 			this.LeftArm.zRot = 0;
-			this.LeftLeg.xRot = Mth.cos(limbSwing ) * limbSwingAmount;
-			this.RightLeg.xRot = Mth.cos(limbSwing ) * -1F * limbSwingAmount;
-			if (LeftLeg.xRot < 0){
-			this.LeftLeg.getChild("leftForLeg").xRot = -LeftLeg.xRot;}
-			if (RightLeg.xRot < 0){
-			this.RightLeg.getChild("rightForLeg").xRot = -RightLeg.xRot;}
 		}else {
 			this.RightArm.xRot = Mth.sin(ageInTicks/8)/10;
 			this.LeftArm.xRot = -Mth.sin(ageInTicks/8)/10;
-			this.LeftLeg.xRot = 0;
-			this.RightLeg.xRot = 0;
 		}
 		this.Head.xRot = headPitch /  ( 90F / (float) Math.PI);
 
@@ -145,6 +137,12 @@ public class HowlerModel<T extends Howler> extends EntityModel<T> {
 		this.Head.getChild("tooth5").xRot = Mth.sin(ageInTicks/6)/8;
 
 
+		this.LeftLeg.xRot = Mth.cos(limbSwing ) * limbSwingAmount;
+		this.RightLeg.xRot = Mth.cos(limbSwing ) * -1F * limbSwingAmount;
+		if (LeftLeg.xRot < 0){
+			this.LeftLeg.getChild("leftForLeg").xRot = -LeftLeg.xRot;}
+		if (RightLeg.xRot < 0){
+			this.RightLeg.getChild("rightForLeg").xRot = -RightLeg.xRot;}
 
 		tail.getChild("tail2").yRot = Mth.sin(ageInTicks/6)/8;
 		tail.getChild("tail2").getChild("tail3").yRot = Mth.sin(ageInTicks/6)/7;

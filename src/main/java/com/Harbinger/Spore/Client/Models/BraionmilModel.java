@@ -128,13 +128,6 @@ public class BraionmilModel<T extends Braionmil> extends EntityModel<T> {
 		 if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
 			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
-			this.RightLeg.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-			 if (LeftLeg.xRot < 0){
-				 this.LeftLeg.getChild("leftForLeg").xRot = -LeftLeg.xRot;}
-			 if (RightLeg.xRot < 0){
-				 this.RightLeg.getChild("rightForLeg").xRot = -RightLeg.xRot;}
-
 			if (entity.BraioAttack()){
 				this.lungs.zScale = (1F + (0.03F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
 				this.lungs.yScale = (1F + (0.03F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
@@ -159,9 +152,15 @@ public class BraionmilModel<T extends Braionmil> extends EntityModel<T> {
 		 else{
 			this.RightArm.xRot = Mth.sin(ageInTicks/8)/10;
 			this.LeftArm.xRot = -Mth.sin(ageInTicks/8)/10;
-			this.LeftLeg.xRot = 0;
-			this.RightLeg.xRot = 0;
 		}
+
+		this.LeftLeg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
+		this.RightLeg.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
+		if (LeftLeg.xRot < 0){
+			this.LeftLeg.getChild("leftForLeg").xRot = -LeftLeg.xRot;}
+		if (RightLeg.xRot < 0){
+			this.RightLeg.getChild("rightForLeg").xRot = -RightLeg.xRot;}
+
 
 		this.head.yRot = netHeadYaw / (180F / (float) Math.PI);
 		this.head.xRot = headPitch /  ( 90F / (float) Math.PI);

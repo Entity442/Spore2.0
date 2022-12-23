@@ -88,12 +88,6 @@ public class InfectedWandererModel<T extends InfectedWanderingTrader> extends En
 			this.head.getChild("jaw").xRot = (Mth.sin(ageInTicks/6)/10) + 0.4F;
 			this.RightArm.xRot = -90F - (Mth.sin(ageInTicks/4)/7);
 			this.LeftArm.xRot = -90F + (Mth.sin(ageInTicks/4)/7);
-			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.6F) * -1.2F * limbSwingAmount;
-			this.RightLeg.xRot = Mth.cos(limbSwing * 0.6F) * 1.2F * limbSwingAmount;
-			if (LeftLeg.xRot < 0){
-				this.LeftLeg.getChild("leftForLeg").xRot = -LeftLeg.xRot;}
-			if (RightLeg.xRot < 0){
-				this.RightLeg.getChild("rightForLeg").xRot = -RightLeg.xRot;}
 			if (entity.swinging){
 				float j = 0;
 				j = j + 0.5F;
@@ -106,12 +100,6 @@ public class InfectedWandererModel<T extends InfectedWanderingTrader> extends En
 			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
 			this.RightArm.zRot = 0;
 			this.LeftArm.zRot = 0;
-			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
-			this.RightLeg.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-			if (LeftLeg.xRot < 0){
-				this.LeftLeg.getChild("leftForLeg").xRot = -LeftLeg.xRot;}
-			if (RightLeg.xRot < 0){
-				this.RightLeg.getChild("rightForLeg").xRot = -RightLeg.xRot;}
 		} else {
 			this.RightArm.zRot = Mth.sin(ageInTicks/8)/10;
 			this.LeftArm.zRot = -Mth.sin(ageInTicks/8)/10;
@@ -119,6 +107,12 @@ public class InfectedWandererModel<T extends InfectedWanderingTrader> extends En
 			this.RightLeg.xRot = 0;
 		}
 
+		this.LeftLeg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
+		this.RightLeg.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
+		if (LeftLeg.xRot < 0){
+			this.LeftLeg.getChild("leftForLeg").xRot = -LeftLeg.xRot;}
+		if (RightLeg.xRot < 0){
+			this.RightLeg.getChild("rightForLeg").xRot = -RightLeg.xRot;}
 
 		this.head.yRot = netHeadYaw / (180F / (float) Math.PI);
 		this.head.xRot = headPitch /  ( 90F / (float) Math.PI);

@@ -111,14 +111,7 @@ public class StalkerModel<T extends Stalker> extends EntityModel<T> {
 		else if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
 			this.arm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.arm2.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-			this.leg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
-			this.leg2.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * -limbSwingAmount;
-			if (leg.xRot < 0) {
-				this.leg.getChild("forleg").xRot = -leg.xRot;
-			}
-			if (leg2.xRot < 0) {
-				this.leg2.getChild("forleg2").xRot = -leg2.xRot;
-			}
+
 			if (arm.xRot < 0) {
 				this.arm.getChild("forarm").xRot = arm.xRot;
 			}
@@ -129,10 +122,14 @@ public class StalkerModel<T extends Stalker> extends EntityModel<T> {
 		} else {
 			this.arm.xRot = Mth.sin(ageInTicks / 8) / 10;
 			this.arm2.xRot = -Mth.sin(ageInTicks / 8) / 10;
-			this.leg.xRot = 0;
-			this.leg2.xRot = 0;
-			this.leg.getChild("forleg").xRot = 0;
-			this.leg2.getChild("forleg2").xRot = 0;
+		}
+		this.leg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
+		this.leg2.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * -limbSwingAmount;
+		if (leg.xRot < 0) {
+			this.leg.getChild("forleg").xRot = -leg.xRot;
+		}
+		if (leg2.xRot < 0) {
+			this.leg2.getChild("forleg2").xRot = -leg2.xRot;
 		}
 
 		this.head.getChild("jaw").xRot = Mth.sin(ageInTicks / 8) / 10;

@@ -5,10 +5,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
@@ -38,6 +40,13 @@ public class InfectedVendicator extends EvolvedInfected{
         });
 
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8));
+        this.goalSelector.addGoal(3, new OpenDoorGoal(this, true) {
+            @Override
+            public void start() {
+                this.mob.swing(InteractionHand.MAIN_HAND);
+                super.start();
+            }
+        });
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 
         super.registerGoals();

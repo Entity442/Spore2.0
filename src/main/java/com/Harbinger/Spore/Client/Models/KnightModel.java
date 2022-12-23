@@ -95,12 +95,6 @@ public class KnightModel<T extends Knight> extends EntityModel<T> {
 			this.body.getChild("head").getChild("jaw").xRot = (Mth.sin(ageInTicks/6)/10);
 			this.body.getChild("RightArm").xRot = 25F + Mth.cos(limbSwing * 0.2F)  * limbSwingAmount;
 			this.body.getChild("RightArm").getChild("RightForArm").xRot = - 88.5F;
-			this.body.getChild("LeftLeg").xRot = Mth.cos(limbSwing * 0.6F) * -1.2F * limbSwingAmount;
-			this.body.getChild("RightLeg").xRot = Mth.cos(limbSwing * 0.6F) * 1.2F * limbSwingAmount;
-			 if (body.getChild("LeftLeg").xRot < 0){
-				 this.body.getChild("LeftLeg").getChild("leftForLeg").xRot = -2 * body.getChild("LeftLeg").xRot;}
-			 if (body.getChild("RightLeg").xRot < 0){
-				 this.body.getChild("RightLeg").getChild("rightForLeg").xRot = -2 * body.getChild("RightLeg").xRot;}
 			this.body.zRot = Mth.cos(limbSwing/4)/10;
 
 			 this.body.getChild("tendril").yRot = -1;
@@ -119,13 +113,6 @@ public class KnightModel<T extends Knight> extends EntityModel<T> {
 		}else if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
 			this.body.getChild("RightArm").xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.body.getChild("RightArm").zRot = 0;
-			this.body.getChild("LeftLeg").xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
-			this.body.getChild("RightLeg").xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-			 if (body.getChild("LeftLeg").xRot < 0){
-				 this.body.getChild("LeftLeg").getChild("leftForLeg").xRot = -2 * body.getChild("LeftLeg").xRot;}
-			 if (body.getChild("RightLeg").xRot < 0){
-				 this.body.getChild("RightLeg").getChild("rightForLeg").xRot = -2 * body.getChild("RightLeg").xRot;}
-
 
 		}
 		else {
@@ -134,8 +121,6 @@ public class KnightModel<T extends Knight> extends EntityModel<T> {
 			this.body.getChild("RightArm").zRot = Mth.sin(ageInTicks/8)/10;
 			this.body.getChild("RightArm").getChild("RightForArm").getChild("fingers").zRot = Mth.sin(ageInTicks/4)/8;
 			this.body.getChild("RightArm").getChild("RightForArm").getChild("tumb").xRot = -Mth.sin(ageInTicks/4)/8;
-			this.body.getChild("LeftLeg").xRot = 0;
-			this.body.getChild("RightLeg").xRot = 0;
 			this.body.getChild("RightArm").getChild("RightForArm").xRot = 0;
 			 this.body.getChild("tendril").yRot = 0;
 			 this.body.getChild("tendril2").yRot = 0;
@@ -143,6 +128,12 @@ public class KnightModel<T extends Knight> extends EntityModel<T> {
 			 this.body.getChild("tendril4").yRot = 0;
 		}
 
+		this.body.getChild("LeftLeg").xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
+		this.body.getChild("RightLeg").xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
+		if (body.getChild("LeftLeg").xRot < 0){
+			this.body.getChild("LeftLeg").getChild("leftForLeg").xRot = -2 * body.getChild("LeftLeg").xRot;}
+		if (body.getChild("RightLeg").xRot < 0){
+			this.body.getChild("RightLeg").getChild("rightForLeg").xRot = -2 * body.getChild("RightLeg").xRot;}
 
 		this.body.getChild("head").getChild("jaw").xRot = Mth.sin(ageInTicks/8)/10;
 		this.body.getChild("tendril").xRot = (Mth.sin(ageInTicks/6)/6);

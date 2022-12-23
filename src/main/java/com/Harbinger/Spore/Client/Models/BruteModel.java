@@ -112,20 +112,19 @@ public class BruteModel<T extends Brute> extends EntityModel<T> {
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)) {
-			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
-			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-			if (RightArm.xRot > 0) {
-				this.RightArm.getChild("RightForArm").xRot = -RightArm.xRot;
-			}
-			if (LeftArm.xRot > 0) {
-				this.LeftArm.getChild("LeftForArm").xRot = -LeftArm.xRot;
-			}
 			this.tail.yRot = Mth.cos(limbSwing * 0.1f);
 			this.tail.getChild("tail2").yRot = Mth.cos(limbSwing * 0.1f);
 			this.tail.getChild("tail2").getChild("tail3").yRot = Mth.cos(limbSwing * 0.1f);
 			this.tail.getChild("tail2").getChild("tail3").getChild("tail4").yRot = Mth.cos(limbSwing * 0.1f);
 		}
-
+		this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
+		this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
+		if (RightArm.xRot > 0) {
+			this.RightArm.getChild("RightForArm").xRot = -RightArm.xRot;
+		}
+		if (LeftArm.xRot > 0) {
+			this.LeftArm.getChild("LeftForArm").xRot = -LeftArm.xRot;
+		}
 
 		this.tail.yRot = Mth.cos(ageInTicks/6)/6;
 		this.tail.getChild("tail2").yRot = Mth.cos(ageInTicks/6)/6;

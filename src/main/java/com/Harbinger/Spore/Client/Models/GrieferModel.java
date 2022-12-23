@@ -114,12 +114,6 @@ public class GrieferModel<T extends Griefer> extends EntityModel<T> {
 			this.head.getChild("jaw").xRot = (Mth.sin(ageInTicks/6)/10) + 0.4F;
 			this.RightArm.xRot = -89.5F - (Mth.sin(ageInTicks/4)/7);
 			this.LeftArm.xRot = -89.5F + (Mth.sin(ageInTicks/4)/7);
-			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.6F) * -1.2F * limbSwingAmount;
-			this.RightLeg.xRot = Mth.cos(limbSwing * 0.6F) * 1.2F * limbSwingAmount;
-			 if (LeftLeg.xRot < 0){
-				 this.LeftLeg.getChild("leftForLeg").xRot = -LeftLeg.xRot;}
-			 if (RightLeg.xRot < 0){
-				 this.RightLeg.getChild("rightForLeg").xRot = -RightLeg.xRot;}
 			if (entity.swinging){
 				this.RightArm.xRot = -88.5F;
 				this.LeftArm.xRot = -88.5F;}
@@ -127,27 +121,20 @@ public class GrieferModel<T extends Griefer> extends EntityModel<T> {
 		}else if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
 			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-			this.LeftLeg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
-			this.RightLeg.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-			 if (LeftLeg.xRot < 0){
-				 this.LeftLeg.getChild("leftForLeg").xRot = -LeftLeg.xRot;}
-			 if (RightLeg.xRot < 0){
-				 this.RightLeg.getChild("rightForLeg").xRot = -RightLeg.xRot;}
 
+		} else{
 
-			this.body.getChild("tumors").xScale =1 + Mth.sin(ageInTicks/8)/10;
-			this.body.getChild("tumors").yScale =1 - Mth.sin(ageInTicks/8)/10;
-			this.body.getChild("tumors").zScale =1 + Mth.sin(ageInTicks/8)/10;
+			this.RightArm.getChild("RightForArm").getChild("fingers").zRot = Mth.sin(ageInTicks/8)/10;
+			this.LeftArm.getChild("LeftForArm").getChild("fingers2").zRot = -Mth.sin(ageInTicks/8)/10;
 
-			this.body.getChild("tumors2").xScale =1 + Mth.sin(ageInTicks/6)/7;
-			this.body.getChild("tumors2").yScale =1 -Mth.sin(ageInTicks/6)/7;
-			this.body.getChild("tumors2").zScale =1 + Mth.sin(ageInTicks/6)/7;
+			this.RightArm.getChild("RightForArm").getChild("meat").visible = false;
 
-			this.body.getChild("tumors3").xScale =1 + Mth.sin(ageInTicks/7)/9;
-			this.body.getChild("tumors3").yScale =1 -Mth.sin(ageInTicks/7)/9;
-			this.body.getChild("tumors3").zScale =1 + Mth.sin(ageInTicks/7)/9;
-
-		}else if (entity.grieferExplosion()){
+			 this.RightArm.xRot = Mth.sin(ageInTicks/8)/10;
+			 this.LeftArm.xRot = -Mth.sin(ageInTicks/8)/10;
+			 this.LeftLeg.xRot = 0;
+			 this.RightLeg.xRot = 0;
+		}
+		if (entity.grieferExplosion()){
 			this.head.yRot = Mth.cos(ageInTicks/4)/4;
 			this.body.getChild("tumors").xScale =  Mth.sin(ageInTicks/8)/10 + (0.05F * entity.getSwell());
 			this.body.getChild("tumors").yScale = Mth.sin(ageInTicks/8)/10 + (0.05F * entity.getSwell());
@@ -161,34 +148,30 @@ public class GrieferModel<T extends Griefer> extends EntityModel<T> {
 			this.body.getChild("tumors3").yScale = Mth.sin(ageInTicks/7)/9 + (0.05F * entity.getSwell());
 			this.body.getChild("tumors3").zScale = Mth.sin(ageInTicks/7)/9 + (0.05F * entity.getSwell());
 
-		}else{
+		} else {
+			this.body.getChild("tumors").xScale = 1 + Mth.sin(ageInTicks / 8) / 10;
+			this.body.getChild("tumors").yScale = 1 - Mth.sin(ageInTicks / 8) / 10;
+			this.body.getChild("tumors").zScale = 1 + Mth.sin(ageInTicks / 8) / 10;
 
-			this.body.getChild("tumors").xScale =1 + Mth.sin(ageInTicks/8)/10;
-			this.body.getChild("tumors").yScale =1 - Mth.sin(ageInTicks/8)/10;
-			this.body.getChild("tumors").zScale =1 + Mth.sin(ageInTicks/8)/10;
+			this.body.getChild("tumors2").xScale = 1 + Mth.sin(ageInTicks / 6) / 7;
+			this.body.getChild("tumors2").yScale = 1 - Mth.sin(ageInTicks / 6) / 7;
+			this.body.getChild("tumors2").zScale = 1 + Mth.sin(ageInTicks / 6) / 7;
 
-			this.body.getChild("tumors2").xScale =1 + Mth.sin(ageInTicks/6)/7;
-			this.body.getChild("tumors2").yScale =1 -Mth.sin(ageInTicks/6)/7;
-			this.body.getChild("tumors2").zScale =1 + Mth.sin(ageInTicks/6)/7;
+			this.body.getChild("tumors3").xScale = 1 + Mth.sin(ageInTicks / 7) / 9;
+			this.body.getChild("tumors3").yScale = 1 - Mth.sin(ageInTicks / 7) / 9;
+			this.body.getChild("tumors3").zScale = 1 + Mth.sin(ageInTicks / 7) / 9;
 
-			this.body.getChild("tumors3").xScale =1 + Mth.sin(ageInTicks/7)/9;
-			this.body.getChild("tumors3").yScale =1 -Mth.sin(ageInTicks/7)/9;
-			this.body.getChild("tumors3").zScale =1 + Mth.sin(ageInTicks/7)/9;
-
-			this.RightArm.getChild("RightForArm").getChild("fingers").zRot = Mth.sin(ageInTicks/8)/10;
-			this.LeftArm.getChild("LeftForArm").getChild("fingers2").zRot = -Mth.sin(ageInTicks/8)/10;
-
-			this.RightArm.getChild("RightForArm").getChild("meat").visible = false;
-
-			 this.RightArm.xRot = Mth.sin(ageInTicks/8)/10;
-			 this.LeftArm.xRot = -Mth.sin(ageInTicks/8)/10;
-			 this.LeftLeg.xRot = 0;
-			 this.RightLeg.xRot = 0;
+			this.head.yRot = netHeadYaw / (180F / (float) Math.PI);
+			this.head.xRot = headPitch / (90F / (float) Math.PI);
+			this.head.getChild("jaw").xRot = Mth.sin(ageInTicks / 8) / 10;
 		}
-		this.head.yRot = netHeadYaw / (180F / (float) Math.PI);
-		this.head.xRot = headPitch /  ( 90F / (float) Math.PI);
-		this.head.getChild("jaw").xRot = Mth.sin(ageInTicks/8)/10;
 
+		this.LeftLeg.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
+		this.RightLeg.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
+		if (LeftLeg.xRot < 0){
+			this.LeftLeg.getChild("leftForLeg").xRot = -LeftLeg.xRot;}
+		if (RightLeg.xRot < 0){
+			this.RightLeg.getChild("rightForLeg").xRot = -RightLeg.xRot;}
 
 	}
 
