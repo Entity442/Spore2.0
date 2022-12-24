@@ -136,17 +136,17 @@ public class GrieferModel<T extends Griefer> extends EntityModel<T> {
 		}
 		if (entity.grieferExplosion()){
 			this.head.yRot = Mth.cos(ageInTicks/4)/4;
-			this.body.getChild("tumors").xScale =  Mth.sin(ageInTicks/8)/10 + (0.05F * entity.getSwell());
-			this.body.getChild("tumors").yScale = Mth.sin(ageInTicks/8)/10 + (0.05F * entity.getSwell());
-			this.body.getChild("tumors").zScale =  Mth.sin(ageInTicks/8)/10 + (0.05F * entity.getSwell());
+			this.body.getChild("tumors").xScale =  body.getChild("tumors").xScale + (0.001F * entity.getSwell());
+			this.body.getChild("tumors").yScale = body.getChild("tumors").yScale + (0.001F * entity.getSwell());
+			this.body.getChild("tumors").zScale =  body.getChild("tumors").zScale + (0.001F * entity.getSwell());
 
-			this.body.getChild("tumors2").xScale = Mth.sin(ageInTicks/6)/7 + (0.05F * entity.getSwell());
-			this.body.getChild("tumors2").yScale = Mth.sin(ageInTicks/6)/7 + (0.05F * entity.getSwell());
-			this.body.getChild("tumors2").zScale = Mth.sin(ageInTicks/6)/7 + (0.05F * entity.getSwell());
+			this.body.getChild("tumors2").xScale = body.getChild("tumors2").xScale + (0.001F * entity.getSwell());
+			this.body.getChild("tumors2").yScale = body.getChild("tumors2").yScale + (0.001F * entity.getSwell());
+			this.body.getChild("tumors2").zScale = body.getChild("tumors2").zScale + (0.001F * entity.getSwell());
 
-			this.body.getChild("tumors3").xScale = Mth.sin(ageInTicks/7)/9 + (0.05F * entity.getSwell());
-			this.body.getChild("tumors3").yScale = Mth.sin(ageInTicks/7)/9 + (0.05F * entity.getSwell());
-			this.body.getChild("tumors3").zScale = Mth.sin(ageInTicks/7)/9 + (0.05F * entity.getSwell());
+			this.body.getChild("tumors3").xScale = body.getChild("tumors3").xScale + (0.001F * entity.getSwell());
+			this.body.getChild("tumors3").yScale = body.getChild("tumors3").yScale + (0.001F * entity.getSwell());
+			this.body.getChild("tumors3").zScale = body.getChild("tumors3").zScale + (0.001F * entity.getSwell());
 
 		} else {
 			this.body.getChild("tumors").xScale = 1 + Mth.sin(ageInTicks / 8) / 10;
