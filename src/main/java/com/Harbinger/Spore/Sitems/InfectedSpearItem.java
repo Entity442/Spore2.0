@@ -31,7 +31,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public class InfectedSpearItem extends Item implements Vanishable {
+public class InfectedSpearItem extends Item implements Vanishable{
     private final Multimap<Attribute, AttributeModifier> defaultModifiers;
     public InfectedSpearItem(Properties properties) {
         super(properties);
@@ -131,5 +131,6 @@ public class InfectedSpearItem extends Item implements Vanishable {
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         return super.canApplyAtEnchantingTable(stack, enchantment) || ImmutableSet.of(Enchantments.SHARPNESS, Enchantments.FIRE_ASPECT, Enchantments.LOYALTY , Enchantments.MOB_LOOTING).contains(enchantment);
     }
+
 }
 
