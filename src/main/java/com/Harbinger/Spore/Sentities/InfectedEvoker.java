@@ -35,6 +35,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 
 public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier {
     private static final EntityDataAccessor<Boolean> HAS_ARM = SynchedEntityData.defineId(InfectedEvoker.class, EntityDataSerializers.BOOLEAN);
@@ -64,7 +65,7 @@ public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier 
     @Override
     public void tick() {
         super.tick();
-        if (!this.getEntityData().get(HAS_ARM)){
+        if (!this.getEntityData().get(HAS_ARM) && (Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).getBaseValue() == SConfig.SERVER.inf_evo_damage.get() * SConfig.SERVER.global_damage.get())){
             AttributeInstance attackDamage = this.getAttribute(Attributes.ATTACK_DAMAGE);
             assert attackDamage != null;
             attackDamage.setBaseValue((SConfig.SERVER.inf_evo_damage.get()/2) * SConfig.SERVER.global_damage.get());
