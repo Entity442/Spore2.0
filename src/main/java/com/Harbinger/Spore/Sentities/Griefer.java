@@ -15,6 +15,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -135,8 +136,12 @@ public class Griefer extends EvolvedInfected{
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1,new GrieferSwellGoal(this));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.5, true));
-        this.goalSelector.addGoal(3, new RandomStrollGoal(this, 1));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.5, false) {
+            @Override
+            protected double getAttackReachSqr(LivingEntity entity) {
+                return 2.0 + entity.getBbWidth() * entity.getBbWidth();
+            }
+        }); this.goalSelector.addGoal(3, new RandomStrollGoal(this, 1));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 
         super.registerGoals();

@@ -27,7 +27,7 @@ public class Knight extends EvolvedInfected{
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
-                return 8.0 + entity.getBbWidth() * entity.getBbWidth();}});
+                return 6.0 + entity.getBbWidth() * entity.getBbWidth();}});
 
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));

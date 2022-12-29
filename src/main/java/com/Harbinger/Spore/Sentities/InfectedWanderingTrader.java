@@ -32,10 +32,13 @@ public class InfectedWanderingTrader extends Infected{
         this.goalSelector.addGoal(0, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.LONG_INVISIBILITY), SoundEvents.WANDERING_TRADER_DRINK_POTION, (p_35882_) -> {
             return !this.isInvisible() && isAggressive();
         }));
+        this.goalSelector.addGoal(0, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRONG_HEALING), SoundEvents.WANDERING_TRADER_DRINK_POTION, (p_35882_) -> {
+            return this.getHealth() < this.getMaxHealth()/2;
+        }));
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
-                return 4.0 + entity.getBbWidth() * entity.getBbWidth();
+                return 3.0 + entity.getBbWidth() * entity.getBbWidth();
             }
         });
 

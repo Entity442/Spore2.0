@@ -19,6 +19,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
@@ -54,10 +55,23 @@ public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier 
 
     }
 
+
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(HAS_ARM, true);
     }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (!this.getEntityData().get(HAS_ARM)){
+            AttributeInstance attackDamage = this.getAttribute(Attributes.ATTACK_DAMAGE);
+            assert attackDamage != null;
+            attackDamage.setBaseValue((SConfig.SERVER.inf_evo_damage.get()/2) * SConfig.SERVER.global_damage.get());
+        }
+    }
+
+
 
     public void addAdditionalSaveData(CompoundTag p_33300_) {
         super.addAdditionalSaveData(p_33300_);
@@ -132,8 +146,8 @@ public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier 
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 if (entityData.get(HAS_ARM)){
-                    return 8.0 + entity.getBbWidth() * entity.getBbWidth();}
-                return 4.0 + entity.getBbWidth() * entity.getBbWidth();}});
+                    return 6.0 + entity.getBbWidth() * entity.getBbWidth();}
+                return 3.0 + entity.getBbWidth() * entity.getBbWidth();}});
 
 
         this.goalSelector.addGoal(1, new PullGoal(this, 32, 8){
@@ -150,7 +164,7 @@ public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier 
     private boolean switchy() {
         if (this.getTarget() != null){
             double ze = this.distanceToSqr(this.getTarget());
-            return (ze > 40.0D) && (ze < 800.0D) && entityData.get(HAS_ARM);
+            return (ze > 40.0D) && (ze < 800.0D) && entityData.get(HAS_ARM) && this.hasLineOfSight(this.getTarget());
         }
         return false;
     }

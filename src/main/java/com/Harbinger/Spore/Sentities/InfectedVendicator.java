@@ -35,7 +35,7 @@ public class InfectedVendicator extends EvolvedInfected{
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
-                return 6.0 + entity.getBbWidth() * entity.getBbWidth();
+                return 4.0 + entity.getBbWidth() * entity.getBbWidth();
             }
         });
 
