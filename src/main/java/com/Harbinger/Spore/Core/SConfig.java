@@ -189,6 +189,7 @@ public class SConfig {
             this.global_damage = builder.define("Global Damage Modifier",1.0);
             this.global_health = builder.define("Global Health Modifier",1.0);
             this.global_armor = builder.define("Global Armor Modifier",1.0);
+
             this.at_mob = builder.comment("Default true").define("Should attack other mobs?",true);
             this.at_an = builder.comment("Default true").define("Should attack Animals?",false);
 
