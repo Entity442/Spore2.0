@@ -103,7 +103,7 @@ public class InfectedVillager extends Infected {
         if (!isFreazing() && kills >= 1) {
             this.ev = ev + 1;
         }
-        if (ev >= (20 * SConfig.SERVER.evolution_age_human.get()) && kills >= 1) {
+        if (ev >= (20 * SConfig.SERVER.evolution_age_human.get()) && kills >= SConfig.SERVER.min_kills.get()) {
             Evolve(this);
         }
     }

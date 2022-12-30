@@ -105,6 +105,7 @@ public class SConfig {
     public  static  double spit_armor;
 
     public  static  int evolution_age_human;
+    public  static  int min_kills;
     public static List<? extends String> human_ev;
     public static List<? extends String> vil_ev;
     public static List<? extends String> pil_ev;
@@ -268,6 +269,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> spit_damage_c;
 
         public final ForgeConfigSpec.ConfigValue<Integer> evolution_age_human;
+        public final ForgeConfigSpec.ConfigValue<Integer> min_kills;
 
         public final ForgeConfigSpec.ConfigValue<Integer> spear_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> spear_damage;
@@ -394,6 +396,7 @@ public class SConfig {
                                      "spore:brute") , o -> o instanceof String);
 
             this.evolution_age_human = builder.comment("Default 150").define("Evolution Timer in seconds",150);
+            this.min_kills = builder.comment("Default 1").define("Minimum amount of kills to start the evolution",1);
 
             builder.pop();
             builder.push("Infections");
@@ -750,6 +753,7 @@ public class SConfig {
         spit_damage_l = SERVER.spit_damage_l.get();
 
         evolution_age_human = SERVER.evolution_age_human.get();
+        min_kills = SERVER.min_kills.get();
 
         human_ev = SERVER.human_ev.get();
         pil_ev = SERVER.pil_ev.get();

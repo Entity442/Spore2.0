@@ -143,7 +143,7 @@ public class Infected extends Monster {
 
     @Override
     public void awardKillScore(Entity entity, int i, DamageSource damageSource) {
-        this.addEffect(new MobEffectInstance(MobEffects.REGENERATION ,1,100));
+        if (this.getHealth() < this.getMaxHealth()){ this.heal(this.getMaxHealth()/5);}
         kills = kills + 1;
         super.awardKillScore(entity, i, damageSource);
     }
