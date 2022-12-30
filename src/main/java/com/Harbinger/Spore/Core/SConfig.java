@@ -5,7 +5,9 @@ import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.google.common.collect.Lists;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
@@ -13,6 +15,166 @@ import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Spore.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class SConfig {
+    public static final Server SERVER;
+    public static final ForgeConfigSpec SERVER_SPEC;
+    public static double global_damage;
+    public static double global_health;
+    public static double global_armor;
+    public static  boolean at_mob;
+    public static  boolean at_an;
+
+    public  static  boolean scent_spawn;
+    public  static  boolean scent_summon;
+    public static  int scent_summon_cooldown;
+    public static  boolean scent_particles;
+    public static int scent_life;
+
+    public  static  double inf_human_hp;
+    public  static  double inf_human_damage;
+    public  static  double inf_human_armor;
+
+    public  static  double inf_vil_hp;
+    public  static  double inf_vil_damage;
+    public  static  double inf_vil_armor;
+
+    public  static  double inf_van_hp;
+    public  static  double inf_van_damage;
+    public  static  double inf_van_armor;
+
+    public  static  double inf_vin_hp;
+    public  static  double inf_vin_damage;
+    public  static  double inf_vin_armor;
+
+    public  static  double inf_pil_hp;
+    public  static  double inf_pil_damage;
+    public  static  double inf_pil_armor;
+    public  static  float inf_pil_range_damage;
+
+    public  static  double inf_evo_hp;
+    public  static  double inf_evo_damage;
+    public  static  double inf_evo_armor;
+    public  static  double inf_claw_hp;
+    public  static  double inf_claw_damage;
+    public  static  double inf_claw_armor;
+
+    public  static  double braio_hp;
+    public  static  double braio_armor;
+    public  static  int poison_level;
+    public  static  int mycelium_level;
+    public  static  int marker_level;
+    public  static  int poison_duration;
+    public  static  int mycelium_duration;
+    public  static  int marker_duration;
+
+    public  static  double griefer_hp;
+    public  static  double griefer_damage;
+    public  static  double griefer_armor;
+    public  static  boolean explosion_on;
+    public static  int explosion;
+
+    public  static  double knight_hp;
+    public  static  double knight_damage;
+    public  static  double knight_armor;
+
+    public  static  double stalker_hp;
+    public  static  double stalker_damage;
+    public  static  double stalker_armor;
+
+    public  static  double brute_hp;
+    public  static  double brute_damage;
+    public  static  double brute_armor;
+
+    public  static  double leaper_hp;
+    public  static  double leaper_damage;
+    public  static  double leaper_armor;
+
+    public  static  double witch_hp;
+    public  static  double witch_armor;
+
+    public  static  double sla_hp;
+    public  static  double sla_damage;
+    public  static  double sla_armor;
+
+    public  static  double how_hp;
+    public  static  double how_damage;
+    public  static  double how_armor;
+
+    public  static  double spit_hp;
+    public  static  double spit_damage_l;
+    public  static  double spit_damage_c;
+    public  static  double spit_armor;
+
+    public  static  int evolution_age_human;
+    public static List<? extends String> human_ev;
+    public static List<? extends String> vil_ev;
+    public static List<? extends String> pil_ev;
+    public static List<? extends String> inf_summon;
+    public static List<? extends String> howler_summon;
+    public static List<? extends String> blacklist;
+    public static List<? extends String> flee;
+    public static List<? extends String> attack;
+    public static List<? extends String> howler_effects;
+    public static List<? extends String> mycelium;
+    public static List<? extends String> corrosion;
+
+    public static List<? extends String> inf_human_conv;
+    public static List<? extends String> inf_vil_conv;
+    public static List<? extends String> inf_witch_conv;
+    public static List<? extends String> inf_vin_conv;
+    public static List<? extends String> inf_pil_conv;
+    public static List<? extends String> inf_van_conv;
+    public static List<? extends String> inf_evo_conv;
+
+    public  static  int spear_durability;
+    public  static  int spear_swing;
+    public  static  int spear_damage;
+    public  static  int spear_range;
+
+    public  static  int saber_durability;
+    public  static  int saber_swing;
+    public  static  int saber_damage;
+
+    public  static  int greatsword_durability;
+    public  static  int greatsword_swing;
+    public  static  int greatsword_damage;
+
+    public  static  int armads_durability;
+    public  static  int armads_swing;
+    public  static  int armads_damage;
+
+    public  static  int maul_durability;
+    public  static  int maul_swing;
+    public  static  int maul_damage;
+
+    public  static  int scythe_durability;
+    public  static  int scythe_swing;
+    public  static  int scythe_damage;
+
+    public  static  int shovel_durability;
+    public  static  int shovel_swing;
+    public  static  int shovel_damage;
+
+    public  static  double crossbow_damage_multiplier;
+    public  static  int crossbow_durability;
+
+    public  static  double bow_swing;
+    public  static  int bow_damage;
+    public  static  double bow_damage_multiplier;
+    public  static  int bow_durability;
+
+    public static int knockback_resistance;
+    public static int armor_toughness;
+    public static int helmet_durability;
+    public static int chestplate_durability;
+    public static int pants_durability;
+    public static int boots_durability;
+
+    public static int helmet_protection;
+    public static int chestplate_protection;
+    public static int pants_protection;
+    public static int boots_protection;
+
+
     public static class Server {
 
         public final ForgeConfigSpec.ConfigValue<Double> global_damage;
@@ -480,8 +642,7 @@ public class SConfig {
             builder.pop();
         }
     }
-    public static final Server SERVER;
-    public static final ForgeConfigSpec SERVER_SPEC;
+
     static {
         Pair<Server, ForgeConfigSpec> commonSpecPair = new ForgeConfigSpec.Builder().configure(Server::new);
         SERVER = commonSpecPair.getLeft();
@@ -493,5 +654,171 @@ public class SConfig {
         file.load();
         config.setConfig(file);
     }
+    @SubscribeEvent
+    public static void onModConfigEvent(final ModConfigEvent.Loading configEvent) {
+        if (configEvent.getConfig().getSpec() == SConfig.SERVER_SPEC) {
+            bakeConfig();
+        }
+    }
 
+    public static void bakeConfig() {
+        global_damage = SERVER.global_damage.get();
+        global_health = SERVER.global_health.get();
+        global_armor = SERVER.global_armor.get();
+        at_mob = SERVER.at_mob.get();
+        at_an = SERVER.at_an.get();
+
+        scent_life = SERVER.scent_life.get();
+        scent_particles = SERVER.scent_particles.get();
+        scent_spawn = SERVER.scent_spawn.get();
+        scent_summon = SERVER.scent_summon.get();
+        scent_summon_cooldown = SERVER.scent_summon_cooldown.get();
+
+        inf_human_hp = SERVER.inf_human_hp.get();
+        inf_human_damage = SERVER.inf_human_damage.get();
+        inf_human_armor = SERVER.inf_human_armor.get();
+
+        inf_vil_hp = SERVER.inf_vil_hp.get();
+        inf_vil_damage = SERVER.inf_vil_damage.get();
+        inf_vil_armor = SERVER.inf_vil_armor.get();
+
+        inf_van_hp = SERVER.inf_van_hp.get();
+        inf_van_damage = SERVER.inf_van_damage.get();
+        inf_van_armor = SERVER.inf_van_armor.get();
+
+        inf_vin_hp = SERVER.inf_vin_hp.get();
+        inf_vin_damage = SERVER.inf_vin_damage.get();
+        inf_vin_armor = SERVER.inf_vin_armor.get();
+
+        inf_pil_hp = SERVER.inf_pil_hp.get();
+        inf_pil_damage = SERVER.inf_pil_damage.get();
+        inf_pil_armor = SERVER.inf_pil_armor.get();
+        inf_pil_range_damage = SERVER.inf_pil_range_damage.get();
+
+        inf_evo_hp = SERVER.inf_evo_hp.get();
+        inf_evo_damage = SERVER.inf_evo_damage.get();
+        inf_evo_armor = SERVER.inf_evo_armor.get();
+        inf_claw_hp = SERVER.inf_claw_hp.get();
+        inf_claw_damage = SERVER.inf_claw_damage.get();
+        inf_claw_armor = SERVER.inf_claw_armor.get();
+
+        braio_armor = SERVER.braio_armor.get();
+        braio_hp = SERVER.braio_hp.get();
+        poison_level = SERVER.poison_level.get();
+        mycelium_level = SERVER.mycelium_level.get();
+        marker_level = SERVER.marker_level.get();
+        poison_duration = SERVER.poison_duration.get();
+        mycelium_duration = SERVER.mycelium_duration.get();
+        marker_duration = SERVER.marker_duration.get();
+
+        griefer_armor = SERVER.griefer_armor.get();
+        griefer_damage = SERVER.griefer_damage.get();
+        griefer_hp = SERVER.griefer_hp.get();
+        explosion = SERVER.explosion.get();
+        explosion_on = SERVER.explosion_on.get();
+
+        witch_hp = SERVER.inf_witch_hp.get();
+        witch_armor = SERVER.inf_witch_armor.get();
+
+        stalker_armor = SERVER.stalker_armor.get();
+        stalker_hp = SERVER.stalker_hp.get();
+        stalker_damage = SERVER.stalker_damage.get();
+
+        knight_armor = SERVER.knight_armor.get();
+        knight_hp = SERVER.knight_hp.get();
+        knight_damage = SERVER.knight_damage.get();
+
+        leaper_armor = SERVER.leap_armor.get();
+        leaper_hp = SERVER.leap_hp.get();
+        leaper_damage = SERVER.leap_damage.get();
+
+        brute_armor = SERVER.brute_armor.get();
+        brute_hp = SERVER.brute_hp.get();
+        brute_damage = SERVER.brute_damage.get();
+
+        sla_armor = SERVER.sla_armor.get();
+        sla_hp = SERVER.sla_hp.get();
+        sla_damage = SERVER.sla_damage.get();
+
+        how_armor = SERVER.how_armor.get();
+        how_hp = SERVER.how_hp.get();
+        how_damage = SERVER.how_damage.get();
+
+        spit_armor = SERVER.spit_armor.get();
+        spit_hp = SERVER.spit_hp.get();
+        spit_damage_c = SERVER.spit_damage_c.get();
+        spit_damage_l = SERVER.spit_damage_l.get();
+
+        evolution_age_human = SERVER.evolution_age_human.get();
+
+        human_ev = SERVER.human_ev.get();
+        pil_ev = SERVER.pil_ev.get();
+        vil_ev = SERVER.villager_ev.get();
+        inf_summon = SERVER.inf_summon.get();
+        howler_summon = SERVER.howler_summon.get();
+        howler_effects = SERVER.howler_effects_buff.get();
+        blacklist = SERVER.blacklist.get();
+        flee   = SERVER.flee.get();
+        attack = SERVER.attack.get();
+
+        mycelium = SERVER.mycelium.get();
+        corrosion = SERVER.corrosion.get();
+
+        inf_human_conv = SERVER.inf_human_conv.get();
+        inf_vil_conv = SERVER.inf_villager_conv.get();
+        inf_van_conv = SERVER.inf_van_conv.get();
+        inf_vin_conv = SERVER.inf_vindi_conv.get();
+        inf_witch_conv = SERVER.inf_witch_conv.get();
+        inf_pil_conv = SERVER.inf_pillager_conv.get();
+        inf_evo_conv = SERVER.inf_evoker_conv.get();
+
+        spear_durability = SERVER.spear_durability.get();
+        spear_damage = SERVER.spear_damage.get();
+        spear_swing = SERVER.spear_swing.get();
+        spear_range = SERVER.spear_range.get();
+
+        saber_durability = SERVER.saber_durability.get();
+        saber_damage = SERVER.saber_damage.get();
+        saber_swing = SERVER.saber_swing.get();
+
+        greatsword_durability = SERVER.greatsword_durability.get();
+        greatsword_damage = SERVER.greatsword_damage.get();
+        greatsword_swing = SERVER.greatsword_swing.get();
+
+        armads_durability = SERVER.armads_durability.get();
+        armads_damage = SERVER.armads_damage.get();
+        armads_swing = SERVER.armads_swing.get();
+
+        maul_durability = SERVER.maul_durability.get();
+        maul_damage = SERVER.maul_damage.get();
+        maul_swing = SERVER.maul_swing.get();
+
+        scythe_durability = SERVER.scythe_durability.get();
+        scythe_damage = SERVER.scythe_damage.get();
+        scythe_swing = SERVER.scythe_swing.get();
+
+        shovel_durability = SERVER.shovel_durability.get();
+        shovel_damage = SERVER.shovel_damage.get();
+        shovel_swing = SERVER.shovel_swing.get();
+
+        crossbow_durability = SERVER.crossbow_durability.get();
+        crossbow_damage_multiplier = SERVER.crossbow_arrow_damage_multiplier.get();
+
+        bow_damage = SERVER.bow_melee_damage.get();
+        bow_swing = SERVER.bow_swing_speed.get();
+        bow_damage_multiplier = SERVER.bow_arrow_damage_multiplier.get();
+        bow_durability = SERVER.bow_durability.get();
+
+        knockback_resistance = SERVER.knockback_resistance.get();
+        armor_toughness = SERVER.armor_toughness.get();
+        helmet_durability = SERVER.helmet_durability.get();
+        chestplate_durability = SERVER.chestplate_durability.get();
+        pants_durability = SERVER.pants_durability.get();
+        boots_durability = SERVER.boots_durability.get();
+
+        helmet_protection = SERVER.helmet_protection.get();
+        chestplate_protection = SERVER.chestplate_protection.get();
+        pants_protection = SERVER.pants_protection.get();
+        boots_protection = SERVER.boots_protection.get();
+    }
 }

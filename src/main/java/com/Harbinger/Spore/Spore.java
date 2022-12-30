@@ -24,7 +24,7 @@ public class Spore
     {
         instance = this;
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SConfig.SERVER_SPEC , Spore.MODID + "config.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SConfig.SERVER_SPEC , Spore.MODID + "config.toml");
         SConfig.loadConfig(SConfig.SERVER_SPEC, FMLPaths.CONFIGDIR.get().resolve(Spore.MODID + "config.toml").toString());
 
         modEventBus.addListener(this::setup);
