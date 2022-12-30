@@ -48,7 +48,7 @@ public class SConfig {
     public  static  double inf_pil_hp;
     public  static  double inf_pil_damage;
     public  static  double inf_pil_armor;
-    public  static  float inf_pil_range_damage;
+    public  static  double inf_pil_range_damage;
 
     public  static  double inf_evo_hp;
     public  static  double inf_evo_damage;
@@ -209,7 +209,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> inf_pil_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_pil_damage;
         public final ForgeConfigSpec.ConfigValue<Double> inf_pil_armor;
-        public final ForgeConfigSpec.ConfigValue<Float> inf_pil_range_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_pil_range_damage;
 
         public final ForgeConfigSpec.ConfigValue<Double> inf_evo_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_evo_damage;
@@ -481,7 +481,7 @@ public class SConfig {
             this.inf_pil_hp = builder.comment("Default 20").defineInRange("Sets Infected Pillager Max health", 20, 1, Double.MAX_VALUE);
             this.inf_pil_damage = builder.comment("Default 6").defineInRange("Sets Infected Pillager Damage", 6, 1, Double.MAX_VALUE);
             this.inf_pil_armor = builder.comment("Default 2").defineInRange("Sets Infected Pillager Armor", 2, 1, Double.MAX_VALUE);
-            this.inf_pil_range_damage = builder.comment("Default 1.6f").define("Sets Infected Pillager Range Damage",1.6f);
+            this.inf_pil_range_damage = builder.comment("Default 1.6f").define("Sets Infected Pillager Range Damage",1.6);
 
             builder.pop();
 
