@@ -61,13 +61,6 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<Double> braio_armor;
         public final ForgeConfigSpec.ConfigValue<Double> braio_hp;
-        public final ForgeConfigSpec.ConfigValue<Integer> poison_level;
-        public final ForgeConfigSpec.ConfigValue<Integer> poison_duration;
-        public final ForgeConfigSpec.ConfigValue<Integer> mycelium_level;
-        public final ForgeConfigSpec.ConfigValue<Integer> mycelium_duration;
-        public final ForgeConfigSpec.ConfigValue<Integer> marker_level;
-        public final ForgeConfigSpec.ConfigValue<Integer> marker_duration;
-
 
 
         public final ForgeConfigSpec.ConfigValue<Double> griefer_armor;
@@ -183,6 +176,9 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_evoker_conv;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_vindi_conv;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_van_conv;
+
+
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> braio_effects;
 
         public Server(ForgeConfigSpec.Builder builder) {
 
@@ -364,12 +360,9 @@ public class SConfig {
             builder.push("Braiomil");
             this.braio_hp = builder.comment("Default 25").defineInRange("Sets Braiomil Max health", 25, 1, Double.MAX_VALUE);
             this.braio_armor = builder.comment("Default 4").defineInRange("Sets Braiomil armor", 4, 1, Double.MAX_VALUE);
-            this.poison_duration = builder.comment("Default 120").defineInRange("Poison duration", 120, 20, Integer.MAX_VALUE);
-            this.poison_level = builder.comment("Default 0").defineInRange("Poison level", 0, 0, Integer.MAX_VALUE);
-            this.mycelium_duration = builder.comment("Default 600").defineInRange("Mycelium Duration", 600, 20, Integer.MAX_VALUE);
-            this.mycelium_level = builder.comment("Default 0").defineInRange("Mycelium level", 0, 0, Integer.MAX_VALUE);
-            this.marker_duration = builder.comment("Default 2400").defineInRange("Marker Duration", 2400, 20, Integer.MAX_VALUE);
-            this.marker_level = builder.comment("Default 1").defineInRange("Marker Level", 1, 0, Integer.MAX_VALUE);
+
+            this.braio_effects = builder.comment("Default values: minecraft:poison|120|0 ,spore:mycelium|600|0 ,spore:marker|2400|1").defineList("Braiomil Effects",
+                    Lists.newArrayList("minecraft:poison|120|0" , "spore:mycelium|600|0","spore:marker|2400|1") , o -> o instanceof String);
             builder.pop();
 
 

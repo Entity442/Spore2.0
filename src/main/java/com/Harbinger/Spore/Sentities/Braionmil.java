@@ -5,16 +5,17 @@ import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.BraionmilSwellGoal;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -31,6 +32,7 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
@@ -80,10 +82,6 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob ,Supp
         return this.entityData.get(DATA_SWELL_DIR);
     }
 
-    public boolean BraioAttack(){
-        return this.swell >= 1;
-    }
-
 
     public void setSwellDir(int p_32284_) {
         this.entityData.set(DATA_SWELL_DIR, p_32284_);
@@ -94,12 +92,17 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob ,Supp
     private void chemAttack(LivingEntity pLivingEntity) {
         AABB boundingBox = pLivingEntity.getBoundingBox().inflate(8);
         List<Entity> entities = pLivingEntity.level.getEntities(pLivingEntity, boundingBox);
-
         for (Entity entity : entities) {
-            if ((entity instanceof LivingEntity livingEntity) && !(entity instanceof Infected || entity instanceof UtilityEntity)) {
-                livingEntity.addEffect(new MobEffectInstance(Seffects.MARKER.get(), SConfig.SERVER.marker_duration.get(), SConfig.SERVER.marker_level.get(), false, false));
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, SConfig.SERVER.poison_duration.get(), SConfig.SERVER.poison_level.get()));
-                livingEntity.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(), SConfig.SERVER.mycelium_duration.get(), SConfig.SERVER.mycelium_level.get()));
+            if ((entity instanceof LivingEntity livingEntity) && !(entity instanceof Infected || entity instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(entity.getEncodeId()))) {
+
+                for (String str : SConfig.SERVER.braio_effects.get()){
+                     String[] string = str.split("\\|" );
+                      MobEffect effect = ForgeRegistries.MOB_EFFECTS.getValue(new ResourceLocation(string[0]));
+                      if (effect != null){
+                        livingEntity.addEffect(new MobEffectInstance(effect , Integer.parseUnsignedInt(string[1]), Integer.parseUnsignedInt(string[2])));
+                       }
+
+               }
             }
         }
     }

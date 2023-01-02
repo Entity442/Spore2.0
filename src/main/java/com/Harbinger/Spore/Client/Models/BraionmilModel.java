@@ -128,28 +128,8 @@ public class BraionmilModel<T extends Braionmil> extends EntityModel<T> {
 		 if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
 			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-			if (entity.BraioAttack()){
-				this.lungs.zScale = (1F + (0.03F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
-				this.lungs.yScale = (1F + (0.03F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
-				this.lungs.xScale = (1F + (-0.005F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
-				this.lungs2.zScale = (1F + (0.03F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
-				this.lungs2.yScale = (1F + (0.03F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
-				this.lungs2.xScale = (1F + (-0.005F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
 
-
-			}
-
-
-		}else if (entity.BraioAttack()){
-			 this.lungs.zScale = (1F + (0.03F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
-			 this.lungs.yScale = (1F + (0.03F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
-			 this.lungs.xScale = (1F + (-0.005F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
-			 this.lungs2.zScale = (1F + (0.03F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
-			 this.lungs2.yScale = (1F + (0.03F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
-			 this.lungs2.xScale = (1F + (-0.005F * entity.BraioSwell() ) + Mth.sin(ageInTicks/6)/6);
-
-		 }
-		 else{
+		} else{
 			this.RightArm.xRot = Mth.sin(ageInTicks/8)/10;
 			this.LeftArm.xRot = -Mth.sin(ageInTicks/8)/10;
 		}
