@@ -44,7 +44,7 @@ public class Griefer extends EvolvedInfected{
         super(type, level);
     }
 
-    protected void defineSynchedData() {
+    public void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_SWELL_DIR, -1);
     }

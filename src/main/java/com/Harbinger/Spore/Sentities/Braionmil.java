@@ -43,7 +43,7 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob ,Supp
     private final int maxSwell = 40;
 
 
-    protected void defineSynchedData() {
+    public void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_SWELL_DIR, -1);
     }

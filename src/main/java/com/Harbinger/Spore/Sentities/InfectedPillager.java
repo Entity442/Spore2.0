@@ -64,7 +64,7 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
     public void shootCrossbowProjectile(LivingEntity p_33275_, ItemStack p_33276_, Projectile p_33277_, float p_33278_) {
         this.shootCrossbowProjectile(this, p_33275_, p_33277_, p_33278_, (float) (SConfig.SERVER.inf_pil_range_damage.get() * 1f));
     }
-    protected void defineSynchedData() {
+    public void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(IS_CHARGING_CROSSBOW, false);
     }

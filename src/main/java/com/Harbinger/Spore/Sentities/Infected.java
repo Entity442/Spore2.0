@@ -2,7 +2,6 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
-import com.Harbinger.Spore.Module.SmobType;
 import com.Harbinger.Spore.Sentities.AI.*;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
@@ -62,10 +61,6 @@ public class Infected extends Monster {
         } else {
             return false;
         }
-    }
-
-    public MobType getMobType() {
-        return SmobType.INFECTED;
     }
     @Override
     public Packet<?> getAddEntityPacket() {

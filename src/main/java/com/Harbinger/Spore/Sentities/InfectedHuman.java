@@ -67,7 +67,7 @@ public class InfectedHuman extends Infected {
     @Override
     public void baseTick() {
         super.baseTick();
-        if (!isFreazing() && kills >= 1) {
+        if (!isFreazing() && kills >= SConfig.SERVER.min_kills.get()) {
             this.ev = ev + 1;
         }
         if (ev >= (20 * SConfig.SERVER.evolution_age_human.get()) && kills >= SConfig.SERVER.min_kills.get()) {
@@ -96,11 +96,6 @@ public class InfectedHuman extends Infected {
         int i = SConfig.SERVER.evolution_age_human.get() * 20;
         return ev >= (i / 4) * 3;
     }
-
-    public int stomac() {
-        return kills;
-    }
-
 
 
     protected SoundEvent getAmbientSound() {

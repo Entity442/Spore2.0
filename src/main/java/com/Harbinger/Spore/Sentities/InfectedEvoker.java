@@ -57,7 +57,7 @@ public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier 
     }
 
 
-    protected void defineSynchedData() {
+    public void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(HAS_ARM, true);
     }
