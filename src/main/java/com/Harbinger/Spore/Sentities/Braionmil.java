@@ -87,8 +87,6 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob ,Supp
         this.entityData.set(DATA_SWELL_DIR, p_32284_);
     }
 
-    public int BraioSwell(){return swell;}
-
     private void chemAttack(LivingEntity pLivingEntity) {
         AABB boundingBox = pLivingEntity.getBoundingBox().inflate(8);
         List<Entity> entities = pLivingEntity.level.getEntities(pLivingEntity, boundingBox);

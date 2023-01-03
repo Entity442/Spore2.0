@@ -6,6 +6,7 @@ import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -149,6 +150,11 @@ public class Infection {
                 if (event != null && event.isCancelable()) {
                     event.setCanceled(true);
                 }
+            }
+        }
+        if (entity instanceof  Infected && ((Infected) entity).getLastDamageSource() == DamageSource.IN_WALL){
+            if (event != null && event.isCancelable()) {
+                event.setCanceled(true);
             }
         }
     }

@@ -16,7 +16,6 @@ public class Biomass extends Item {
     public Biomass() {
         super(new Item.Properties().tab(ScreativeTab.SPORE_T));
     }
-
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
 
@@ -27,4 +26,5 @@ public class Biomass extends Item {
         }
         super.appendHoverText(itemStack, level, components, tooltipFlag);
     }
+
 }

@@ -180,6 +180,7 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> braio_effects;
 
+
         public Server(ForgeConfigSpec.Builder builder) {
 
             builder.push("Global Variables");
