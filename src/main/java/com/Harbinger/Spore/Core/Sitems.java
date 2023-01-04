@@ -120,6 +120,8 @@ public class Sitems {
             () -> new InfectedSpearItem(new Item.Properties().tab(ScreativeTab.SPORE).durability(SConfig.SERVER.spear_durability.get())));
     public  static final RegistryObject<Item> INFECTED_CROSSBOW = ITEMS.register("infected_crossbow",
             () -> new InfectedCrossbow());
+    public  static final RegistryObject<Item> MACE = ITEMS.register("mace",
+            () -> new InfectedMace());
 
     public  static final RegistryObject<Item> INF_HELMET = ITEMS.register("inf_helmet",
             () -> new InfectedHelmet());

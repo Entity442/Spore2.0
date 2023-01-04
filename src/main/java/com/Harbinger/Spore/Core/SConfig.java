@@ -130,6 +130,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Integer> shovel_damage;
         public final ForgeConfigSpec.ConfigValue<Integer> shovel_swing;
 
+        public final ForgeConfigSpec.ConfigValue<Integer> mace_durability;
+        public final ForgeConfigSpec.ConfigValue<Integer> mace_damage;
+        public final ForgeConfigSpec.ConfigValue<Integer> mace_swing;
+
         public final ForgeConfigSpec.ConfigValue<Integer> crossbow_durability;
         public final ForgeConfigSpec.ConfigValue<Double> crossbow_arrow_damage_multiplier;
 
@@ -452,6 +456,11 @@ public class SConfig {
             this.shovel_durability = builder.comment("Default 1400").define("Durability",1400);
             this.shovel_damage = builder.comment("Default 6").defineInRange("Damage", 6, 1, Integer.MAX_VALUE);
             this.shovel_swing = builder.comment("Default 3").define("Swing",3);
+            builder.pop();
+            builder.push("Mace");
+            this.mace_durability = builder.comment("Default 1000").define("Durability",1000);
+            this.mace_damage = builder.comment("Default 9").defineInRange("Damage", 9, 1, Integer.MAX_VALUE);
+            this.mace_swing = builder.comment("Default 3").define("Swing",3);
             builder.pop();
             builder.pop();
             builder.push("Armor");

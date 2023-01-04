@@ -25,6 +25,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -69,6 +71,7 @@ public class Container extends BaseEntityBlock {
             BlockEntity blockentity = p_49070_.getBlockEntity(p_49071_);
             if (blockentity instanceof ContainerBlockEntity) {
                 p_49072_.openMenu((ContainerBlockEntity)blockentity);
+                MinecraftForge.EVENT_BUS.post(new PlayerContainerEvent.Open(p_49072_, p_49072_.containerMenu));
             }
             return InteractionResult.CONSUME;
         }
