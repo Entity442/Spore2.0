@@ -13,6 +13,9 @@ public class SConfig {
     public static final Server SERVER;
     public static final ForgeConfigSpec SERVER_SPEC;
 
+    public static final DataGen DATAGEN;
+    public static final ForgeConfigSpec DATAGEN_SPEC;
+
     public static class Server {
 
         public final ForgeConfigSpec.ConfigValue<Double> global_damage;
@@ -27,6 +30,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Integer> scent_summon_cooldown;
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_particles;
         public final ForgeConfigSpec.ConfigValue<Integer> scent_life;
+        public final ForgeConfigSpec.ConfigValue<Integer> scent_spawn_chance;
 
         public final ForgeConfigSpec.ConfigValue<Double> inf_human_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_human_damage;
@@ -330,6 +334,7 @@ public class SConfig {
             this.scent_spawn = builder.comment("Default true").define("Should scent spawn?",true);
             this.scent_particles = builder.comment("Default true").define("Should scent have particles?",true);
             this.scent_life = builder.comment("Default 6000").define("Scent life",6000);
+            this.scent_spawn_chance = builder.comment("Default 10").define("The Chance for the scent to spawn from a mob dying 1-100",10);
             this.inf_summon = builder.defineList("Mobs that can be summoned by the Scent",
                     Lists.newArrayList(
                             "spore:inf_human"
@@ -486,10 +491,77 @@ public class SConfig {
         }
     }
 
+    public static class DataGen{
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_human_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_villager_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_pillager_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_witch_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_wan_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_vin_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_evoker_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_braio_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_knight_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_griefer_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_leap_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_spitter_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_slasher_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_howler_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_stalker_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_brute_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_claw_loot;
+        public DataGen(ForgeConfigSpec.Builder builder){
+            builder.push("LootTables");
+            builder.comment("item|chance to drop(1-100)|minimum amount|maximum amount.Only values above 0 will be taken in consideration.");
+            this.inf_human_loot = builder.defineList("Infected Human",
+                    Lists.newArrayList("spore:mutated_fiber|50|1|3","spore:mutated_heart|10|1|1") , o -> o instanceof String);
+            this.inf_villager_loot = builder.defineList("Infected Villager",
+                    Lists.newArrayList("spore:mutated_fiber|50|2|5","spore:mutated_heart|10|1|1","spore:cerebrum|25|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
+            this.inf_pillager_loot = builder.defineList("Infected Pillager",
+                    Lists.newArrayList("spore:mutated_fiber|50|2|5","spore:mutated_heart|10|1|1","spore:cerebrum|25|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
+            this.inf_witch_loot = builder.defineList("Infected Witch",
+                    Lists.newArrayList("spore:mutated_fiber|50|1|3" ,"minecraft:stick|60|1|6","minecraft:glowstone_dust|30|1|3","spore:cerebrum|30|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
+            this.inf_wan_loot = builder.defineList("Infected Wandering Trader",
+                    Lists.newArrayList("spore:mutated_fiber|80|2|5","spore:mutated_heart|10|1|1","spore:cerebrum|30|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
+            this.inf_evoker_loot = builder.defineList("Infected Evoker",
+                    Lists.newArrayList("spore:mutated_fiber|50|2|5","spore:armor_fragment|70|1|3","spore:claw_fragment|80|3|6","spore:mutated_heart|10|1|1","spore:cerebrum|25|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
+            this.inf_vin_loot = builder.defineList("Infected Vindicator",
+                    Lists.newArrayList("spore:mutated_fiber|50|2|5","spore:armor_fragment|80|1|4","spore:mutated_heart|10|1|1","spore:cerebrum|25|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
+            this.inf_claw_loot = builder.defineList("Claw ",
+                    Lists.newArrayList("spore:mutated_fiber|50|1|3","spore:armor_fragment|80|1|2","spore:claw_fragment|80|2|6") , o -> o instanceof String);
+
+            this.inf_braio_loot = builder.defineList("Braiomil ",
+                    Lists.newArrayList("spore:mutated_fiber|80|1|3","spore:armor_fragment|50|1|2","spore:mutated_heart|10|1|1") , o -> o instanceof String);
+            this.inf_knight_loot = builder.defineList("Knight ",
+                    Lists.newArrayList("spore:mutated_fiber|70|1|5","spore:armor_fragment|80|4|9","spore:mutated_heart|10|1|1","spore:claw_fragment|80|6|9") , o -> o instanceof String);
+            this.inf_griefer_loot = builder.defineList("Griefer ",
+                    Lists.newArrayList("spore:mutated_fiber|50|2|5","spore:armor_fragment|80|2|4","spore:mutated_heart|10|1|1","spore:claw_fragment|80|3|6") , o -> o instanceof String);
+
+            this.inf_spitter_loot = builder.defineList("Spitter ",
+                    Lists.newArrayList("spore:mutated_fiber|80|1|3","spore:armor_fragment|50|1|2","spore:mutated_heart|10|1|1","spore:cerebrum|20|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
+            this.inf_slasher_loot = builder.defineList("Slasher ",
+                    Lists.newArrayList("spore:mutated_fiber|70|1|5","spore:armor_fragment|80|4|9","spore:mutated_heart|10|1|1","spore:claw_fragment|80|4|8","spore:cerebrum|20|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
+            this.inf_leap_loot = builder.defineList("Leaper ",
+                    Lists.newArrayList("spore:mutated_fiber|50|2|5","spore:armor_fragment|80|2|4","spore:mutated_heart|10|1|1","spore:claw_fragment|80|3|6","spore:cerebrum|20|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
+
+            this.inf_howler_loot = builder.defineList("Howler ",
+                    Lists.newArrayList("spore:mutated_fiber|80|1|3","spore:armor_fragment|50|1|2","spore:mutated_heart|10|1|1","spore:cerebrum|20|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
+            this.inf_stalker_loot = builder.defineList("Stalker ",
+                    Lists.newArrayList("spore:mutated_fiber|70|1|5","spore:armor_fragment|80|3|6","spore:mutated_heart|10|1|1","spore:claw_fragment|80|1|4","spore:cerebrum|20|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
+            this.inf_brute_loot = builder.defineList("Brute ",
+                    Lists.newArrayList("spore:mutated_fiber|50|2|5","spore:armor_fragment|80|5|12","spore:mutated_heart|10|1|1","spore:cerebrum|20|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
+
+            builder.pop();
+        }
+    }
+
     static {
         Pair<Server, ForgeConfigSpec> commonSpecPair = new ForgeConfigSpec.Builder().configure(Server::new);
         SERVER = commonSpecPair.getLeft();
         SERVER_SPEC = commonSpecPair.getRight();
+
+        Pair<DataGen , ForgeConfigSpec> commonPair = new ForgeConfigSpec.Builder().configure(DataGen::new);
+        DATAGEN = commonPair.getLeft();
+        DATAGEN_SPEC = commonPair.getRight();
     }
 
     public static void loadConfig(ForgeConfigSpec config, String path) {

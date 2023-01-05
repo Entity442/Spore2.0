@@ -25,14 +25,15 @@ public class Infection {
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event) {
         if (event != null && event.getEntity() != null) {
-            inf(event.getEntity().level, event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), event.getEntity());
-        }
-    }
+            LevelAccessor world = event.getEntity().level;
+            double x = event.getEntity().getX();
+            double y = event.getEntity().getY();
+            double z = event.getEntity().getZ();
+            Entity entity = event.getEntity();
 
-    public static void inf(LevelAccessor world, double x, double y, double z, Entity entity) {
         if (entity instanceof Infected && SConfig.SERVER.scent_spawn.get()) {
             if (world instanceof ServerLevel _level) {
-                if (Math.random() < 0.1) {
+                if (Math.random() < (SConfig.SERVER.scent_spawn_chance.get() / 100f)) {
                     {
                         Mob entityToSpawn = new ScentEntity(Sentities.SCENT.get(), _level);
                         entityToSpawn.moveTo(x, y + 4, z, world.getRandom().nextFloat() * 360F, 0);
@@ -129,6 +130,7 @@ public class Infection {
                 }
             }
         }
+      }
     }
 
 
@@ -136,29 +138,18 @@ public class Infection {
 
     @SubscribeEvent
     public static void onEntityDeath(LivingDropsEvent event) {
-        if (event != null && event.getEntity() != null) {
-            drop(event, event.getEntity());
-        }
-    }
-    public static void drop(@Nullable Event event, Entity entity) {
+        if (event != null && event.getEntity() != null) {Entity entity = event.getEntity();
         if ((SConfig.SERVER.inf_human_conv.get().contains(entity.getEncodeId()) || SConfig.SERVER.inf_villager_conv.get().contains(entity.getEncodeId())
                 || SConfig.SERVER.inf_pillager_conv.get().contains(entity.getEncodeId()) || SConfig.SERVER.inf_witch_conv.get().contains(entity.getEncodeId())
                 || SConfig.SERVER.inf_evoker_conv.get().contains(entity.getEncodeId())) || SConfig.SERVER.inf_vindi_conv.get().contains(entity.getEncodeId())
                 || SConfig.SERVER.inf_van_conv.get().contains(entity.getEncodeId())) {
             LivingEntity _livEnt = (LivingEntity) entity;
             if (_livEnt.hasEffect(Seffects.MYCELIUM.get())) {
-                if (event != null && event.isCancelable()) {
+                if (event.isCancelable()) {
                     event.setCanceled(true);
                 }
             }
         }
-        if (entity instanceof  Infected && ((Infected) entity).getLastDamageSource() == DamageSource.IN_WALL){
-            if (event != null && event.isCancelable()) {
-                event.setCanceled(true);
-            }
-        }
     }
-
-
-
+    }
 }
