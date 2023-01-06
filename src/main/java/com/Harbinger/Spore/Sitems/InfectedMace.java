@@ -56,11 +56,12 @@ public class InfectedMace extends Item implements Vanishable {
     public boolean hurtEnemy(ItemStack stack, LivingEntity entity, LivingEntity livingEntity) {
         stack.hurtAndBreak(1, livingEntity, (ss) -> {
             ss.broadcastBreakEvent(EquipmentSlot.MAINHAND);});
+        entity.knockback(2.2F, Mth.sin(livingEntity.getYRot() * ((float) Math.PI / 180F)), (-Mth.cos(livingEntity.getYRot() * ((float) Math.PI / 180F))));
         AABB bounding = entity.getBoundingBox().inflate(2);
         List<Entity> targets = entity.level.getEntities(entity , bounding);
         for (Entity en : targets) {
             if (en instanceof LivingEntity){
-                ((LivingEntity) en).knockback(1.3F, Mth.sin(livingEntity.getYRot() * ((float) Math.PI / 180F)), (-Mth.cos(livingEntity.getYRot() * ((float) Math.PI / 180F))));
+                ((LivingEntity) en).knockback(2.2F, Mth.sin(livingEntity.getYRot() * ((float) Math.PI / 180F)), (-Mth.cos(livingEntity.getYRot() * ((float) Math.PI / 180F))));
                 en.hurt(DamageSource.mobAttack(livingEntity), SConfig.SERVER.mace_damage.get());
             }
         }
