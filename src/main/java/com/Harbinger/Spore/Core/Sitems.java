@@ -44,6 +44,8 @@ public class Sitems {
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> ARMOR_PLATE = ITEMS.register("armor_plate",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> TUMOR = ITEMS.register("tumor",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE).stacksTo(16)));
 
 
 
