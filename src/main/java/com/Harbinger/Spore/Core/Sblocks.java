@@ -8,6 +8,8 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -57,4 +59,9 @@ public class Sblocks {
             Container::new);
     public  static final RegistryObject<Block> LAB_BLOCK = registerBlockT("lab_block",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(4f, 20f)));
+    public  static final RegistryObject<SlabBlock> LAB_SLAB = registerBlockT("lab_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Sblocks.LAB_BLOCK.get())));
+    public  static final RegistryObject<StairBlock> LAB_STAIR = registerBlockT("lab_stair",
+            () -> new StairBlock(()-> LAB_BLOCK.get().defaultBlockState(),BlockBehaviour.Properties.copy(Sblocks.LAB_BLOCK.get())));
+
 }
