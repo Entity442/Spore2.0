@@ -24,6 +24,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -60,9 +61,11 @@ public class InfectedMace extends Item implements Vanishable {
         AABB bounding = entity.getBoundingBox().inflate(2);
         List<Entity> targets = entity.level.getEntities(entity , bounding);
         for (Entity en : targets) {
-            if (en instanceof LivingEntity){
+            if (en instanceof LivingEntity && !(en.is(livingEntity))){
                 ((LivingEntity) en).knockback(2.2F, Mth.sin(livingEntity.getYRot() * ((float) Math.PI / 180F)), (-Mth.cos(livingEntity.getYRot() * ((float) Math.PI / 180F))));
                 en.hurt(DamageSource.mobAttack(livingEntity), SConfig.SERVER.mace_damage.get());
+                int k = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, stack);
+                if (k > 0){ en.setSecondsOnFire(10 * k);}
             }
         }
         return true;

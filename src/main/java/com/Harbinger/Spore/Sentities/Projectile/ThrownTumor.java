@@ -34,7 +34,6 @@ public class ThrownTumor extends ThrowableItemProjectile {
 
     public void handleEntityEvent(byte p_37484_) {
         if (p_37484_ == 3) {
-            double d0 = 0.08D;
 
             for(int i = 0; i < 8; ++i) {
                 this.level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, this.getItem()), this.getX(), this.getY(), this.getZ(), ((double)this.random.nextFloat() - 0.5D) * 0.08D, ((double)this.random.nextFloat() - 0.5D) * 0.08D, ((double)this.random.nextFloat() - 0.5D) * 0.08D);
