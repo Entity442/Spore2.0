@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
+import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.PullGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
@@ -40,7 +41,7 @@ public class Slasher extends EvolvedInfected{
 
 
 
-        this.goalSelector.addGoal(2, new SlasherAttackGoal());
+        this.goalSelector.addGoal(2, new AOEMeleeAttackGoal(this ,1.2,true, 1.2 ,3));
         this.goalSelector.addGoal(1, new PullGoal(this, 32, 16));
         this.goalSelector.addGoal(3, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
@@ -49,19 +50,6 @@ public class Slasher extends EvolvedInfected{
         super.registerGoals();
     }
 
-
-    class SlasherAttackGoal extends MeleeAttackGoal{
-        public SlasherAttackGoal() {
-            super(Slasher.this, 1.2, true);
-        }
-
-        protected double getAttackReachSqr(LivingEntity entity) {
-            float f = Slasher.this.getBbWidth() + 0.4F;
-            return (double)(f * 3.0F * f * 3.0F + (entity.getBbWidth() * 2));
-        }
-
-
-    }
 
     protected SoundEvent getAmbientSound() {
         return Ssounds.INF_GROWL.get();
