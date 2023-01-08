@@ -79,7 +79,6 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.SCENT.get(), ScentEntityRenderer::new);
 
 
-        event.registerBlockEntityRenderer(SblockEntities.CONTAINER.get() , ContainerItemRenderer::new);
     }
 
     @SubscribeEvent
