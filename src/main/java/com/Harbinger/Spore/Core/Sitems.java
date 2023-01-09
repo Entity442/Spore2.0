@@ -44,6 +44,14 @@ public class Sitems {
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> ARMOR_PLATE = ITEMS.register("armor_plate",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> ALVEOLIC_SACK = ITEMS.register("alveolic_sack",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> ALTERED_SPLEEN = ITEMS.register("altered_spleen",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> CORROSIVE_SACK = ITEMS.register("corrosive_sack",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> TENDONS = ITEMS.register("tendons",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> TUMOR = ITEMS.register("tumor",
             () -> new Tumor( new Item.Properties().tab(ScreativeTab.SPORE).stacksTo(16)));
 
