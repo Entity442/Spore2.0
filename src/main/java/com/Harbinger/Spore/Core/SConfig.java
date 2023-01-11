@@ -178,12 +178,6 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> corrosion;
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_human_conv;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_villager_conv;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_witch_conv;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_pillager_conv;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_evoker_conv;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_vindi_conv;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_van_conv;
 
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> braio_effects;
@@ -196,6 +190,8 @@ public class SConfig {
             this.global_health = builder.define("Global Health Modifier",1.0);
             this.global_armor = builder.define("Global Armor Modifier",1.0);
 
+            builder.pop();
+            builder.push("TargetingTasks");
             this.at_mob = builder.comment("Default true").define("Should attack other mobs?",true);
             this.at_an = builder.comment("Default true").define("Should attack Animals?",false);
 
@@ -206,14 +202,13 @@ public class SConfig {
             this.attack = builder.defineList("Mobs that will target infected",
                     Lists.newArrayList(
                             "minecraft:iron_golem",
-                                     "guardvillagers:guard") , o -> o instanceof String);
+                            "guardvillagers:guard") , o -> o instanceof String);
 
             this.flee = builder.defineList("Mobs that will run from infected",
                     Lists.newArrayList(
                             "minecraft:villager",
-                                     "minecraft:wandering_trader") , o -> o instanceof String);
+                            "minecraft:wandering_trader") , o -> o instanceof String);
             builder.pop();
-
 
 
 
@@ -239,35 +234,14 @@ public class SConfig {
 
             this.evolution_age_human = builder.comment("Default 150").define("Evolution Timer in seconds",150);
             this.min_kills = builder.comment("Default 1").define("Minimum amount of kills to start the evolution",1);
-
             builder.pop();
             builder.push("Infections");
-            this.inf_human_conv = builder.defineList("Mobs that can become infected humans",
+            this.inf_human_conv = builder.defineList("Mobs and their infected counterparts",
                     Lists.newArrayList(
-                            "minecraft:zombie"
-                            ,"minecraft:husk"
-                            ,"minecraft:drowned" ) , o -> o instanceof String);
-            this.inf_villager_conv = builder.defineList("Mobs that can become infected villagers",
-                    Lists.newArrayList(
-                            "minecraft:villager"
-                            ,"minecraft:zombie_villager",
-                            "guardvillagers:guard") , o -> o instanceof String);
-            this.inf_witch_conv = builder.defineList("Mobs that can become infected witches",
-                    Lists.newArrayList(
-                            "minecraft:witch" ) , o -> o instanceof String);
-            this.inf_evoker_conv = builder.defineList("Mobs that can become infected evokers",
-                    Lists.newArrayList(
-                            "minecraft:evoker") , o -> o instanceof String);
-            this.inf_pillager_conv = builder.defineList("Mobs that can become infected pillagers",
-                    Lists.newArrayList(
-                            "minecraft:pillager" ) , o -> o instanceof String);
-            this.inf_vindi_conv = builder.defineList("Mobs that can become infected vindicators",
-                    Lists.newArrayList(
-                            "minecraft:vindicator","hunterillager:hunterillager" ) , o -> o instanceof String);
-            this.inf_van_conv = builder.defineList("Mobs that can become infected wandering traders",
-                    Lists.newArrayList(
-                            "minecraft:wandering_trader" ) , o -> o instanceof String);
-
+                            "minecraft:zombie|spore:inf_human","minecraft:husk|spore:inf_human","minecraft:drowned|spore:inf_human"
+                            ,"minecraft:pillager|spore:inf_pillager","minecraft:villager|spore:inf_villager","guardvillagers:guard|spore:inf_villager",
+                            "minecraft:witch|spore:inf_witch","minecraft:wandering_trader|spore:inf_wanderer","minecraft:evoker|spore:inf_evoker",
+                            "minecraft:vindicator|spore:inf_vindicator","hunterillager:hunterillager|spore:inf_vindicator") , o -> o instanceof String);
             builder.pop();
             builder.pop();
 

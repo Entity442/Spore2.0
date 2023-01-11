@@ -4,6 +4,7 @@ import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -11,10 +12,7 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -24,6 +22,7 @@ import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -93,7 +92,7 @@ public class Howler extends EvolvedInfected implements Support{
                 this.screamTimer = 0;
             } else {
                 this.mob.getNavigation().stop();
-                if (screamTimer >= 80){
+                if (screamTimer >= 80 && !level.isClientSide){
                     int r = random.nextInt(1,3);
                     ScreamAOE(this.mob);
                     for (int index0 = 0; index0 < r; index0++) {
@@ -157,6 +156,7 @@ public class Howler extends EvolvedInfected implements Support{
 
 
     public void SummonScream(LivingEntity entity) {
+        ServerLevelAccessor world = (ServerLevelAccessor) entity.level;
         Level level = entity.level;
         Random rand = new Random();
         int d = random.nextInt(0 ,2);
@@ -168,8 +168,9 @@ public class Howler extends EvolvedInfected implements Support{
             int randomIndex = rand.nextInt(ev.size());
             ResourceLocation randomElement1 = new ResourceLocation(ev.get(randomIndex));
             EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
-            Entity waveentity = randomElement.create(level);
+            Mob waveentity = (Mob) randomElement.create(level);
             waveentity.setPos(entity.getX() + r, entity.getY() + 0.5D + d, entity.getZ() + c);
+            waveentity.finalizeSpawn(world, level.getCurrentDifficultyAt(new BlockPos(entity.getX()  ,entity.getY() ,entity.getZ() )), MobSpawnType.NATURAL, null,null);
             level.addFreshEntity(waveentity);
             this.scream = true;
         }

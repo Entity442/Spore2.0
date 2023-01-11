@@ -3,15 +3,21 @@ package com.Harbinger.Spore.Sentities.Utility;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sparticles;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -37,7 +43,9 @@ public class ScentEntity extends UtilityEntity {
             this.getPersistentData().putInt("summon", 1 + this.getPersistentData().getInt("summon"));
             if (this.getPersistentData().getInt("summon") >= SConfig.SERVER.scent_summon_cooldown.get()) {
                 this.getPersistentData().putInt("summon", 0);
-                this.Summon(this);
+
+                if (!this.level.isClientSide){
+                this.Summon(this);}
             }}
         }
         super.tick();
@@ -79,6 +87,7 @@ public class ScentEntity extends UtilityEntity {
     }
 
     public void Summon(LivingEntity entity) {
+        ServerLevelAccessor world = (ServerLevelAccessor) entity.level;
         Level level = entity.level;
         Random rand = new Random();
         int d = random.nextInt(0 ,3);
@@ -90,8 +99,9 @@ public class ScentEntity extends UtilityEntity {
             int randomIndex = rand.nextInt(ev.size());
             ResourceLocation randomElement1 = new ResourceLocation(ev.get(randomIndex));
             EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
-            Entity waveentity = randomElement.create(level);
+            Mob waveentity = (Mob) randomElement.create(level);
             waveentity.setPos(entity.getX() + r, entity.getY() + 0.5D + d, entity.getZ() + c);
+            waveentity.finalizeSpawn(world, level.getCurrentDifficultyAt(new BlockPos(entity.getX()  ,entity.getY() ,entity.getZ() )),MobSpawnType.NATURAL, null,null);
             level.addFreshEntity(waveentity);
         }
     }
