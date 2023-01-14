@@ -2,14 +2,12 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
-import com.Harbinger.Spore.Sentities.AI.InfectedWallMovementControl;
+import com.Harbinger.Spore.Sentities.MovementControls.InfectedWallMovementControl;
 import com.Harbinger.Spore.Sentities.AI.LeapGoal;
-import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -23,9 +21,6 @@ import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-
-import java.util.List;
 
 public class Leaper extends EvolvedInfected{
     public Leaper(EntityType<? extends Monster> type, Level level) {
@@ -57,14 +52,8 @@ public class Leaper extends EvolvedInfected{
     }
 
 
-    @Override
-    public boolean hurt(DamageSource source, float amount) {
-        if (source == DamageSource.FALL){
-            this.causeFallDamage(amount , 0.2F ,DamageSource.GENERIC);
-            return  false;
-        }
-
-        return super.hurt(source, amount);
+    protected int calculateFallDamage(float p_149389_, float p_149390_) {
+        return super.calculateFallDamage(p_149389_, p_149390_) - 10;
     }
 
     public static AttributeSupplier.Builder createAttributes() {

@@ -1,4 +1,4 @@
-package com.Harbinger.Spore.Sentities.AI;
+package com.Harbinger.Spore.Sentities.MovementControls;
 
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.control.MoveControl;

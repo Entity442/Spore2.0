@@ -57,5 +57,6 @@ public class InfectedExoskeleton extends ArmorItem {
                 return SConfig.SERVER.knockback_resistance.get();
             }
         } , slot,properties);
+
     }
 }
