@@ -31,6 +31,7 @@ public class Attributes {
         event.put(Sentities.STALKER.get(), Stalker.createAttributes().build());
         event.put(Sentities.SCENT.get(), ScentEntity.createAttributes().build());
         event.put(Sentities.BRUTE.get(), Brute.createAttributes().build());
+        event.put(Sentities.BUSSER.get(), Busser.createAttributes().build());
     }
 }
 

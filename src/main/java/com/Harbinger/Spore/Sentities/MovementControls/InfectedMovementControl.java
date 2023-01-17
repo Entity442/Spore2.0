@@ -6,30 +6,23 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.phys.Vec3;
 
-public class InfectedWaterMovementControl  extends MoveControl {
+public class InfectedMovementControl extends MoveControl {
     private final Mob mob;
 
-    public InfectedWaterMovementControl(Mob mob) {
+    public InfectedMovementControl(Mob mob) {
         super(mob);
         this.mob = mob;
     }
 
-    private void updateSpeed() {
-        if (this.mob.isInWater()) {
-            this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(0.0D, 0.04D, 0.0D));
-
-        }
-
-    }
 
     public void tick() {
-        this.updateSpeed();
-        if (mob.horizontalCollision && (mob.isInWater() || mob.isInPowderSnow)) {
-            Vec3 initialVec = mob.getDeltaMovement();
-            Vec3 climbVec = new Vec3(initialVec.x, 0.2D, initialVec.z);
-            mob.setDeltaMovement(climbVec.x * 0.91D,
-                    climbVec.y * 0.98D, climbVec.z * 0.91D);
-        }
+            if (mob.horizontalCollision && mob.isInWater()) {
+                Vec3 initialVec = mob.getDeltaMovement();
+                Vec3 climbVec = new Vec3(initialVec.x, 0.2D, initialVec.z);
+                mob.setDeltaMovement(climbVec.x * 0.91D,
+                        climbVec.y * 0.98D, climbVec.z * 0.91D);
+            }
+
         if (this.operation == MoveControl.Operation.MOVE_TO && !this.mob.getNavigation().isDone()) {
             double d0 = this.wantedX - this.mob.getX();
             double d1 = this.wantedY - this.mob.getY();
@@ -42,8 +35,7 @@ public class InfectedWaterMovementControl  extends MoveControl {
             float f1 = (float)(this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED));
             this.mob.setSpeed(Mth.lerp(0.2F, this.mob.getSpeed(), f1));
             this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(0.0D, (double)this.mob.getSpeed() * d1 * 0.1D, 0.0D));
-        } else {
-            this.mob.setSpeed(0.0F);
-        }
+        } else {this.mob.setSpeed(0.0F);}
+
     }
 }

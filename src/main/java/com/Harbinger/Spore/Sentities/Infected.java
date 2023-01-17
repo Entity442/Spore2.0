@@ -3,7 +3,7 @@ package com.Harbinger.Spore.Sentities;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Sentities.AI.*;
-import com.Harbinger.Spore.Sentities.MovementControls.InfectedWaterMovementControl;
+import com.Harbinger.Spore.Sentities.MovementControls.InfectedMovementControl;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
@@ -32,6 +32,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
 public class Infected extends Monster {
@@ -44,11 +45,30 @@ public class Infected extends Monster {
         this.setPathfindingMalus(BlockPathTypes.DANGER_OTHER, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, 16.0F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
-        this.moveControl =  new InfectedWaterMovementControl(this);
+        this.moveControl =  new InfectedMovementControl(this);
         this.xpReward = 5;
     }
 
+    public void travel(Vec3 p_32858_) {
+        if (this.isEffectiveAi() && this.isInWater()) {
+            this.moveRelative(0.1F, p_32858_);
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.7D));
+            if (this.getTarget() == null) {
+                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
+            }
+        } else {
+            super.travel(p_32858_);
+        }
 
+    }
+
+    public int getMaxAirSupply() {
+        return 1200;
+    }
+    protected int increaseAirSupply(int p_28389_) {
+        return this.getMaxAirSupply();
+    }
 
     public boolean doHurtTarget(Entity p_32257_) {
         if (super.doHurtTarget(p_32257_)) {
@@ -88,7 +108,7 @@ public class Infected extends Monster {
 
         this.goalSelector.addGoal(5 , new InfectedPanicGoal(this , 1.5));
         this.goalSelector.addGoal(8 , new FleeSunGoal(this , 1.2));
-        this.goalSelector.addGoal(8, new SwimToTarget(this , 1.0));
+        this.goalSelector.addGoal(6,new FloatDiveGoal(this));
         this.goalSelector.addGoal(7, new SwimToBlockGoal(this , 1.5, 8));
         this.goalSelector.addGoal(9,new FollowOthersGoal(this, 1.2, ScentEntity.class , 128 , false));
         this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7 , 32, true));
@@ -122,7 +142,7 @@ public class Infected extends Monster {
                 this.jumpFromGround();
             }
         }
-        if (this.getLastDamageSource() == DamageSource.IN_WALL && this.isOnGround()){
+        if (this.getLastDamageSource() == DamageSource.IN_WALL || (this.horizontalCollision && this.isInWater())){
             this.jumpFromGround();
         }
     }

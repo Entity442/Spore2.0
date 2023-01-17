@@ -3,7 +3,6 @@ package com.Harbinger.Spore.Client;
 import com.Harbinger.Spore.Client.Models.*;
 import com.Harbinger.Spore.Client.Renderers.*;
 import com.Harbinger.Spore.Core.SMenu;
-import com.Harbinger.Spore.Core.SblockEntities;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.Particles.AcidParticle;
@@ -46,6 +45,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(InfectedWandererModel.LAYER_LOCATION, InfectedWandererModel::createBodyLayer);
         event.registerLayerDefinition(StalkerModel.LAYER_LOCATION, StalkerModel::createBodyLayer);
         event.registerLayerDefinition(BruteModel.LAYER_LOCATION, BruteModel::createBodyLayer);
+        event.registerLayerDefinition(BusserModel.LAYER_LOCATION, BusserModel::createBodyLayer);
     }
 
 
@@ -71,6 +71,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.INF_WANDERER.get(), InfectedWandererRenderer::new);
         event.registerEntityRenderer(Sentities.STALKER.get(), StalkerRenderer::new);
         event.registerEntityRenderer(Sentities.BRUTE.get(), BruteRenderer::new);
+        event.registerEntityRenderer(Sentities.BUSSER.get(), BusserRenderer::new);
 
 
         event.registerEntityRenderer(Sentities.ACID_BALL.get(), ThrownItemRenderer::new);

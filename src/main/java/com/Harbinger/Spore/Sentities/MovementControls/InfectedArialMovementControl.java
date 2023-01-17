@@ -2,46 +2,57 @@ package com.Harbinger.Spore.Sentities.MovementControls;
 
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 
 public class InfectedArialMovementControl extends MoveControl {
-    private final Mob mob;
-    private int floatDuration;
+    private final int maxTurn;
+    private final boolean hoversInPlace;
 
-    public InfectedArialMovementControl(Mob m) {
-        super(m);
-        this.mob = m;
+    public InfectedArialMovementControl(Mob p_24893_, int p_24894_, boolean p_24895_) {
+        super(p_24893_);
+        this.maxTurn = p_24894_;
+        this.hoversInPlace = p_24895_;
     }
 
     public void tick() {
         if (this.operation == MoveControl.Operation.MOVE_TO) {
-            if (this.floatDuration-- <= 0) {
-                this.floatDuration += this.mob.getRandom().nextInt(5) + 2;
-                Vec3 vec3 = new Vec3(this.wantedX - this.mob.getX(), this.wantedY - this.mob.getY(), this.wantedZ - this.mob.getZ());
-                double d0 = vec3.length();
-                vec3 = vec3.normalize();
-                if (this.canReach(vec3, Mth.ceil(d0))) {
-                    this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(vec3.scale(0.1D)));
-                } else {
-                    this.operation = MoveControl.Operation.WAIT;
-                }
+            this.operation = MoveControl.Operation.WAIT;
+            this.mob.setNoGravity(true);
+            double d0 = this.wantedX - this.mob.getX();
+            double d1 = this.wantedY - this.mob.getY();
+            double d2 = this.wantedZ - this.mob.getZ();
+            double d3 = d0 * d0 + d1 * d1 + d2 * d2;
+            if (d3 < (double)2.5000003E-7F) {
+                this.mob.setYya(0.0F);
+                this.mob.setZza(0.0F);
+                return;
             }
 
-        }
-    }
-
-    private boolean canReach(Vec3 p_32771_, int p_32772_) {
-        AABB aabb = this.mob.getBoundingBox();
-
-        for(int i = 1; i < p_32772_; ++i) {
-            aabb = aabb.move(p_32771_);
-            if (!this.mob.level.noCollision(this.mob, aabb)) {
-                return false;
+            float f = (float)(Mth.atan2(d2, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
+            this.mob.setYRot(this.rotlerp(this.mob.getYRot(), f, 90.0F));
+            float f1;
+            if (this.mob.isOnGround()) {
+                f1 = (float)(this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED));
+            } else {
+                f1 = (float)(this.speedModifier * this.mob.getAttributeValue(Attributes.FLYING_SPEED));
             }
+
+            this.mob.setSpeed(f1);
+            double d4 = Math.sqrt(d0 * d0 + d2 * d2);
+            if (Math.abs(d1) > (double)1.0E-5F || Math.abs(d4) > (double)1.0E-5F) {
+                float f2 = (float)(-(Mth.atan2(d1, d4) * (double)(180F / (float)Math.PI)));
+                this.mob.setXRot(this.rotlerp(this.mob.getXRot(), f2, (float)this.maxTurn));
+                this.mob.setYya(d1 > 0.0D ? f1 : -f1);
+            }
+        } else {
+            if (!this.hoversInPlace) {
+                this.mob.setNoGravity(false);
+            }
+
+            this.mob.setYya(0.0F);
+            this.mob.setZza(0.0F);
         }
 
-        return true;
     }
 }

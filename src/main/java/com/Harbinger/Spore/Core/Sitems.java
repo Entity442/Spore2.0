@@ -83,6 +83,8 @@ public class Sitems {
             () -> new ForgeSpawnEggItem(Sentities.GRIEFER,-5750208,-10092442, new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> BRAIO_SPAWNEGG = ITEMS.register("braio_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.BRAIOMIL,-6124508,-13421773, new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> BUSSER_SPAWNEGG = ITEMS.register("busser_spawnegg",
+            () -> new ForgeSpawnEggItem(Sentities.BUSSER,-3724508,-23121773, new Item.Properties().tab(ScreativeTab.SPORE)));
 
     public  static final RegistryObject<Item> LEAPER_SPAWNEGG = ITEMS.register("leaper_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.LEAPER,-9762718,-12345773, new Item.Properties().tab(ScreativeTab.SPORE)));

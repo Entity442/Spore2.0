@@ -93,6 +93,10 @@ public class Sentities {
             () -> EntityType.Builder.of(Brute::new, MobCategory.MONSTER).sized(1.8f,1.6f)
                     .build(new ResourceLocation(Spore.MODID, "brute").toString()));
 
+    public static final RegistryObject<EntityType<Busser>> BUSSER = SPORE_ENTITIES.register("busser",
+            () -> EntityType.Builder.of(Busser::new, MobCategory.MONSTER).sized(0.6f, 1.9f)
+                    .build(new ResourceLocation(Spore.MODID, "busser").toString()));
+
 
 
 
