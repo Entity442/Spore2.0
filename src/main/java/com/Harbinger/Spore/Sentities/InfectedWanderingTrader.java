@@ -2,7 +2,6 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
-import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
@@ -21,7 +20,7 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 
-public class InfectedWanderingTrader extends Infected{
+public class InfectedWanderingTrader extends Infected {
     public InfectedWanderingTrader(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }

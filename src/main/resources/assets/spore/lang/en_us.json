@@ -58,6 +58,7 @@
   "item.spore.howler_spawnegg": "Howler",
   "item.spore.stalker_spawnegg": "Stalker",
   "item.spore.brute_spawnegg": "Brute",
+  "item.spore.busser_spawnegg": "Phayres",
 
   "item.spore.scent_spawnegg": "Scent",
   "item.spore.claw_spawnegg": "Claw",
@@ -80,6 +81,7 @@
   "entity.spore.brute": "Brute",
   "entity.spore.scent": "Scent",
   "entity.spore.claw": "Claw",
+  "entity.spore.busser": "Phayres",
 
   "entity.spore.thrown_tumor": "Tumor",
   "entity.spore.thrown_spear": "Infected Spear",

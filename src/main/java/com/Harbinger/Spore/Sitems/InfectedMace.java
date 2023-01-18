@@ -3,8 +3,6 @@ package com.Harbinger.Spore.Sitems;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.ScreativeTab;
 import com.Harbinger.Spore.Core.Sitems;
-import com.Harbinger.Spore.Sentities.Infected;
-import com.Harbinger.Spore.Sentities.Support;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;

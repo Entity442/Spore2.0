@@ -76,7 +76,7 @@ public class Brute extends EvolvedInfected {
 
 
         for (Entity en : entities) {
-            if (en instanceof Infected){
+            if (SConfig.SERVER.can_be_carried.get().contains(en.getEncodeId())){
                 return true;
             }
         }

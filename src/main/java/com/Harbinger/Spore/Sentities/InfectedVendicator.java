@@ -4,7 +4,6 @@ import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -29,7 +28,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
-public class InfectedVendicator extends EvolvedInfected{
+public class InfectedVendicator extends EvolvedInfected {
     public InfectedVendicator(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }

@@ -178,10 +178,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> corrosion;
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_human_conv;
-
-
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> braio_effects;
-
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> support;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> ranged;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> can_be_carried;
 
         public Server(ForgeConfigSpec.Builder builder) {
 
@@ -210,6 +210,17 @@ public class SConfig {
                             "minecraft:wandering_trader") , o -> o instanceof String);
             builder.pop();
 
+            builder.push("MobRoles");
+            builder.comment("Decides some of the interactions between the infected mobs");
+            this.support = builder.defineList("Support",
+                    Lists.newArrayList("spore:inf_witch","spore:braiomil","spore:howler","spore:busser") , o -> o instanceof String);
+
+            this.can_be_carried = builder.defineList("Disposable",
+                    Lists.newArrayList("spore:inf_human","spore:inf_villager","spore:inf_wanderer","spore:knight","spore:griefer","spore:slasher","spore:inf_vindicator","minecraft:creeper") , o -> o instanceof String);
+
+            this.ranged = builder.defineList("Ranged",
+                    Lists.newArrayList("spore:spitter","spore:inf_pillager","spore:braiomil","spore:inf_evoker") , o -> o instanceof String);
+            builder.pop();
 
 
 

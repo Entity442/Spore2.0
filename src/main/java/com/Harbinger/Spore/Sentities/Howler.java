@@ -26,11 +26,10 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class Howler extends EvolvedInfected implements Support{
+public class Howler extends EvolvedInfected {
     public Howler(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }
@@ -182,7 +181,7 @@ public class Howler extends EvolvedInfected implements Support{
         List<Entity> entities = entity.level.getEntities(entity, boundingBox);
 
         for (Entity en : entities) {
-            if (en instanceof Infected && !(en instanceof Support)){
+            if (en instanceof Infected && !(SConfig.SERVER.support.get().contains(en.getEncodeId()))){
                 return true;
             }
         }
@@ -199,9 +198,9 @@ public class Howler extends EvolvedInfected implements Support{
         int j=0,k=0;
         if (isAlive()){
             if (level.getDifficulty() == Difficulty.EASY){
-                j = 0; k = 100;
+                k = 100;
             }else  if (level.getDifficulty() == Difficulty.NORMAL){
-                j = 0; k = 200;
+                k = 200;
             } else if (level.getDifficulty() == Difficulty.HARD){
                 j = 1; k = 400;
             }

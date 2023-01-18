@@ -2,8 +2,9 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
-import com.Harbinger.Spore.Sentities.MovementControls.InfectedWallMovementControl;
 import com.Harbinger.Spore.Sentities.AI.LeapGoal;
+import com.Harbinger.Spore.Sentities.AI.TransportInfected;
+import com.Harbinger.Spore.Sentities.MovementControls.InfectedWallMovementControl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -44,7 +45,10 @@ public class Leaper extends EvolvedInfected{
             public boolean canContinueToUse() {
                 return (onGround);}
         });
-        this.goalSelector.addGoal(3, new RandomStrollGoal(this, 0.8));
+        this.goalSelector.addGoal(3, new TransportInfected<>(this,Mob.class,32,0.8 ,
+                entity -> SConfig.SERVER.ranged.get().contains(entity.getEncodeId()) || SConfig.SERVER.support.get().contains(entity.getEncodeId())
+                        && !(entity instanceof  Busser)));
+        this.goalSelector.addGoal(4, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 
 
@@ -66,6 +70,14 @@ public class Leaper extends EvolvedInfected{
                 .add(Attributes.ATTACK_KNOCKBACK, 3)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1);
 
+    }
+
+    @Override
+    public boolean causeFallDamage(float f1, float f2, DamageSource source) {
+        if (this.isVehicle()) {
+            return false;
+        }
+        return super.causeFallDamage(f1, f2, source);
     }
 
     protected SoundEvent getAmbientSound() {

@@ -30,7 +30,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 import java.util.Random;
-import java.util.SplittableRandom;
 
 public class InfectedVillager extends Infected {
     private int ev;

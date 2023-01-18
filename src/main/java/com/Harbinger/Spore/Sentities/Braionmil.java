@@ -1,7 +1,6 @@
 package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.BraionmilSwellGoal;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
@@ -17,7 +16,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -36,7 +34,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
-public class Braionmil extends EvolvedInfected  implements RangedAttackMob ,Support{
+public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
     public Braionmil(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }

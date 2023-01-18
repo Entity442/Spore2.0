@@ -3,26 +3,30 @@ package com.Harbinger.Spore.Sentities;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Sentities.AI.FlyAroundGoal;
 import com.Harbinger.Spore.Sentities.AI.FlyingLookGoal;
+import com.Harbinger.Spore.Sentities.AI.TransportInfected;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedArialMovementControl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 
-public class Busser extends EvolvedInfected implements Support{
+import java.util.Objects;
+
+public class Busser extends EvolvedInfected {
+
     public Busser(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         if (this.getTarget() != null || !this.isOnGround()){
-        this.moveControl = new InfectedArialMovementControl(this , 0 , true);
+        this.moveControl = new InfectedArialMovementControl(this , 20 , true);
         }
     }
     public boolean causeFallDamage(float p_147105_, float p_147106_, DamageSource p_147107_) {
@@ -32,8 +36,13 @@ public class Busser extends EvolvedInfected implements Support{
 
     protected PathNavigation createNavigation(Level p_27815_) {
         FlyingPathNavigation flyingpathnavigation = new FlyingPathNavigation(this, p_27815_) {
-            public boolean isStableDestination(BlockPos p_27947_) {
-                return !this.level.getBlockState(p_27947_.below()).isAir();
+            public boolean isStableDestination(BlockPos pos) {
+                if (this.mob.isVehicle()){
+                    return this.level.getBlockState(pos.below((int) this.mob.getY())).isAir()
+                            && this.level.getBlockState(pos.below((int) this.mob.getY() - 1)).isAir()
+                            && !this.level.getBlockState(pos.below((int) this.mob.getY() - 2)).isAir();
+                }
+                return !this.level.getBlockState(pos.below()).isAir();
             }
         };
         flyingpathnavigation.setCanOpenDoors(false);
@@ -42,26 +51,44 @@ public class Busser extends EvolvedInfected implements Support{
         return flyingpathnavigation;
     }
 
+    protected void customServerAiStep() {
+        if (this.isVehicle()){
+            if (Objects.requireNonNull(this.getFirstPassenger()).verticalCollisionBelow){
+                this.setDeltaMovement(this.getDeltaMovement().add(0.0,0.01,0.0));
+            }
+        }
+        super.customServerAiStep();
+    }
+
+    public void positionRider(Entity entity) {
+        super.positionRider(entity);
+        entity.setPos(this.getX(), this.getY() - 1.5,this.getZ());
+    }
+
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.5, false) {
+        this.goalSelector.addGoal(1, new TransportInfected<>(this, Mob.class,32,0.8 ,
+                e -> { return SConfig.SERVER.can_be_carried.get().contains(e.getEncodeId()) || SConfig.SERVER.ranged.get().contains(e.getEncodeId());}));
+
+        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
-                return 3.0 + entity.getBbWidth() * entity.getBbWidth();
-            }
-        });
+                return 3.0 + entity.getBbWidth() * entity.getBbWidth();}});
 
-        this.goalSelector.addGoal(3, new RandomStrollGoal(this , 0.8){
-            @Override
-            public boolean canUse() {
-                return this.mob.isOnGround() && this.mob.getTarget() == null;
-            }});
         this.goalSelector.addGoal(4, new FlyAroundGoal(this));
+
         this.goalSelector.addGoal(5 ,new  FlyingLookGoal(this));
 
         super.registerGoals();
     }
 
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (Math.random() < 0.3 && this.isVehicle()){
+            this.ejectPassengers();
+        }
+        return super.hurt(source, amount);
+    }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
@@ -75,6 +102,5 @@ public class Busser extends EvolvedInfected implements Support{
 
 
     }
-
 
 }
