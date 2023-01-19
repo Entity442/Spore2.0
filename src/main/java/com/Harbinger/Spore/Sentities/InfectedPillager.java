@@ -75,8 +75,6 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
             protected double getAttackReachSqr(LivingEntity entity) {
             return 3.0 + entity.getBbWidth() * entity.getBbWidth();
         }});
-        this.goalSelector.addGoal(3, new FollowOthersGoal(this , 1.1 , EvolvedInfected.class,32 , true));
-
     }
 
 

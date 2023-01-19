@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
+import com.Harbinger.Spore.Sentities.AI.TransportInfected;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -32,6 +33,9 @@ public class Brute extends EvolvedInfected {
 
     @Override
     protected void registerGoals() {
+        this.goalSelector.addGoal(1,new TransportInfected<>(this,Infected.class,16,1.1,entity -> {
+            return SConfig.SERVER.ranged.get().contains(entity.getEncodeId());
+        }));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
@@ -73,7 +77,6 @@ public class Brute extends EvolvedInfected {
     boolean checkForInfected(Entity entity){
         AABB boundingBox = entity.getBoundingBox().inflate(1.2);
         List<Entity> entities = entity.level.getEntities(entity, boundingBox);
-
 
         for (Entity en : entities) {
             if (SConfig.SERVER.can_be_carried.get().contains(en.getEncodeId())){

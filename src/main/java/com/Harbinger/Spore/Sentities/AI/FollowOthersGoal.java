@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.Sentities.AI;
 
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -8,10 +9,11 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class FollowOthersGoal extends Goal {
     protected boolean shouldLook;
-    private static final TargetingConditions PARTNER_TARGETING = TargetingConditions.forNonCombat().range(32);
+    private static TargetingConditions PARTNER_TARGETING;
     protected final Level level;
     protected final PathfinderMob mob;
     private final Class<? extends PathfinderMob> partnerClass;
@@ -23,14 +25,18 @@ public class FollowOthersGoal extends Goal {
     public  FollowOthersGoal(PathfinderMob mob , double speedModifier , int range , boolean look){
         this(mob , speedModifier, mob.getClass(),range, look);
     }
+    public FollowOthersGoal(PathfinderMob mob, double speedModifier, Class<? extends PathfinderMob> partnerClass ,int range , boolean look){
+        this(mob,speedModifier,partnerClass , range,look,(Predicate<LivingEntity>)null);
+    }
 
-    public  FollowOthersGoal( PathfinderMob mob, double speedModifier, Class<? extends PathfinderMob> partnerClass ,int range , boolean look){
+    public  FollowOthersGoal(PathfinderMob mob, double speedModifier, Class<? extends PathfinderMob> partnerClass ,int range , boolean look ,@Nullable Predicate<LivingEntity> en){
     this.shouldLook = look;
     this.level = mob.level;
     this.mob = mob;
     this.range = range;
     this.speedModifier = speedModifier;
     this.partnerClass = partnerClass;
+    PARTNER_TARGETING = TargetingConditions.forNonCombat().range(range).selector(en);
     this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 }
 

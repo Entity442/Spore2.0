@@ -62,7 +62,7 @@ public class TransportInfected<T extends LivingEntity> extends Goal {
         if (!mob.isVehicle() && partner != null && !partner.isPassenger()){
             this.mob.getLookControl().setLookAt(this.partner, 10.0F, (float)this.mob.getMaxHeadXRot());
              this.mob.getNavigation().moveTo(this.partner, this.speed);
-             if (this.mob.distanceToSqr(partner) < 50.0D && !partner.isPassenger()){
+             if (this.mob.distanceToSqr(partner) < 9.0D && !partner.isPassenger()){
              this.equip();}
         }
     }

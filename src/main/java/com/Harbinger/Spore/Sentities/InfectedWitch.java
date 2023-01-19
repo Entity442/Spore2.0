@@ -54,8 +54,6 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
         this.goalSelector.addGoal(3, new RangedAttackGoal(this, 1.0D, 40, 10.0F));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
 
-        this.goalSelector.addGoal(7, new FollowOthersGoal(this , 1 , EvolvedInfected.class, 32, true));
-
     }
 
     @Override

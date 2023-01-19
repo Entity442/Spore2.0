@@ -2,6 +2,7 @@ package com.Harbinger.Spore.sEvents;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Sentities.*;
+import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
 import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import com.Harbinger.Spore.Spore;
@@ -23,17 +24,32 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Mod.EventBusSubscriber(modid = Spore.MODID)
 public class HandlerEvents {
     @SubscribeEvent
-    public static void onLivingSpawned(EntityJoinLevelEvent event) {
-
+    public void onLivingSpawned(EntityJoinLevelEvent event) {
+        PathfinderMob mob = (PathfinderMob) event.getEntity();
         if (SConfig.SERVER.attack.get().contains(event.getEntity().getEncodeId())){
-            Mob mob = (Mob) event.getEntity();
             mob.targetSelector.addGoal(1 , new NearestAttackableTargetGoal<>(mob , Infected.class, false));
         }
 
         if (SConfig.SERVER.flee.get().contains(event.getEntity().getEncodeId())){
-            PathfinderMob mob = (PathfinderMob) event.getEntity();
             mob.goalSelector.addGoal(2, new AvoidEntityGoal<>(mob , Infected.class,6.0F, 1.0D, 0.9D));
             mob.goalSelector.addGoal(2, new AvoidEntityGoal<>(mob , UtilityEntity.class,8.0F, 1.0D, 0.9D));
+        }
+
+        if (SConfig.SERVER.basic.get().contains(event.getEntity().getEncodeId())){
+            mob.goalSelector.addGoal(8, new FollowOthersGoal(mob,0.8 ,Infected.class,16 ,false , entity -> {return
+            SConfig.SERVER.evolved.get().contains(event.getEntity().getEncodeId());}));
+        }
+        if (SConfig.SERVER.ranged.get().contains(event.getEntity().getEncodeId())){
+            mob.goalSelector.addGoal(6, new FollowOthersGoal(mob,0.8 ,Infected.class,32 ,false , entity -> {return
+                    SConfig.SERVER.carriers.get().contains(event.getEntity().getEncodeId());}));
+        }
+        if (SConfig.SERVER.can_be_carried.get().contains(event.getEntity().getEncodeId())){
+            mob.goalSelector.addGoal(7, new FollowOthersGoal(mob,0.8 ,Infected.class,32 ,false , entity -> {return
+                    SConfig.SERVER.carriers.get().contains(event.getEntity().getEncodeId());}));
+        }
+        if (SConfig.SERVER.support.get().contains(event.getEntity().getEncodeId())){
+            mob.goalSelector.addGoal(6, new FollowOthersGoal(mob,0.8 ,Infected.class,16 ,false , entity -> {return
+                    SConfig.SERVER.evolved.get().contains(event.getEntity().getEncodeId());}));
         }
     }
     @SubscribeEvent

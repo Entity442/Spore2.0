@@ -7,6 +7,8 @@ import com.Harbinger.Spore.Sentities.AI.TransportInfected;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedArialMovementControl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,8 +20,6 @@ import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
-
-import java.util.Objects;
 
 public class Busser extends EvolvedInfected {
 
@@ -37,10 +37,10 @@ public class Busser extends EvolvedInfected {
     protected PathNavigation createNavigation(Level p_27815_) {
         FlyingPathNavigation flyingpathnavigation = new FlyingPathNavigation(this, p_27815_) {
             public boolean isStableDestination(BlockPos pos) {
+                for (int i = 0; i < 3; ++i){
                 if (this.mob.isVehicle()){
-                    return this.level.getBlockState(pos.below((int) this.mob.getY())).isAir()
-                            && this.level.getBlockState(pos.below((int) this.mob.getY() - 1)).isAir()
-                            && !this.level.getBlockState(pos.below((int) this.mob.getY() - 2)).isAir();
+                    return this.level.getBlockState(pos.below((int) this.mob.getY() - i)).isAir();
+                    }
                 }
                 return !this.level.getBlockState(pos.below()).isAir();
             }
@@ -52,22 +52,24 @@ public class Busser extends EvolvedInfected {
     }
 
     protected void customServerAiStep() {
-        if (this.isVehicle()){
-            if (Objects.requireNonNull(this.getFirstPassenger()).verticalCollisionBelow){
+        if (this.isVehicle() && this.getFirstPassenger() != null){
+            if (this.getFirstPassenger().verticalCollisionBelow){
                 this.setDeltaMovement(this.getDeltaMovement().add(0.0,0.01,0.0));
             }
+        }else {
+            this.setDeltaMovement(this.getDeltaMovement().add(0.0,-0.01,0.0));
         }
         super.customServerAiStep();
     }
 
     public void positionRider(Entity entity) {
         super.positionRider(entity);
-        entity.setPos(this.getX(), this.getY() - 1.5,this.getZ());
+        entity.setPos(this.getX(), this.getY() - 1.2,this.getZ());
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new TransportInfected<>(this, Mob.class,32,0.8 ,
+        this.goalSelector.addGoal(2, new TransportInfected<>(this, Mob.class,32,0.8 ,
                 e -> { return SConfig.SERVER.can_be_carried.get().contains(e.getEncodeId()) || SConfig.SERVER.ranged.get().contains(e.getEncodeId());}));
 
         this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.5, false) {
@@ -93,14 +95,26 @@ public class Busser extends EvolvedInfected {
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, SConfig.SERVER.brute_hp.get() * SConfig.SERVER.global_health.get())
-                .add(Attributes.MOVEMENT_SPEED, 0.25)
+                .add(Attributes.MOVEMENT_SPEED, 0.3)
                 .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.brute_damage.get() * SConfig.SERVER.global_damage.get())
                 .add(Attributes.ARMOR, SConfig.SERVER.brute_armor.get() * SConfig.SERVER.global_armor.get())
-                .add(Attributes.FOLLOW_RANGE, 128)
+                .add(Attributes.FOLLOW_RANGE, 64)
                 .add(Attributes.ATTACK_KNOCKBACK, 1)
                 .add(Attributes.FLYING_SPEED, 4);
 
 
     }
 
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.isAlive() && this.isVehicle() && this.getTarget() != null){
+            if (this.distanceToSqr(this.getTarget()) < 30D){
+                LivingEntity entity = (LivingEntity) this.getFirstPassenger();
+                if (entity != null && SConfig.SERVER.can_be_carried.get().contains(entity.getEncodeId())){
+                entity.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING ,200,1));
+                entity.stopRiding();}
+            }
+        }
+    }
 }

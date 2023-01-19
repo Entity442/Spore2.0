@@ -182,6 +182,9 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> support;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> ranged;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> can_be_carried;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> carriers;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> basic;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> evolved;
 
         public Server(ForgeConfigSpec.Builder builder) {
 
@@ -212,6 +215,17 @@ public class SConfig {
 
             builder.push("MobRoles");
             builder.comment("Decides some of the interactions between the infected mobs");
+            this.basic = builder.defineList("Basic Infected",
+                    Lists.newArrayList("spore:inf_human","spore:inf_villager","spore:inf_wanderer","spore:inf_witch","spore:inf_pillager") , o -> o instanceof String);
+
+            this.evolved = builder.defineList("Evolved Infected",
+                    Lists.newArrayList("spore:braiomil","spore:knight","spore:griefer","spore:busser","spore:spitter","spore:leaper","spore:slasher",
+                            "spore:howler","spore:stalker","spore:brute") , o -> o instanceof String);
+
+
+            this.carriers = builder.defineList("Carriers",
+                    Lists.newArrayList("spore:leaper","spore:brute","spore:busser") , o -> o instanceof String);
+
             this.support = builder.defineList("Support",
                     Lists.newArrayList("spore:inf_witch","spore:braiomil","spore:howler","spore:busser") , o -> o instanceof String);
 
