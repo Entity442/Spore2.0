@@ -1,6 +1,5 @@
 package com.Harbinger.Spore.Sentities.AI;
 
-import com.Harbinger.Spore.Sentities.Infected;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -11,29 +10,32 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.function.Predicate;
 
 public class BuffAlliesGoal extends Goal {
     protected final Level level;
     private final Mob mob;
     private final RangedBuff rangedAttackMob;
-    private static final TargetingConditions PARTNER_TARGETING = TargetingConditions.forNonCombat().range(8.0D);
-    private final Class<? extends Infected> partnerClass;
+    private final TargetingConditions PARTNER_TARGETING;
+    private final Class<? extends Mob> partnerClass;
     @Nullable
-    protected Infected partner;
+    protected Mob partner;
     private int attackTime = -1;
     private final double speedModifier;
-    private int seeTime;
     private final int attackIntervalMin;
     private final int attackIntervalMax;
     private final float attackRadius;
 
+    public BuffAlliesGoal(RangedBuff mob1, Class<? extends Mob> partnerClass, double speedModifier, int attackTime, int attackTime1, float attackRadius) {
+        this(mob1 ,partnerClass,speedModifier,attackTime,attackTime1,attackRadius,(Predicate<LivingEntity>)null);
+    }
 
-    public BuffAlliesGoal(RangedBuff mob1, Class<? extends Infected> partnerClass, double speedModifier, int attackTime, int attackTime1, float attackRadius) {
+    public BuffAlliesGoal(RangedBuff mob1, Class<? extends Mob> partnerClass, double speedModifier, int attackTime, int attackTime1, float attackRadius ,@Nullable Predicate<LivingEntity> en) {
         this.partnerClass = partnerClass;
         if (!(mob1 instanceof LivingEntity)) {
             throw new IllegalArgumentException("Buff");
         } else {
+            this.PARTNER_TARGETING = TargetingConditions.forNonCombat().range(8.0D).selector(en);
             this.level =((LivingEntity) mob1).level;
             this.rangedAttackMob = mob1;
             this.mob = (Mob)mob1;
@@ -60,7 +62,6 @@ public class BuffAlliesGoal extends Goal {
 
     public void stop() {
         this.partner = null;
-        this.seeTime = 0;
         this.attackTime = -1;
     }
 
@@ -73,9 +74,7 @@ public class BuffAlliesGoal extends Goal {
         double d0 = this.mob.distanceToSqr(this.partner.getX(), this.partner.getY(), this.partner.getZ());
         boolean flag = this.mob.getSensing().hasLineOfSight(this.partner);
         if (flag) {
-            ++this.seeTime;
         } else {
-            this.seeTime = 0;
         }
 
             this.mob.getNavigation().moveTo(this.partner, this.speedModifier);
@@ -97,12 +96,12 @@ public class BuffAlliesGoal extends Goal {
     }
 
     @Nullable
-    private Infected getFreePartner() {
-        List<? extends Infected> list = this.level.getNearbyEntities(this.partnerClass, PARTNER_TARGETING, this.mob, this.mob.getBoundingBox().inflate(8.0D));
+    private Mob getFreePartner() {
+        List<? extends Mob> list = this.level.getNearbyEntities(this.partnerClass, PARTNER_TARGETING, this.mob, this.mob.getBoundingBox().inflate(8.0D));
         double d0 = Double.MAX_VALUE;
-        Infected inf = null;
+        Mob inf = null;
 
-        for(Infected inf1 : list) {
+        for(Mob inf1 : list) {
             if ( this.mob.distanceToSqr(inf1) < d0) {
                 inf = inf1;
                 d0 = this.mob.distanceToSqr(inf1);

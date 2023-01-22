@@ -182,7 +182,6 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> support;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> ranged;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> can_be_carried;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> carriers;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> basic;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> evolved;
 
@@ -213,18 +212,13 @@ public class SConfig {
                             "minecraft:wandering_trader") , o -> o instanceof String);
             builder.pop();
 
-            builder.push("MobRoles");
-            builder.comment("Decides some of the interactions between the infected mobs");
-            this.basic = builder.defineList("Basic Infected",
+            builder.push("MobRoles ,decides some of the interactions between the infected mobs");
+            this.basic = builder.defineList("Basic_Infected",
                     Lists.newArrayList("spore:inf_human","spore:inf_villager","spore:inf_wanderer","spore:inf_witch","spore:inf_pillager") , o -> o instanceof String);
 
-            this.evolved = builder.defineList("Evolved Infected",
+            this.evolved = builder.defineList("Evolved_Infected",
                     Lists.newArrayList("spore:braiomil","spore:knight","spore:griefer","spore:busser","spore:spitter","spore:leaper","spore:slasher",
-                            "spore:howler","spore:stalker","spore:brute") , o -> o instanceof String);
-
-
-            this.carriers = builder.defineList("Carriers",
-                    Lists.newArrayList("spore:leaper","spore:brute","spore:busser") , o -> o instanceof String);
+                            "spore:howler","spore:stalker","spore:brute" , "spore:inf_evoker", "spore:inf_vindicator") , o -> o instanceof String);
 
             this.support = builder.defineList("Support",
                     Lists.newArrayList("spore:inf_witch","spore:braiomil","spore:howler","spore:busser") , o -> o instanceof String);
@@ -332,8 +326,8 @@ public class SConfig {
             builder.push("Scent");
             this.scent_spawn = builder.comment("Default true").define("Should scent spawn?",true);
             this.scent_particles = builder.comment("Default true").define("Should scent have particles?",true);
-            this.scent_life = builder.comment("Default 6000").define("Scent life",6000);
-            this.scent_spawn_chance = builder.comment("Default 10").define("The Chance for the scent to spawn from a mob dying 1-100",10);
+            this.scent_life = builder.comment("Default 6000").define("Scent life",2000);
+            this.scent_spawn_chance = builder.comment("Default 10").define("The Chance for the scent to spawn from a mob dying 1-100",3);
             this.inf_summon = builder.defineList("Mobs that can be summoned by the Scent",
                     Lists.newArrayList(
                             "spore:inf_human"
@@ -347,6 +341,8 @@ public class SConfig {
             this.inf_vil_hp = builder.comment("Default 20").defineInRange("Sets Infected Villager Max health", 20, 1, Double.MAX_VALUE);
             this.inf_vil_damage = builder.comment("Default 6").defineInRange("Sets Infected Villager Damage", 6, 1, Double.MAX_VALUE);
             this.inf_vil_armor = builder.comment("Default 1").defineInRange("Sets Infected Villager Armor", 1, 0, Double.MAX_VALUE);
+
+
             builder.pop();
 
             builder.push("Stalker");

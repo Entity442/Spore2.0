@@ -42,7 +42,7 @@ public class Howler extends EvolvedInfected {
         this.goalSelector.addGoal(1, new HowlerAttackGoal( this,1.5));
         this.goalSelector.addGoal(3, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(7, new FollowOthersGoal(this , 1 , EvolvedInfected.class, 32 , true));
+        this.goalSelector.addGoal(7, new FollowOthersGoal(this , 1 , EvolvedInfected.class, 32));
 
 
         super.registerGoals();
@@ -181,7 +181,7 @@ public class Howler extends EvolvedInfected {
         List<Entity> entities = entity.level.getEntities(entity, boundingBox);
 
         for (Entity en : entities) {
-            if (en instanceof Infected && !(SConfig.SERVER.support.get().contains(en.getEncodeId()))){
+            if (en instanceof Infected && !(SConfig.SERVER.support.get().contains(en.getEncodeId()) || SConfig.SERVER.carriers.get().contains(en.getEncodeId()))){
                 return true;
             }
         }

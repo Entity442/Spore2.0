@@ -50,7 +50,9 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
             return this.getHealth() < this.getMaxHealth();
         }));
         this.goalSelector.addGoal(2, new BuffAlliesGoal(this,Infected.class,1.2,35,45,3));
-        this.goalSelector.addGoal(1, new BuffAlliesGoal(this,EvolvedInfected.class,1.2,35,45,3));
+        this.goalSelector.addGoal(1, new BuffAlliesGoal(this,Mob.class,1.2,35,45,3,entity -> {
+            return SConfig.SERVER.evolved.get().contains(entity.getEncodeId());
+        }));
         this.goalSelector.addGoal(3, new RangedAttackGoal(this, 1.0D, 40, 10.0F));
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
 

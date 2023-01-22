@@ -23,7 +23,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class Leaper extends EvolvedInfected{
+public class Leaper extends EvolvedInfected implements Carrier{
     public Leaper(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         this.moveControl = new InfectedWallMovementControl(this);

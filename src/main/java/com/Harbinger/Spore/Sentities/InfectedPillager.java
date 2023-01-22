@@ -1,8 +1,9 @@
 package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Seffects;
+import com.Harbinger.Spore.Core.Spotion;
 import com.Harbinger.Spore.Core.Ssounds;
-import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -15,6 +16,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -23,10 +26,13 @@ import net.minecraft.world.entity.ai.goal.RangedCrossbowAttackGoal;
 import net.minecraft.world.entity.monster.CrossbowAttackMob;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.InventoryCarrier;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -59,8 +65,11 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
         this.entityData.set(IS_CHARGING_CROSSBOW, p_33302_);
     }
 
-    public void shootCrossbowProjectile(LivingEntity p_33275_, ItemStack p_33276_, Projectile p_33277_, float p_33278_) {
-        this.shootCrossbowProjectile(this, p_33275_, p_33277_, p_33278_, (float) (SConfig.SERVER.inf_pil_range_damage.get() * 1f));
+    public void shootCrossbowProjectile(LivingEntity entity, ItemStack itemStack, Projectile projectile, float f) {
+        if (projectile instanceof Arrow){
+            ((Arrow) projectile).addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(), 120));
+        }
+        this.shootCrossbowProjectile(this, entity, projectile, f, (float) (SConfig.SERVER.inf_pil_range_damage.get() * 1f));
     }
     public void defineSynchedData() {
         super.defineSynchedData();
@@ -127,7 +136,7 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
     protected void populateDefaultEquipmentSlots(RandomSource p_219059_, DifficultyInstance p_219060_) {
         if (Math.random() < 0.5) {
               this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.CROSSBOW));
-        }
+             }
         else {
             this.setItemSlot(EquipmentSlot.MAINHAND,  ItemStack.EMPTY);
         }

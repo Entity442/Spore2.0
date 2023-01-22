@@ -9,7 +9,6 @@ import com.Harbinger.Spore.Spore;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -24,37 +23,47 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Mod.EventBusSubscriber(modid = Spore.MODID)
 public class HandlerEvents {
     @SubscribeEvent
-    public void onLivingSpawned(EntityJoinLevelEvent event) {
-        PathfinderMob mob = (PathfinderMob) event.getEntity();
-        if (SConfig.SERVER.attack.get().contains(event.getEntity().getEncodeId())){
-            mob.targetSelector.addGoal(1 , new NearestAttackableTargetGoal<>(mob , Infected.class, false));
-        }
+    public static void onLivingSpawned(EntityJoinLevelEvent event) {
+        if (event != null && event.getEntity() != null) {
+            if (event.getEntity() instanceof PathfinderMob mob){
+            if (SConfig.SERVER.attack.get().contains(event.getEntity().getEncodeId())) {
+                mob.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(mob, Infected.class, false));
+            }
 
-        if (SConfig.SERVER.flee.get().contains(event.getEntity().getEncodeId())){
-            mob.goalSelector.addGoal(2, new AvoidEntityGoal<>(mob , Infected.class,6.0F, 1.0D, 0.9D));
-            mob.goalSelector.addGoal(2, new AvoidEntityGoal<>(mob , UtilityEntity.class,8.0F, 1.0D, 0.9D));
-        }
+            if (SConfig.SERVER.flee.get().contains(event.getEntity().getEncodeId())) {
+                mob.goalSelector.addGoal(2, new AvoidEntityGoal<>(mob, Infected.class, 6.0F, 1.0D, 0.9D));
+                mob.goalSelector.addGoal(2, new AvoidEntityGoal<>(mob, UtilityEntity.class, 8.0F, 1.0D, 0.9D));
+            }
 
-        if (SConfig.SERVER.basic.get().contains(event.getEntity().getEncodeId())){
-            mob.goalSelector.addGoal(8, new FollowOthersGoal(mob,0.8 ,Infected.class,16 ,false , entity -> {return
-            SConfig.SERVER.evolved.get().contains(event.getEntity().getEncodeId());}));
+            if (SConfig.SERVER.basic.get().contains(event.getEntity().getEncodeId())) {
+                mob.goalSelector.addGoal(8, new FollowOthersGoal(mob, 0.8, PathfinderMob.class, 32, entity -> {
+                    return
+                            SConfig.SERVER.evolved.get().contains(event.getEntity().getEncodeId());
+                }));
+            }
+            if (SConfig.SERVER.ranged.get().contains(event.getEntity().getEncodeId())) {
+                mob.goalSelector.addGoal(6, new FollowOthersGoal(mob, 0.8, PathfinderMob.class, 32, entity -> {
+                    return entity instanceof Carrier;
+                }));
+            }
+            if (SConfig.SERVER.can_be_carried.get().contains(event.getEntity().getEncodeId())) {
+                mob.goalSelector.addGoal(7, new FollowOthersGoal(mob, 0.8, PathfinderMob.class, 32, entity -> {
+                    return entity instanceof Carrier;
+                }));
+            }
+            if (SConfig.SERVER.support.get().contains(event.getEntity().getEncodeId())) {
+                mob.goalSelector.addGoal(6, new FollowOthersGoal(mob, 0.8, PathfinderMob.class, 16, entity -> {
+                    return
+                            SConfig.SERVER.evolved.get().contains(event.getEntity().getEncodeId());
+                }));
+            }
         }
-        if (SConfig.SERVER.ranged.get().contains(event.getEntity().getEncodeId())){
-            mob.goalSelector.addGoal(6, new FollowOthersGoal(mob,0.8 ,Infected.class,32 ,false , entity -> {return
-                    SConfig.SERVER.carriers.get().contains(event.getEntity().getEncodeId());}));
-        }
-        if (SConfig.SERVER.can_be_carried.get().contains(event.getEntity().getEncodeId())){
-            mob.goalSelector.addGoal(7, new FollowOthersGoal(mob,0.8 ,Infected.class,32 ,false , entity -> {return
-                    SConfig.SERVER.carriers.get().contains(event.getEntity().getEncodeId());}));
-        }
-        if (SConfig.SERVER.support.get().contains(event.getEntity().getEncodeId())){
-            mob.goalSelector.addGoal(6, new FollowOthersGoal(mob,0.8 ,Infected.class,16 ,false , entity -> {return
-                    SConfig.SERVER.evolved.get().contains(event.getEntity().getEncodeId());}));
         }
     }
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event) {
-        if (event != null && event.getEntity() != null && !(event.getEntity().getLastDamageSource() == DamageSource.IN_WALL)) {
+        if (event != null && event.getEntity() != null) {
+            if (!(event.getEntity().getLastDamageSource() == DamageSource.IN_WALL)){
             RandomSource random = RandomSource.create();
             if (event.getEntity() instanceof InfectedHuman){
                 for (String str : SConfig.DATAGEN.inf_human_loot.get()){
@@ -344,5 +353,5 @@ public class HandlerEvents {
                         ItemEntity item = new ItemEntity(event.getEntity().getLevel(), event.getEntity().getX() , event.getEntity().getY(),event.getEntity().getZ(),itemStack);
                         item.setPickUpDelay(10);
                         event.getEntity().getLevel().addFreshEntity(item);}}}
-        }}
+        }}}
 }

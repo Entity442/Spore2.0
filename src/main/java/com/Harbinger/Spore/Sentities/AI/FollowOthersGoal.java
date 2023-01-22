@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class FollowOthersGoal extends Goal {
-    protected boolean shouldLook;
     private static TargetingConditions PARTNER_TARGETING;
     protected final Level level;
     protected final PathfinderMob mob;
@@ -22,15 +21,14 @@ public class FollowOthersGoal extends Goal {
     protected PathfinderMob partner;
     private final double speedModifier;
 
-    public  FollowOthersGoal(PathfinderMob mob , double speedModifier , int range , boolean look){
-        this(mob , speedModifier, mob.getClass(),range, look);
+    public  FollowOthersGoal(PathfinderMob mob, double speedModifier, int range){
+        this(mob , speedModifier, mob.getClass(),range);
     }
-    public FollowOthersGoal(PathfinderMob mob, double speedModifier, Class<? extends PathfinderMob> partnerClass ,int range , boolean look){
-        this(mob,speedModifier,partnerClass , range,look,(Predicate<LivingEntity>)null);
+    public FollowOthersGoal(PathfinderMob mob, double speedModifier, Class<? extends PathfinderMob> partnerClass, int range){
+        this(mob,speedModifier,partnerClass , range, (Predicate<LivingEntity>)null);
     }
 
-    public  FollowOthersGoal(PathfinderMob mob, double speedModifier, Class<? extends PathfinderMob> partnerClass ,int range , boolean look ,@Nullable Predicate<LivingEntity> en){
-    this.shouldLook = look;
+    public  FollowOthersGoal(PathfinderMob mob, double speedModifier, Class<? extends PathfinderMob> partnerClass, int range, @Nullable Predicate<LivingEntity> en){
     this.level = mob.level;
     this.mob = mob;
     this.range = range;
@@ -57,11 +55,9 @@ public class FollowOthersGoal extends Goal {
 }
 
     public void tick() {
-        assert this.partner != null;
-        if (shouldLook){
-        this.mob.getLookControl().setLookAt(this.partner, 10.0F, (float)this.mob.getMaxHeadXRot());
-        }
+      if(this.partner != null){
         this.mob.getNavigation().moveTo(this.partner, this.speedModifier);
+      }
 }
 
 

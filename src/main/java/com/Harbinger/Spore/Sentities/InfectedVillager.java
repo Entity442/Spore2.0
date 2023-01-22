@@ -71,7 +71,7 @@ public class InfectedVillager extends Infected {
         this.goalSelector.addGoal(4, new BreakBlockGoal(Blocks.SMITHING_TABLE, this,1,4));
         this.goalSelector.addGoal(4, new BreakBlockGoal(Blocks.STONECUTTER, this,1,4));
         this.goalSelector.addGoal(4, new BreakBlockGoal(Blocks.GRINDSTONE, this,1,4));
-        this.goalSelector.addGoal(7, new FollowOthersGoal(this , 1 , EvolvedInfected.class, 32, true));
+        this.goalSelector.addGoal(7, new FollowOthersGoal(this , 1 , EvolvedInfected.class, 32));
 
 
 

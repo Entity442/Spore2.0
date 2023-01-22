@@ -26,7 +26,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class Brute extends EvolvedInfected {
+public class Brute extends EvolvedInfected implements Carrier{
     public Brute(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }
@@ -96,9 +96,9 @@ public class Brute extends EvolvedInfected {
         List<Entity> entities = entity.level.getEntities(entity, boundingBox);
 
         for (Entity en : entities) {
-            if (en instanceof Infected){
+            if (en instanceof Mob){
                 en.setDeltaMovement(d0 * -0.2D, (d1 + d3) * 0.02D, d2 * -0.2D);
-                ((Infected) en).addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING , 200,0));
+                ((Mob) en).addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING , 200,0));
             }
         }
 

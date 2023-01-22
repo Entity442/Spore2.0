@@ -21,7 +21,7 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 
-public class Busser extends EvolvedInfected {
+public class Busser extends EvolvedInfected implements Carrier{
 
     public Busser(EntityType<? extends Monster> type, Level level) {
         super(type, level);
