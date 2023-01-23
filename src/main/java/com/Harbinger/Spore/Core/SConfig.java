@@ -334,7 +334,7 @@ public class SConfig {
                             ,"spore:inf_villager"
                             ,"spore:inf_pillager" ) , o -> o instanceof String);
             this.scent_summon = builder.comment("Default true").define("Should scent summon entities?",true);
-            this.scent_summon_cooldown = builder.comment("Default 300").define("The average amount of time it will take for a mob to be summoned",300);
+            this.scent_summon_cooldown = builder.comment("Default 600").define("The average amount of time it will take for a mob to be summoned",300);
             builder.pop();
 
             builder.push("Infected Villager");

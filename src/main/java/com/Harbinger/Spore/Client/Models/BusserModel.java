@@ -168,12 +168,19 @@ public class BusserModel<T extends Busser> extends EntityModel<T> {
 			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
 			this.RightArm.zRot = 0;
 			this.LeftArm.zRot = 0;
+			this.LeftArm.getChild("LeftForArm").zRot = 0;
+			this.RightArm.getChild("RightForArm").zRot = 0;
 		}else {
 			this.RightArm.xRot = 0;
 			this.LeftArm.xRot = 0;
 
 			this.RightArm.zRot = 1.1f + Mth.sin(ageInTicks/3);
 			this.LeftArm.zRot = -1.1f - Mth.sin(ageInTicks/3);
+
+			if (Mth.sin(ageInTicks/3) < 0){
+			this.RightArm.getChild("RightForArm").zRot = Mth.sin(ageInTicks/3)/3;}
+			if (Mth.sin(ageInTicks/3) < 0){
+			this.LeftArm.getChild("LeftForArm").zRot = -Mth.sin(ageInTicks/3)/3;}
 		}
 
 

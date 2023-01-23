@@ -181,7 +181,7 @@ public class Howler extends EvolvedInfected {
         List<Entity> entities = entity.level.getEntities(entity, boundingBox);
 
         for (Entity en : entities) {
-            if (en instanceof Infected && !(SConfig.SERVER.support.get().contains(en.getEncodeId()) || SConfig.SERVER.carriers.get().contains(en.getEncodeId()))){
+            if (en instanceof Infected && !(SConfig.SERVER.support.get().contains(en.getEncodeId()) || en instanceof Carrier)){
                 return true;
             }
         }
