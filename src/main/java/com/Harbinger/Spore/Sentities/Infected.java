@@ -13,16 +13,20 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FleeSunGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -37,6 +41,7 @@ import net.minecraftforge.network.NetworkHooks;
 
 public class Infected extends Monster {
     public int kills;
+
     public Infected(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 16.0F);
@@ -62,6 +67,7 @@ public class Infected extends Monster {
         }
 
     }
+
 
     public int getMaxAirSupply() {
         return 1200;
@@ -91,7 +97,7 @@ public class Infected extends Monster {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(3,(new HurtTargetGoal(this , Infected.class)).setAlertOthers(Infected.class));
+        this.goalSelector.addGoal(3, new HurtTargetGoal(this ,entity -> {return !SConfig.SERVER.blacklist.get().contains(entity.getEncodeId());}, Infected.class));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
                 (this, Player.class,  true));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
@@ -124,25 +130,23 @@ public class Infected extends Monster {
             Biome biome = this.level.getBiome(blockpos).value();
             if ((biome.getBaseTemperature() <= 0.2) && (!entity.isOnFire())) {
                 this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 2, 1, false, false), Infected.this);
-
             }
         }
+
         if (this.horizontalCollision && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) {
             boolean flag = false;
             AABB aabb = this.getBoundingBox().inflate(0.2D);
-
             for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
                 BlockState blockstate = this.level.getBlockState(blockpos);
                 if (blockstate.getMaterial() == Material.GLASS || blockstate.getMaterial() == Material.LEAVES) {
                     flag = this.level.destroyBlock(blockpos, true, this) || flag;
                 }
             }
-
             if (!flag && this.onGround) {
                 this.jumpFromGround();
             }
         }
-        if (this.getLastDamageSource() == DamageSource.IN_WALL || (this.horizontalCollision && this.isInWater())){
+        if (this.getLastDamageSource() == DamageSource.IN_WALL || this.horizontalCollision){
             this.jumpFromGround();
         }
     }

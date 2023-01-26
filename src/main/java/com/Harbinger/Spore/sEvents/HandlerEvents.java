@@ -27,12 +27,12 @@ public class HandlerEvents {
         if (event != null && event.getEntity() != null) {
             if (event.getEntity() instanceof PathfinderMob mob){
             if (SConfig.SERVER.attack.get().contains(event.getEntity().getEncodeId())) {
-                mob.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(mob, Infected.class, false));
+                mob.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(mob, Infected.class, false));
             }
 
             if (SConfig.SERVER.flee.get().contains(event.getEntity().getEncodeId())) {
-                mob.goalSelector.addGoal(2, new AvoidEntityGoal<>(mob, Infected.class, 6.0F, 1.0D, 0.9D));
-                mob.goalSelector.addGoal(2, new AvoidEntityGoal<>(mob, UtilityEntity.class, 8.0F, 1.0D, 0.9D));
+                mob.goalSelector.addGoal(4, new AvoidEntityGoal<>(mob, Infected.class, 6.0F, 1.0D, 0.9D));
+                mob.goalSelector.addGoal(4, new AvoidEntityGoal<>(mob, UtilityEntity.class, 8.0F, 1.0D, 0.9D));
             }
 
             if (SConfig.SERVER.basic.get().contains(event.getEntity().getEncodeId())) {
@@ -353,5 +353,22 @@ public class HandlerEvents {
                         ItemEntity item = new ItemEntity(event.getEntity().getLevel(), event.getEntity().getX() , event.getEntity().getY(),event.getEntity().getZ(),itemStack);
                         item.setPickUpDelay(10);
                         event.getEntity().getLevel().addFreshEntity(item);}}}
+
+                if (event.getEntity() instanceof Busser){
+                    for (String str : SConfig.DATAGEN.inf_bus_loot.get()){
+                        String[] string = str.split("\\|" );
+                        ItemStack itemStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0])));
+                        int m = 1;
+                        if (Integer.parseUnsignedInt(string[2]) == Integer.parseUnsignedInt(string[3])){
+                            m = Integer.parseUnsignedInt(string[3]);
+
+                        } else {if (Integer.parseUnsignedInt(string[2]) >= 1 && Integer.parseUnsignedInt(string[2]) >= 1){
+                            m = random.nextInt(Integer.parseUnsignedInt(string[2]), Integer.parseUnsignedInt(string[3]));}}
+
+                        if (Math.random() < (Integer.parseUnsignedInt(string[1]) / 100F)) {
+                            itemStack.setCount(m);
+                            ItemEntity item = new ItemEntity(event.getEntity().getLevel(), event.getEntity().getX() , event.getEntity().getY(),event.getEntity().getZ(),itemStack);
+                            item.setPickUpDelay(10);
+                            event.getEntity().getLevel().addFreshEntity(item);}}}
         }}}
 }

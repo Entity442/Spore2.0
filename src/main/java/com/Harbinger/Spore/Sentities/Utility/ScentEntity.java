@@ -2,6 +2,8 @@ package com.Harbinger.Spore.Sentities.Utility;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sparticles;
+import com.Harbinger.Spore.Sentities.Carrier;
+import com.Harbinger.Spore.Sentities.Infected;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -19,6 +21,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
@@ -44,11 +47,23 @@ public class ScentEntity extends UtilityEntity {
             if (this.getPersistentData().getInt("summon") >= SConfig.SERVER.scent_summon_cooldown.get()) {
                 this.getPersistentData().putInt("summon", 0);
 
-                if (!this.level.isClientSide){
+                if (!this.level.isClientSide && checkForNonInfected(this)){
                 this.Summon(this);}
             }}
         }
         super.tick();
+    }
+
+    boolean checkForNonInfected(Entity entity){
+        AABB boundingBox = entity.getBoundingBox().inflate(16);
+        List<Entity> entities = entity.level.getEntities(entity, boundingBox ,EntitySelector.NO_CREATIVE_OR_SPECTATOR);
+
+        for (Entity en : entities) {
+            if (en instanceof LivingEntity && !(SConfig.SERVER.blacklist.get().contains(en.getEncodeId()) || en instanceof Infected || en instanceof UtilityEntity)){
+                return true;
+            }
+        }
+        return false;
     }
 
 

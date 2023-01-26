@@ -114,9 +114,11 @@ public class GrieferModel<T extends Griefer> extends EntityModel<T> {
 			this.head.getChild("jaw").xRot = (Mth.sin(ageInTicks/6)/10) + 0.4F;
 			this.RightArm.xRot = -89.5F - (Mth.sin(ageInTicks/4)/7);
 			this.LeftArm.xRot = -89.5F + (Mth.sin(ageInTicks/4)/7);
-			if (entity.swinging){
-				this.RightArm.xRot = -88.5F;
-				this.LeftArm.xRot = -88.5F;}
+			 if (entity.attackAnim > 0) {
+				 float f1 = 1.0F - (float) Mth.abs(10 - 2 * entity.attackAnim) / 10.0F;
+				 this.RightArm.xRot = Mth.sin(f1) * 2.0F;
+				 this.LeftArm.xRot = Mth.sin(f1) * 2.0F;
+			 }
 
 		}else if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
 			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;

@@ -139,12 +139,14 @@ public class InfectedEvokerModel<T extends InfectedEvoker> extends EntityModel<T
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		if (entity.swinging){
+		if (entity.attackAnim > 0) {
+			float f1 = 1.0F - (float) Mth.abs(10 - 2 * entity.attackAnim) / 10.0F;
 			this.RightArm.xRot = -140f;
 			this.LeftArm.xRot = -140f;
-			this.RightArm.yRot = Mth.sin(ageInTicks/6)/8;
-			this.LeftArm.yRot = -Mth.sin(ageInTicks/6)/8;
+			this.RightArm.yRot = Mth.sin(ageInTicks/6)/8 + Mth.sin(f1) * 2.0F;
+			this.LeftArm.yRot = -Mth.sin(ageInTicks/6)/8 + Mth.sin(f1) * 2.0F;
 		}
+		
 		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
 			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "spore:lab_block",
+    "spore:lab_slab",
+    "spore:lab_stair",
+    "spore:container"
+  ]
+}

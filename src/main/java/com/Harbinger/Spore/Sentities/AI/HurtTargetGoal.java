@@ -11,19 +11,25 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class HurtTargetGoal extends TargetGoal {
-    private static final TargetingConditions HURT_BY_TARGETING = TargetingConditions.forCombat().ignoreInvisibilityTesting();
+    private  final TargetingConditions HURT_BY_TARGETING;
     private boolean alertSameType;
     private int timestamp;
     private final Class<?>[] toIgnoreDamage;
     @Nullable
     private Class<?>[] toIgnoreAlert;
 
-    public HurtTargetGoal(PathfinderMob p_26039_, Class<?>... p_26040_) {
+    public HurtTargetGoal(PathfinderMob pathfinderMob,Class<?>... mob){
+        this(pathfinderMob ,(Predicate<LivingEntity>)null,mob);
+    }
+
+    public HurtTargetGoal(PathfinderMob p_26039_, @Nullable Predicate<LivingEntity> en, Class<?>... mob) {
         super(p_26039_, true);
-        this.toIgnoreDamage = p_26040_;
+        this.toIgnoreDamage = mob;
         this.setFlags(EnumSet.of(Goal.Flag.TARGET));
+        this.HURT_BY_TARGETING = TargetingConditions.forCombat().ignoreInvisibilityTesting().selector(en);
     }
 
     public boolean canUse() {
@@ -46,9 +52,9 @@ public class HurtTargetGoal extends TargetGoal {
         }
     }
 
-    public HurtTargetGoal setAlertOthers(Class<?>... p_26045_) {
+    public HurtTargetGoal setAlertOthers(Class<?>... mob) {
         this.alertSameType = true;
-        this.toIgnoreAlert = p_26045_;
+        this.toIgnoreAlert = mob;
         return this;
     }
 
@@ -66,7 +72,7 @@ public class HurtTargetGoal extends TargetGoal {
 
     protected void alertOthers() {
         double d0 = this.getFollowDistance();
-        AABB aabb = AABB.unitCubeFromLowerCorner(this.mob.position()).inflate(d0, 16.0D, d0);
+        AABB aabb = AABB.unitCubeFromLowerCorner(this.mob.position()).inflate(d0, 10.0D, d0);
         List<? extends Mob> list = this.mob.level.getEntitiesOfClass(this.mob.getClass(), aabb, EntitySelector.NO_SPECTATORS);
         Iterator iterator = list.iterator();
 
@@ -102,8 +108,8 @@ public class HurtTargetGoal extends TargetGoal {
         }
     }
 
-    protected void alertOther(Mob p_26042_, LivingEntity p_26043_) {
-        p_26042_.setTarget(p_26043_);
+    protected void alertOther(Mob mob, LivingEntity entity) {
+        mob.setTarget(entity);
     }
 
 }

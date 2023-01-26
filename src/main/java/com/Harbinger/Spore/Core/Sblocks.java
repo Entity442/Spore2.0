@@ -2,11 +2,9 @@ package com.Harbinger.Spore.Core;
 
 import com.Harbinger.Spore.Sblocks.Acid;
 import com.Harbinger.Spore.Sblocks.Container;
-import com.Harbinger.Spore.Sblocks.LabDoor;
 import com.Harbinger.Spore.Sblocks.Mycelium;
 import com.Harbinger.Spore.Sblocks.SBlockProperty.Orientation;
 import com.Harbinger.Spore.Spore;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
@@ -64,7 +62,5 @@ public class Sblocks {
             () -> new SlabBlock(BlockBehaviour.Properties.copy(Sblocks.LAB_BLOCK.get())));
     public  static final RegistryObject<StairBlock> LAB_STAIR = registerBlockT("lab_stair",
             () -> new StairBlock(()-> LAB_BLOCK.get().defaultBlockState(),BlockBehaviour.Properties.copy(Sblocks.LAB_BLOCK.get())));
-    public static final  RegistryObject<Block> LAB_DOOR = registerBlockT("lab_door",
-            () -> new LabDoor(BlockBehaviour.Properties.copy(Sblocks.LAB_BLOCK.get())));
 
 }

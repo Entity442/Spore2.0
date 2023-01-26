@@ -48,6 +48,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> inf_vin_damage;
         public final ForgeConfigSpec.ConfigValue<Double> inf_vin_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> bus_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> bus_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> bus_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> inf_pil_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_pil_damage;
         public final ForgeConfigSpec.ConfigValue<Double> inf_pil_armor;
@@ -238,7 +242,8 @@ public class SConfig {
                     Lists.newArrayList(
                             "spore:knight"
                             ,"spore:griefer"
-                            ,"spore:braiomil" ) , o -> o instanceof String);
+                            ,"spore:braiomil"
+                            ,"spore:busser" ) , o -> o instanceof String);
 
             this.villager_ev = builder.defineList("Infected Villager Evolutions",
                     Lists.newArrayList(
@@ -297,6 +302,12 @@ public class SConfig {
             this.inf_vin_hp = builder.comment("Default 28").defineInRange("Sets Infected Vindicator Max health", 28, 1, Double.MAX_VALUE);
             this.inf_vin_damage = builder.comment("Default 7").defineInRange("Sets Infected Vindicator Damage", 7, 1, Double.MAX_VALUE);
             this.inf_vin_armor = builder.comment("Default 4").defineInRange("Sets Infected Vindicator Armor", 4, 1, Double.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Phayres");
+            this.bus_hp = builder.comment("Default 30").defineInRange("Sets Phayres Max health", 30, 1, Double.MAX_VALUE);
+            this.bus_damage = builder.comment("Default 6").defineInRange("Sets Phayres Damage", 6, 1, Double.MAX_VALUE);
+            this.bus_armor = builder.comment("Default 4").defineInRange("Sets Phayres Armor", 4, 1, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Brute");
@@ -504,6 +515,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_stalker_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_brute_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_claw_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_bus_loot;
         public DataGen(ForgeConfigSpec.Builder builder){
             builder.push("LootTables");
             builder.comment("item|chance to drop(1-100)|minimum amount|maximum amount.Only values above 0 will be taken in consideration.");
@@ -530,6 +542,8 @@ public class SConfig {
                     Lists.newArrayList("spore:mutated_fiber|70|1|5","spore:armor_fragment|80|4|9","spore:mutated_heart|10|1|1","spore:claw_fragment|80|6|9") , o -> o instanceof String);
             this.inf_griefer_loot = builder.defineList("Griefer ",
                     Lists.newArrayList("spore:mutated_fiber|50|2|5","spore:armor_fragment|80|2|4","spore:mutated_heart|10|1|1","spore:claw_fragment|80|3|6","spore:tumor|100|1|3") , o -> o instanceof String);
+            this.inf_bus_loot = builder.defineList("Phayres ",
+                    Lists.newArrayList("spore:mutated_fiber|80|1|3","spore:armor_fragment|50|1|2","spore:mutated_heart|10|1|1") , o -> o instanceof String);
 
             this.inf_spitter_loot = builder.defineList("Spitter ",
                     Lists.newArrayList("spore:mutated_fiber|80|1|3","spore:armor_fragment|50|1|2","spore:mutated_heart|10|1|1","spore:cerebrum|20|1|1","spore:spine_fragment|15|1|3","spore:corrosive_sack|30|1|1") , o -> o instanceof String);

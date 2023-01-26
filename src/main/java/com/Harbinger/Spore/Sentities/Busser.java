@@ -1,8 +1,7 @@
 package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Sentities.AI.FlyAroundGoal;
-import com.Harbinger.Spore.Sentities.AI.FlyingLookGoal;
+import com.Harbinger.Spore.Sentities.AI.FlyingWanderAround;
 import com.Harbinger.Spore.Sentities.AI.TransportInfected;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedArialMovementControl;
 import net.minecraft.core.BlockPos;
@@ -76,12 +75,9 @@ public class Busser extends EvolvedInfected implements Carrier{
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 return 3.0 + entity.getBbWidth() * entity.getBbWidth();}});
-
-        this.goalSelector.addGoal(4, new FlyAroundGoal(this));
-
-        this.goalSelector.addGoal(5 ,new  FlyingLookGoal(this));
-
         super.registerGoals();
+
+        this.goalSelector.addGoal(4 , new FlyingWanderAround(this , 1.0));
     }
 
     @Override

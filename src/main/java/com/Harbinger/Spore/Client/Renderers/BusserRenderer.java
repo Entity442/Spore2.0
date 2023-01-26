@@ -15,14 +15,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class BusserRenderer<Type extends Busser> extends MobRenderer<Type , BusserModel<Type>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Spore.MODID,
-            "textures/entity/blank.png");
+            "textures/entity/busser.png");
     public BusserRenderer(EntityRendererProvider.Context context) {
         super(context, new BusserModel<>(context.bakeLayer(BusserModel.LAYER_LOCATION)), 0.5f);
         this.addLayer(new Eyes<>(this));
     }
 
     private  class Eyes<Type extends Busser,M extends BusserModel<Type>> extends EyesLayer<Type,M> {
-        private static final RenderType EYES = RenderType.eyes(new ResourceLocation(Spore.MODID,"textures/entity/blank.png"));
+        private static final RenderType EYES = RenderType.eyes(new ResourceLocation(Spore.MODID,"textures/entity/eyes/busser.png"));
         public Eyes(RenderLayerParent layer) {
             super(layer);
         }

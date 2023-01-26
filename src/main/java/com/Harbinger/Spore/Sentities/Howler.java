@@ -137,7 +137,7 @@ public class Howler extends EvolvedInfected {
 
     public void ScreamAOE(Entity entity){
             AABB boundingBox = entity.getBoundingBox().inflate(16);
-            List<Entity> entities = entity.level.getEntities(entity, boundingBox);
+            List<Entity> entities = entity.level.getEntities(entity, boundingBox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
 
             for (Entity entity1 : entities) {
                 if(entity1 instanceof Infected livingEntity) {
@@ -178,7 +178,7 @@ public class Howler extends EvolvedInfected {
 
     boolean checkForInfected(Entity entity){
         AABB boundingBox = entity.getBoundingBox().inflate(12);
-        List<Entity> entities = entity.level.getEntities(entity, boundingBox);
+        List<Entity> entities = entity.level.getEntities(entity, boundingBox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
 
         for (Entity en : entities) {
             if (en instanceof Infected && !(SConfig.SERVER.support.get().contains(en.getEncodeId()) || en instanceof Carrier)){
