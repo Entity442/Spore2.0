@@ -27,7 +27,9 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 
 public class InfEvoClaw extends UtilityEntity implements Enemy{
@@ -110,9 +112,10 @@ public class InfEvoClaw extends UtilityEntity implements Enemy{
         Level world = this.level;
         RandomSource randomsource = this.getRandom();
         if (!level.isClientSide) {
-            ((ServerLevel)level).sendParticles(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack((world.getBlockState(new BlockPos(x, y - 1, z))).getBlock())), x - 0.2D, y - 0.1D, z - 0.2D, 3,
-                    ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, (double)0.15F);
-        }
+            if (world.getBlockState(new BlockPos(x, y - 1, z)).getMaterial() != Material.AIR){
+            ((ServerLevel) level).sendParticles(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack((world.getBlockState(new BlockPos(x, y - 1, z))).getBlock())), x - 0.2D, y - 0.1D, z - 0.2D, 3,
+                    ((double) randomsource.nextFloat() - 0.5D) * 0.08D, ((double) randomsource.nextFloat() - 0.5D) * 0.08D, ((double) randomsource.nextFloat() - 0.5D) * 0.08D, (double) 0.15F);
+        }}
     }
 
 }

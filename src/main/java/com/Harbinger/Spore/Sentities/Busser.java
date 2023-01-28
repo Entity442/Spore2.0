@@ -94,7 +94,7 @@ public class Busser extends EvolvedInfected implements Carrier{
                 .add(Attributes.MOVEMENT_SPEED, 0.3)
                 .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.brute_damage.get() * SConfig.SERVER.global_damage.get())
                 .add(Attributes.ARMOR, SConfig.SERVER.brute_armor.get() * SConfig.SERVER.global_armor.get())
-                .add(Attributes.FOLLOW_RANGE, 64)
+                .add(Attributes.FOLLOW_RANGE, 128)
                 .add(Attributes.ATTACK_KNOCKBACK, 1)
                 .add(Attributes.FLYING_SPEED, 4);
 

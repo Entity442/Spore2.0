@@ -26,6 +26,8 @@ public class Sitems {
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> MUTATED_FIBER = ITEMS.register("mutated_fiber",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> WING_MEMBRANE = ITEMS.register("wing_membrane",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> FLESHY_BONE = ITEMS.register("fleshy_bone",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> HARDENED_BIND = ITEMS.register("hardened_bind",

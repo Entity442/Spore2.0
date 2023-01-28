@@ -543,7 +543,7 @@ public class SConfig {
             this.inf_griefer_loot = builder.defineList("Griefer ",
                     Lists.newArrayList("spore:mutated_fiber|50|2|5","spore:armor_fragment|80|2|4","spore:mutated_heart|10|1|1","spore:claw_fragment|80|3|6","spore:tumor|100|1|3") , o -> o instanceof String);
             this.inf_bus_loot = builder.defineList("Phayres ",
-                    Lists.newArrayList("spore:mutated_fiber|80|1|3","spore:armor_fragment|50|1|2","spore:mutated_heart|10|1|1") , o -> o instanceof String);
+                    Lists.newArrayList("spore:mutated_fiber|80|1|3","spore:armor_fragment|50|1|2","spore:mutated_heart|10|1|1","spore:wing_membrane|60|1|3") , o -> o instanceof String);
 
             this.inf_spitter_loot = builder.defineList("Spitter ",
                     Lists.newArrayList("spore:mutated_fiber|80|1|3","spore:armor_fragment|50|1|2","spore:mutated_heart|10|1|1","spore:cerebrum|20|1|1","spore:spine_fragment|15|1|3","spore:corrosive_sack|30|1|1") , o -> o instanceof String);

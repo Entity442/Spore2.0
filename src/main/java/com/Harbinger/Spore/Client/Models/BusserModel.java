@@ -183,6 +183,11 @@ public class BusserModel<T extends Busser> extends EntityModel<T> {
 		this.head.getChild("ear").xRot = Mth.sin(ageInTicks / 4) / 6;
 		this.head.getChild("ear2").xRot = Mth.sin(ageInTicks / 4) / 6;
 
+		this.ribs.yRot = Mth.sin(ageInTicks / 7) / 6;
+		this.ribs2.yRot = Mth.sin(ageInTicks / 8) / 8;
+		this.ribs3.yRot = -Mth.sin(ageInTicks / 9) / 5;
+		this.ribs4.yRot = -Mth.sin(ageInTicks / 6) / 7;
+
 
 		if (entity.isVehicle() || entity.isOnGround()){
 			this.Tail.xRot = 0;
