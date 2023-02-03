@@ -60,6 +60,8 @@
   "item.spore.stalker_spawnegg": "Stalker",
   "item.spore.brute_spawnegg": "Brute",
   "item.spore.busser_spawnegg": "Phayres",
+  "item.spore.inf_drowned_spawnegg": "Infected Drowned",
+
 
   "item.spore.scent_spawnegg": "Scent",
   "item.spore.claw_spawnegg": "Claw",
@@ -83,6 +85,7 @@
   "entity.spore.scent": "Scent",
   "entity.spore.claw": "Claw",
   "entity.spore.busser": "Phayres",
+  "entity.spore.inf_drowned": "Infected Drowned",
 
   "entity.spore.thrown_tumor": "Tumor",
   "entity.spore.thrown_spear": "Infected Spear",

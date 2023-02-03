@@ -22,7 +22,7 @@ public class HurtTargetGoal extends TargetGoal {
     private Class<?>[] toIgnoreAlert;
 
     public HurtTargetGoal(PathfinderMob pathfinderMob,Class<?>... mob){
-        this(pathfinderMob ,(Predicate<LivingEntity>)null,mob);
+        this(pathfinderMob , null,mob);
     }
 
     public HurtTargetGoal(PathfinderMob p_26039_, @Nullable Predicate<LivingEntity> en, Class<?>... mob) {

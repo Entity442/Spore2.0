@@ -59,7 +59,7 @@ public class LeapGoal extends Goal {
             vec31 = vec31.normalize().scale(2D).add(vec3.scale(1.5D));
         }
 
-        this.mob.setDeltaMovement(vec31.x + yd, (double)this.yd, vec31.z + yd);
+        this.mob.setDeltaMovement(vec31.x + yd, this.yd, vec31.z + yd);
     }
 
 }

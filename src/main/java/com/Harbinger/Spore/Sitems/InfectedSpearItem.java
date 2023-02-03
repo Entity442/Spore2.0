@@ -30,6 +30,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
+import java.util.Objects;
 
 public class InfectedSpearItem extends Item implements Vanishable{
     private final Multimap<Attribute, AttributeModifier> defaultModifiers;
@@ -43,7 +44,7 @@ public class InfectedSpearItem extends Item implements Vanishable{
     }
     @Override
     public boolean isValidRepairItem(ItemStack itemstack, ItemStack repairitem) {
-        return List.of(Sitems.BIOMASS.get()).contains(repairitem.getItem());
+        return Objects.equals(Sitems.BIOMASS.get(), repairitem.getItem());
     }
 
 
@@ -78,7 +79,7 @@ public class InfectedSpearItem extends Item implements Vanishable{
                                 thrownSpear.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
                             }
                             level.addFreshEntity(thrownSpear);
-                            level.playSound((Player)null, thrownSpear, SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 1.0F, 1.0F);
+                            level.playSound(null, thrownSpear, SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 1.0F, 1.0F);
                             if (!player.getAbilities().instabuild) {
                                 player.getInventory().removeItem(stack);
                             }

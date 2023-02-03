@@ -114,7 +114,7 @@ public class InfEvoClaw extends UtilityEntity implements Enemy{
         if (!level.isClientSide) {
             if (world.getBlockState(new BlockPos(x, y - 1, z)).getMaterial() != Material.AIR){
             ((ServerLevel) level).sendParticles(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack((world.getBlockState(new BlockPos(x, y - 1, z))).getBlock())), x - 0.2D, y - 0.1D, z - 0.2D, 3,
-                    ((double) randomsource.nextFloat() - 0.5D) * 0.08D, ((double) randomsource.nextFloat() - 0.5D) * 0.08D, ((double) randomsource.nextFloat() - 0.5D) * 0.08D, (double) 0.15F);
+                    ((double) randomsource.nextFloat() - 0.5D) * 0.08D, ((double) randomsource.nextFloat() - 0.5D) * 0.08D, ((double) randomsource.nextFloat() - 0.5D) * 0.08D, 0.15F);
         }}
     }
 

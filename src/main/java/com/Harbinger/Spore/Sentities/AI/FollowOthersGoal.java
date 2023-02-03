@@ -25,7 +25,7 @@ public class FollowOthersGoal extends Goal {
         this(mob , speedModifier, mob.getClass(),range);
     }
     public FollowOthersGoal(PathfinderMob mob, double speedModifier, Class<? extends PathfinderMob> partnerClass, int range){
-        this(mob,speedModifier,partnerClass , range, (Predicate<LivingEntity>)null);
+        this(mob,speedModifier,partnerClass , range, null);
     }
 
     public  FollowOthersGoal(PathfinderMob mob, double speedModifier, Class<? extends PathfinderMob> partnerClass, int range, @Nullable Predicate<LivingEntity> en){
@@ -48,7 +48,11 @@ public class FollowOthersGoal extends Goal {
      }
     }
     public boolean canContinueToUse() {
-        return this.partner.isAlive() || this.getFreePartner() != null;}
+        if (this.partner != null){
+        return this.partner.isAlive() || this.getFreePartner() != null;
+        }
+        return false;
+        }
 
     public void stop() {
         this.partner = null;

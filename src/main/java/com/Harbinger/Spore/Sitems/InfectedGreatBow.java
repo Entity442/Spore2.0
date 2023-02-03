@@ -25,6 +25,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
+import java.util.Objects;
 
 public class InfectedGreatBow extends BowItem{
     public InfectedGreatBow(Properties properties) {
@@ -33,7 +34,7 @@ public class InfectedGreatBow extends BowItem{
     }
     @Override
     public boolean isValidRepairItem(ItemStack itemstack, ItemStack repairitem) {
-        return List.of(Sitems.BIOMASS.get()).contains(repairitem.getItem());
+        return Objects.equals(Sitems.BIOMASS.get(), repairitem.getItem());
     }
 
     @Override

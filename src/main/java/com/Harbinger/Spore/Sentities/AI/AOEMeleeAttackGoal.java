@@ -35,7 +35,7 @@ public class AOEMeleeAttackGoal extends Goal {
     private long lastCanUseCheck;
     private static final long COOLDOWN_BETWEEN_CAN_USE_CHECKS = 20L;
     private int failedPathFindingPenalty = 0;
-    private boolean canPenalize = false;
+    private final boolean canPenalize = false;
     public double box;
     public float ranged;
     public AOEMeleeAttackGoal(PathfinderMob mob, double speed, boolean p_25554_ , double hitbox ,float range) {
@@ -106,7 +106,7 @@ public class AOEMeleeAttackGoal extends Goal {
     public void stop() {
         LivingEntity livingentity = this.mob.getTarget();
         if (!EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(livingentity)) {
-            this.mob.setTarget((LivingEntity)null);
+            this.mob.setTarget(null);
         }
 
         this.mob.setAggressive(false);

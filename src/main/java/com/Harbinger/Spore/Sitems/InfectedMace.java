@@ -29,6 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
+import java.util.Objects;
 
 public class InfectedMace extends Item implements Vanishable {
     private final Multimap<Attribute, AttributeModifier> defaultModifiers;
@@ -42,7 +43,7 @@ public class InfectedMace extends Item implements Vanishable {
     }
     @Override
     public boolean isValidRepairItem(ItemStack itemstack, ItemStack repairitem) {
-        return List.of(Sitems.BIOMASS.get()).contains(repairitem.getItem());
+        return Objects.equals(Sitems.BIOMASS.get(), repairitem.getItem());
     }
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {

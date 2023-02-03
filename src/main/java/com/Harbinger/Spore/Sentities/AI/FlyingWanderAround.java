@@ -42,6 +42,6 @@ public class FlyingWanderAround extends Goal {
 
         int i = 8;
         Vec3 vec32 = HoverRandomPos.getPos(mob, 8, 7, vec3.x, vec3.z, ((float)Math.PI / 2F), 3, 1);
-        return vec32 != null ? vec32 : AirAndWaterRandomPos.getPos(mob, 8, 4, -2, vec3.x, vec3.z, (double)((float)Math.PI / 2F));
+        return vec32 != null ? vec32 : AirAndWaterRandomPos.getPos(mob, 8, 4, -2, vec3.x, vec3.z, (float)Math.PI / 2F);
     }
 }

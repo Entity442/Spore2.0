@@ -2,6 +2,7 @@ package com.Harbinger.Spore;
 
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Sentities.Infected;
+import com.Harbinger.Spore.Sentities.InfectedDrowned;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
@@ -69,6 +70,10 @@ public class Spore
             SpawnPlacements.register(Sentities.INF_WANDERER.get(),
                     SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                     Infected::checkMonsterInfectedRules);
+            SpawnPlacements.register(Sentities.INF_DROWNED.get(),
+                    SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    InfectedDrowned::checkUnderwaterInfectedRules);
+
         });
     }
 

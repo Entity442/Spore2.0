@@ -32,6 +32,7 @@ public class Attributes {
         event.put(Sentities.SCENT.get(), ScentEntity.createAttributes().build());
         event.put(Sentities.BRUTE.get(), Brute.createAttributes().build());
         event.put(Sentities.BUSSER.get(), Busser.createAttributes().build());
+        event.put(Sentities.INF_DROWNED.get(), InfectedDrowned.createAttributes().build());
     }
 }
 

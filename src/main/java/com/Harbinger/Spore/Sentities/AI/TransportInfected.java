@@ -22,7 +22,7 @@ public class TransportInfected<T extends LivingEntity> extends Goal {
     protected T partner;
 
     public TransportInfected(Mob mob, Class<T> partnerClass, int searchrange, double speed) {
-        this(mob ,partnerClass,searchrange,speed,(Predicate<LivingEntity>)null);
+        this(mob ,partnerClass,searchrange,speed, null);
     }
     public TransportInfected(Mob mob, Class<T> partnerClass, int searchrange, double speed ,@Nullable Predicate<LivingEntity> en) {
         this.mob = mob;

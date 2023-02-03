@@ -40,6 +40,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> inf_vil_damage;
         public final ForgeConfigSpec.ConfigValue<Double> inf_vil_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> inf_dr_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_dr_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_dr_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> inf_van_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_van_damage;
         public final ForgeConfigSpec.ConfigValue<Double> inf_van_armor;
@@ -262,7 +266,7 @@ public class SConfig {
             builder.push("Infections");
             this.inf_human_conv = builder.defineList("Mobs and their infected counterparts",
                     Lists.newArrayList(
-                            "minecraft:zombie|spore:inf_human","minecraft:husk|spore:inf_human","minecraft:drowned|spore:inf_human"
+                            "minecraft:zombie|spore:inf_human","minecraft:husk|spore:inf_human","minecraft:drowned|spore:inf_drowned"
                             ,"minecraft:pillager|spore:inf_pillager","minecraft:villager|spore:inf_villager","guardvillagers:guard|spore:inf_villager",
                             "minecraft:witch|spore:inf_witch","minecraft:wandering_trader|spore:inf_wanderer","minecraft:evoker|spore:inf_evoker",
                             "minecraft:vindicator|spore:inf_vindicator","hunterillager:hunterillager|spore:inf_vindicator") , o -> o instanceof String);
@@ -304,6 +308,12 @@ public class SConfig {
             this.inf_vin_armor = builder.comment("Default 4").defineInRange("Sets Infected Vindicator Armor", 4, 1, Double.MAX_VALUE);
             builder.pop();
 
+            builder.push("Infected Drowned");
+            this.inf_dr_hp = builder.comment("Default 16").defineInRange("Sets Infected Vindicator Max health", 16, 1, Double.MAX_VALUE);
+            this.inf_dr_damage = builder.comment("Default 5").defineInRange("Sets Infected Vindicator Damage", 5, 1, Double.MAX_VALUE);
+            this.inf_dr_armor = builder.comment("Default 1").defineInRange("Sets Infected Vindicator Armor", 1, 1, Double.MAX_VALUE);
+            builder.pop();
+
             builder.push("Phayres");
             this.bus_hp = builder.comment("Default 30").defineInRange("Sets Phayres Max health", 30, 1, Double.MAX_VALUE);
             this.bus_damage = builder.comment("Default 6").defineInRange("Sets Phayres Damage", 6, 1, Double.MAX_VALUE);
@@ -337,15 +347,15 @@ public class SConfig {
             builder.push("Scent");
             this.scent_spawn = builder.comment("Default true").define("Should scent spawn?",true);
             this.scent_particles = builder.comment("Default true").define("Should scent have particles?",true);
-            this.scent_life = builder.comment("Default 6000").define("Scent life",2000);
-            this.scent_spawn_chance = builder.comment("Default 10").define("The Chance for the scent to spawn from a mob dying 1-100",3);
+            this.scent_life = builder.comment("Default 4000").define("Scent life",4000);
+            this.scent_spawn_chance = builder.comment("Default 5").define("The Chance for the scent to spawn from a mob dying 1-100",5);
             this.inf_summon = builder.defineList("Mobs that can be summoned by the Scent",
                     Lists.newArrayList(
                             "spore:inf_human"
                             ,"spore:inf_villager"
                             ,"spore:inf_pillager" ) , o -> o instanceof String);
             this.scent_summon = builder.comment("Default true").define("Should scent summon entities?",true);
-            this.scent_summon_cooldown = builder.comment("Default 600").define("The average amount of time it will take for a mob to be summoned",300);
+            this.scent_summon_cooldown = builder.comment("Default 300").define("The average amount of time it will take for a mob to be summoned",300);
             builder.pop();
 
             builder.push("Infected Villager");
@@ -516,11 +526,14 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_brute_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_claw_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_bus_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_drow_loot;
         public DataGen(ForgeConfigSpec.Builder builder){
             builder.push("LootTables");
             builder.comment("item|chance to drop(1-100)|minimum amount|maximum amount.Only values above 0 will be taken in consideration.");
             this.inf_human_loot = builder.defineList("Infected Human",
                     Lists.newArrayList("spore:mutated_fiber|50|1|3","spore:mutated_heart|10|1|1") , o -> o instanceof String);
+            this.inf_drow_loot = builder.defineList("Infected Drowned",
+                    Lists.newArrayList("spore:mutated_fiber|50|1|3","spore:mutated_heart|5|1|1","minecraft:copper_ingot|15|1|1") , o -> o instanceof String);
             this.inf_villager_loot = builder.defineList("Infected Villager",
                     Lists.newArrayList("spore:mutated_fiber|50|2|5","spore:mutated_heart|10|1|1","spore:cerebrum|25|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
             this.inf_pillager_loot = builder.defineList("Infected Pillager",

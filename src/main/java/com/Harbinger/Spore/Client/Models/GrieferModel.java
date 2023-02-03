@@ -115,7 +115,7 @@ public class GrieferModel<T extends Griefer> extends EntityModel<T> {
 			this.RightArm.xRot = -89.5F - (Mth.sin(ageInTicks/4)/7);
 			this.LeftArm.xRot = -89.5F + (Mth.sin(ageInTicks/4)/7);
 			 if (entity.attackAnim > 0) {
-				 float f1 = 1.0F - (float) Mth.abs(10 - 2 * entity.attackAnim) / 10.0F;
+				 float f1 = 1.0F - Mth.abs(10 - 2 * entity.attackAnim) / 10.0F;
 				 this.RightArm.xRot = Mth.sin(f1) * 2.0F;
 				 this.LeftArm.xRot = Mth.sin(f1) * 2.0F;
 			 }

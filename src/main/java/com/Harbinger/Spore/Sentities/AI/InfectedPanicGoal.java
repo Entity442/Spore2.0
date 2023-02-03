@@ -32,9 +32,9 @@ public class InfectedPanicGoal extends Goal {
             if (this.mob.isOnFire()) {
                 BlockPos blockpos = this.lookForWater(this.mob.level, this.mob, 5);
                 if (blockpos != null) {
-                    this.posX = (double)blockpos.getX();
-                    this.posY = (double)blockpos.getY();
-                    this.posZ = (double)blockpos.getZ();
+                    this.posX = blockpos.getX();
+                    this.posY = blockpos.getY();
+                    this.posZ = blockpos.getZ();
                     return true;
                 }
             }
@@ -74,7 +74,7 @@ public class InfectedPanicGoal extends Goal {
         BlockPos blockpos = p_198174_.blockPosition();
         return !p_198173_.getBlockState(blockpos).getCollisionShape(p_198173_, blockpos).isEmpty() ? null : BlockPos.findClosestMatch(p_198174_.blockPosition(), p_198175_, 1, (p_196649_) -> {
             return p_198173_.getFluidState(p_196649_).is(FluidTags.WATER);
-        }).orElse((BlockPos)null);
+        }).orElse(null);
     }
 
 }

@@ -370,5 +370,22 @@ public class HandlerEvents {
                             ItemEntity item = new ItemEntity(event.getEntity().getLevel(), event.getEntity().getX() , event.getEntity().getY(),event.getEntity().getZ(),itemStack);
                             item.setPickUpDelay(10);
                             event.getEntity().getLevel().addFreshEntity(item);}}}
+
+                if (event.getEntity() instanceof InfectedDrowned){
+                    for (String str : SConfig.DATAGEN.inf_drow_loot.get()){
+                        String[] string = str.split("\\|" );
+                        ItemStack itemStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0])));
+                        int m = 1;
+                        if (Integer.parseUnsignedInt(string[2]) == Integer.parseUnsignedInt(string[3])){
+                            m = Integer.parseUnsignedInt(string[3]);
+
+                        } else {if (Integer.parseUnsignedInt(string[2]) >= 1 && Integer.parseUnsignedInt(string[2]) >= 1){
+                            m = random.nextInt(Integer.parseUnsignedInt(string[2]), Integer.parseUnsignedInt(string[3]));}}
+
+                        if (Math.random() < (Integer.parseUnsignedInt(string[1]) / 100F)) {
+                            itemStack.setCount(m);
+                            ItemEntity item = new ItemEntity(event.getEntity().getLevel(), event.getEntity().getX() , event.getEntity().getY(),event.getEntity().getZ(),itemStack);
+                            item.setPickUpDelay(10);
+                            event.getEntity().getLevel().addFreshEntity(item);}}}
         }}}
 }

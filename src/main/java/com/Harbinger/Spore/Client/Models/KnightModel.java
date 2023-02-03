@@ -109,7 +109,7 @@ public class KnightModel<T extends Knight> extends EntityModel<T> {
 				 this.body.getChild("RightArm").getChild("RightForArm").xRot = 0;
 			 }
 			 if (entity.attackAnim > 0) {
-				 float f1 = 1.0F - (float) Mth.abs(10 - 2 * entity.attackAnim) / 10.0F;
+				 float f1 = 1.0F - Mth.abs(10 - 2 * entity.attackAnim) / 10.0F;
 				 this.body.getChild("RightArm").xRot =  Mth.sin(f1) * 2.0F;
 			 }
 

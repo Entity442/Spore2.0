@@ -33,6 +33,8 @@ public class Sentities {
             () -> EntityType.Builder.of(InfectedHuman::new, MobCategory.MONSTER).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "inf_human").toString()));
 
+
+
     public static final RegistryObject<EntityType<Knight>> KNIGHT = SPORE_ENTITIES.register("knight",
             () -> EntityType.Builder.of(Knight::new, MobCategory.MONSTER).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "knight").toString()));
@@ -97,7 +99,9 @@ public class Sentities {
             () -> EntityType.Builder.of(Busser::new, MobCategory.MONSTER).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "busser").toString()));
 
-
+    public static final RegistryObject<EntityType<InfectedDrowned>> INF_DROWNED = SPORE_ENTITIES.register("inf_drowned",
+            () -> EntityType.Builder.of(InfectedDrowned::new, MobCategory.MONSTER).sized(0.6f, 2f)
+                    .build(new ResourceLocation(Spore.MODID, "inf_drowned").toString()));
 
 
     public static final RegistryObject<EntityType<AcidBall>> ACID_BALL = register("acid_ball",
@@ -124,4 +128,7 @@ public class Sentities {
     public static final RegistryObject<EntityType<InfEvoClaw>> CLAW = SPORE_ENTITIES.register("claw",
             () -> EntityType.Builder.of(InfEvoClaw::new, MobCategory.MONSTER).sized(0.5f, 1f)
                     .build(new ResourceLocation(Spore.MODID, "claw").toString()));
+
+
+
 }

@@ -50,7 +50,7 @@ public class BreakBlockGoal extends MoveToBlockGoal {
     }
 
     private boolean tryFindBlock() {
-        return this.blockPos != null && this.isValidTarget(this.mob.level, this.blockPos) ? true : this.findNearestBlock();
+        return this.blockPos != null && this.isValidTarget(this.mob.level, this.blockPos) || this.findNearestBlock();
     }
 
     public void stop() {
@@ -79,7 +79,7 @@ public class BreakBlockGoal extends MoveToBlockGoal {
         if (this.isReachedTarget() && blockpos1 != null) {
             if (this.ticksSinceReachedGoal > 0) {
                 if (!level.isClientSide) {
-                    ((ServerLevel)level).sendParticles(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(blockToRemove)), (double)blockpos1.getX() + 0.5D, (double)blockpos1.getY() + 0.7D, (double)blockpos1.getZ() + 0.5D, 3, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, (double)0.15F);
+                    ((ServerLevel)level).sendParticles(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(blockToRemove)), (double)blockpos1.getX() + 0.5D, (double)blockpos1.getY() + 0.7D, (double)blockpos1.getZ() + 0.5D, 3, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, ((double)randomsource.nextFloat() - 0.5D) * 0.08D, 0.15F);
                 }
             }
 
@@ -96,7 +96,7 @@ public class BreakBlockGoal extends MoveToBlockGoal {
                         double d3 = randomsource.nextGaussian() * 0.02D;
                         double d1 = randomsource.nextGaussian() * 0.02D;
                         double d2 = randomsource.nextGaussian() * 0.02D;
-                        ((ServerLevel)level).sendParticles(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(blockToRemove)), (double)blockpos1.getX() + 0.5D, (double)blockpos1.getY(), (double)blockpos1.getZ() + 0.5D, 1, d3, d1, d2, (double)0.15F);
+                        ((ServerLevel)level).sendParticles(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(blockToRemove)), (double)blockpos1.getX() + 0.5D, blockpos1.getY(), (double)blockpos1.getZ() + 0.5D, 1, d3, d1, d2, 0.15F);
                     }
 
                     this.playBreakSound(level, blockpos1);
