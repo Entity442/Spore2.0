@@ -89,14 +89,9 @@ public class InfectedDrownModel<T extends InfectedDrowned> extends EntityModel<T
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (entity.isAggressive()){
-			if (entity.isInWater()){
-				this.Body.getChild("RightArm").xRot = - 90 - headPitch /  ( 90F / (float) Math.PI) - (Mth.sin(ageInTicks/4)/7);
-				this.Body.getChild("LeftArm").xRot = - 90 - headPitch /  ( 90F / (float) Math.PI) + (Mth.sin(ageInTicks/4)/7);
-			}else {
 				this.Body.getChild("RightArm").xRot = -89.5F - (Mth.sin(ageInTicks/4)/7);
 				this.Body.getChild("LeftArm").xRot = -89.5F + (Mth.sin(ageInTicks/4)/7);
 
-			}
 		}else {
 			this.Body.getChild("RightArm").zRot = Mth.sin(ageInTicks/8)/10;
 			this.Body.getChild("LeftArm").zRot = -Mth.sin(ageInTicks/8)/10;
@@ -114,8 +109,8 @@ public class InfectedDrownModel<T extends InfectedDrowned> extends EntityModel<T
 			this.Body.getChild("LeftArm").zRot = -Mth.sin(ageInTicks/8)/10;
 		}
 
-		if (entity.isInWater() && entity.isEyeInWater(FluidTags.WATER) && !(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
-			if (entity.isEyeInWater(FluidTags.WATER) && entity.getXRot() < 5){
+		if (entity.isInWater() && !(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
+			if (entity.isSwimming() && entity.getXRot() < 5){
 				this.Body.xRot = -headPitch /  ( 90F / (float) Math.PI);
 			}
 		}else {

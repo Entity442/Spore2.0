@@ -24,17 +24,16 @@ public class Busser extends EvolvedInfected implements Carrier{
 
     public Busser(EntityType<? extends Monster> type, Level level) {
         super(type, level);
-        if (this.getTarget() != null || !this.isOnGround()){
         this.moveControl = new InfectedArialMovementControl(this , 20 , true);
-        }
+
     }
     public boolean causeFallDamage(float p_147105_, float p_147106_, DamageSource p_147107_) {
         return false;
     }
 
 
-    protected PathNavigation createNavigation(Level p_27815_) {
-        FlyingPathNavigation flyingpathnavigation = new FlyingPathNavigation(this, p_27815_) {
+    protected PathNavigation createNavigation(Level level) {
+        FlyingPathNavigation flyingpathnavigation = new FlyingPathNavigation(this, level) {
             public boolean isStableDestination(BlockPos pos) {
                 for (int i = 0; i < 3; ++i){
                 if (this.mob.isVehicle()){
@@ -68,10 +67,10 @@ public class Busser extends EvolvedInfected implements Carrier{
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(2, new TransportInfected<>(this, Mob.class,32,0.8 ,
+        this.goalSelector.addGoal(1, new TransportInfected<>(this, Mob.class,32,0.8 ,
                 e -> { return SConfig.SERVER.can_be_carried.get().contains(e.getEncodeId()) || SConfig.SERVER.ranged.get().contains(e.getEncodeId());}));
 
-        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.5, false) {
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 return 3.0 + entity.getBbWidth() * entity.getBbWidth();}});
@@ -91,7 +90,7 @@ public class Busser extends EvolvedInfected implements Carrier{
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, SConfig.SERVER.brute_hp.get() * SConfig.SERVER.global_health.get())
-                .add(Attributes.MOVEMENT_SPEED, 0.3)
+                .add(Attributes.MOVEMENT_SPEED, 0.1)
                 .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.brute_damage.get() * SConfig.SERVER.global_damage.get())
                 .add(Attributes.ARMOR, SConfig.SERVER.brute_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.FOLLOW_RANGE, 128)

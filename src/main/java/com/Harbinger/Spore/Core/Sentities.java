@@ -5,7 +5,7 @@ import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownSpear;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownTumor;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
-import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
+import com.Harbinger.Spore.Sentities.InfEvoClaw;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.resources.ResourceLocation;
@@ -102,6 +102,10 @@ public class Sentities {
     public static final RegistryObject<EntityType<InfectedDrowned>> INF_DROWNED = SPORE_ENTITIES.register("inf_drowned",
             () -> EntityType.Builder.of(InfectedDrowned::new, MobCategory.MONSTER).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "inf_drowned").toString()));
+
+    public static final RegistryObject<EntityType<Host>> HOST = SPORE_ENTITIES.register("host",
+            () -> EntityType.Builder.of(Host::new, MobCategory.MONSTER).sized(0.6f, 2f)
+                    .build(new ResourceLocation(Spore.MODID, "host").toString()));
 
 
     public static final RegistryObject<EntityType<AcidBall>> ACID_BALL = register("acid_ball",

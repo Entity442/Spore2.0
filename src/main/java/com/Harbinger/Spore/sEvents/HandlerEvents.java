@@ -3,7 +3,7 @@ package com.Harbinger.Spore.sEvents;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
-import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
+import com.Harbinger.Spore.Sentities.InfEvoClaw;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.resources.ResourceLocation;

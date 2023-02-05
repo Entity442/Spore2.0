@@ -2,7 +2,7 @@ package com.Harbinger.Spore.sEvents;
 
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Sentities.*;
-import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
+import com.Harbinger.Spore.Sentities.InfEvoClaw;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import com.Harbinger.Spore.Spore;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -33,6 +33,7 @@ public class Attributes {
         event.put(Sentities.BRUTE.get(), Brute.createAttributes().build());
         event.put(Sentities.BUSSER.get(), Busser.createAttributes().build());
         event.put(Sentities.INF_DROWNED.get(), InfectedDrowned.createAttributes().build());
+        event.put(Sentities.HOST.get(), Host.createAttributes().build());
     }
 }
 

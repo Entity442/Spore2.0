@@ -3,13 +3,13 @@ package com.Harbinger.Spore.Core;
 import com.Harbinger.Spore.Sblocks.Acid;
 import com.Harbinger.Spore.Sblocks.Container;
 import com.Harbinger.Spore.Sblocks.Mycelium;
-import com.Harbinger.Spore.Sblocks.SBlockProperty.Orientation;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -39,7 +39,6 @@ public class Sblocks {
     private static <T extends Block> void registerBlockItemT(String name, RegistryObject<T> block) {
         Sitems.ITEMS.register(name, () -> new BlockItem(block.get(),
                 new Item.Properties().tab(ScreativeTab.SPORE_T)));}
-    public static final EnumProperty<Orientation> ORIENTATION = EnumProperty.create("orientation", Orientation.class);
 
     private static <T extends Block> RegistryObject<T> registerBlockWithoutBlockItem(String name, Supplier<T> block) {
         return BLOCKS.register(name, block);
@@ -52,10 +51,14 @@ public class Sblocks {
 
     public static final RegistryObject<Block> MYCELIUM = registerBlock("mycelium",
             Mycelium::new);
+
+
     public static final RegistryObject<Block> ACID = registerBlockWithoutBlockItem("acid",
             Acid::new);
+
     public static final RegistryObject<Block> CONTAINER = registerBlockT("container",
             Container::new);
+    
     public  static final RegistryObject<Block> LAB_BLOCK = registerBlockT("lab_block",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(4f, 20f)));
     public  static final RegistryObject<SlabBlock> LAB_SLAB = registerBlockT("lab_slab",

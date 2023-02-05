@@ -18,7 +18,6 @@ public class FloatDiveGoalDR extends Goal {
             this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(0.0D, 0.01D, 0.0D));
             mob.getNavigation().setCanFloat(true);
         } else {
-            this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
             mob.getNavigation().setCanFloat(false);
         }
     }

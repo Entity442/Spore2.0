@@ -14,7 +14,6 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
@@ -25,6 +24,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
@@ -37,7 +38,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
@@ -60,12 +60,16 @@ public class InfectedDrowned extends UtilityEntity implements Enemy {
             this.moveRelative(0.1F, p_32858_);
             this.move(MoverType.SELF, this.getDeltaMovement());
             this.setDeltaMovement(this.getDeltaMovement().scale(0.9D));
-            if ( this.getTarget() == null) {
                 this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
-            }
+
         } else {
             super.travel(p_32858_);
         }
+    }
+
+    @Override
+    public float getStepHeight() {
+        return 1.0F;
     }
 
     @Override
@@ -75,22 +79,25 @@ public class InfectedDrowned extends UtilityEntity implements Enemy {
             assert speed != null;
             speed.setBaseValue(0.15);
         }
+    }
 
-        if (!this.level.isClientSide){
-        if (this.getTarget() != null){
-            if (this.distanceToSqr(this.getTarget()) < 30.0D && !this.getTarget().isEyeInFluidType(ForgeMod.WATER_TYPE.get())){
-                this.navigation = this.groundNavigation;
+    public void updateSwimming() {
+        if (!this.level.isClientSide) {
+            if (this.getTarget() != null){
+                if (this.distanceToSqr(this.getTarget()) < 8.0D && !this.getTarget().isEyeInFluidType(ForgeMod.WATER_TYPE.get())){
+                    this.navigation = this.groundNavigation;
+                    this.setDeltaMovement(this.getDeltaMovement().add(0.0D, 0.015D, 0.0D));
+                }
             }
-        }else if (this.isInWater() && this.isEyeInWater(FluidTags.WATER)){
-            this.navigation = this.waterNavigation;
-        }else{
-            this.navigation = this.groundNavigation;
-
-        }}
-
-        if (!this.level.isClientSide && this.horizontalCollision){
-            this.jumpControl.jump();
+            if (this.isEffectiveAi() && this.isInWater() && isEyeInFluidType(ForgeMod.WATER_TYPE.get())) {
+                this.navigation = this.waterNavigation;
+                this.setSwimming(true);
+            } else {
+                this.navigation = this.groundNavigation;
+                this.setSwimming(false);
+            }
         }
+
     }
 
     public int getMaxAirSupply() {
@@ -131,9 +138,18 @@ public class InfectedDrowned extends UtilityEntity implements Enemy {
         }));
 
         this.goalSelector.addGoal(4 , new ReturnToWater(this, 1.2));
+        this.goalSelector.addGoal(4, new RandomStrollGoal(this ,0.8));
+        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(5,new FloatDiveGoalDR(this));
         this.goalSelector.addGoal(6,new MoveTowardsRestrictionGoal(this , 1.0));
         this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7 , 32));
+
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.5, false) {
+            @Override
+            protected double getAttackReachSqr(LivingEntity entity) {
+                return 3.0 + entity.getBbWidth() * entity.getBbWidth();
+            }
+        });
         super.registerGoals();
     }
 
@@ -192,11 +208,6 @@ public class InfectedDrowned extends UtilityEntity implements Enemy {
         if (this.getHealth() < this.getMaxHealth()){ this.heal(this.getMaxHealth()/5);}
         kills = kills + 1;
         super.awardKillScore(entity, i, damageSource);
-    }
-
-
-    public boolean isEyeInWater(TagKey<Fluid> fluid) {
-        return fluid == FluidTags.WATER;
     }
 
 

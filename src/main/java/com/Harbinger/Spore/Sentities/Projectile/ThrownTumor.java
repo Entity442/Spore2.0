@@ -42,17 +42,14 @@ public class ThrownTumor extends ThrowableItemProjectile {
 
     }
 
-    protected void onHitEntity(EntityHitResult hitResult) {
-        super.onHitEntity(hitResult);
-        Explosion.BlockInteraction explosion$blockinteraction = Explosion.BlockInteraction.NONE;
-        hitResult.getEntity().level.explode(this, this.getX(), this.getY(), this.getZ(), (float)2, explosion$blockinteraction);
-    }
 
     @Override
     protected void onHit(HitResult hitResult) {
         super.onHit(hitResult);
+        if (!this.level.isClientSide){
         Explosion.BlockInteraction explosion$blockinteraction = Explosion.BlockInteraction.NONE;
         this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)2, explosion$blockinteraction);
+        }
     }
 
 

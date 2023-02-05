@@ -3,6 +3,7 @@ package com.Harbinger.Spore.Client.Models;// Made with Blockbench 4.4.3
 // Paste this class into your mod and generate all required imports
 
 
+import com.Harbinger.Spore.Sentities.Host;
 import com.Harbinger.Spore.Sentities.InfEvoClaw;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -15,12 +16,12 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class InfEvoClawModel<T extends InfEvoClaw> extends EntityModel<T> {
+public class HostModel<T extends Host> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Spore.MODID, "infevoclawmodel"), "main");
 	private final ModelPart base;
 
-	public InfEvoClawModel(ModelPart root) {
+	public HostModel(ModelPart root) {
 		this.base = root.getChild("base");
 	}
 
