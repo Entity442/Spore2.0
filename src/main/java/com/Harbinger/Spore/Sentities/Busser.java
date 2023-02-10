@@ -74,9 +74,10 @@ public class Busser extends EvolvedInfected implements Carrier{
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 return 3.0 + entity.getBbWidth() * entity.getBbWidth();}});
-        super.registerGoals();
+
 
         this.goalSelector.addGoal(4 , new FlyingWanderAround(this , 1.0));
+        super.registerGoals();
     }
 
     @Override
@@ -95,7 +96,7 @@ public class Busser extends EvolvedInfected implements Carrier{
                 .add(Attributes.ARMOR, SConfig.SERVER.brute_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.FOLLOW_RANGE, 128)
                 .add(Attributes.ATTACK_KNOCKBACK, 1)
-                .add(Attributes.FLYING_SPEED, 4);
+                .add(Attributes.FLYING_SPEED, 0.4);
 
 
     }

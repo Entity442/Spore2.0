@@ -46,6 +46,8 @@ public class Sitems {
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> ARMOR_PLATE = ITEMS.register("armor_plate",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> PLATED_MUSCLE = ITEMS.register("plated_muscle",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> ALVEOLIC_SACK = ITEMS.register("alveolic_sack",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> ALTERED_SPLEEN = ITEMS.register("altered_spleen",
@@ -53,6 +55,8 @@ public class Sitems {
     public  static final RegistryObject<Item> CORROSIVE_SACK = ITEMS.register("corrosive_sack",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> TENDONS = ITEMS.register("tendons",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> SICKLE_FRAGMENT = ITEMS.register("sickle_fragment",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> TUMOR = ITEMS.register("tumor",
             () -> new Tumor( new Item.Properties().tab(ScreativeTab.SPORE).stacksTo(16)));
@@ -138,6 +142,8 @@ public class Sitems {
             () -> new InfectedCrossbow());
     public  static final RegistryObject<Item> MACE = ITEMS.register("mace",
             () -> new InfectedMace());
+    public  static final RegistryObject<Item> SICKLE = ITEMS.register("sickle",
+            () -> new InfectedSickle());
 
     public  static final RegistryObject<Item> INF_HELMET = ITEMS.register("inf_helmet",
             () -> new InfectedHelmet());
@@ -148,7 +154,14 @@ public class Sitems {
     public  static final RegistryObject<Item> INF_BOOTS = ITEMS.register("inf_boots",
             () -> new InfectedBoots());
 
-
+    public  static final RegistryObject<Item> PLATED_HELMET = ITEMS.register("plated_helmet",
+            () -> new PlatedBoots());
+    public  static final RegistryObject<Item> PLATED_CHEST = ITEMS.register("plated_chest",
+            () -> new PlatedBoots());
+    public  static final RegistryObject<Item> PLATED_PANTS = ITEMS.register("plated_pants",
+            () -> new PlatedBoots());
+    public  static final RegistryObject<Item> PLATED_BOOTS = ITEMS.register("plated_boots",
+            () -> new PlatedBoots());
 
 
     public  static final RegistryObject<Item> BIOMASS = ITEMS.register("biomass",
