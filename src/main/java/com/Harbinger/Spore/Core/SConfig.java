@@ -186,6 +186,19 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<Integer> knockback_resistance1;
 
+        public final ForgeConfigSpec.ConfigValue<Integer> helmet_durability2;
+        public final ForgeConfigSpec.ConfigValue<Integer> chestplate_durability2;
+        public final ForgeConfigSpec.ConfigValue<Integer> pants_durability2;
+        public final ForgeConfigSpec.ConfigValue<Integer> boots_durability2;
+
+        public final ForgeConfigSpec.ConfigValue<Integer> helmet_protection2;
+        public final ForgeConfigSpec.ConfigValue<Integer> chestplate_protection2;
+        public final ForgeConfigSpec.ConfigValue<Integer> pants_protection2;
+        public final ForgeConfigSpec.ConfigValue<Integer> boots_protection2;
+
+        public final ForgeConfigSpec.ConfigValue<Integer> armor_toughness2;
+
+        public final ForgeConfigSpec.ConfigValue<Integer> knockback_resistance2;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> human_ev;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> villager_ev;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> pil_ev;
@@ -529,23 +542,43 @@ public class SConfig {
             builder.pop();
             builder.push("Plated Exoskeleton");
             builder.push("Helmet");
-            this.helmet_durability1 = builder.comment("Default 350").defineInRange("Helmet Durability", 350, 1, Integer.MAX_VALUE);
+            this.helmet_durability1 = builder.comment("Default 350").defineInRange("Helmet Durability", 450, 1, Integer.MAX_VALUE);
             this.helmet_protection1 = builder.comment("Default 3").defineInRange("Helmet Protection", 3, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Chestplate");
-            this.chestplate_durability1 = builder.comment("Default 500").defineInRange("Chestplate Durability", 500, 1, Integer.MAX_VALUE);
+            this.chestplate_durability1 = builder.comment("Default 500").defineInRange("Chestplate Durability", 600, 1, Integer.MAX_VALUE);
             this.chestplate_protection1 = builder.comment("Default 7").defineInRange("Chestplate Protection", 7, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Leggings");
-            this.pants_durability1 = builder.comment("Default 400").defineInRange("Leggings Durability", 400, 1, Integer.MAX_VALUE);
+            this.pants_durability1 = builder.comment("Default 400").defineInRange("Leggings Durability", 500, 1, Integer.MAX_VALUE);
             this.pants_protection1 = builder.comment("Default 6").defineInRange("Leggings Protection", 5, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Boots");
-            this.boots_durability1 = builder.comment("Default 350").defineInRange("Boots Durability", 350, 1, Integer.MAX_VALUE);
+            this.boots_durability1 = builder.comment("Default 350").defineInRange("Boots Durability", 450, 1, Integer.MAX_VALUE);
             this.boots_protection1 = builder.comment("Default 2").defineInRange("Boots Protection", 2, 1, Integer.MAX_VALUE);
             builder.pop();
             this.armor_toughness1 = builder.comment("Default 1").defineInRange("Armor Toughness", 1, 0, Integer.MAX_VALUE);
             this.knockback_resistance1 = builder.comment("Default 0").defineInRange("Armor Knockback Resistance", 0, 0, Integer.MAX_VALUE);
+            builder.pop();
+            builder.push("Flesh Exoskeleton");
+            builder.push("Helmet");
+            this.helmet_durability2 = builder.comment("Default 350").defineInRange("Helmet Durability", 350, 1, Integer.MAX_VALUE);
+            this.helmet_protection2 = builder.comment("Default 2").defineInRange("Helmet Protection", 2, 1, Integer.MAX_VALUE);
+            builder.pop();
+            builder.push("Chestplate");
+            this.chestplate_durability2 = builder.comment("Default 500").defineInRange("Chestplate Durability", 500, 1, Integer.MAX_VALUE);
+            this.chestplate_protection2 = builder.comment("Default 6").defineInRange("Chestplate Protection", 6, 1, Integer.MAX_VALUE);
+            builder.pop();
+            builder.push("Leggings");
+            this.pants_durability2 = builder.comment("Default 400").defineInRange("Leggings Durability", 400, 1, Integer.MAX_VALUE);
+            this.pants_protection2 = builder.comment("Default 5").defineInRange("Leggings Protection", 5, 1, Integer.MAX_VALUE);
+            builder.pop();
+            builder.push("Boots");
+            this.boots_durability2 = builder.comment("Default 350").defineInRange("Boots Durability", 350, 1, Integer.MAX_VALUE);
+            this.boots_protection2 = builder.comment("Default 2").defineInRange("Boots Protection", 2, 1, Integer.MAX_VALUE);
+            builder.pop();
+            this.armor_toughness2 = builder.comment("Default 0").defineInRange("Armor Toughness", 0, 0, Integer.MAX_VALUE);
+            this.knockback_resistance2 = builder.comment("Default 0").defineInRange("Armor Knockback Resistance", 0, 0, Integer.MAX_VALUE);
             builder.pop();
         }
     }

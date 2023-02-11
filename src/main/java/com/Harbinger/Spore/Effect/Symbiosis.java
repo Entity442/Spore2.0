@@ -1,11 +1,12 @@
 package com.Harbinger.Spore.Effect;
 
-import net.minecraft.client.gui.screens.Screen;
+import com.Harbinger.Spore.Core.Seffects;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.extensions.IForgeMobEffect;
 
 import java.util.ArrayList;
@@ -22,12 +23,27 @@ public class Symbiosis extends MobEffect implements IForgeMobEffect {
         return ret;
     }
 
-    @Override
-    public boolean isDurationEffectTick(int pDuration, int pAmplifier) {
-        return true;
+
+    public void applyEffectTick(LivingEntity entity, int amplifier) {
+        if (!entity.getCommandSenderWorld().isClientSide && entity instanceof Player player) {
+            FoodData foodData = player.getFoodData();
+                float exhaustion = foodData.getExhaustionLevel();
+                if (exhaustion > 0.0F) {
+                    player.causeFoodExhaustion(exhaustion * 2F);
+                }
+
+        }
     }
 
-
-
-
+    public boolean isDurationEffectTick(int duration, int intensity) {
+        if (this == Seffects.SYMBIOSIS.get()) {
+            int i = 40 >> intensity;
+            if (i > 0) {
+                return duration % i == 0;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
 }

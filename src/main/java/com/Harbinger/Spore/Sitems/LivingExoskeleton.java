@@ -10,20 +10,20 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class InfectedExoskeleton extends ArmorItem {
+public class LivingExoskeleton extends ArmorItem {
 
 
-    public InfectedExoskeleton(EquipmentSlot slot, Properties properties) {
+    public LivingExoskeleton(EquipmentSlot slot, Properties properties) {
         super(new ArmorMaterial() {
             @Override
             public int getDurabilityForSlot(EquipmentSlot slot1) {
-                return new int[]{SConfig.SERVER.boots_durability.get(), SConfig.SERVER.pants_durability.get(), SConfig.SERVER.chestplate_durability.get(), SConfig.SERVER.helmet_durability.get()}
+                return new int[]{SConfig.SERVER.boots_durability2.get(), SConfig.SERVER.pants_durability2.get(), SConfig.SERVER.chestplate_durability2.get(), SConfig.SERVER.helmet_durability2.get()}
                         [slot.getIndex()];
             }
 
             @Override
             public int getDefenseForSlot(EquipmentSlot slot1) {
-                return new int[]{SConfig.SERVER.boots_protection.get(), SConfig.SERVER.pants_protection.get(), SConfig.SERVER.chestplate_protection.get(), SConfig.SERVER.helmet_protection.get()}
+                return new int[]{SConfig.SERVER.boots_protection2.get(), SConfig.SERVER.pants_protection2.get(), SConfig.SERVER.chestplate_protection2.get(), SConfig.SERVER.helmet_protection2.get()}
                         [slot.getIndex()];
             }
 
@@ -44,17 +44,17 @@ public class InfectedExoskeleton extends ArmorItem {
 
             @Override
             public String getName() {
-                return "Living";
+                return "Flesh";
             }
 
             @Override
             public float getToughness() {
-                return SConfig.SERVER.armor_toughness.get();
+                return SConfig.SERVER.armor_toughness2.get();
             }
 
             @Override
             public float getKnockbackResistance() {
-                return SConfig.SERVER.knockback_resistance.get() /10F;
+                return SConfig.SERVER.knockback_resistance2.get() /10F;
             }
         } , slot,properties);
 

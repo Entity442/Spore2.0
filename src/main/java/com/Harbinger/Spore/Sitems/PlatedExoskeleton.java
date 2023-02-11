@@ -52,7 +52,7 @@ public class PlatedExoskeleton extends ArmorItem {
 
             @Override
             public float getKnockbackResistance() {
-                return SConfig.SERVER.knockback_resistance1.get();
+                return SConfig.SERVER.knockback_resistance1.get() / 10F;
             }
         } , slot,properties);
 

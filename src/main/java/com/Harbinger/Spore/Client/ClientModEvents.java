@@ -8,17 +8,21 @@ import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.Particles.AcidParticle;
 import com.Harbinger.Spore.Particles.SporeParticle;
 import com.Harbinger.Spore.Screens.ContainerScreen;
+import com.Harbinger.Spore.Sitems.Elytron;
 import com.Harbinger.Spore.Spore;
 import com.Harbinger.Spore.sEvents.SItemProperties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+
+import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = Spore.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEvents {
@@ -48,6 +52,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(BusserModel.LAYER_LOCATION, BusserModel::createBodyLayer);
         event.registerLayerDefinition(InfectedDrownModel.LAYER_LOCATION, InfectedDrownModel::createBodyLayer);
         event.registerLayerDefinition(HostModel.LAYER_LOCATION, HostModel::createBodyLayer);
+        event.registerLayerDefinition(ElytrumModel.LAYER_LOCATION, ElytrumModel::createBodyLayer);
     }
 
 
@@ -98,6 +103,9 @@ public class ClientModEvents {
 
     }
 
+    public static <T extends Item> Supplier<T> getElytraItem() {
+        return () -> (T) new Elytron.InfectedElytron();
+    }
 
     @SubscribeEvent
     public static void registerParticle(RegisterParticleProvidersEvent event) {

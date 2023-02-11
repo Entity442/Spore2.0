@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.Core;
 
+import com.Harbinger.Spore.Client.ClientModEvents;
 import com.Harbinger.Spore.Sitems.*;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.world.item.Item;
@@ -56,7 +57,11 @@ public class Sitems {
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> TENDONS = ITEMS.register("tendons",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> INNARDS = ITEMS.register("innards",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> SICKLE_FRAGMENT = ITEMS.register("sickle_fragment",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> R_WING = ITEMS.register("r_wing",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> TUMOR = ITEMS.register("tumor",
             () -> new Tumor( new Item.Properties().tab(ScreativeTab.SPORE).stacksTo(16)));
@@ -155,14 +160,23 @@ public class Sitems {
             () -> new InfectedBoots());
 
     public  static final RegistryObject<Item> PLATED_HELMET = ITEMS.register("plated_helmet",
-            () -> new PlatedBoots());
+            () -> new PlatedHelmet());
     public  static final RegistryObject<Item> PLATED_CHEST = ITEMS.register("plated_chest",
-            () -> new PlatedBoots());
+            () -> new PlatedChestplate());
     public  static final RegistryObject<Item> PLATED_PANTS = ITEMS.register("plated_pants",
-            () -> new PlatedBoots());
+            () -> new PlatedLeggings());
     public  static final RegistryObject<Item> PLATED_BOOTS = ITEMS.register("plated_boots",
             () -> new PlatedBoots());
 
+    public  static final RegistryObject<Item> LIVING_HELMET = ITEMS.register("living_helmet",
+            () -> new LivingHelmet());
+    public  static final RegistryObject<Item> LIVING_CHEST = ITEMS.register("living_chest",
+            () -> new LivingChestplate());
+    public  static final RegistryObject<Item> LIVING_PANTS = ITEMS.register("living_pants",
+            () -> new LivingLeggings());
+    public  static final RegistryObject<Item> LIVING_BOOTS = ITEMS.register("living_boots",
+            () -> new LivingBoots());
+    public  static final RegistryObject<Item> R_ELYTRON = ITEMS.register("r_elytron", ClientModEvents.getElytraItem());
 
     public  static final RegistryObject<Item> BIOMASS = ITEMS.register("biomass",
             () -> new Biomass());
