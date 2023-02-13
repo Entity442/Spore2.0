@@ -1,6 +1,8 @@
 package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Sentities.AI.AerialChargeGoal;
+import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.FlyingWanderAround;
 import com.Harbinger.Spore.Sentities.AI.TransportInfected;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedArialMovementControl;
@@ -14,7 +16,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
@@ -49,17 +50,6 @@ public class Busser extends EvolvedInfected implements Carrier{
         return flyingpathnavigation;
     }
 
-    protected void customServerAiStep() {
-        if (this.isVehicle() && this.getFirstPassenger() != null){
-            if (this.getFirstPassenger().verticalCollisionBelow){
-                this.setDeltaMovement(this.getDeltaMovement().add(0.0,0.01,0.0));
-            }
-        }else {
-            this.setDeltaMovement(this.getDeltaMovement().add(0.0,-0.01,0.0));
-        }
-        super.customServerAiStep();
-    }
-
     public void positionRider(Entity entity) {
         super.positionRider(entity);
         entity.setPos(this.getX(), this.getY() - 1.2,this.getZ());
@@ -67,15 +57,15 @@ public class Busser extends EvolvedInfected implements Carrier{
 
     @Override
     protected void registerGoals() {
+
         this.goalSelector.addGoal(1, new TransportInfected<>(this, Mob.class,32,0.8 ,
                 e -> { return SConfig.SERVER.can_be_carried.get().contains(e.getEncodeId()) || SConfig.SERVER.ranged.get().contains(e.getEncodeId());}));
 
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.5, false) {
+        this.goalSelector.addGoal(2, new CustomMeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 return 3.0 + entity.getBbWidth() * entity.getBbWidth();}});
-
-
+        this.goalSelector.addGoal(3, new AerialChargeGoal(this ));
         this.goalSelector.addGoal(4 , new FlyingWanderAround(this , 1.0));
         super.registerGoals();
     }

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    " RR",
+    " RR"
+  ],
+  "key": {
+    "R": {
+      "item": "spore:mutated_fiber"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "spore:plated_muscle"
+  }
+}

@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
+import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.TransportInfected;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
@@ -36,7 +37,7 @@ public class Brute extends EvolvedInfected implements Carrier{
         this.goalSelector.addGoal(1,new TransportInfected<>(this,Infected.class,16,1.1,entity -> {
             return SConfig.SERVER.ranged.get().contains(entity.getEncodeId());
         }));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.5, false) {
+        this.goalSelector.addGoal(2, new CustomMeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 return 3.0 + entity.getBbWidth() * entity.getBbWidth();

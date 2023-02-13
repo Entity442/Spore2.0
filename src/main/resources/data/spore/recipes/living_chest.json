@@ -1,19 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "T#T",
-    "TRT",
-    "TTT"
+    "   ",
+    " R ",
+    " # "
   ],
   "key": {
     "R": {
-      "item": "spore:living_core"
+      "item": "spore:living_chest"
     },
     "#": {
-      "item": "spore:spine"
-    },
-    "T": {
-      "item": "spore:armor_plate"
+      "item": "spore:plated_chest"
     }
   },
   "result": {

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RRR",
+    "VTV",
+    "RCX"
+  ],
+  "key": {
+    "R": {
+      "item": "spore:muscle_plate"
+    },
+    "T": {
+      "item": "spore:living_core"
+    },
+    "C": {
+      "item": "spore:innards"
+    },
+    "V": {
+      "item": "spore:alveolic_sack"
+    },
+    "X": {
+      "item": "spore:altered_spleen"
+    }
+  },
+  "result": {
+    "item": "spore:living_chest"
+  }
+}

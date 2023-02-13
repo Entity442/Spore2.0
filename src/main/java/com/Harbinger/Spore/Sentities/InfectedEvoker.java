@@ -3,6 +3,7 @@ package com.Harbinger.Spore.Sentities;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Ssounds;
+import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.PullGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -21,7 +22,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -142,7 +142,7 @@ public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier 
 
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(2 , new MeleeAttackGoal(this ,1.4,true){
+        this.goalSelector.addGoal(2 , new CustomMeleeAttackGoal(this ,1.4,true){
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 if (entityData.get(HAS_ARM)){

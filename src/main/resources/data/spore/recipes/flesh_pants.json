@@ -2,18 +2,18 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "R#R",
-    "R R",
+    "# #",
     "R R"
   ],
   "key": {
     "R": {
-      "item": "spore:armor_plate"
+      "item": "spore:plated_muscle"
     },
     "#": {
-      "item": "spore:spine_fragment"
+      "item": "spore:tendons"
     }
   },
   "result": {
-    "item": "spore:inf_pants"
+    "item": "spore:living_pants"
   }
 }

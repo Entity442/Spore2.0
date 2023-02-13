@@ -22,6 +22,10 @@
   "item.spore.altered_spleen": "Altered Spleen",
   "item.spore.tendons": "Tendons",
   "item.spore.wing_membrane": "Wing Membrane",
+  "item.spore.plated_muscle": "Dense Muscle",
+  "item.spore.sickle_fragment": "Sickle Fragment",
+  "item.spore.innards": "Innards",
+  "item.spore.r_wing": "Wing",
 
   "item.spore.saber": "Infected Saber",
   "item.spore.infected_bow": "Infected Bow",
@@ -33,15 +37,27 @@
   "item.spore.combat_shovel": "Infected Combat Shovel",
   "item.spore.infected_spear": "Infected Spear",
   "item.spore.infected_crossbow": "Infected Crossbow",
+  "item.spore.sickle": "Infected Sickle",
+  "item.spore.r_elytron": "Reconstructed Elytron",
 
   "item.spore.amethyst_dust": "Amethyst Dust",
   "item.spore.compound": "Compound",
   "item.spore.compound_plate": "Compound Plate",
 
-  "item.spore.inf_helmet": "Infected Helmet",
-  "item.spore.inf_chest": "Infected Chestplate",
-  "item.spore.inf_pants": "Infected Leggings",
-  "item.spore.inf_boots": "Infected Boots",
+  "item.spore.inf_helmet": "Living Helmet",
+  "item.spore.inf_chest": "Living Chestplate",
+  "item.spore.inf_pants": "Living Leggings",
+  "item.spore.inf_boots": "Living Boots",
+
+  "item.spore.plated_helmet": "Plated Helmet",
+  "item.spore.plated_chest": "Plated Chestplate",
+  "item.spore.plated_pants": "Plated Leggings",
+  "item.spore.plated_boots": "Plated Boots",
+
+  "item.spore.living_helmet": "Flesh Helmet",
+  "item.spore.living_chest": "Flesh Chestplate",
+  "item.spore.living_pants": "Flesh Leggings",
+  "item.spore.living_boots": "Flesh Boots",
 
   "item.spore.knight_spawnegg": "Knight",
   "item.spore.infected_human_spawnegg": "Infected Human",

@@ -53,7 +53,7 @@ public class Infection {
                 Mob mobT = (Mob) value2.create(event.getEntity().level);
                 if (string[0].contains(Objects.requireNonNull(entity.getEncodeId()))) {
                     assert mobT != null;
-                    mobT.setPos(entity.getX(), entity.getY() + 0.5D, entity.getZ());
+                    mobT.setPos(entity.getX(), entity.getY(), entity.getZ());
                     mobT.finalizeSpawn(worlder, world.getCurrentDifficultyAt(new BlockPos(entity.getX(), entity.getY(), entity.getZ())), MobSpawnType.NATURAL, null, null);
                     world.addFreshEntity(mobT);
                     entity.discard();

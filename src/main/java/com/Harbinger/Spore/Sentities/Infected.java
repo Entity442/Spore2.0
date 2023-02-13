@@ -144,12 +144,9 @@ public class Infected extends Monster {
                 this.jumpFromGround();
             }
         }
-        if (this.getLastDamageSource() == DamageSource.IN_WALL || this.horizontalCollision){
-            if (this.isInWater()){
-                this.jumpInFluid(ForgeMod.WATER_TYPE.get());
-            }else {
+        if ((this.getLastDamageSource() == DamageSource.IN_WALL || this.horizontalCollision) && this.isOnGround()){
             this.jumpFromGround();
-        }}
+        }
     }
 
 

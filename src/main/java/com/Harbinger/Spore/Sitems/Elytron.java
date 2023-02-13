@@ -35,13 +35,13 @@ public class Elytron extends ArmorItem {
         super(new ArmorMaterial() {
             @Override
             public int getDurabilityForSlot(EquipmentSlot slot1) {
-                return new int[]{0, 0, SConfig.SERVER.chestplate_durability.get(),0}
+                return new int[]{0, 0, SConfig.SERVER.ely_durability.get(),0}
                         [slot.getIndex()];
             }
 
             @Override
             public int getDefenseForSlot(EquipmentSlot slot1) {
-                return new int[]{0, 0, SConfig.SERVER.chestplate_protection.get(), 0}
+                return new int[]{0, 0, SConfig.SERVER.ely_protection.get(), 0}
                         [slot.getIndex()];
             }
 
@@ -67,12 +67,12 @@ public class Elytron extends ArmorItem {
 
             @Override
             public float getToughness() {
-                return SConfig.SERVER.armor_toughness.get();
+                return SConfig.SERVER.ely_toughness.get();
             }
 
             @Override
             public float getKnockbackResistance() {
-                return SConfig.SERVER.knockback_resistance.get() /10F;
+                return SConfig.SERVER.ely_knockback_resistance.get() /10F;
             }
         } , slot,properties);
 

@@ -199,6 +199,13 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Integer> armor_toughness2;
 
         public final ForgeConfigSpec.ConfigValue<Integer> knockback_resistance2;
+
+        public final ForgeConfigSpec.ConfigValue<Integer> ely_durability;
+        public final ForgeConfigSpec.ConfigValue<Integer> ely_protection;
+        public final ForgeConfigSpec.ConfigValue<Integer> ely_toughness;
+        public final ForgeConfigSpec.ConfigValue<Integer> ely_knockback_resistance;
+
+
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> human_ev;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> villager_ev;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> pil_ev;
@@ -579,6 +586,12 @@ public class SConfig {
             builder.pop();
             this.armor_toughness2 = builder.comment("Default 0").defineInRange("Armor Toughness", 0, 0, Integer.MAX_VALUE);
             this.knockback_resistance2 = builder.comment("Default 0").defineInRange("Armor Knockback Resistance", 0, 0, Integer.MAX_VALUE);
+            builder.pop();
+            builder.push("Elytron");
+            this.ely_knockback_resistance = builder.comment("Default 0").defineInRange("Knockback Resistance", 0, 0, Integer.MAX_VALUE);
+            this.ely_durability = builder.comment("Default 500").defineInRange("Durability", 500, 1, Integer.MAX_VALUE);
+            this.ely_protection = builder.comment("Default 5").defineInRange("Protection", 5, 1, Integer.MAX_VALUE);
+            this.ely_toughness = builder.comment("Default 1").defineInRange("Toughness", 1, 0, Integer.MAX_VALUE);
             builder.pop();
         }
     }

@@ -1,27 +1,16 @@
 package com.Harbinger.Spore.Sentities.AI;
 
-import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Sentities.Infected;
-import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.pathfinder.Path;
-import net.minecraft.world.phys.AABB;
 
 import java.util.EnumSet;
-import java.util.List;
-import java.util.Objects;
 
-public class AOEMeleeAttackGoal extends Goal {
+public class CustomMeleeAttackGoal extends Goal {
     protected final PathfinderMob mob;
     private final double speedModifier;
     private final boolean followingTargetEvenIfNotSeen;
@@ -35,19 +24,13 @@ public class AOEMeleeAttackGoal extends Goal {
     private long lastCanUseCheck;
     private static final long COOLDOWN_BETWEEN_CAN_USE_CHECKS = 20L;
     private int failedPathFindingPenalty = 0;
-    private final boolean canPenalize = false;
-    public double box;
-    public float ranged;
-    public AOEMeleeAttackGoal(PathfinderMob mob, double speed, boolean p_25554_ , double hitbox ,float range) {
-        this.box = hitbox;
-        this.ranged = range;
-        this.mob = mob;
-        this.speedModifier = speed;
+    private boolean canPenalize = false;
+
+    public CustomMeleeAttackGoal(PathfinderMob p_25552_, double p_25553_, boolean p_25554_) {
+        this.mob = p_25552_;
+        this.speedModifier = p_25553_;
         this.followingTargetEvenIfNotSeen = p_25554_;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
-    }
-    protected double getAttackReachSqr(LivingEntity entity) {
-        return mob.getBbWidth() + ranged;
     }
 
     public boolean canUse() {
@@ -106,7 +89,7 @@ public class AOEMeleeAttackGoal extends Goal {
     public void stop() {
         LivingEntity livingentity = this.mob.getTarget();
         if (!EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(livingentity)) {
-            this.mob.setTarget(null);
+            this.mob.setTarget((LivingEntity)null);
         }
 
         this.mob.setAggressive(false);
@@ -158,20 +141,12 @@ public class AOEMeleeAttackGoal extends Goal {
         }
     }
 
-    protected void checkAndPerformAttack(LivingEntity entity, double p_25558_) {
+    protected void checkAndPerformAttack(LivingEntity entity, double at) {
         double d0 = this.getAttackReachSqr(entity);
-        if (p_25558_ <= d0 && this.ticksUntilNextAttack <= 0 && mob.hasLineOfSight(entity)) {
+        if (at <= d0 && this.ticksUntilNextAttack <= 0 && mob.hasLineOfSight(entity)) {
             this.resetAttackCooldown();
             this.mob.swing(InteractionHand.MAIN_HAND);
             this.mob.doHurtTarget(entity);
-            AABB hitbox = entity.getBoundingBox().inflate(box);
-            List<Entity> targets = entity.level.getEntities(entity , hitbox);
-            for (Entity en : targets) {
-                if (en instanceof LivingEntity && !(en.is(mob) || SConfig.SERVER.blacklist.get().contains(en.getEncodeId()) || en instanceof Infected || en instanceof UtilityEntity)){
-                    en.hurt(DamageSource.mobAttack(mob) , (float) Objects.requireNonNull(mob.getAttribute(Attributes.ATTACK_DAMAGE)).getBaseValue());
-                    ((LivingEntity) en).knockback(Objects.requireNonNull(mob.getAttribute(Attributes.ATTACK_KNOCKBACK)).getBaseValue() ,Mth.sin(mob.getYRot() * ((float) Math.PI / 180F)), (-Mth.cos(mob.getYRot() * ((float) Math.PI / 180F))));
-                }
-            }
         }
 
     }
@@ -192,4 +167,7 @@ public class AOEMeleeAttackGoal extends Goal {
         return this.adjustedTickDelay(20);
     }
 
+    protected double getAttackReachSqr(LivingEntity p_25556_) {
+        return (double)(this.mob.getBbWidth() * 2.0F * this.mob.getBbWidth() * 2.0F + p_25556_.getBbWidth());
+    }
 }

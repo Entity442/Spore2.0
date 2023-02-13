@@ -1,19 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "TTT",
-    "TRT",
+    "   ",
+    " R ",
     " # "
   ],
   "key": {
     "R": {
-      "item": "spore:cerebrum"
+      "item": "spore:living_helmet"
     },
     "#": {
-      "item": "spore:spine_fragment"
-    },
-    "T": {
-      "item": "spore:armor_plate"
+      "item": "spore:plated_helmet"
     }
   },
   "result": {

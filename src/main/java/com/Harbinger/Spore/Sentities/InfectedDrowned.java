@@ -3,10 +3,7 @@ package com.Harbinger.Spore.Sentities;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Ssounds;
-import com.Harbinger.Spore.Sentities.AI.FloatDiveGoalDR;
-import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
-import com.Harbinger.Spore.Sentities.AI.HurtTargetGoal;
-import com.Harbinger.Spore.Sentities.AI.ReturnToWater;
+import com.Harbinger.Spore.Sentities.AI.*;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedMovementControl;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.core.BlockPos;
@@ -144,7 +141,7 @@ public class InfectedDrowned extends UtilityEntity implements Enemy {
         this.goalSelector.addGoal(6,new MoveTowardsRestrictionGoal(this , 1.0));
         this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7 , 32));
 
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.5, false) {
+        this.goalSelector.addGoal(1, new CustomMeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 return 3.0 + entity.getBbWidth() * entity.getBbWidth();
