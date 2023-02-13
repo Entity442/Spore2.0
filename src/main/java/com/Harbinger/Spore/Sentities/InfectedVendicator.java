@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -25,6 +26,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.AABB;
 
 import javax.annotation.Nullable;
 
@@ -82,9 +85,27 @@ public class InfectedVendicator extends EvolvedInfected {
     }
     protected void populateDefaultEquipmentSlots(RandomSource p_219149_, DifficultyInstance p_219150_) {
             this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_AXE));
-
-
     }
+
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (this.horizontalCollision && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) {
+            boolean flag = false;
+            AABB aabb = this.getBoundingBox().inflate(0.2);
+            for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
+                BlockState blockstate = this.level.getBlockState(blockpos);
+                if (blockstate.getMaterial() == Material.WOOD && this.isAggressive()) {
+                    flag = this.level.destroyBlock(blockpos, true, this) || flag;
+                }
+            }
+            if (!flag && this.onGround) {
+                this.jumpFromGround();
+            }
+        }
+    }
+
     protected SoundEvent getAmbientSound() {
         return Ssounds.INF_GROWL.get();
     }

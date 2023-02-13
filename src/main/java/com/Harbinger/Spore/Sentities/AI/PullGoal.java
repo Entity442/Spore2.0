@@ -24,7 +24,7 @@ public class PullGoal extends Goal {
     public boolean canUse() {
         if (this.mob.getTarget() != null) {
             double d0 = this.mob.distanceToSqr(this.mob.getTarget());
-            if ((d0 < (mob.getBbWidth() + range)) && (d0 > (mob.getBbWidth() + range_min))) {
+            if ((d0 < (mob.getBbWidth() + range)) && (d0 > (mob.getBbWidth() + range_min)) && this.mob.hasLineOfSight(this.mob.getTarget())) {
                 if (!this.mob.getTarget().isOnGround()) {
                     return false;
                 } else {

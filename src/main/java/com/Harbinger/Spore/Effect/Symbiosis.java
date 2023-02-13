@@ -5,7 +5,6 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.food.FoodData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.extensions.IForgeMobEffect;
 
@@ -26,12 +25,7 @@ public class Symbiosis extends MobEffect implements IForgeMobEffect {
 
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         if (!entity.getCommandSenderWorld().isClientSide && entity instanceof Player player) {
-            FoodData foodData = player.getFoodData();
-                float exhaustion = foodData.getExhaustionLevel();
-                if (exhaustion > 0.0F) {
-                    player.causeFoodExhaustion(exhaustion * 2F);
-                }
-
+                    player.causeFoodExhaustion(0.1F);
         }
     }
 

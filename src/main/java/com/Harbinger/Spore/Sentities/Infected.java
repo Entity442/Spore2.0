@@ -34,10 +34,10 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 
-public class Infected extends Monster {
+public class Infected extends Monster{
+
     public int kills;
 
     public Infected(EntityType<? extends Monster> type, Level level) {
@@ -51,6 +51,7 @@ public class Infected extends Monster {
         this.moveControl =  new InfectedMovementControl(this);
         this.xpReward = 5;
     }
+
 
     public void travel(Vec3 p_32858_) {
         if (this.isEffectiveAi() && this.isInWater()) {

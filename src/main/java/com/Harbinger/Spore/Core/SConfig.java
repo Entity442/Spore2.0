@@ -231,6 +231,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> basic;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> evolved;
 
+
         public Server(ForgeConfigSpec.Builder builder) {
 
             builder.push("Global Variables");

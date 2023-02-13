@@ -13,6 +13,8 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 @Mod(Spore.MODID)
@@ -20,7 +22,7 @@ public class Spore
 {
     public  static Spore instance;
     public static final String MODID = "spore";
-
+    public static final Logger LOGGER = LogManager.getLogger(Spore.MODID);
     public Spore()
     {
         instance = this;
