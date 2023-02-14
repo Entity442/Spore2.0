@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
+import com.Harbinger.Spore.Core.Sitems;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import net.minecraft.core.BlockPos;
@@ -70,6 +71,14 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
     public void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(IS_CHARGING_CROSSBOW, false);
+    }
+
+    @Override
+    public boolean startRiding(Entity entity) {
+        if (!this.getMainHandItem().equals(new ItemStack(Items.CROSSBOW))){
+            this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.CROSSBOW));
+        }
+        return super.startRiding(entity);
     }
 
     protected void registerGoals() {

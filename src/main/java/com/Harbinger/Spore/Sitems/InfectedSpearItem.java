@@ -29,7 +29,6 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.List;
 import java.util.Objects;
 
 public class InfectedSpearItem extends Item implements Vanishable{

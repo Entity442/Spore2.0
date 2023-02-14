@@ -39,6 +39,8 @@
   "item.spore.infected_crossbow": "Infected Crossbow",
   "item.spore.sickle": "Infected Sickle",
   "item.spore.r_elytron": "Reconstructed Elytron",
+  "item.spore.knife": "Infected Knife",
+  "item.spore.rapier": "Infected Rapier",
 
   "item.spore.amethyst_dust": "Amethyst Dust",
   "item.spore.compound": "Compound",
@@ -141,6 +143,7 @@
 
   "item.armor.shift": "Holding shift activates the wall climbing ability.",
   "item.armor.normal": "Press shift for more info.",
+  "item.rapier.corrosive": "Delivers Corrosive Slashes",
 
   "sounds.spore.damage": "Infected is being damaged",
   "sounds.spore.growl": "Infected is growling",

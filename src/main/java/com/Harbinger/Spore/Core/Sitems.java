@@ -58,7 +58,7 @@ public class Sitems {
     public  static final RegistryObject<Item> TENDONS = ITEMS.register("tendons",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> INNARDS = ITEMS.register("innards",
-            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+            () -> new Innards( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> SICKLE_FRAGMENT = ITEMS.register("sickle_fragment",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> R_WING = ITEMS.register("r_wing",
@@ -149,6 +149,10 @@ public class Sitems {
             () -> new InfectedMace());
     public  static final RegistryObject<Item> SICKLE = ITEMS.register("sickle",
             () -> new InfectedSickle());
+    public  static final RegistryObject<Item> KNIFE = ITEMS.register("knife",
+            () -> new InfectedKnife());
+    public  static final RegistryObject<Item> RAPIER = ITEMS.register("rapier",
+            () -> new InfectedRapier());
 
     public  static final RegistryObject<Item> INF_HELMET = ITEMS.register("inf_helmet",
             () -> new InfectedHelmet());
