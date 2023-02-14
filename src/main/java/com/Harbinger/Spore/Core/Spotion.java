@@ -22,4 +22,6 @@ public class Spotion {
             () -> new Potion(new MobEffectInstance(Seffects.MARKER.get(), 3600, 1)));
     public static RegistryObject<Potion> CORROSION_POTION = POTIONS.register("corrosion_potion",
             () -> new Potion(new MobEffectInstance(Seffects.CORROSION.get(), 3600, 0)));
+    public static RegistryObject<Potion> CORROSION_POTION_STRONG = POTIONS.register("corrosion_potion_strong",
+            () -> new Potion(new MobEffectInstance(Seffects.CORROSION.get(), 3600, 3)));
 }

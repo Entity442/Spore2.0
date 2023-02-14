@@ -130,6 +130,11 @@
   "item.minecraft.lingering_potion.effect.corrosion_potion": "Corrosion Lingering Potion",
   "item.minecraft.tipped_arrow.effect.corrosion_potion": "Corrosion Arrow",
 
+  "item.minecraft.splash_potion.effect.corrosion_potion_strong": "Corrosive Splash Potion",
+  "item.minecraft.potion.effect.corrosion_potion_strong": "Corrosive Potion",
+  "item.minecraft.lingering_potion.effect.corrosion_potion_strong": "Corrosive Lingering Potion",
+  "item.minecraft.tipped_arrow.effect.corrosion_potion_strong": "Corrosive Arrow",
+
   "itemGroup.spore": "Spore",
   "itemGroup.spore_t": "Spore Tech",
 
