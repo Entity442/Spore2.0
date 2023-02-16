@@ -168,11 +168,13 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<Integer> helmet_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> chestplate_durability;
+        public final ForgeConfigSpec.ConfigValue<Integer> chestplate_up_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> pants_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> boots_durability;
 
         public final ForgeConfigSpec.ConfigValue<Integer> helmet_protection;
         public final ForgeConfigSpec.ConfigValue<Integer> chestplate_protection;
+        public final ForgeConfigSpec.ConfigValue<Integer> chestplate_up_protection;
         public final ForgeConfigSpec.ConfigValue<Integer> pants_protection;
         public final ForgeConfigSpec.ConfigValue<Integer> boots_protection;
 
@@ -555,6 +557,10 @@ public class SConfig {
             this.chestplate_durability = builder.comment("Default 500").defineInRange("Chestplate Durability", 500, 1, Integer.MAX_VALUE);
             this.chestplate_protection = builder.comment("Default 10").defineInRange("Chestplate Protection", 10, 1, Integer.MAX_VALUE);
             builder.pop();
+            builder.push("Chestplate Upgraded");
+            this.chestplate_up_durability = builder.comment("Default 700").defineInRange("Chestplate Durability", 700, 1, Integer.MAX_VALUE);
+            this.chestplate_up_protection = builder.comment("Default 13").defineInRange("Chestplate Protection", 13, 1, Integer.MAX_VALUE);
+            builder.pop();
             builder.push("Leggings");
             this.pants_durability = builder.comment("Default 400").defineInRange("Leggings Durability", 400, 1, Integer.MAX_VALUE);
             this.pants_protection = builder.comment("Default 9").defineInRange("Leggings Protection", 9, 1, Integer.MAX_VALUE);
@@ -682,7 +688,7 @@ public class SConfig {
                     Lists.newArrayList("spore:mutated_fiber|50|2|5","spore:innards|50|1|1","spore:armor_fragment|80|5|12","spore:mutated_heart|10|1|1","spore:cerebrum|20|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
 
             this.innards_loot = builder.defineList("Innards",
-                    Lists.newArrayList("minecraft:bone_meal|50|1|2","minecraft:rotten_flesh|40|1|1") , o -> o instanceof String);
+                    Lists.newArrayList("minecraft:bone_meal|50|1|2","minecraft:rotten_flesh|40|1|1","minecraft:wheat_seeds|40|1|1") , o -> o instanceof String);
 
             builder.pop();
         }

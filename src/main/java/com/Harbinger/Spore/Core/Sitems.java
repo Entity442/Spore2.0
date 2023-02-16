@@ -182,6 +182,9 @@ public class Sitems {
             () -> new LivingBoots());
     public  static final RegistryObject<Item> R_ELYTRON = ITEMS.register("r_elytron", ClientModEvents.getElytraItem());
 
+    public  static final RegistryObject<Item> INF_UP_CHESTPLATE = ITEMS.register("inf_up_chest",
+            () -> new UpgradedInfectedExoskeleton.InfectedUpChestplate());
+
     public  static final RegistryObject<Item> BIOMASS = ITEMS.register("biomass",
             () -> new Biomass());
     public  static final RegistryObject<Item> AMETHYST_DUST = ITEMS.register("amethyst_dust",
