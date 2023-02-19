@@ -22,6 +22,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> global_health;
         public final ForgeConfigSpec.ConfigValue<Double> global_armor;
         public final ForgeConfigSpec.ConfigValue<Boolean> at_mob;
+        public final ForgeConfigSpec.ConfigValue<Boolean> inf_player;
         public final ForgeConfigSpec.ConfigValue<Boolean> at_an;
 
 
@@ -313,6 +314,7 @@ public class SConfig {
             this.min_kills = builder.comment("Default 1").define("Minimum amount of kills to start the evolution",1);
             builder.pop();
             builder.push("Infections");
+            this.inf_player = builder.comment("Default true").define("Should the player be infected on death?",false);
             this.inf_human_conv = builder.defineList("Mobs and their infected counterparts",
                     Lists.newArrayList(
                             "minecraft:zombie|spore:inf_human","minecraft:husk|spore:inf_human","minecraft:drowned|spore:inf_drowned"

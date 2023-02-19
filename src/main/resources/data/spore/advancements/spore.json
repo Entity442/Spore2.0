@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "spore:mutated_heart"
+    },
+    "title": "",
+    "description": ""
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "spore:body_parts"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "spore:biomass",
+      "spore:armads",
+      "spore:armor_plate",
+
+      "spore:armads_b"
+    ]
+  }
+}

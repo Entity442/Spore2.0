@@ -34,6 +34,7 @@ public class Attributes {
         event.put(Sentities.BUSSER.get(), Busser.createAttributes().build());
         event.put(Sentities.INF_DROWNED.get(), InfectedDrowned.createAttributes().build());
         event.put(Sentities.HOST.get(), Host.createAttributes().build());
+        event.put(Sentities.INF_PLAYER.get(), InfectedPlayer.createAttributes().build());
     }
 }
 

@@ -4,12 +4,16 @@ import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Sentities.Infected;
+import com.Harbinger.Spore.Sentities.InfectedHuman;
+import com.Harbinger.Spore.Sentities.InfectedPlayer;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -18,6 +22,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Mod.EventBusSubscriber
 public class Infection {
@@ -40,6 +45,27 @@ public class Infection {
                     }
                 }
             }
+        }
+
+        if (entity instanceof Player player && player.hasEffect(Seffects.MYCELIUM.get()) && !world.isClientSide && SConfig.SERVER.inf_player.get()){
+             Component name = player.getName();
+            InfectedPlayer infectedHuman = Sentities.INF_PLAYER.get().create(world);
+            ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
+            ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
+            ItemStack legs = player.getItemBySlot(EquipmentSlot.LEGS);
+            ItemStack feet = player.getItemBySlot(EquipmentSlot.FEET);
+            ItemStack hand = player.getItemBySlot(EquipmentSlot.MAINHAND);
+            ItemStack offhand = player.getItemBySlot(EquipmentSlot.OFFHAND);
+            assert infectedHuman != null;
+            infectedHuman.setItemSlot(EquipmentSlot.HEAD , head);
+            infectedHuman.setItemSlot(EquipmentSlot.CHEST , chest);
+            infectedHuman.setItemSlot(EquipmentSlot.LEGS , legs);
+            infectedHuman.setItemSlot(EquipmentSlot.FEET , feet);
+            infectedHuman.setItemSlot(EquipmentSlot.MAINHAND , hand);
+            infectedHuman.setItemSlot(EquipmentSlot.OFFHAND , offhand);
+            infectedHuman.moveTo(event.getEntity().getX(),event.getEntity().getY(),event.getEntity().getZ());
+            infectedHuman.setCustomName(name);
+            world.addFreshEntity(infectedHuman);
         }
 
 

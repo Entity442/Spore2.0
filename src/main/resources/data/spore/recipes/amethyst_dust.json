@@ -7,5 +7,14 @@
   ],
   "result": {
     "item": "spore:amethyst_dust"
-  }
+  },
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "create"
+      }
+    }
+  ]
 }

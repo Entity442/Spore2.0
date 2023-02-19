@@ -33,7 +33,9 @@ public class Sentities {
             () -> EntityType.Builder.of(InfectedHuman::new, MobCategory.MONSTER).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "inf_human").toString()));
 
-
+    public static final RegistryObject<EntityType<InfectedPlayer>> INF_PLAYER = SPORE_ENTITIES.register("inf_player",
+            () -> EntityType.Builder.of(InfectedPlayer::new, MobCategory.MONSTER).sized(0.6f, 2f)
+                    .build(new ResourceLocation(Spore.MODID, "inf_player").toString()));
 
     public static final RegistryObject<EntityType<Knight>> KNIGHT = SPORE_ENTITIES.register("knight",
             () -> EntityType.Builder.of(Knight::new, MobCategory.MONSTER).sized(0.6f, 2f)
