@@ -65,6 +65,12 @@ public class Infection {
             infectedHuman.setItemSlot(EquipmentSlot.OFFHAND , offhand);
             infectedHuman.moveTo(event.getEntity().getX(),event.getEntity().getY(),event.getEntity().getZ());
             infectedHuman.setCustomName(name);
+            infectedHuman.setDropChance(EquipmentSlot.HEAD , 0);
+            infectedHuman.setDropChance(EquipmentSlot.CHEST , 0);
+            infectedHuman.setDropChance(EquipmentSlot.LEGS , 0);
+            infectedHuman.setDropChance(EquipmentSlot.FEET , 0);
+            infectedHuman.setDropChance(EquipmentSlot.OFFHAND , 0);
+            infectedHuman.setDropChance(EquipmentSlot.MAINHAND , 0);
             world.addFreshEntity(infectedHuman);
         }
 

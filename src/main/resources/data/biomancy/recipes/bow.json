@@ -8,11 +8,5 @@
     {"count":3,"ingredient":{"item":"spore:fleshy_claw"}}
   ],
   "result":{"count":1,"item":"spore:infected_bow"
-  },
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "biomancy"
-    }
-  ]
+  }
 }

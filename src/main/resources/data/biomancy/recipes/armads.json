@@ -9,11 +9,5 @@
     {"count":2,"ingredient":{"item":"spore:fleshy_bone"}}
   ],
   "result":{"count":1,"item":"spore:armads"
-  },
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "biomancy"
-    }
-  ]
+  }
 }

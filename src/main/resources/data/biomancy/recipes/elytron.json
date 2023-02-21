@@ -3,17 +3,11 @@
   "bio_forge_tab":"biomancy:blocks",
   "ingredient_quantities":
   [
+    {"count":1,"ingredient":{"item":"spore:living_core"}},
     {"count":2,"ingredient":{"item":"spore:r_wing"}},
     {"count":1,"ingredient":{"item":"spore:armor_plate"}},
-    {"count":1,"ingredient":{"item":"spore:living_core"}},
     {"count":4,"ingredient":{"item":"spore:alveolic_sack"}}
   ],
   "result":{"count":1,"item":"spore:r_elytron"
-  },
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "biomancy"
-    }
-  ]
+  }
 }

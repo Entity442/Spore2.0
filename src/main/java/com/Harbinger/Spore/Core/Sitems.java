@@ -84,6 +84,8 @@ public class Sitems {
             () -> new ForgeSpawnEggItem(Sentities.INF_WANDERER,-6639718,-97141773, new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> INF_DROWNED_SPAWNEGG = ITEMS.register("inf_drowned_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.INF_DROWNED,-16751002, -16764109, new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> INF_PLAYER_SPAWNEGG = ITEMS.register("inf_player_spawnegg",
+            () -> new ForgeSpawnEggItem(Sentities.INF_PLAYER,-86751002, -43764109, new Item.Properties().tab(ScreativeTab.SPORE)));
 
 
 

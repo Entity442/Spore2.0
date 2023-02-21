@@ -13,5 +13,14 @@
   "result": {
     "count": 1,
     "item": "spore:plated_muscle"
-  }
+  },
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "biomancy"
+      }
+    }
+  ]
 }

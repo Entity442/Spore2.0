@@ -8,11 +8,5 @@
     {"count":4,"ingredient":{"item":"spore:armor_fragment"}}
   ],
   "result":{"count":1,"item":"spore:armor_plate"
-  },
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "biomancy"
-    }
-  ]
+  }
 }

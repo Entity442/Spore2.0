@@ -106,6 +106,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> how_damage;
         public final ForgeConfigSpec.ConfigValue<Double> how_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> player_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> player_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> player_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> spit_hp;
         public final ForgeConfigSpec.ConfigValue<Double> spit_armor;
         public final ForgeConfigSpec.ConfigValue<Double> spit_damage_l;
@@ -242,7 +246,12 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> basic;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> evolved;
 
-
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_h;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_c;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_l;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_b;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_ho;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_hm;
         public Server(ForgeConfigSpec.Builder builder) {
 
             builder.push("Global Variables");
@@ -314,7 +323,7 @@ public class SConfig {
             this.min_kills = builder.comment("Default 1").define("Minimum amount of kills to start the evolution",1);
             builder.pop();
             builder.push("Infections");
-            this.inf_player = builder.comment("Default true").define("Should the player be infected on death?",false);
+            this.inf_player = builder.comment("Default true").define("Should the player be infected on death?",true);
             this.inf_human_conv = builder.defineList("Mobs and their infected counterparts",
                     Lists.newArrayList(
                             "minecraft:zombie|spore:inf_human","minecraft:husk|spore:inf_human","minecraft:drowned|spore:inf_drowned"
@@ -448,21 +457,41 @@ public class SConfig {
             this.inf_human_damage = builder.comment("Default 6").defineInRange("Sets Infected Human Damage", 6, 1, Double.MAX_VALUE);
             this.inf_human_armor = builder.comment("Default 1").defineInRange("Sets Infected Human Armor", 1, 0, Double.MAX_VALUE);
             builder.pop();
-            builder.push("Knight");
+            builder.push("Knight ");
             this.knight_hp = builder.comment("Default 25").defineInRange("Sets Knight Max health", 25, 1, Double.MAX_VALUE);
             this.knight_damage = builder.comment("Default 7").defineInRange("Sets Knight Damage", 7, 1, Double.MAX_VALUE);
             this.knight_armor = builder.comment("Default 7").defineInRange("Sets Knight Armor", 7, 1, Double.MAX_VALUE);
             builder.pop();
-            builder.push("Leaper");
+            builder.push("Leaper ");
             this.leap_hp = builder.comment("Default 55").defineInRange("Sets Leaper Max health", 55, 1, Double.MAX_VALUE);
             this.leap_damage = builder.comment("Default 8").defineInRange("Sets Leaper Damage", 8, 1, Double.MAX_VALUE);
             this.leap_armor = builder.comment("Default 3").defineInRange("Sets Leaper Armor", 3, 1, Double.MAX_VALUE);
             builder.pop();
 
-            builder.push("Slasher");
+            builder.push("Slasher ");
             this.sla_hp = builder.comment("Default 35").defineInRange("Sets Slasher Max health", 35, 1, Double.MAX_VALUE);
             this.sla_damage = builder.comment("Default 10").defineInRange("Sets Slasher Damage", 10, 1, Double.MAX_VALUE);
             this.sla_armor = builder.comment("Default 2").defineInRange("Sets Slasher Armor", 2, 1, Double.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Infected Player");
+            this.player_hp = builder.comment("Default 15").defineInRange("Infected Player Max health", 15, 1, Double.MAX_VALUE);
+            this.player_damage = builder.comment("Default 4").defineInRange("Infected Player Damage", 4, 1, Double.MAX_VALUE);
+            this.player_armor = builder.comment("Default 2").defineInRange("Infected Player Armor", 2, 1, Double.MAX_VALUE);
+            builder.push("Items|chance of giving");
+            this.player_h = builder.defineList("Head Slot",
+                    Lists.newArrayList("minecraft:leather_helmet|50","minecraft:iron_helmet|20","minecraft:chainmail_helmet|20") , o -> o instanceof String);
+            this.player_c = builder.defineList("Chest Slot",
+                    Lists.newArrayList("minecraft:leather_chestplate|50","minecraft:iron_chestplate|20","minecraft:chainmail_chestplate|20") , o -> o instanceof String);
+            this.player_l = builder.defineList("Legs Slot",
+                    Lists.newArrayList("minecraft:leather_leggings|50","minecraft:iron_leggings|20","minecraft:chainmail_leggings|20") , o -> o instanceof String);
+            this.player_b = builder.defineList("Boots Slot",
+                    Lists.newArrayList("minecraft:leather_boots|50","minecraft:iron_boots|20","minecraft:chainmail_boots|20") , o -> o instanceof String);
+            this.player_hm = builder.defineList("MainHand Slot",
+                    Lists.newArrayList("minecraft:stone_sword|50" , "minecraft:stone_axe|20", "minecraft:pickaxe|20" , "minecraft:iron_sword|30") , o -> o instanceof String);
+            this.player_ho = builder.defineList("OffHand Slot",
+                    Lists.newArrayList("minecraft:torch|50","minecraft:shield|30") , o -> o instanceof String);
+            builder.pop();
             builder.pop();
 
             builder.push("Spitter");
@@ -644,6 +673,9 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_bus_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_drow_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> innards_loot;
+
+
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> name;
         public DataGen(ForgeConfigSpec.Builder builder){
             builder.push("LootTables");
             builder.comment("item|chance to drop(1-100)|minimum amount|maximum amount.Only values above 0 will be taken in consideration.");
@@ -693,8 +725,38 @@ public class SConfig {
                     Lists.newArrayList("minecraft:bone_meal|50|1|2","minecraft:rotten_flesh|40|1|1","minecraft:wheat_seeds|40|1|1") , o -> o instanceof String);
 
             builder.pop();
+            builder.push("Others");
+
+            this.name = builder.defineList("Infected Player possible names",
+                    Lists.newArrayList(
+                            "The_Harbinger69",
+                            "Deyvid",
+                            "Dany_Why",
+                            "Technoblade",
+                            "Ike",
+                            "Hypnotizd",
+                            "SaDrOcK:(",
+                            "JhonOK22",
+                            "hacie",
+                            "2ac",
+                            "Pajera",
+                            "CopperKev",
+                            "TheBeast22",
+                            "Bowser",
+                            "Mad_Dog",
+                            "Ripley",
+                            "Kraken",
+                            "Zero",
+                            "FireBread",
+                            "Ire",
+                            "xXFuryXx",
+                            "Nova69",
+                            "Belladonna",
+                            "Mademoiselle2016") , o -> o instanceof String);
+            builder.pop();
         }
     }
+
 
     static {
         Pair<Server, ForgeConfigSpec> commonSpecPair = new ForgeConfigSpec.Builder().configure(Server::new);
@@ -704,6 +766,7 @@ public class SConfig {
         Pair<DataGen , ForgeConfigSpec> commonPair = new ForgeConfigSpec.Builder().configure(DataGen::new);
         DATAGEN = commonPair.getLeft();
         DATAGEN_SPEC = commonPair.getRight();
+
     }
 
     public static void loadConfig(ForgeConfigSpec config, String path) {

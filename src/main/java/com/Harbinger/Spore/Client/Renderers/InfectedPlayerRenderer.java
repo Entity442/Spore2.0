@@ -19,7 +19,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class InfectedPlayerRenderer<Type extends InfectedPlayer> extends MobRenderer<Type , InfectedPlayerModel<Type>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Spore.MODID,
-            "textures/entity/blank.png");
+            "textures/entity/inf_player.png");
 
 
     public InfectedPlayerRenderer(EntityRendererProvider.Context context) {
@@ -29,11 +29,11 @@ public class InfectedPlayerRenderer<Type extends InfectedPlayer> extends MobRend
 
         this.addLayer(new ItemInHandLayer<>(this, context.getItemInHandRenderer()));
 
-        ///this.addLayer(new Eyes<>(this));
+        this.addLayer(new Eyes<>(this));
     }
 
-    private  class Eyes<Type extends InfectedPlayer,M extends InfectedPlayerModel<Type>> extends EyesLayer<Type,M>{
-        private static final RenderType EYES = RenderType.eyes(new ResourceLocation(Spore.MODID,"textures/entity/eyes/baio.png"));
+    private static class Eyes<Type extends InfectedPlayer,M extends InfectedPlayerModel<Type>> extends EyesLayer<Type,M>{
+        private static final RenderType EYES = RenderType.eyes(new ResourceLocation(Spore.MODID,"textures/entity/eyes/inf_player.png"));
         public Eyes(RenderLayerParent layer) {
             super(layer);
         }

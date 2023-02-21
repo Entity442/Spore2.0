@@ -80,6 +80,7 @@
   "item.spore.brute_spawnegg": "Brute",
   "item.spore.busser_spawnegg": "Phayres",
   "item.spore.inf_drowned_spawnegg": "Infected Drowned",
+  "item.spore.inf_player_spawnegg": "Infected Adventurer",
 
 
   "item.spore.scent_spawnegg": "Scent",
@@ -105,6 +106,7 @@
   "entity.spore.claw": "Claw",
   "entity.spore.busser": "Phayres",
   "entity.spore.inf_drowned": "Infected Drowned",
+  "entity.spore.inf_player": "Infected Adventurer",
 
   "entity.spore.thrown_tumor": "Tumor",
   "entity.spore.thrown_spear": "Infected Spear",

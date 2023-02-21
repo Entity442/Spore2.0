@@ -2,27 +2,36 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "RRR",
-    "VTV",
-    "RCX"
+    "T#T",
+    "RCD"
   ],
   "key": {
     "R": {
-      "item": "spore:muscle_plate"
+      "item": "spore:plated_muscle"
+    },
+    "#": {
+      "item": "spore:living_core"
     },
     "T": {
-      "item": "spore:living_core"
+      "item": "spore:alveolic_sack"
     },
     "C": {
       "item": "spore:innards"
     },
-    "V": {
-      "item": "spore:alveolic_sack"
-    },
-    "X": {
+    "D": {
       "item": "spore:altered_spleen"
     }
   },
   "result": {
     "item": "spore:living_chest"
+  },
+  "conditions": [
+  {
+    "type": "forge:not",
+    "value": {
+      "type": "forge:mod_loaded",
+      "modid": "biomancy"
+    }
   }
+]
 }
