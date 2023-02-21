@@ -281,7 +281,7 @@ public class SConfig {
 
             builder.push("MobRoles ,decides some of the interactions between the infected mobs");
             this.basic = builder.defineList("Basic_Infected",
-                    Lists.newArrayList("spore:inf_human","spore:inf_villager","spore:inf_wanderer","spore:inf_witch","spore:inf_pillager") , o -> o instanceof String);
+                    Lists.newArrayList("spore:inf_human","spore:inf_villager","spore:inf_wanderer","spore:inf_witch","spore:inf_pillager","spore:inf_player") , o -> o instanceof String);
 
             this.evolved = builder.defineList("Evolved_Infected",
                     Lists.newArrayList("spore:braiomil","spore:knight","spore:griefer","spore:busser","spore:spitter","spore:leaper","spore:slasher",
@@ -475,7 +475,7 @@ public class SConfig {
             builder.pop();
 
             builder.push("Infected Player");
-            this.player_hp = builder.comment("Default 15").defineInRange("Infected Player Max health", 15, 1, Double.MAX_VALUE);
+            this.player_hp = builder.comment("Default 21").defineInRange("Infected Player Max health", 21, 1, Double.MAX_VALUE);
             this.player_damage = builder.comment("Default 4").defineInRange("Infected Player Damage", 4, 1, Double.MAX_VALUE);
             this.player_armor = builder.comment("Default 2").defineInRange("Infected Player Armor", 2, 1, Double.MAX_VALUE);
             builder.push("Items|chance of giving");
@@ -730,6 +730,11 @@ public class SConfig {
             this.name = builder.defineList("Infected Player possible names",
                     Lists.newArrayList(
                             "The_Harbinger69",
+                            "ABucketOfFriedChicken",
+                            "LoneGuy",
+                            "cheesepuff",
+                            "Sire_AwfulThe1st",
+                            "Azami",
                             "Deyvid",
                             "Dany_Why",
                             "Technoblade",
