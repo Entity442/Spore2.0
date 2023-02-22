@@ -120,48 +120,37 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<Integer> spear_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> spear_damage;
-        public final ForgeConfigSpec.ConfigValue<Integer> spear_swing;
         public final ForgeConfigSpec.ConfigValue<Integer> spear_range;
 
         public final ForgeConfigSpec.ConfigValue<Integer> saber_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> saber_damage;
-        public final ForgeConfigSpec.ConfigValue<Integer> saber_swing;
 
         public final ForgeConfigSpec.ConfigValue<Integer> greatsword_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> greatsword_damage;
-        public final ForgeConfigSpec.ConfigValue<Integer> greatsword_swing;
 
         public final ForgeConfigSpec.ConfigValue<Integer> armads_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> armads_damage;
-        public final ForgeConfigSpec.ConfigValue<Integer> armads_swing;
 
         public final ForgeConfigSpec.ConfigValue<Integer> knife_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> knife_damage;
-        public final ForgeConfigSpec.ConfigValue<Integer> knife_swing;
 
         public final ForgeConfigSpec.ConfigValue<Integer> maul_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> maul_damage;
-        public final ForgeConfigSpec.ConfigValue<Integer> maul_swing;
 
         public final ForgeConfigSpec.ConfigValue<Integer> scythe_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> scythe_damage;
-        public final ForgeConfigSpec.ConfigValue<Integer> scythe_swing;
 
         public final ForgeConfigSpec.ConfigValue<Integer> shovel_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> shovel_damage;
-        public final ForgeConfigSpec.ConfigValue<Integer> shovel_swing;
 
         public final ForgeConfigSpec.ConfigValue<Integer> rapier_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> rapier_damage;
-        public final ForgeConfigSpec.ConfigValue<Integer> rapier_swing;
 
         public final ForgeConfigSpec.ConfigValue<Integer> mace_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> mace_damage;
-        public final ForgeConfigSpec.ConfigValue<Integer> mace_swing;
 
         public final ForgeConfigSpec.ConfigValue<Integer> sickle_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> sickle_damage;
-        public final ForgeConfigSpec.ConfigValue<Integer> sickle_swing;
 
         public final ForgeConfigSpec.ConfigValue<Integer> crossbow_durability;
         public final ForgeConfigSpec.ConfigValue<Double> crossbow_arrow_damage_multiplier;
@@ -169,7 +158,6 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Integer> bow_durability;
         public final ForgeConfigSpec.ConfigValue<Double> bow_arrow_damage_multiplier;
         public final ForgeConfigSpec.ConfigValue<Integer> bow_melee_damage;
-        public final ForgeConfigSpec.ConfigValue<Double> bow_swing_speed;
 
         public final ForgeConfigSpec.ConfigValue<Integer> helmet_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> chestplate_durability;
@@ -515,23 +503,19 @@ public class SConfig {
             builder.push("Spear");
             this.spear_durability = builder.comment("Default 800").define("Durability",800);
             this.spear_damage = builder.comment("Default 11").defineInRange("Melee Damage", 11, 1, Integer.MAX_VALUE);
-            this.spear_swing = builder.comment("Default 3").define("Swing",3);
             this.spear_range = builder.comment("Default 12").define("Ranged Damage",12);
             builder.pop();
             builder.push("Saber");
             this.saber_durability = builder.comment("Default 1000").define("Durability",1000);
             this.saber_damage = builder.comment("Default 8").defineInRange("Damage", 8, 1, Integer.MAX_VALUE);
-            this.saber_swing = builder.comment("Default 2").define("Swing",2);
             builder.pop();
             builder.push("Knife");
             this.knife_durability = builder.comment("Default 400").define("Durability",400);
             this.knife_damage = builder.comment("Default 6").defineInRange("Damage", 6, 1, Integer.MAX_VALUE);
-            this.knife_swing = builder.comment("Default 1").define("Swing",1);
             builder.pop();
             builder.push("GreatSword");
             this.greatsword_durability = builder.comment("Default 2000").define("Durability",2000);
             this.greatsword_damage = builder.comment("Default 12").defineInRange("Damage", 12, 1, Integer.MAX_VALUE);
-            this.greatsword_swing = builder.comment("Default 3").define("Swing",3);
             builder.pop();
             builder.push("Crossbow");
             this.crossbow_durability = builder.comment("Default 700").define("Crossbow Durability",700);
@@ -541,42 +525,34 @@ public class SConfig {
             this.bow_durability = builder.comment("Default 700").define("Bow Durability",700);
             this.bow_arrow_damage_multiplier = builder.comment("Default 1.0").define("Bow Range Damage Modifier",1.0);
             this.bow_melee_damage = builder.comment("Default 5").defineInRange("Damage", 5, 1, Integer.MAX_VALUE);
-            this.bow_swing_speed = builder.comment("Default 2.4").define("Bow Swing",2.4);
             builder.pop();
             builder.push("Armads");
             this.armads_durability = builder.comment("Default 2500").define("Durability",2500);
             this.armads_damage = builder.comment("Default 15").defineInRange("Damage", 15, 1, Integer.MAX_VALUE);
-            this.armads_swing = builder.comment("Default 3").define("Swing",3);
             builder.pop();
             builder.push("Maul");
             this.maul_durability = builder.comment("Default 1500").define("Durability",1500);
             this.maul_damage = builder.comment("Default 7").defineInRange("Damage", 7, 1, Integer.MAX_VALUE);
-            this.maul_swing = builder.comment("Default 3").define("Swing",3);
             builder.pop();
             builder.push("Sickle");
             this.sickle_durability = builder.comment("Default 1200").define("Durability",1200);
             this.sickle_damage = builder.comment("Default 12").defineInRange("Damage", 12, 1, Integer.MAX_VALUE);
-            this.sickle_swing = builder.comment("Default 2").define("Swing",2);
             builder.pop();
             builder.push("Scythe");
             this.scythe_durability = builder.comment("Default 1200").define("Durability",1200);
             this.scythe_damage = builder.comment("Default 8").defineInRange("Damage", 8, 1, Integer.MAX_VALUE);
-            this.scythe_swing = builder.comment("Default 3").define("Swing",3);
             builder.pop();
             builder.push("Combat Shovel");
             this.shovel_durability = builder.comment("Default 1400").define("Durability",1400);
             this.shovel_damage = builder.comment("Default 6").defineInRange("Damage", 6, 1, Integer.MAX_VALUE);
-            this.shovel_swing = builder.comment("Default 3").define("Swing",3);
             builder.pop();
             builder.push("Rapier");
             this.rapier_durability = builder.comment("Default 900").define("Durability",900);
             this.rapier_damage = builder.comment("Default 10").defineInRange("Damage", 10, 1, Integer.MAX_VALUE);
-            this.rapier_swing = builder.comment("Default 3").define("Swing",3);
             builder.pop();
             builder.push("Mace");
             this.mace_durability = builder.comment("Default 1000").define("Durability",1000);
             this.mace_damage = builder.comment("Default 9").defineInRange("Damage", 9, 1, Integer.MAX_VALUE);
-            this.mace_swing = builder.comment("Default 3").define("Swing",3);
             builder.pop();
             builder.pop();
             builder.push("Living Exoskeleton");

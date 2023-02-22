@@ -19,7 +19,7 @@ public class InfectedGreatSword extends SwordItem implements IForgeItem {
             }
 
             public float getSpeed() {
-                return SConfig.SERVER.greatsword_swing.get();
+                return 3;
             }
 
             public float getAttackDamageBonus() {return SConfig.SERVER.greatsword_damage.get() - 4;}

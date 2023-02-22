@@ -20,7 +20,7 @@ public class InfectedMaul extends PickaxeItem {
             }
 
             public float getSpeed() {
-                return SConfig.SERVER.maul_swing.get();
+                return 3;
             }
 
             public float getAttackDamageBonus() {return SConfig.SERVER.maul_damage.get() - 4;}

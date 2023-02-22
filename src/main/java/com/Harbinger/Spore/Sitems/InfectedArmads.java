@@ -23,7 +23,7 @@ public class InfectedArmads extends AxeItem {
         }
 
         public float getSpeed() {
-            return SConfig.SERVER.armads_swing.get();
+            return 3;
         }
 
         public float getAttackDamageBonus() {return SConfig.SERVER.armads_damage.get() - 4;}

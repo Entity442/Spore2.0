@@ -16,7 +16,7 @@ public class InfectedSaber extends SwordItem {
             }
 
             public float getSpeed() {
-                return SConfig.SERVER.saber_swing.get();
+                return 2;
             }
 
             public float getAttackDamageBonus() {return SConfig.SERVER.saber_damage.get() - 4;}

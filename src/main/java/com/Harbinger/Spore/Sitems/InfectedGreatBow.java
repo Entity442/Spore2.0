@@ -111,7 +111,7 @@ public class InfectedGreatBow extends BowItem{
             builder.put(Attributes.ATTACK_DAMAGE,
                     new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Ranged item modifier", (double) SConfig.SERVER.bow_melee_damage.get() - 1, AttributeModifier.Operation.ADDITION));
             builder.put(Attributes.ATTACK_SPEED,
-                    new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Ranged item modifier", -SConfig.SERVER.bow_swing_speed.get(), AttributeModifier.Operation.ADDITION));
+                    new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Ranged item modifier", -2.4, AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
         return super.getDefaultAttributeModifiers(slot);

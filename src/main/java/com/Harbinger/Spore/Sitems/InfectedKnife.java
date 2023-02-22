@@ -28,7 +28,7 @@ public class InfectedKnife extends SwordItem {
 
             @Override
             public float getSpeed() {
-                return SConfig.SERVER.knife_swing.get();
+                return 1;
             }
 
             @Override

@@ -26,7 +26,7 @@ public class InfectedRapier extends SwordItem {
 
             @Override
             public float getSpeed() {
-                return SConfig.SERVER.rapier_swing.get();
+                return 2;
             }
 
             @Override

@@ -35,7 +35,7 @@ public class InfectedSickle extends Item implements Vanishable {
         super(new Item.Properties().tab(ScreativeTab.SPORE).durability(SConfig.SERVER.sickle_durability.get()));
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", SConfig.SERVER.sickle_damage.get() - 1, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", -SConfig.SERVER.sickle_swing.get(), AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", -2, AttributeModifier.Operation.ADDITION));
 
         this.defaultModifiers = builder.build();
     }

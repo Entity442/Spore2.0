@@ -26,7 +26,7 @@ public class InfectedScythe extends HoeItem {
             }
 
             public float getSpeed() {
-                return SConfig.SERVER.scythe_swing.get();
+                return 3;
             }
 
             public float getAttackDamageBonus() {return SConfig.SERVER.scythe_damage.get() - 4;}
