@@ -17,7 +17,7 @@ public class InfectedCombatShovel extends ShovelItem {
             }
 
             public float getSpeed() {
-                return SConfig.SERVER.shovel_swing.get();
+                return 3;
             }
 
             public float getAttackDamageBonus() {return SConfig.SERVER.shovel_damage.get() - 4;}
