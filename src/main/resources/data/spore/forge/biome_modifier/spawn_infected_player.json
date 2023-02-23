@@ -8,7 +8,7 @@
   },
   "spawners": {
     "type": "spore:inf_player",
-    "weight": 12,
+    "weight": 20,
     "minCount": 1,
     "maxCount": 1
   }

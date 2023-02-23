@@ -18,6 +18,9 @@
     "spore:stalker",
     "spore:brute",
     "spore:claw",
-    "spore:busser"
+    "spore:busser",
+    "spore:inf_drowned",
+    "spore:inf_player",
+    "spore:scamper"
   ]
 }
