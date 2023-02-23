@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.BreakBlockGoal;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
@@ -109,15 +110,24 @@ public class InfectedVillager extends Infected {
 
 
     public void Evolve(LivingEntity entity) {
-        Random rand = new Random();
-        List<? extends String> ev = SConfig.SERVER.villager_ev.get();
-        for (int i = 0; i < 1; ++i) {
-            int randomIndex = rand.nextInt(ev.size());
-            ResourceLocation randomElement1 = new ResourceLocation(ev.get(randomIndex));
-            EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
-            Entity waveentity = randomElement.create(level);
-            waveentity.setPos(entity.getX(), entity.getY() + 0.5D, entity.getZ());
-            level.addFreshEntity(waveentity);
+        if (Math.random() < 0.9) {
+            Random rand = new Random();
+            List<? extends String> ev = SConfig.SERVER.villager_ev.get();
+            for (int i = 0; i < 1; ++i) {
+                int randomIndex = rand.nextInt(ev.size());
+                ResourceLocation randomElement1 = new ResourceLocation(ev.get(randomIndex));
+                EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
+                Entity waveentity = randomElement.create(level);
+                waveentity.setPos(entity.getX(), entity.getY() + 0.5D, entity.getZ());
+                waveentity.setCustomName(entity.getCustomName());
+                level.addFreshEntity(waveentity);
+                entity.discard();
+            }
+        }else {
+            Scamper scamper = new Scamper(Sentities.SCAMPER.get(), level);
+            scamper.setPos(entity.getX(), entity.getY() + 0.5D, entity.getZ());
+            scamper.setCustomName(entity.getCustomName());
+            level.addFreshEntity(scamper);
             entity.discard();
         }
     }

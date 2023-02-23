@@ -73,6 +73,10 @@ public class Sentities {
             () -> EntityType.Builder.of(Spitter::new, MobCategory.MONSTER).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "spitter").toString()));
 
+    public static final RegistryObject<EntityType<Scamper>> SCAMPER = SPORE_ENTITIES.register("scamper",
+            () -> EntityType.Builder.of(Scamper::new, MobCategory.MONSTER).sized(0.6f, 1.9f)
+                    .build(new ResourceLocation(Spore.MODID, "scamper").toString()));
+
     public static final RegistryObject<EntityType<InfectedPillager>> INF_PILLAGER = SPORE_ENTITIES.register("inf_pillager",
             () -> EntityType.Builder.of(InfectedPillager::new, MobCategory.MONSTER).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "inf_pillager").toString()));

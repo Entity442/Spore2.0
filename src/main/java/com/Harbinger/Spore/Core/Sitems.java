@@ -121,6 +121,9 @@ public class Sitems {
     public  static final RegistryObject<Item> CLAW_SPAWNEGG = ITEMS.register("claw_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.CLAW,-16777216, -3394816, new Item.Properties().tab(ScreativeTab.SPORE)));
 
+    public  static final RegistryObject<Item> SCAMPER_SPAWNEGG = ITEMS.register("scamper_spawnegg",
+            () -> new ForgeSpawnEggItem(Sentities.SCAMPER,-33777216, -3894816, new Item.Properties().tab(ScreativeTab.SPORE)));
+
 
 
     public  static final RegistryObject<Item> ACID = ITEMS.register("acid",

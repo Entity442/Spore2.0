@@ -90,6 +90,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> stalker_damage;
         public final ForgeConfigSpec.ConfigValue<Double> stalker_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> scamper_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> scamper_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> scamper_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> brute_hp;
         public final ForgeConfigSpec.ConfigValue<Double> brute_damage;
         public final ForgeConfigSpec.ConfigValue<Double> brute_armor;
@@ -461,6 +465,12 @@ public class SConfig {
             this.sla_hp = builder.comment("Default 35").defineInRange("Sets Slasher Max health", 35, 1, Double.MAX_VALUE);
             this.sla_damage = builder.comment("Default 10").defineInRange("Sets Slasher Damage", 10, 1, Double.MAX_VALUE);
             this.sla_armor = builder.comment("Default 2").defineInRange("Sets Slasher Armor", 2, 1, Double.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Scamper ");
+            this.scamper_hp = builder.comment("Default 35").defineInRange("Sets Scamper Max health", 25, 1, Double.MAX_VALUE);
+            this.scamper_damage = builder.comment("Default 10").defineInRange("Sets Scamper Damage", 6, 1, Double.MAX_VALUE);
+            this.scamper_armor = builder.comment("Default 2").defineInRange("Sets Scamper Armor", 3, 1, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Infected Player");

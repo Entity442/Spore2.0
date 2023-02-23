@@ -78,7 +78,7 @@ public class ScentEntity extends UtilityEntity {
     }
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        return  false;
+        return source.isExplosion();
     }
 
     public void aiStep() {
