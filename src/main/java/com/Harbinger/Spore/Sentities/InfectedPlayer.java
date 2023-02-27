@@ -99,42 +99,42 @@ public class InfectedPlayer extends Infected{
 
 
 
-        for (String str : SConfig.SERVER.player_h.get()){
+        for (String str : SConfig.DATAGEN.player_h.get()){
             String[] string = str.split("\\|" );
             ItemStack helmet = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0])));
             if (Math.random() < Integer.parseUnsignedInt(string[1]) / 100F) {
                 helmetG = helmet;
             }
         }
-        for (String str : SConfig.SERVER.player_c.get()){
+        for (String str : SConfig.DATAGEN.player_c.get()){
             String[] string = str.split("\\|" );
             ItemStack chest = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0])));
             if (Math.random() < Integer.parseUnsignedInt(string[1]) / 100F) {
                 chestG = chest;
             }
         }
-        for (String str : SConfig.SERVER.player_l.get()){
+        for (String str : SConfig.DATAGEN.player_l.get()){
             String[] string = str.split("\\|" );
             ItemStack legs = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0])));
             if (Math.random() < Integer.parseUnsignedInt(string[1]) / 100F) {
                 legsG = legs;
             }
         }
-        for (String str : SConfig.SERVER.player_b.get()){
+        for (String str : SConfig.DATAGEN.player_b.get()){
             String[] string = str.split("\\|" );
             ItemStack boot = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0])));
             if (Math.random() < Integer.parseUnsignedInt(string[1]) / 100F) {
                 bootG = boot;
             }
         }
-        for (String str : SConfig.SERVER.player_hm.get()){
+        for (String str : SConfig.DATAGEN.player_hm.get()){
             String[] string = str.split("\\|" );
             ItemStack main = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0])));
             if (Math.random() < Integer.parseUnsignedInt(string[1]) / 100F) {
                 mainG = main;
             }
         }
-        for (String str : SConfig.SERVER.player_ho.get()){
+        for (String str : SConfig.DATAGEN.player_ho.get()){
             String[] string = str.split("\\|" );
             ItemStack off = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0])));
             if (Math.random() < Integer.parseUnsignedInt(string[1]) / 100F) {

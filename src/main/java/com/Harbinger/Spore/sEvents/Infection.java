@@ -3,6 +3,7 @@ package com.Harbinger.Spore.sEvents;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sentities;
+import com.Harbinger.Spore.Sentities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.Infected;
 import com.Harbinger.Spore.Sentities.InfectedHuman;
 import com.Harbinger.Spore.Sentities.InfectedPlayer;
@@ -11,16 +12,19 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -43,6 +47,25 @@ public class Infection {
                         entityToSpawn.moveTo(x, y + 4, z, world.getRandom().nextFloat() * 360F, 0);
                         world.addFreshEntity(entityToSpawn);
                     }
+                }
+            }
+        }
+
+        if (entity instanceof  EvolvedInfected infected && (Math.random() < 0.2)){
+            AreaEffectCloud areaeffectcloud = new AreaEffectCloud(world, x, y, z);
+            areaeffectcloud.setRadius(2.5F);
+            areaeffectcloud.setRadiusOnUse(-0.5F);
+            areaeffectcloud.setWaitTime(10);
+            areaeffectcloud.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get() ,40 ,0));
+            areaeffectcloud.setDuration(areaeffectcloud.getDuration() / 2);
+            areaeffectcloud.setRadiusPerTick(-areaeffectcloud.getRadius() / (float)areaeffectcloud.getDuration());
+            world.addFreshEntity(areaeffectcloud);
+            AABB hitbox = infected.getBoundingBox().inflate(30);
+            List<Entity> entities = entity.level.getEntities(entity, hitbox);
+            for (Entity entity1 : entities) {
+                if(entity1 instanceof Infected infected1) {
+                    BlockPos pos = new BlockPos(x ,y,z);
+                    infected1.setSearchPos(pos);
                 }
             }
         }

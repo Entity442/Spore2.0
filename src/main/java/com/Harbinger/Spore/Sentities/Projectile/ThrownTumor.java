@@ -49,6 +49,7 @@ public class ThrownTumor extends ThrowableItemProjectile {
         if (!this.level.isClientSide){
         Explosion.BlockInteraction explosion$blockinteraction = Explosion.BlockInteraction.NONE;
         this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)2, explosion$blockinteraction);
+        this.discard();
         }
     }
 

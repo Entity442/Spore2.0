@@ -5,19 +5,28 @@ import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
 import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import com.Harbinger.Spore.Spore;
+import net.minecraft.commands.Commands;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Spore.MODID)
 public class HandlerEvents {
@@ -57,6 +66,31 @@ public class HandlerEvents {
                 }));
             }}
         }
+    }
+
+    @SubscribeEvent
+    public static  void SetTheArea(RegisterCommandsEvent event){
+        event.getDispatcher().register(Commands.literal("spore:set_area")
+        .executes(arguments -> {
+            ServerLevel world = arguments.getSource().getLevel();
+            double x = arguments.getSource().getPosition().x();
+            double y = arguments.getSource().getPosition().y();
+            double z = arguments.getSource().getPosition().z();
+            Entity entity = arguments.getSource().getEntity();
+            if (entity == null)
+                entity = FakePlayerFactory.getMinecraft(world);
+             if (entity != null){
+                 AABB hitbox = entity.getBoundingBox().inflate(20);
+                 List<Entity> entities = entity.level.getEntities(entity, hitbox);
+                 for (Entity entity1 : entities) {
+                     if(entity1 instanceof Infected infected) {
+                         BlockPos pos = new BlockPos(x ,y,z);
+                         infected.setSearchPos(pos);
+                     }
+                 }
+             }
+            return 0;
+        }));
     }
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event) {

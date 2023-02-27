@@ -36,9 +36,13 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
+import javax.annotation.Nullable;
+
 public class Infected extends Monster{
 
     public int kills;
+    @Nullable
+    BlockPos searchPos;
 
     public Infected(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -52,6 +56,14 @@ public class Infected extends Monster{
         this.xpReward = 5;
     }
 
+    @Nullable
+    public BlockPos getSearchPos() {
+        return searchPos;
+    }
+
+    public void setSearchPos(@Nullable BlockPos searchPos) {
+        this.searchPos = searchPos;
+    }
 
     public void travel(Vec3 p_32858_) {
         if (this.isEffectiveAi() && this.isInWater()) {
@@ -111,6 +123,7 @@ public class Infected extends Monster{
             return !SConfig.SERVER.blacklist.get().contains(en.getEncodeId()) && SConfig.SERVER.at_an.get();
         }));
 
+        this.goalSelector.addGoal(4, new SearchAreaGoal(this, 1.2));
         this.goalSelector.addGoal(5 , new InfectedPanicGoal(this , 1.5));
         this.goalSelector.addGoal(8 , new FleeSunGoal(this , 1.2));
         this.goalSelector.addGoal(6,new FloatDiveGoal(this));
@@ -167,6 +180,7 @@ public class Infected extends Monster{
         kills = kills + 1;
         super.awardKillScore(entity, i, damageSource);
     }
+
 
 
     @Override

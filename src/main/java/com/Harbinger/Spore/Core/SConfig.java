@@ -238,12 +238,6 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> basic;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> evolved;
 
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_h;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_c;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_l;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_b;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_ho;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_hm;
         public Server(ForgeConfigSpec.Builder builder) {
 
             builder.push("Global Variables");
@@ -477,20 +471,6 @@ public class SConfig {
             this.player_hp = builder.comment("Default 21").defineInRange("Infected Player Max health", 21, 1, Double.MAX_VALUE);
             this.player_damage = builder.comment("Default 4").defineInRange("Infected Player Damage", 4, 1, Double.MAX_VALUE);
             this.player_armor = builder.comment("Default 2").defineInRange("Infected Player Armor", 2, 1, Double.MAX_VALUE);
-            builder.push("Items|chance of giving");
-            this.player_h = builder.defineList("Head Slot",
-                    Lists.newArrayList("minecraft:leather_helmet|50","minecraft:iron_helmet|20","minecraft:chainmail_helmet|20") , o -> o instanceof String);
-            this.player_c = builder.defineList("Chest Slot",
-                    Lists.newArrayList("minecraft:leather_chestplate|50","minecraft:iron_chestplate|20","minecraft:chainmail_chestplate|20") , o -> o instanceof String);
-            this.player_l = builder.defineList("Legs Slot",
-                    Lists.newArrayList("minecraft:leather_leggings|50","minecraft:iron_leggings|20","minecraft:chainmail_leggings|20") , o -> o instanceof String);
-            this.player_b = builder.defineList("Boots Slot",
-                    Lists.newArrayList("minecraft:leather_boots|50","minecraft:iron_boots|20","minecraft:chainmail_boots|20") , o -> o instanceof String);
-            this.player_hm = builder.defineList("MainHand Slot",
-                    Lists.newArrayList("minecraft:stone_sword|50" , "minecraft:stone_axe|20", "minecraft:pickaxe|20" , "minecraft:iron_sword|30") , o -> o instanceof String);
-            this.player_ho = builder.defineList("OffHand Slot",
-                    Lists.newArrayList("minecraft:torch|50","minecraft:shield|30") , o -> o instanceof String);
-            builder.pop();
             builder.pop();
 
             builder.push("Spitter");
@@ -663,8 +643,15 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> sca_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> innards_loot;
 
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> spawns;
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> name;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_h;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_c;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_l;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_b;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_ho;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_hm;
         public DataGen(ForgeConfigSpec.Builder builder){
             builder.push("LootTables");
             builder.comment("item|chance to drop(1-100)|minimum amount|maximum amount.Only values above 0 will be taken in consideration.");
@@ -722,35 +709,30 @@ public class SConfig {
             builder.push("Others");
             this.name = builder.defineList("Infected Player possible names",
                     Lists.newArrayList(
-                            "The_Harbinger69",
-                            "ABucketOfFriedChicken",
-                            "LoneGuy",
-                            "cheesepuff",
-                            "Sire_AwfulThe1st",
-                            "Azami",
-                            "Deyvid",
-                            "Dany_Why",
-                            "Technoblade",
-                            "Ike",
-                            "Hypnotizd",
-                            "SaDrOcK:(",
-                            "JhonOK22",
-                            "hacie",
-                            "2ac",
-                            "Pajera",
-                            "CopperKev",
-                            "TheBeast22",
-                            "Bowser",
-                            "Mad_Dog",
-                            "Ripley",
-                            "Kraken",
-                            "Zero",
-                            "FireBread",
-                            "Ire",
-                            "xXFuryXx",
-                            "Nova69",
-                            "Belladonna",
+                            "The_Harbinger69", "ABucketOfFriedChicken", "LoneGuy", "cheesepuff", "Sire_AwfulThe1st", "Azami",
+                            "Deyvid", "Dany_Why", "Technoblade", "Ike", "Hypnotizd", "SaDrOcK:(", "JhonOK22", "hacie", "WhisperFire26",
+                            "Pajera", "CopperKev", "TheBeast22", "Bowser", "Mad_Dog", "Ripley", "Kraken", "Zero", "FireBread", "Ire",
+                            "xXFuryXx", "Nova69", "Belladonna","Entity","Keymind","Whisper",
                             "Mademoiselle2016") , o -> o instanceof String);
+            builder.comment("Items|chance of giving");
+            this.player_h = builder.defineList("Head Slot",
+                    Lists.newArrayList("minecraft:leather_helmet|50","minecraft:iron_helmet|20","minecraft:chainmail_helmet|20") , o -> o instanceof String);
+            this.player_c = builder.defineList("Chest Slot",
+                    Lists.newArrayList("minecraft:leather_chestplate|50","minecraft:iron_chestplate|20","minecraft:chainmail_chestplate|20") , o -> o instanceof String);
+            this.player_l = builder.defineList("Legs Slot",
+                    Lists.newArrayList("minecraft:leather_leggings|50","minecraft:iron_leggings|20","minecraft:chainmail_leggings|20") , o -> o instanceof String);
+            this.player_b = builder.defineList("Boots Slot",
+                    Lists.newArrayList("minecraft:leather_boots|50","minecraft:iron_boots|20","minecraft:chainmail_boots|20") , o -> o instanceof String);
+            this.player_hm = builder.defineList("MainHand Slot",
+                    Lists.newArrayList("minecraft:stone_sword|50" , "minecraft:stone_axe|20", "minecraft:pickaxe|20" , "minecraft:iron_sword|30") , o -> o instanceof String);
+            this.player_ho = builder.defineList("OffHand Slot",
+                    Lists.newArrayList("minecraft:torch|50","minecraft:shield|30") , o -> o instanceof String);
+
+            builder.pop();
+            builder.push("Spawns");
+            this.spawns = builder.defineList("mob|weight|minimum|maximum",
+                    Lists.newArrayList("spore:inf_human|100|2|5","spore:inf_drowned|60|1|2","spore:inf_pillager|60|1|3","spore:inf_villager|80|1|3","spore:inf_player|20|1|2"
+                            ,"spore:inf_wanderer|25|1|2","spore:inf_witch|25|1|2","spore:inf_vindicator|20|1|2","spore:inf_evoker|10|1|2") , o -> o instanceof String);
             builder.pop();
         }
     }
