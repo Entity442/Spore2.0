@@ -91,10 +91,12 @@ public class InfectedPlayer extends Infected{
         ItemStack offG = ItemStack.EMPTY;
         List<? extends String> name = SConfig.DATAGEN.name.get();
         Random rand = new Random();
+        if (this.getCustomName() != null){
         for (int i = 0; i < 1; ++i) {
             int randomIndex = rand.nextInt(name.size());
             Component component = Component.nullToEmpty(name.get(randomIndex));
             this.setCustomName(component);
+           }
         }
 
 
