@@ -7,9 +7,11 @@ import com.Harbinger.Spore.Sentities.AI.*;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedMovementControl;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
@@ -33,7 +35,9 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
@@ -207,8 +211,20 @@ public class InfectedDrowned extends UtilityEntity implements Enemy {
         super.awardKillScore(entity, i, damageSource);
     }
 
-
-    public static boolean checkUnderwaterInfectedRules(EntityType<? extends InfectedDrowned> p_219014_, ServerLevelAccessor levelAccessor, MobSpawnType p_219016_, BlockPos pos, RandomSource source) {
-        return (levelAccessor.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(levelAccessor, pos, source) && checkMobSpawnRules(p_219014_, levelAccessor, p_219016_, pos, source ) && levelAccessor.getFluidState(pos.below()).is(FluidTags.WATER));
+    public static boolean checkUnderwaterInfectedRules(EntityType<InfectedDrowned> p_218956_, ServerLevelAccessor levelAccessor, MobSpawnType spawnType, BlockPos pos, RandomSource source) {
+        if (!levelAccessor.getFluidState(pos.below()).is(FluidTags.WATER)) {
+            return false;
+        } else {
+            Holder<Biome> holder = levelAccessor.getBiome(pos);
+            boolean flag = levelAccessor.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(levelAccessor, pos, source) && (spawnType == MobSpawnType.SPAWNER || levelAccessor.getFluidState(pos).is(FluidTags.WATER));
+            if (holder.is(BiomeTags.MORE_FREQUENT_DROWNED_SPAWNS)) {
+                return source.nextInt(15) == 0 && flag;
+            } else {
+                return source.nextInt(40) == 0 && isDeepEnoughToSpawn(levelAccessor, pos) && flag;
+            }
+        }
+    }
+    private static boolean isDeepEnoughToSpawn(LevelAccessor levelAccessor, BlockPos pos) {
+        return pos.getY() < levelAccessor.getSeaLevel() - 5;
     }
 }
