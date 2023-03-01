@@ -3,7 +3,10 @@ package com.Harbinger.Spore.Core;
 import com.Harbinger.Spore.Client.ClientModEvents;
 import com.Harbinger.Spore.Sitems.*;
 import com.Harbinger.Spore.Spore;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -133,69 +136,95 @@ public class Sitems {
 
 
     public  static final RegistryObject<Item> SABER = ITEMS.register("saber",
-            () -> new InfectedSaber());
+            InfectedSaber::new);
     public  static final RegistryObject<Item> GREATSWORD = ITEMS.register("greatsword",
-            () -> new InfectedGreatSword());
+            InfectedGreatSword::new);
     public  static final RegistryObject<Item> ARMADS = ITEMS.register("armads",
-            () -> new InfectedArmads());
+            InfectedArmads::new);
     public  static final RegistryObject<Item> INFECTED_BOW = ITEMS.register("infected_bow",
             () -> new InfectedGreatBow( new Item.Properties().tab(ScreativeTab.SPORE).durability(SConfig.SERVER.bow_durability.get())));
     public  static final RegistryObject<Item> MAUL = ITEMS.register("maul",
-            () -> new InfectedMaul());
+            InfectedMaul::new);
     public  static final RegistryObject<Item> SCYTHE = ITEMS.register("scythe",
-            () -> new InfectedScythe());
+            InfectedScythe::new);
     public  static final RegistryObject<Item> COMBAT_SHOVEL = ITEMS.register("combat_shovel",
-            () -> new InfectedCombatShovel());
+            InfectedCombatShovel::new);
     public  static final RegistryObject<Item> INFECTED_SPEAR = ITEMS.register("infected_spear",
             () -> new InfectedSpearItem(new Item.Properties().tab(ScreativeTab.SPORE).durability(SConfig.SERVER.spear_durability.get())));
     public  static final RegistryObject<Item> INFECTED_CROSSBOW = ITEMS.register("infected_crossbow",
-            () -> new InfectedCrossbow());
+            InfectedCrossbow::new);
     public  static final RegistryObject<Item> MACE = ITEMS.register("mace",
-            () -> new InfectedMace());
+            InfectedMace::new);
     public  static final RegistryObject<Item> SICKLE = ITEMS.register("sickle",
-            () -> new InfectedSickle());
+            InfectedSickle::new);
     public  static final RegistryObject<Item> KNIFE = ITEMS.register("knife",
-            () -> new InfectedKnife());
+            InfectedKnife::new);
     public  static final RegistryObject<Item> RAPIER = ITEMS.register("rapier",
-            () -> new InfectedRapier());
+            InfectedRapier::new);
 
     public  static final RegistryObject<Item> INF_HELMET = ITEMS.register("inf_helmet",
-            () -> new InfectedHelmet());
+            InfectedHelmet::new);
     public  static final RegistryObject<Item> INF_CHEST = ITEMS.register("inf_chest",
-            () -> new InfectedChestplate());
+            InfectedChestplate::new);
     public  static final RegistryObject<Item> INF_PANTS = ITEMS.register("inf_pants",
-            () -> new InfectedLeggings());
+            InfectedLeggings::new);
     public  static final RegistryObject<Item> INF_BOOTS = ITEMS.register("inf_boots",
-            () -> new InfectedBoots());
+            InfectedBoots::new);
 
     public  static final RegistryObject<Item> PLATED_HELMET = ITEMS.register("plated_helmet",
-            () -> new PlatedHelmet());
+            PlatedHelmet::new);
     public  static final RegistryObject<Item> PLATED_CHEST = ITEMS.register("plated_chest",
-            () -> new PlatedChestplate());
+            PlatedChestplate::new);
     public  static final RegistryObject<Item> PLATED_PANTS = ITEMS.register("plated_pants",
-            () -> new PlatedLeggings());
+            PlatedLeggings::new);
     public  static final RegistryObject<Item> PLATED_BOOTS = ITEMS.register("plated_boots",
-            () -> new PlatedBoots());
+            PlatedBoots::new);
 
     public  static final RegistryObject<Item> LIVING_HELMET = ITEMS.register("living_helmet",
-            () -> new LivingHelmet());
+            LivingHelmet::new);
     public  static final RegistryObject<Item> LIVING_CHEST = ITEMS.register("living_chest",
-            () -> new LivingChestplate());
+            LivingChestplate::new);
     public  static final RegistryObject<Item> LIVING_PANTS = ITEMS.register("living_pants",
-            () -> new LivingLeggings());
+            LivingLeggings::new);
     public  static final RegistryObject<Item> LIVING_BOOTS = ITEMS.register("living_boots",
-            () -> new LivingBoots());
+            LivingBoots::new);
     public  static final RegistryObject<Item> R_ELYTRON = ITEMS.register("r_elytron", ClientModEvents.getElytraItem());
 
     public  static final RegistryObject<Item> INF_UP_CHESTPLATE = ITEMS.register("inf_up_chest",
-            () -> new UpgradedInfectedExoskeleton.InfectedUpChestplate());
+            UpgradedInfectedExoskeleton.InfectedUpChestplate::new);
 
     public  static final RegistryObject<Item> BIOMASS = ITEMS.register("biomass",
-            () -> new Biomass());
+            Biomass::new);
     public  static final RegistryObject<Item> AMETHYST_DUST = ITEMS.register("amethyst_dust",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE_T)));
     public  static final RegistryObject<Item> COMPOUND = ITEMS.register("compound",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE_T)));
     public  static final RegistryObject<Item> COMPOUND_PLATE = ITEMS.register("compound_plate",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE_T)));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private static RegistryObject<Item> block(RegistryObject<Block> block, CreativeModeTab tab) {
+        return ITEMS.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
+    }
+    public static final RegistryObject<Item> CONTAINER = block(Sblocks.CONTAINER, ScreativeTab.SPORE_T);
+    public static final RegistryObject<Item> LAB_BLOCK = block(Sblocks.LAB_BLOCK, ScreativeTab.SPORE_T);
+    public static final RegistryObject<Item> LAB_SLAB = block(Sblocks.LAB_SLAB, ScreativeTab.SPORE_T);
+    public static final RegistryObject<Item> LAB_STAIR = block(Sblocks.LAB_STAIR, ScreativeTab.SPORE_T);
+
+    public static final RegistryObject<Item> GROWTHS_BIG = block(Sblocks.GROWTHS_BIG, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> GROWTHS_SMALL = block(Sblocks.GROWTHS_SMALL, ScreativeTab.SPORE);
+
 }

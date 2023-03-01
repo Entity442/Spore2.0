@@ -56,6 +56,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(ScamperModel.LAYER_LOCATION, ScamperModel::createBodyLayer);
         event.registerLayerDefinition(ElytrumModel.LAYER_LOCATION, ElytrumModel::createBodyLayer);
         event.registerLayerDefinition(WingedChestplate.LAYER_LOCATION, WingedChestplate::createBodyLayer);
+        event.registerLayerDefinition(MoundModel.LAYER_LOCATION, MoundModel::createBodyLayer);
     }
 
 
@@ -86,6 +87,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.HOST.get(), HostRenderer::new);
         event.registerEntityRenderer(Sentities.INF_PLAYER.get(), InfectedPlayerRenderer::new);
         event.registerEntityRenderer(Sentities.SCAMPER.get(), ScamperHumanRenderer::new);
+        event.registerEntityRenderer(Sentities.MOUND.get(), MoundRenderer::new);
 
 
         event.registerEntityRenderer(Sentities.ACID_BALL.get(), ThrownItemRenderer::new);

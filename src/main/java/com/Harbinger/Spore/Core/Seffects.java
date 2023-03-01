@@ -19,8 +19,9 @@ public class Seffects {
 
 
 
-    public static final RegistryObject<MobEffect> MYCELIUM = MOB_EFFECTS.register("mycelium",
+    public static final RegistryObject<MobEffect> MYCELIUM = MOB_EFFECTS.register("mycelium_ef",
             Mycelium::new);
+
     public static final RegistryObject<MobEffect> STUNT = MOB_EFFECTS.register("stunt",() -> new
             Stunt().addAttributeModifier(Attributes.MOVEMENT_SPEED,
             "91AEAA56-376B-4498-935B-2F7F68070635", -0.3F, AttributeModifier.Operation.MULTIPLY_TOTAL).addAttributeModifier(Attributes.ATTACK_DAMAGE,

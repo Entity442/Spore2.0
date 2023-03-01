@@ -435,7 +435,7 @@ public class SConfig {
             this.braio_armor = builder.comment("Default 4").defineInRange("Sets Braiomil armor", 4, 1, Double.MAX_VALUE);
 
             this.braio_effects = builder.comment("Default values: minecraft:poison|120|0 ,spore:mycelium|600|0 ,spore:marker|2400|1").defineList("Braiomil Effects",
-                    Lists.newArrayList("minecraft:poison|120|0" , "spore:mycelium|600|0","spore:marker|2400|1") , o -> o instanceof String);
+                    Lists.newArrayList("minecraft:poison|120|0" , "spore:mycelium_ef|600|0","spore:marker|2400|1") , o -> o instanceof String);
             builder.pop();
 
 
