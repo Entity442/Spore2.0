@@ -1,6 +1,9 @@
 {
   "block.spore.growths_big": "Mycelium",
   "block.spore.growths_small": "Mycelium",
+  "block.spore.blomfung": "Bloomed Mycelium",
+  "block.spore.bloomfung2": "Bloomed Mycelium",
+  "block.spore.fungal_roots": "Roots",
   "block.spore.acid": "Acid pool",
   "item.spore.claw": "Claw",
   "item.spore.claw_fragment": "Claw Fragment",
@@ -155,6 +158,7 @@
   "sounds.spore.growl": "Infected is growling",
   "sounds.spore.braiomil_attack": "The Braiomil is attacking",
   "sounds.spore.howler_growl": "The Howler is calling",
+  "sounds.spore.fungal_burst": "A Fungus Bursts",
 
   "item.line.shift": "A nutrient soup made out of animal matter.",
   "item.line.normal": "Press shift for more info.",

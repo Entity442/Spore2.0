@@ -2,6 +2,13 @@
   "values": [
     "spore:growths_big",
     "spore:growths_small",
-    "spore:infested_dirt"
+    "spore:blomfung",
+    "spore:bloomfung2",
+    "spore:fungal_roots",
+    "spore:infested_dirt",
+    "spore:infested_sand",
+    "spore:infested_gravel",
+    "spore:infested_stone",
+    "spore:infested_deepslate"
   ]
 }

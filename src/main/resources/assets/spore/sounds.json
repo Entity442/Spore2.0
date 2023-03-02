@@ -24,6 +24,12 @@
     "sounds": [
       "spore:braiomil_attack"
     ]
+  },
+  "fungal_burst" :{
+    "subtitle": "sounds.spore.fungal_burst",
+    "sounds": [
+      "spore:fungal_burst"
+    ]
   }
 
 }

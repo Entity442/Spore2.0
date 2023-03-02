@@ -28,6 +28,10 @@ public class Ssounds {
     public static final RegistryObject<SoundEvent> BRAIOMIL_ATTACK = SOUNDS.register(
             "braiomil_attack",
             () -> new SoundEvent(new ResourceLocation(Spore.MODID, "braiomil_attack")));
+
+    public static final RegistryObject<SoundEvent> FUNGAL_BURST = SOUNDS.register(
+            "fungal_burst",
+            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "fungal_burst")));
     private Ssounds() {
     }
 }

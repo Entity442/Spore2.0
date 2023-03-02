@@ -127,6 +127,8 @@ public class Sitems {
     public  static final RegistryObject<Item> SCAMPER_SPAWNEGG = ITEMS.register("scamper_spawnegg",
             () -> new ForgeSpawnEggItem(Sentities.SCAMPER,-33777216, -3894816, new Item.Properties().tab(ScreativeTab.SPORE)));
 
+    public  static final RegistryObject<Item> MOUND_SPAWNEGG = ITEMS.register("mound_spawnegg",
+            () -> new ForgeSpawnEggItem(Sentities.MOUND,-33777216, -3894816, new Item.Properties().tab(ScreativeTab.SPORE)));
 
 
     public  static final RegistryObject<Item> ACID = ITEMS.register("acid",
@@ -226,5 +228,8 @@ public class Sitems {
 
     public static final RegistryObject<Item> GROWTHS_BIG = block(Sblocks.GROWTHS_BIG, ScreativeTab.SPORE);
     public static final RegistryObject<Item> GROWTHS_SMALL = block(Sblocks.GROWTHS_SMALL, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> BLOOM_G = block(Sblocks.BLOOM_G, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> BLOOM_GG = block(Sblocks.BLOOM_GG, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> FUNGAL_ROOTS = block(Sblocks.FUNGAL_ROOTS, ScreativeTab.SPORE);
 
 }
