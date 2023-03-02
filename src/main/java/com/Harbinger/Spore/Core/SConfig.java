@@ -106,6 +106,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> sla_damage;
         public final ForgeConfigSpec.ConfigValue<Double> sla_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> mound_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> mound_armor;
+        public final ForgeConfigSpec.ConfigValue<Integer> mound_cooldown;
+
         public final ForgeConfigSpec.ConfigValue<Double> how_hp;
         public final ForgeConfigSpec.ConfigValue<Double> how_damage;
         public final ForgeConfigSpec.ConfigValue<Double> how_armor;
@@ -371,6 +375,12 @@ public class SConfig {
             this.brute_hp = builder.comment("Default 70").defineInRange("Sets Brute Max health", 70, 1, Double.MAX_VALUE);
             this.brute_damage = builder.comment("Default 7").defineInRange("Sets Brute Damage", 7, 1, Double.MAX_VALUE);
             this.brute_armor = builder.comment("Default 15").defineInRange("Sets Brute Armor", 15, 1, Double.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Mound");
+            this.mound_hp = builder.comment("Default 20").defineInRange("Sets Mound Max health", 20, 1, Double.MAX_VALUE);
+            this.mound_armor = builder.comment("Default 2").defineInRange("Sets Mound Damage", 2, 1, Double.MAX_VALUE);
+            this.mound_cooldown = builder.comment("Default 600").defineInRange("Sets Mound Infection Cooldown", 600, 1, Integer.MAX_VALUE);
             builder.pop();
 
             builder.push("Howler");

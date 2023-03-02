@@ -2,16 +2,17 @@ package com.Harbinger.Spore.Sentities.Utility;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sblocks;
+import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sparticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
@@ -24,9 +25,12 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Objects;
+
 public class Mound extends UtilityEntity{
     private int counter;
-    private final  int maxCounter = 1000;
+    private final  int maxCounter = SConfig.SERVER.mound_cooldown.get();
+    private int attack_counter = 0;
     public Mound(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
     }
@@ -39,26 +43,29 @@ public class Mound extends UtilityEntity{
             entity.makeStuckInBlock(Blocks.AIR.defaultBlockState(), new Vec3(0, 1, 0));
         }
         if (counter < maxCounter){
-            counter = counter + 1;
+            this.setCounter(this.getCounter() + 1);
         }
-        if (entity.isAlive() && counter >= maxCounter && !level.isClientSide){
-            counter = 0;
+        if (entity.isAlive() && this.getCounter() >= maxCounter && !level.isClientSide){
             Spread(entity , entity.level);
+            this.setCounter(0);
+        }
+        if (entity.isAlive() && attack_counter >= 0){
+            attack_counter = attack_counter - 1;
+        }
+        if (this.getCounter() > (maxCounter - 50) && this.getCounter() < maxCounter && this.level instanceof ServerLevel serverLevel){
+                double x0 = this.getX() - (random.nextFloat() - 0.2) * 0.2D;
+                double y0 = this.getY() + (random.nextFloat() - 0.5) * 0.5D * 10;
+                double z0 = this.getZ() + (random.nextFloat() - 0.2) * 0.2D;
+                serverLevel.sendParticles(Sparticles.SPORE_PARTICLE.get(), x0, y0, z0, 3,0, 0, 0,1);
         }
     }
 
-    public void aiStep() {
-        super.aiStep();
-        double x = this.getX();
-        double y = this.getY();
-        double z = this.getZ();
-        if (counter > (maxCounter - 50) && counter < maxCounter){
-            for (int l = 0; l < 4; ++l) {
-            double x0 = x - (random.nextFloat() - 0.5) * 0.5D;
-            double y0 = y + (random.nextFloat() - 0.5) * 0.5D * 10;
-            double z0 = z + (random.nextFloat() - 0.5) * 0.5D;
-            this.level.addParticle(Sparticles.SPORE_PARTICLE.get(), x0, y0, z0, 0, 0, 0);}
-        }
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
+    public int getCounter() {
+        return counter;
     }
 
     private void Spread(Entity entity , LevelAccessor level) {
@@ -109,11 +116,31 @@ public class Mound extends UtilityEntity{
         }
     }
 
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (source.getEntity() instanceof LivingEntity livingEntity){
+            if (attack_counter == 0 && Objects.equals(getLastDamageSource(), DamageSource.mobAttack(livingEntity))){
+                LivingEntity entity = this;
+                if (!entity.level.isClientSide) {
+                    AreaEffectCloud areaeffectcloud = new AreaEffectCloud(entity.level, entity.getX(), entity.getY(), entity.getZ());
+                    areaeffectcloud.setOwner(entity);
+
+                    areaeffectcloud.setParticle(Sparticles.SPORE_PARTICLE.get());
+                    areaeffectcloud.setRadius(2.0F);
+                    areaeffectcloud.setDuration(600);
+                    areaeffectcloud.setRadiusPerTick((4.0F - areaeffectcloud.getRadius()) / (float)areaeffectcloud.getDuration());
+                    areaeffectcloud.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(), 200, 1));
+                    entity.level.addFreshEntity(areaeffectcloud);
+                }
+            }
+    }
+        return super.hurt(source, amount);
+    }
+
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, SConfig.SERVER.inf_human_hp.get() * SConfig.SERVER.global_health.get())
-                .add(Attributes.ARMOR, SConfig.SERVER.inf_human_armor.get() * SConfig.SERVER.global_armor.get())
-                .add(Attributes.MOVEMENT_SPEED, 0.1)
+                .add(Attributes.MAX_HEALTH, SConfig.SERVER.mound_hp.get() * SConfig.SERVER.global_health.get())
+                .add(Attributes.ARMOR, SConfig.SERVER.mound_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.FOLLOW_RANGE, 16)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1);
 

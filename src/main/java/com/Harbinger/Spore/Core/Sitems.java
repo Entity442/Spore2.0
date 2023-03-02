@@ -128,7 +128,7 @@ public class Sitems {
             () -> new ForgeSpawnEggItem(Sentities.SCAMPER,-33777216, -3894816, new Item.Properties().tab(ScreativeTab.SPORE)));
 
     public  static final RegistryObject<Item> MOUND_SPAWNEGG = ITEMS.register("mound_spawnegg",
-            () -> new ForgeSpawnEggItem(Sentities.MOUND,-33777216, -3894816, new Item.Properties().tab(ScreativeTab.SPORE)));
+            () -> new ForgeSpawnEggItem(Sentities.MOUND,-5750208, -9762718, new Item.Properties().tab(ScreativeTab.SPORE)));
 
 
     public  static final RegistryObject<Item> ACID = ITEMS.register("acid",

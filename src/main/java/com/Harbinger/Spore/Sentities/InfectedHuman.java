@@ -35,6 +35,7 @@ public class InfectedHuman extends Infected {
 
     }
 
+
     @Override
     protected void registerGoals() {
 

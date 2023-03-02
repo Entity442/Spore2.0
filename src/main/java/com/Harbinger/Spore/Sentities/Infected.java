@@ -79,6 +79,10 @@ public class Infected extends Monster{
 
     }
 
+    @Override
+    public void setTarget(@org.jetbrains.annotations.Nullable LivingEntity entity) {
+        super.setTarget(entity);
+    }
 
     public int getMaxAirSupply() {
         return 1200;
@@ -108,6 +112,7 @@ public class Infected extends Monster{
 
     @Override
     protected void registerGoals() {
+        this.goalSelector.addGoal(3,new LocalTargettingGoal(this));
         this.goalSelector.addGoal(3, new HurtTargetGoal(this ,entity -> {return !SConfig.SERVER.blacklist.get().contains(entity.getEncodeId());}, Infected.class));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
                 (this, Player.class,  true));
