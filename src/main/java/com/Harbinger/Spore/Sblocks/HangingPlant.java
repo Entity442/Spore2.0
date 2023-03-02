@@ -88,6 +88,6 @@ public class HangingPlant extends FlowerBlock {
     }
 
     public boolean isPathfindable(BlockState p_153469_, BlockGetter p_153470_, BlockPos p_153471_, PathComputationType p_153472_) {
-        return false;
+        return true;
     }
 }

@@ -33,8 +33,12 @@ public class Mound extends UtilityEntity{
     private int attack_counter = 0;
     public Mound(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
+        setPersistenceRequired();
     }
-
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
     @Override
     public void tick() {
         super.tick();
@@ -81,11 +85,19 @@ public class Mound extends UtilityEntity{
             BlockState block2 =  (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.create(new ResourceLocation("spore:roof_foliage")))
                     .getRandomElement(RandomSource.create()).orElse(Blocks.AIR)).defaultBlockState();
 
-            BlockState blockstate = level.getBlockState(blockpos);
-            BlockState detectAir = level.getBlockState(blockpos.offset(a,0,c));
+            BlockState nord = level.getBlockState(blockpos.north());
+            BlockState south = level.getBlockState(blockpos.south());
+            BlockState west = level.getBlockState(blockpos.west());
+            BlockState east = level.getBlockState(blockpos.east());
             BlockState above = level.getBlockState(blockpos.above());
             BlockState below = level.getBlockState(blockpos.below());
-            if (Math.random() < 0.02 && !blockstate.is(BlockTags.create(new ResourceLocation("spore:infected_blocks"))) && (detectAir.canOcclude() || above.canOcclude() || below.canOcclude())){
+
+            BlockState blockstate = level.getBlockState(blockpos);
+
+            if (Math.random() < 0.02 && !blockstate.is(BlockTags.create(new ResourceLocation("spore:infected_blocks"))) && blockstate.canOcclude()
+                    && (above.isAir() || below.isAir() || nord.isAir() || south.isAir() || west.isAir() || east.isAir()
+                   || !above.canOcclude() || !below.canOcclude() || !nord.canOcclude() || !south.canOcclude() || !west.canOcclude() || !east.canOcclude())){
+
                 if ((blockstate.getMaterial() == Material.DIRT || blockstate.getMaterial() == Material.GRASS)){
                 level.setBlock(blockpos,Sblocks.INFESTED_DIRT.get().defaultBlockState(),3);
                 }

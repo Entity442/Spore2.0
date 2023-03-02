@@ -30,6 +30,11 @@ public class Scamper extends Infected{
 
     public Scamper(EntityType<? extends Monster> type, Level level) {
         super(type, level);
+        setPersistenceRequired();
+    }
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
     }
 
     public boolean isDeploying() {
