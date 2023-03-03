@@ -30,6 +30,12 @@
     "sounds": [
       "spore:fungal_burst"
     ]
+  },
+  "puff" :{
+    "subtitle": "sounds.spore.puff",
+    "sounds": [
+      "spore:puff"
+    ]
   }
 
 }

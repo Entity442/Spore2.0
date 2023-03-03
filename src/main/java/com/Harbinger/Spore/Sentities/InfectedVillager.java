@@ -5,7 +5,7 @@ import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.BreakBlockGoal;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
-import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
+import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;

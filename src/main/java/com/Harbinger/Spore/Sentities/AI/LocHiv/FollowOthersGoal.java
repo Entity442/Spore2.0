@@ -1,4 +1,4 @@
-package com.Harbinger.Spore.Sentities.AI;
+package com.Harbinger.Spore.Sentities.AI.LocHiv;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;

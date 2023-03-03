@@ -32,6 +32,10 @@ public class Ssounds {
     public static final RegistryObject<SoundEvent> FUNGAL_BURST = SOUNDS.register(
             "fungal_burst",
             () -> new SoundEvent(new ResourceLocation(Spore.MODID, "fungal_burst")));
+
+    public static final RegistryObject<SoundEvent> PUFF = SOUNDS.register(
+            "puff",
+            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "puff")));
     private Ssounds() {
     }
 }

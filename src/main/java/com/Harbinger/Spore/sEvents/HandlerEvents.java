@@ -1,7 +1,7 @@
 package com.Harbinger.Spore.sEvents;
 
 import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Sentities.AI.FollowOthersGoal;
+import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
 import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import com.Harbinger.Spore.Spore;

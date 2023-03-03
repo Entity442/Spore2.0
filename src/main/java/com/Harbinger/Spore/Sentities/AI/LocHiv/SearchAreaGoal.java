@@ -1,4 +1,4 @@
-package com.Harbinger.Spore.Sentities.AI;
+package com.Harbinger.Spore.Sentities.AI.LocHiv;
 
 import com.Harbinger.Spore.Sentities.Infected;
 import net.minecraft.world.entity.ai.goal.Goal;
