@@ -28,6 +28,7 @@ public class Sblocks {
     public static final RegistryObject<Block> BLOOM_GG = BLOCKS.register("bloomfung2", HangingPlantBub::new);
     public static final RegistryObject<Block> FUNGAL_STEM = BLOCKS.register("fungal_stem", FungalStem::new);
     public static final RegistryObject<Block> FUNGAL_ROOTS = BLOCKS.register("fungal_roots", HangingRoots::new);
+    public static final RegistryObject<Block> GROWTH_MYCELIUM = BLOCKS.register("growth_mycelium", GenericFoliageBlock::new);
 
     public static final RegistryObject<Block> INFESTED_DIRT = BLOCKS.register("infested_dirt", () -> new Block(BlockBehaviour.Properties.copy(Blocks.COARSE_DIRT)));
     public static final RegistryObject<Block> INFESTED_STONE = BLOCKS.register("infested_stone", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE)));
