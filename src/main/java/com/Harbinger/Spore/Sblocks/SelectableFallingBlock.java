@@ -6,6 +6,10 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+
+import java.util.Collections;
+import java.util.List;
 
 public class SelectableFallingBlock extends FallingBlock {
     public ItemStack stack;
@@ -16,6 +20,14 @@ public class SelectableFallingBlock extends FallingBlock {
 
     public ItemStack getCloneItemStack(BlockGetter p_57256_, BlockPos p_57257_, BlockState p_57258_) {
         return stack;
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+        List<ItemStack> dropsOriginal = super.getDrops(state, builder);
+        if (!dropsOriginal.isEmpty())
+            return dropsOriginal;
+        return Collections.singletonList(stack);
     }
 
 

@@ -32,6 +32,7 @@ public class Sblocks {
     public static final RegistryObject<Block> GROWTH_MYCELIUM = BLOCKS.register("growth_mycelium", () -> new GenericFoliageBlock( BlockBehaviour.Properties.of(Material.PLANT).strength(0f, 0f).noCollission().noOcclusion().sound(SoundType.CROP)
             .lightLevel(s -> 2).hasPostProcess((bs, br, bp) -> true).emissiveRendering((bs, br, bp) -> true)));
     public static final RegistryObject<Block> WALL_GROWTHS = BLOCKS.register("wall_growths", WallFolliage::new);
+    public static final RegistryObject<Block> WALL_GROWTHS_BIG = BLOCKS.register("wall_growths_big", WallFolliage::new);
 
     public static final RegistryObject<Block> INFESTED_DIRT = BLOCKS.register("infested_dirt", () -> new SelectableBlock(new ItemStack(Blocks.COARSE_DIRT.asItem()),BlockBehaviour.Properties.copy(Blocks.COARSE_DIRT)));
     public static final RegistryObject<Block> INFESTED_STONE = BLOCKS.register("infested_stone", () -> new SelectableBlock(new ItemStack(Blocks.STONE.asItem()),BlockBehaviour.Properties.copy(Blocks.STONE)));

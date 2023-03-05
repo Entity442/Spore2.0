@@ -5,6 +5,8 @@
   "block.spore.bloomfung2": "Bloomed Mycelium",
   "block.spore.fungal_roots": "Roots",
   "block.spore.growth_mycelium": "Mycelium",
+  "block.spore.wall_growths": "Mycelium",
+  "block.spore.wall_growths_big": "Mycelium",
   "block.spore.acid": "Acid pool",
 
   "item.spore.claw": "Claw",
