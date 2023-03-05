@@ -14,8 +14,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class GenericFoliageBlock extends FlowerBlock {
-    public GenericFoliageBlock() {
-        super(MobEffects.WITHER, 1, BlockBehaviour.Properties.of(Material.PLANT).strength(0f, 0f).noCollission().noOcclusion().sound(SoundType.CROP));
+    public GenericFoliageBlock(Properties propeties) {
+        super(MobEffects.WITHER, 1 ,propeties);
     }
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {

@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sentities.Utility;
 
 import com.Harbinger.Spore.Core.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -17,6 +18,8 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -76,6 +79,9 @@ public class Mound extends UtilityEntity{
                     .getRandomElement(RandomSource.create()).orElse(Blocks.AIR)).defaultBlockState();
             BlockState block2 =  (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.create(new ResourceLocation("spore:roof_foliage")))
                     .getRandomElement(RandomSource.create()).orElse(Blocks.AIR)).defaultBlockState();
+            BlockState block3 =  (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.create(new ResourceLocation("spore:wall_foliage")))
+                    .getRandomElement(RandomSource.create()).orElse(Blocks.AIR)).defaultBlockState();
+
 
             BlockState nord = level.getBlockState(blockpos.north());
             BlockState south = level.getBlockState(blockpos.south());
@@ -96,20 +102,17 @@ public class Mound extends UtilityEntity{
                     && (nordT || southT || westT || eastT || aboveT || belowT)){
 
                 if ((blockstate.getMaterial() == Material.DIRT || blockstate.getMaterial() == Material.GRASS)){
-                level.setBlock(blockpos,Sblocks.INFESTED_DIRT.get().defaultBlockState(),3);
-                }
+                level.setBlock(blockpos,Sblocks.INFESTED_DIRT.get().defaultBlockState(),3);}
+
                 if ((blockstate.getMaterial() == Material.SAND)){
                     if (blockstate.getBlock() == Blocks.GRAVEL){
-                        level.setBlock(blockpos,Sblocks.INFESTED_GRAVEL.get().defaultBlockState(),3);
-                    }
-                    else {   level.setBlock(blockpos,Sblocks.INFESTED_SAND.get().defaultBlockState(),3);}
-                }
+                        level.setBlock(blockpos,Sblocks.INFESTED_GRAVEL.get().defaultBlockState(),3);}
+                    else {   level.setBlock(blockpos,Sblocks.INFESTED_SAND.get().defaultBlockState(),3);}}
 
                 if ((blockstate.getMaterial() == Material.STONE && blockstate.getDestroySpeed(level ,blockpos) < 5)){
                     if (blockstate.getBlock() == Blocks.DEEPSLATE){
                         level.setBlock(blockpos,Sblocks.INFESTED_DEEPSLATE.get().defaultBlockState(),3);
-                    }else {level.setBlock(blockpos,Sblocks.INFESTED_STONE.get().defaultBlockState(),3);}
-                }
+                    }else {level.setBlock(blockpos,Sblocks.INFESTED_STONE.get().defaultBlockState(),3);}}
                 }
 
             if (above.isAir() && blockstate.isSolidRender(level ,blockpos) && Math.random() < 0.01){level.setBlock(blockpos.above(),block1,3);}
@@ -117,12 +120,34 @@ public class Mound extends UtilityEntity{
                 if (block2.getBlock().getStateDefinition().getProperty("hanging") instanceof BooleanProperty property){
                     level.setBlock(blockpos.below(),block2.setValue(property, true),3);
                 }else {
-                    level.setBlock(blockpos.below(),block2,3);
-                }
+                    level.setBlock(blockpos.below(),block2,3);}}
+
+
+            if (blockstate.isSolidRender(level , blockpos) && (nordT || southT || westT || eastT || aboveT || belowT)){
+                Direction direction = Direction.NORTH;
+                Direction direction2 = Direction.SOUTH;
+                Direction direction3 = Direction.EAST;
+                Direction direction4 = Direction.WEST;
+                Property<?> property = block3.getBlock().getStateDefinition().getProperty("facing");
+                if (property instanceof DirectionProperty directionProperty&& Math.random() < 0.01) {
+                    if (nord.isAir()){
+                        level.setBlock(blockpos.north(),block3.setValue(directionProperty,direction),3);
+                    }
+                    if (south.isAir()){
+                        level.setBlock(blockpos.south(),block3.setValue(directionProperty,direction2),3);
+                    }
+                    if (west.isAir()){
+                        level.setBlock(blockpos.west(),block3.setValue(directionProperty,direction4),3);
+                    }
+                    if (east.isAir()){
+                        level.setBlock(blockpos.east(),block3.setValue(directionProperty,direction3),3);
+                    }
+              }
             }
-            this.playSound(Ssounds.PUFF.get(),1f ,0.5f);
+            this.playSound(Ssounds.PUFF.get(),0.5f ,0.5f);
         }
     }
+
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
@@ -138,7 +163,7 @@ public class Mound extends UtilityEntity{
                     areaeffectcloud.setRadiusPerTick((4.0F - areaeffectcloud.getRadius()) / (float)areaeffectcloud.getDuration());
                     areaeffectcloud.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(), 200, 1));
                     entity.level.addFreshEntity(areaeffectcloud);
-                    this.playSound(Ssounds.PUFF.get() ,1f ,0.5f);
+                    this.playSound(Ssounds.PUFF.get() ,0.5f ,0.5f);
                     attack_counter = 300;
                 }
             }

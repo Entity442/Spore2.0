@@ -4,12 +4,19 @@ import com.Harbinger.Spore.Core.Sblocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class FungalStem extends GenericFoliageBlock{
+    public FungalStem() {
+        super( BlockBehaviour.Properties.of(Material.PLANT).strength(0f, 0f).noCollission().noOcclusion().sound(SoundType.CROP));
+    }
+
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         Vec3 offset = state.getOffset(world, pos);
