@@ -3,7 +3,8 @@
 	"render_type": "cutout",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "spore:block/fungal_stem"
+		"0": "spore:block/fungal_stem",
+		"particle": "spore:block/fungal_stem"
 	},
 	"elements": [
 		{

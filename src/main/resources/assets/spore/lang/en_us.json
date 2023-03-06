@@ -7,6 +7,9 @@
   "block.spore.growth_mycelium": "Mycelium",
   "block.spore.wall_growths": "Mycelium",
   "block.spore.wall_growths_big": "Mycelium",
+  "block.spore.fungal_stem": "Fungal Stem",
+  "block.spore.fungal_stem_sapling": "Fungal Growth",
+  "block.spore.fungal_stem_top": "Fungal Growth",
   "block.spore.acid": "Acid pool",
 
   "item.spore.claw": "Claw",
