@@ -151,7 +151,7 @@ public class Mound extends UtilityEntity{
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-            if (attack_counter == 0){
+        if (attack_counter == 0){
                 LivingEntity entity = this;
                 if (!entity.level.isClientSide) {
                     AreaEffectCloud areaeffectcloud = new AreaEffectCloud(entity.level, entity.getX(), entity.getY(), entity.getZ());
@@ -167,7 +167,7 @@ public class Mound extends UtilityEntity{
                     attack_counter = 300;
                 }
             }
-        return super.hurt(source, amount);
+        return source != DamageSource.FALL;
     }
 
     public static AttributeSupplier.Builder createAttributes() {

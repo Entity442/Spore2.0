@@ -1,16 +1,17 @@
 package com.Harbinger.Spore.Sentities;
 
-import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Core.Seffects;
-import com.Harbinger.Spore.Core.Sparticles;
-import com.Harbinger.Spore.Core.Ssounds;
+import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.FollowTargetGoal;
+import com.Harbinger.Spore.Sentities.Utility.Mound;
+import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,6 +22,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -51,7 +53,37 @@ public class Scamper extends Infected{
         {deployClock = deployClock - 1;}
         if (this.deployClock == 0){
             deploying = false;}
+
+        if (this.isAlive()){
+            this.getPersistentData().putInt("age", 1 + this.getPersistentData().getInt("age"));
+            if (this.getPersistentData().getInt("age") >= SConfig.SERVER.scamper_age.get()) {
+                if (!level.isClientSide){
+                    RandomSource randomSource = RandomSource.create();
+                    int chance = randomSource.nextInt(1,4);
+                    for (int i = 0; i < chance; ++i) {Summon();}
+                    SummonScent();
+                    this.discard();
+                }
+            }
+        }
         super.tick();
+    }
+
+    private void Summon(){
+        RandomSource randomSource = RandomSource.create();
+        Mound mound = new Mound(Sentities.MOUND.get(),level);
+        int vecx = randomSource.nextInt(-2 ,2);
+        int vecz = randomSource.nextInt(-2 ,2);
+        mound.moveTo(this.getX(),this.getY(),this.getZ());
+        mound.addEffect(new MobEffectInstance(MobEffects.REGENERATION ,200,0));
+        mound.setDeltaMovement(0.4 * vecx ,0.1,0.4 * vecz);
+        level.addFreshEntity(mound);
+        level.explode(this,this.getX(),this.getY(), this.getZ(),1f, Explosion.BlockInteraction.NONE);
+    }
+    private void SummonScent(){
+        ScentEntity scent = new ScentEntity(Sentities.SCENT.get(),level);
+        scent.moveTo(this.getX(),this.getY() + 0.4F ,this.getZ());
+        level.addFreshEntity(scent);
     }
 
     @Override

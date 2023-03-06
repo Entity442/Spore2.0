@@ -93,6 +93,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> scamper_hp;
         public final ForgeConfigSpec.ConfigValue<Double> scamper_damage;
         public final ForgeConfigSpec.ConfigValue<Double> scamper_armor;
+        public final ForgeConfigSpec.ConfigValue<Integer> scamper_age;
 
         public final ForgeConfigSpec.ConfigValue<Double> brute_hp;
         public final ForgeConfigSpec.ConfigValue<Double> brute_damage;
@@ -475,6 +476,7 @@ public class SConfig {
             this.scamper_hp = builder.comment("Default 35").defineInRange("Sets Scamper Max health", 25, 1, Double.MAX_VALUE);
             this.scamper_damage = builder.comment("Default 10").defineInRange("Sets Scamper Damage", 6, 1, Double.MAX_VALUE);
             this.scamper_armor = builder.comment("Default 2").defineInRange("Sets Scamper Armor", 3, 1, Double.MAX_VALUE);
+            this.scamper_age = builder.comment("Default 6000").defineInRange("Sets Scamper Age", 6000, 1, Integer.MAX_VALUE);
             builder.pop();
 
             builder.push("Infected Player");
