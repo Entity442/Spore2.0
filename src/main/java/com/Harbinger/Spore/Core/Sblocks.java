@@ -41,6 +41,9 @@ public class Sblocks {
     public static final RegistryObject<Block> INFESTED_SAND = BLOCKS.register("infested_sand", () -> new SelectableFallingBlock(new ItemStack(Blocks.SAND.asItem()),BlockBehaviour.Properties.copy(Blocks.SAND)));
     public static final RegistryObject<Block> INFESTED_GRAVEL = BLOCKS.register("infested_gravel", () -> new SelectableFallingBlock(new ItemStack(Blocks.GRAVEL.asItem()),BlockBehaviour.Properties.copy(Blocks.GRAVEL)));
     public static final RegistryObject<Block> INFESTED_DEEPSLATE = BLOCKS.register("infested_deepslate", () -> new SelectableBlock(new ItemStack(Blocks.DEEPSLATE.asItem()),BlockBehaviour.Properties.copy(Blocks.DEEPSLATE)));
+    public static final RegistryObject<Block> BIOMASS_LUMP = BLOCKS.register("biomass_lump", BiomassLump::new);
 
-
+    public static final RegistryObject<Block> ROOTED_BIOMASS = BLOCKS.register("rooted_biomass", () -> new Block(BlockBehaviour.Properties.of(Material.MOSS).strength(2f,2f).sound(SoundType.SLIME_BLOCK)));
+    public static final RegistryObject<Block> BIOMASS_BLOCK = BLOCKS.register("biomass_block", () -> new Block(BlockBehaviour.Properties.of(Material.MOSS).strength(2f,2f).sound(SoundType.SLIME_BLOCK)));
+    public static final RegistryObject<Block> ROOTED_MYCELIUM = BLOCKS.register("rooted_mycelium", () -> new Block(BlockBehaviour.Properties.of(Material.MOSS).strength(2f,2f).sound(SoundType.SLIME_BLOCK)));
 }

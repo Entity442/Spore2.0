@@ -10,6 +10,10 @@
   "block.spore.fungal_stem": "Fungal Stem",
   "block.spore.fungal_stem_sapling": "Fungal Growth",
   "block.spore.fungal_stem_top": "Fungal Growth",
+  "block.spore.biomass_block": "Biomass",
+  "block.spore.rooted_biomass": "Rooted Biomass",
+  "block.spore.rooted_mycelium": "Rooted Mycelium",
+  "block.spore.biomass_lump": "Biomass Lump",
   "block.spore.acid": "Acid pool",
 
   "item.spore.claw": "Claw",
@@ -121,6 +125,7 @@
   "entity.spore.inf_drowned": "Infected Drowned",
   "entity.spore.inf_player": "Infected Adventurer",
   "entity.spore.scamper": "Scamper",
+  "entity.spore.mound": "Flesh Mound",
 
   "entity.spore.thrown_tumor": "Tumor",
   "entity.spore.thrown_spear": "Infected Spear",

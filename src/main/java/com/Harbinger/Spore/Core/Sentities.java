@@ -141,7 +141,7 @@ public class Sentities {
                     .build(new ResourceLocation(Spore.MODID, "claw").toString()));
 
     public static final RegistryObject<EntityType<Mound>> MOUND = SPORE_ENTITIES.register("mound",
-            () -> EntityType.Builder.of(Mound::new, MobCategory.MONSTER).sized(0.5f, 0.5f)
+            () -> EntityType.Builder.of(Mound::new, MobCategory.MONSTER).sized(0.5f, 0.9f)
                     .build(new ResourceLocation(Spore.MODID, "mound").toString()));
 
 

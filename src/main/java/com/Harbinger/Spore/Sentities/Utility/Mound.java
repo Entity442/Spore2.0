@@ -3,6 +3,10 @@ package com.Harbinger.Spore.Sentities.Utility;
 import com.Harbinger.Spore.Core.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -10,7 +14,9 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
@@ -26,12 +32,17 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class Mound extends UtilityEntity{
+    private static final EntityDataAccessor<Integer> AGE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> STRUCTURE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.BOOLEAN);
     private int counter;
     private final  int maxCounter = SConfig.SERVER.mound_cooldown.get();
     private int attack_counter = 0;
     public Mound(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         setPersistenceRequired();
+    }
+    protected int calculateFallDamage(float p_149389_, float p_149390_) {
+        return super.calculateFallDamage(p_149389_, p_149390_) - 30;
     }
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
@@ -41,6 +52,13 @@ public class Mound extends UtilityEntity{
     public void tick() {
         super.tick();
         Entity entity = this;
+        if (entity.isAlive() && entityData.get(AGE) < 3){
+            this.getPersistentData().putInt("age", 1 + this.getPersistentData().getInt("age"));
+            if (this.getPersistentData().getInt("age") >= SConfig.SERVER.mound_age.get()) {
+                this.getPersistentData().putInt("age",0);
+                entityData.set(AGE,entityData.get(AGE) + 1);
+            }
+        }
         if (entity.isOnGround()){
             entity.makeStuckInBlock(Blocks.AIR.defaultBlockState(), new Vec3(0, 1, 0));
         }
@@ -49,6 +67,7 @@ public class Mound extends UtilityEntity{
         }
         if (entity.isAlive() && this.getCounter() >= maxCounter && !level.isClientSide){
             Spread(entity , entity.level);
+            this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,60,1));
             this.setCounter(0);
         }
         if (entity.isAlive() && attack_counter > 0){
@@ -61,6 +80,23 @@ public class Mound extends UtilityEntity{
                 serverLevel.sendParticles(Sparticles.SPORE_PARTICLE.get(), x0, y0, z0, 3,0, 0, 0,1);
         }
     }
+    public int getAge(){
+        return entityData.get(AGE);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putInt("age",entityData.get(AGE));
+        tag.putBoolean("structure",entityData.get(STRUCTURE));
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        entityData.set(AGE, tag.getInt("age"));
+        entityData.set(STRUCTURE, tag.getBoolean("structure"));
+    }
 
     public void setCounter(int counter) {
         this.counter = counter;
@@ -71,8 +107,16 @@ public class Mound extends UtilityEntity{
     }
 
     private void Spread(Entity entity , LevelAccessor level) {
+        int range;
+        if (entityData.get(AGE) == 2){
+            range = 8;
+        }else if (entityData.get(AGE) == 3){
+            range = 10;
+        }else {
+            range = 6;
+        }
 
-        AABB aabb = entity.getBoundingBox().inflate(6);
+        AABB aabb = entity.getBoundingBox().inflate(range);
         for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
 
             BlockState block1 =  (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.create(new ResourceLocation("spore:ground_foliage")))
@@ -81,7 +125,8 @@ public class Mound extends UtilityEntity{
                     .getRandomElement(RandomSource.create()).orElse(Blocks.AIR)).defaultBlockState();
             BlockState block3 =  (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.create(new ResourceLocation("spore:wall_foliage")))
                     .getRandomElement(RandomSource.create()).orElse(Blocks.AIR)).defaultBlockState();
-
+            BlockState block4 =  (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.create(new ResourceLocation("spore:block_st")))
+                    .getRandomElement(RandomSource.create()).orElse(Blocks.AIR)).defaultBlockState();
 
             BlockState nord = level.getBlockState(blockpos.north());
             BlockState south = level.getBlockState(blockpos.south());
@@ -101,11 +146,11 @@ public class Mound extends UtilityEntity{
             if (Math.random() < 0.02 && !blockstate.is(BlockTags.create(new ResourceLocation("spore:infected_blocks"))) && blockstate.isSolidRender(level,blockpos)
                     && (nordT || southT || westT || eastT || aboveT || belowT)){
 
-                if ((blockstate.getMaterial() == Material.DIRT || blockstate.getMaterial() == Material.GRASS)){
+                if ((blockstate.getMaterial() == Material.DIRT || blockstate.getMaterial() == Material.GRASS) && blockstate.getDestroySpeed(level ,blockpos) < 5){
                 level.setBlock(blockpos,Sblocks.INFESTED_DIRT.get().defaultBlockState(),3);}
 
                 if ((blockstate.getMaterial() == Material.SAND)){
-                    if (blockstate.getBlock() == Blocks.GRAVEL){
+                    if (blockstate.getBlock() == Blocks.GRAVEL && blockstate.getDestroySpeed(level ,blockpos) < 5){
                         level.setBlock(blockpos,Sblocks.INFESTED_GRAVEL.get().defaultBlockState(),3);}
                     else {   level.setBlock(blockpos,Sblocks.INFESTED_SAND.get().defaultBlockState(),3);}}
 
@@ -116,6 +161,10 @@ public class Mound extends UtilityEntity{
                 }
 
             if (above.isAir() && blockstate.isSolidRender(level ,blockpos) && Math.random() < 0.01){level.setBlock(blockpos.above(),block1,3);}
+            if (above.isAir() && blockstate.isSolidRender(level ,blockpos) && Math.random() < 0.01 && entityData.get(STRUCTURE) && entityData.get(AGE) == 3 && this.distanceToSqr(blockpos.getX(),blockpos.getY(),blockpos.getZ()) > 80){
+                level.setBlock(blockpos.above(),block4,3);
+                entityData.set(STRUCTURE,false);
+            }
             if (below.isAir() && blockstate.isSolidRender(level ,blockpos) && Math.random() < 0.01){
                 if (block2.getBlock().getStateDefinition().getProperty("hanging") instanceof BooleanProperty property){
                     level.setBlock(blockpos.below(),block2.setValue(property, true),3);
@@ -129,7 +178,7 @@ public class Mound extends UtilityEntity{
                 Direction direction3 = Direction.EAST;
                 Direction direction4 = Direction.WEST;
                 Property<?> property = block3.getBlock().getStateDefinition().getProperty("facing");
-                if (property instanceof DirectionProperty directionProperty&& Math.random() < 0.01) {
+                if (property instanceof DirectionProperty directionProperty && Math.random() < 0.01) {
                     if (nord.isAir()){
                         level.setBlock(blockpos.north(),block3.setValue(directionProperty,direction),3);
                     }
@@ -148,26 +197,40 @@ public class Mound extends UtilityEntity{
         }
     }
 
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        if (getAge() == 2){
+            AttributeInstance health = this.getAttribute(Attributes.MAX_HEALTH);
+            assert health != null;
+            health.setBaseValue(SConfig.SERVER.mound_hp.get() * 2 * SConfig.SERVER.global_health.get());
+        }
+        if (getAge() == 3){
+            AttributeInstance health = this.getAttribute(Attributes.MAX_HEALTH);
+            assert health != null;
+            health.setBaseValue(SConfig.SERVER.mound_hp.get() * 3 * SConfig.SERVER.global_health.get());
+        }
+    }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurt(DamageSource p_21016_, float p_21017_) {
         if (attack_counter == 0){
-                LivingEntity entity = this;
-                if (!entity.level.isClientSide) {
-                    AreaEffectCloud areaeffectcloud = new AreaEffectCloud(entity.level, entity.getX(), entity.getY(), entity.getZ());
-                    areaeffectcloud.setOwner(entity);
+            LivingEntity entity = this;
+            if (!entity.level.isClientSide) {
+                AreaEffectCloud areaeffectcloud = new AreaEffectCloud(entity.level, entity.getX(), entity.getY(), entity.getZ());
+                areaeffectcloud.setOwner(entity);
 
-                    areaeffectcloud.setParticle(Sparticles.SPORE_PARTICLE.get());
-                    areaeffectcloud.setRadius(2.0F);
-                    areaeffectcloud.setDuration(300);
-                    areaeffectcloud.setRadiusPerTick((4.0F - areaeffectcloud.getRadius()) / (float)areaeffectcloud.getDuration());
-                    areaeffectcloud.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(), 200, 1));
-                    entity.level.addFreshEntity(areaeffectcloud);
-                    this.playSound(Ssounds.PUFF.get() ,0.5f ,0.5f);
-                    attack_counter = 300;
-                }
+                areaeffectcloud.setParticle(Sparticles.SPORE_PARTICLE.get());
+                areaeffectcloud.setRadius(2.0F);
+                areaeffectcloud.setDuration(300);
+                areaeffectcloud.setRadiusPerTick(((4.0F * entityData.get(AGE)) - areaeffectcloud.getRadius()) / (float)areaeffectcloud.getDuration());
+                areaeffectcloud.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(), 200, 1));
+                entity.level.addFreshEntity(areaeffectcloud);
+                this.playSound(Ssounds.PUFF.get() ,0.5f ,0.5f);
+                attack_counter = 300;
             }
-        return source != DamageSource.FALL;
+        }
+        return super.hurt(p_21016_, p_21017_);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -178,4 +241,13 @@ public class Mound extends UtilityEntity{
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1);
 
     }
+
+
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(AGE, 1);
+        this.entityData.define(STRUCTURE, true);
+    }
+
+
 }

@@ -61,7 +61,7 @@ public class Scamper extends Infected{
                     RandomSource randomSource = RandomSource.create();
                     int chance = randomSource.nextInt(1,4);
                     for (int i = 0; i < chance; ++i) {Summon();}
-                    SummonScent();
+                    if (SConfig.SERVER.scent_spawn.get()){SummonScent();}
                     this.discard();
                 }
             }

@@ -3,11 +3,14 @@ package com.Harbinger.Spore.sEvents;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
 import com.Harbinger.Spore.Sentities.*;
+import com.Harbinger.Spore.Sentities.Utility.Mound;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -16,6 +19,7 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.util.FakePlayerFactory;
@@ -25,6 +29,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.server.ServerLifecycleHooks;
 
 import java.util.List;
 
@@ -69,7 +74,7 @@ public class HandlerEvents {
     }
 
     @SubscribeEvent
-    public static  void SetTheArea(RegisterCommandsEvent event){
+    public static  void Command(RegisterCommandsEvent event){
         event.getDispatcher().register(Commands.literal("spore:set_area")
         .executes(arguments -> {
             ServerLevel world = arguments.getSource().getLevel();
@@ -91,6 +96,29 @@ public class HandlerEvents {
              }
             return 0;
         }));
+        event.getDispatcher().register(Commands.literal("spore:check_entity")
+                .executes(arguments -> {
+                    ServerLevel world = arguments.getSource().getLevel();
+                    Entity entity = arguments.getSource().getEntity();
+                    if (entity == null)
+                        entity = FakePlayerFactory.getMinecraft(world);
+                    if (entity != null){
+                        AABB hitbox = entity.getBoundingBox().inflate(5);
+                        List<Entity> entities = entity.level.getEntities(entity, hitbox);
+                        for (Entity entity1 : entities) {
+                            if(entity1 instanceof Infected infected) {
+                                if (entity instanceof Player player && !player.level.isClientSide){
+                                    player.displayClientMessage(Component.literal("Entity " + infected.getCustomName()),false);
+                                    player.displayClientMessage(Component.literal("Current Health " + infected.getHealth()),false);
+                                    player.displayClientMessage(Component.literal("Kills " + infected.getKills()),false);
+                                    player.displayClientMessage(Component.literal("Position to be Searched " + infected.getSearchPos()),false);
+                                }
+                            }
+                        }
+                    }
+                    return 0;
+                }));
+
     }
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event) {

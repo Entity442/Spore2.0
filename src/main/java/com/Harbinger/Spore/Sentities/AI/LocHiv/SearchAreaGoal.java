@@ -26,17 +26,14 @@ public class SearchAreaGoal extends Goal {
         return infected.getTarget() == null;
     }
 
-    @Override
-    public void stop() {
-        if (this.infected.getSearchPos() != null && this.infected.getSearchPos().distToCenterSqr(this.infected.position()) < 4.0){
-            infected.setSearchPos(null);
-        }
-    }
 
     @Override
     public void tick() {
         if (this.infected.getSearchPos() != null){
             infected.getNavigation().moveTo(this.infected.getSearchPos().getX(),this.infected.getSearchPos().getY(), this.infected.getSearchPos().getZ(),this.speed);
+        }
+        if (this.infected.getSearchPos() != null && this.infected.getSearchPos().distToCenterSqr(this.infected.position()) < 20.0){
+            infected.setSearchPos(null);
         }
     }
 

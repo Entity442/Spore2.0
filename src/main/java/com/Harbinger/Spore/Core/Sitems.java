@@ -234,4 +234,8 @@ public class Sitems {
     public static final RegistryObject<Item> GROWTH_MYCELIUM = block(Sblocks.GROWTH_MYCELIUM, ScreativeTab.SPORE);
     public static final RegistryObject<Item> FUNGAL_STEP_SAPLING = block(Sblocks.FUNGAL_STEM_SAPLING, ScreativeTab.SPORE);
 
+    public static final RegistryObject<Item> ROOTED_BIOMASS = block(Sblocks.ROOTED_BIOMASS, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> BIOMASS_BLOCK = block(Sblocks.BIOMASS_BLOCK, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> ROOTED_MYCELIUM = block(Sblocks.ROOTED_MYCELIUM, ScreativeTab.SPORE);
+
 }

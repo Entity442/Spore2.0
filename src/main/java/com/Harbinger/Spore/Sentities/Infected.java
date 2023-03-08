@@ -2,18 +2,25 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
-import com.Harbinger.Spore.Sentities.AI.*;
+import com.Harbinger.Spore.Sentities.AI.FloatDiveGoal;
+import com.Harbinger.Spore.Sentities.AI.HurtTargetGoal;
+import com.Harbinger.Spore.Sentities.AI.InfectedPanicGoal;
+import com.Harbinger.Spore.Sentities.AI.LocHiv.BufferAI;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.LocalTargettingGoal;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.SearchAreaGoal;
+import com.Harbinger.Spore.Sentities.AI.SwimToBlockGoal;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedMovementControl;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.tags.BlockTags;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
@@ -42,8 +49,7 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 
 public class Infected extends Monster{
-
-    public int kills;
+    public static final EntityDataAccessor<Integer> KILLS = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
     @Nullable
     BlockPos searchPos;
 
@@ -133,7 +139,7 @@ public class Infected extends Monster{
 
         this.goalSelector.addGoal(4, new SearchAreaGoal(this, 1.2));
         this.goalSelector.addGoal(5 , new InfectedPanicGoal(this , 1.5));
-        this.goalSelector.addGoal(8 , new FleeSunGoal(this , 1.2));
+        this.goalSelector.addGoal(4 , new BufferAI(this ));
         this.goalSelector.addGoal(6,new FloatDiveGoal(this));
         this.goalSelector.addGoal(7, new SwimToBlockGoal(this , 1.5, 8));
         this.goalSelector.addGoal(9,new FollowOthersGoal(this, 1.2, ScentEntity.class , 128));
@@ -158,7 +164,8 @@ public class Infected extends Monster{
             AABB aabb = this.getBoundingBox().inflate(0.2D);
             for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
                 BlockState blockstate = this.level.getBlockState(blockpos);
-                if (blockstate.getMaterial() == Material.GLASS || blockstate.getMaterial() == Material.LEAVES) {
+                if ((blockstate.getMaterial() == Material.GLASS && blockstate.getDestroySpeed(level ,blockpos) < 2) ||
+                        (blockstate.getMaterial() == Material.LEAVES && blockstate.getDestroySpeed(level ,blockpos) < 2)) {
                     flag = this.level.destroyBlock(blockpos, true, this) || flag;
                 }
             }
@@ -184,12 +191,30 @@ public class Infected extends Monster{
 
     @Override
     public void awardKillScore(Entity entity, int i, DamageSource damageSource) {
-        if (this.getHealth() < this.getMaxHealth()){ this.heal(this.getMaxHealth()/5);}
-        kills = kills + 1;
+        this.entityData.set(KILLS,entityData.get(KILLS) + 1);
         super.awardKillScore(entity, i, damageSource);
     }
 
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putInt("kills",entityData.get(KILLS));
+    }
 
+
+    public void setKills(Integer count){
+        entityData.set(KILLS,count);
+    }
+    public  int getKills(){return entityData.get(KILLS);}
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        entityData.set(KILLS, tag.getInt("kills"));
+    }
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(KILLS, 0);
+    }
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
@@ -200,7 +225,6 @@ public class Infected extends Monster{
     }
 
     public static boolean checkMonsterInfectedRules(EntityType<? extends Infected> p_219014_, ServerLevelAccessor levelAccessor, MobSpawnType p_219016_, BlockPos pos, RandomSource source) {
-        return (levelAccessor.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(levelAccessor, pos, source) && checkMobSpawnRules(p_219014_, levelAccessor, p_219016_, pos, source ) && levelAccessor.getBlockState(pos.below()).canOcclude())
-                || (levelAccessor.getDifficulty() != Difficulty.PEACEFUL && levelAccessor.getBlockState(pos.below()).is(BlockTags.MOOSHROOMS_SPAWNABLE_ON));
+        return (levelAccessor.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(levelAccessor, pos, source) && checkMobSpawnRules(p_219014_, levelAccessor, p_219016_, pos, source));
     }
 }

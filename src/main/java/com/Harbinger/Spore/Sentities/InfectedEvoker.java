@@ -70,11 +70,18 @@ public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier 
             attackDamage.setBaseValue((SConfig.SERVER.inf_evo_damage.get()/2) * SConfig.SERVER.global_damage.get());
         }
     }
+    public boolean hasArm(){
+        return entityData.get(HAS_ARM);
+    }
+    public void setArm(boolean b){
+        entityData.set(HAS_ARM,b);
+    }
 
 
 
-    public void addAdditionalSaveData(CompoundTag p_33300_) {
-        super.addAdditionalSaveData(p_33300_);
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("arm",entityData.get(HAS_ARM));
         ListTag listtag = new ListTag();
 
         for(int i = 0; i < this.inventory.getContainerSize(); ++i) {
@@ -84,12 +91,13 @@ public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier 
             }
         }
 
-        p_33300_.put("Inventory", listtag);
+        tag.put("Inventory", listtag);
     }
 
-    public void readAdditionalSaveData(CompoundTag p_33291_) {
-        super.readAdditionalSaveData(p_33291_);
-        ListTag listtag = p_33291_.getList("Inventory", 10);
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        entityData.set(HAS_ARM ,tag.getBoolean("arm"));
+        ListTag listtag = tag.getList("Inventory", 10);
 
         for(int i = 0; i < listtag.size(); ++i) {
             ItemStack itemstack = ItemStack.of(listtag.getCompound(i));
@@ -164,7 +172,7 @@ public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier 
     private boolean switchy() {
         if (this.getTarget() != null){
             double ze = this.distanceToSqr(this.getTarget());
-            return (ze > 40.0D) && (ze < 800.0D) && entityData.get(HAS_ARM);
+            return (ze > 200.0D) && (ze < 600.0D) && entityData.get(HAS_ARM);
         }
         return false;
     }
@@ -189,8 +197,4 @@ public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier 
         }
     }
 
-
-    public boolean setHas_arm(){
-        return entityData.get(HAS_ARM);
-    }
 }

@@ -43,9 +43,11 @@ public class MoundModel<T extends Mound> extends EntityModel<T> {
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
-		this.body.xScale =1+ Mth.cos(ageInTicks/9)/6;
-		this.body.zScale =1+ Mth.cos(ageInTicks/9)/6;
-		this.body.yScale =1 -Mth.cos(ageInTicks/9)/6;
+		this.body.xScale =entity.getAge() + Mth.cos(ageInTicks/9)/6;
+		this.body.zScale =entity.getAge() + Mth.cos(ageInTicks/9)/6;
+		this.body.yScale =entity.getAge() -Mth.cos(ageInTicks/9)/6;
+		this.bb_main.xScale = entity.getAge();
+		this.bb_main.zScale = entity.getAge();
 	}
 
 	@Override

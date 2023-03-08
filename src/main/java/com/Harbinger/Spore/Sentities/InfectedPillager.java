@@ -190,10 +190,11 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
     @Override
     public void baseTick() {
         super.baseTick();
-        if (!isFreazing() && kills >= SConfig.SERVER.min_kills.get()) {
-            this.ev = ev + 1;
+        if (!isFreazing() && this.entityData.get(KILLS) >= SConfig.SERVER.min_kills.get()) {
+            this.ev = this.ev + 1;
         }
-        if (ev >= (20 * SConfig.SERVER.evolution_age_human.get()) && kills >= 1) {
+        if (this.ev >= (20 * SConfig.SERVER.evolution_age_human.get()) && this.entityData.get(KILLS) >= SConfig.SERVER.min_kills.get()) {
+            this.entityData.set(KILLS,entityData.get(KILLS) - SConfig.SERVER.min_kills.get());
             Evolve(this);
         }
     }
@@ -211,6 +212,7 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
                 Entity waveentity = randomElement.create(level);
                 waveentity.setPos(entity.getX(), entity.getY() + 0.5D, entity.getZ());
                 waveentity.setCustomName(entity.getCustomName());
+                if (waveentity instanceof Infected infected){infected.setKills(entityData.get(KILLS));}
                 level.addFreshEntity(waveentity);
                 entity.discard();
             }
@@ -218,6 +220,7 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
             Scamper scamper = new Scamper(Sentities.SCAMPER.get(), level);
             scamper.setPos(entity.getX(), entity.getY() + 0.5D, entity.getZ());
             scamper.setCustomName(entity.getCustomName());
+            scamper.setKills(entityData.get(KILLS));
             level.addFreshEntity(scamper);
             entity.discard();
         }
