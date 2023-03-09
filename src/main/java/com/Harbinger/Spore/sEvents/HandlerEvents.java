@@ -32,6 +32,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
 import java.util.List;
+import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = Spore.MODID)
 public class HandlerEvents {
@@ -108,10 +109,13 @@ public class HandlerEvents {
                         for (Entity entity1 : entities) {
                             if(entity1 instanceof Infected infected) {
                                 if (entity instanceof Player player && !player.level.isClientSide){
-                                    player.displayClientMessage(Component.literal("Entity " + infected.getCustomName()),false);
+                                    player.displayClientMessage(Component.literal("Entity "+ infected.getEncodeId() + " " + infected.getCustomName()),false);
                                     player.displayClientMessage(Component.literal("Current Health " + infected.getHealth()),false);
                                     player.displayClientMessage(Component.literal("Kills " + infected.getKills()),false);
                                     player.displayClientMessage(Component.literal("Position to be Searched " + infected.getSearchPos()),false);
+                                    player.displayClientMessage(Component.literal("Buffs " + infected.getActiveEffects()),false);
+                                    player.displayClientMessage(Component.literal("-------------------------"),false);
+
                                 }
                             }
                         }

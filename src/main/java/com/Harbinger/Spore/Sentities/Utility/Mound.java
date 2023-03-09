@@ -31,6 +31,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Map;
+
 public class Mound extends UtilityEntity{
     private static final EntityDataAccessor<Integer> AGE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> STRUCTURE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.BOOLEAN);
@@ -148,6 +150,19 @@ public class Mound extends UtilityEntity{
 
                 if ((blockstate.getMaterial() == Material.DIRT || blockstate.getMaterial() == Material.GRASS) && blockstate.getDestroySpeed(level ,blockpos) < 5){
                 level.setBlock(blockpos,Sblocks.INFESTED_DIRT.get().defaultBlockState(),3);}
+
+                if (blockstate.is(BlockTags.create(new ResourceLocation("minecraft:logs"))) && blockstate.getDestroySpeed(level ,blockpos) < 5){
+                    BlockState _bs = Sblocks.ROTTEN_LOG.get().defaultBlockState();
+                    for (Map.Entry<Property<?>, Comparable<?>> entry : blockstate.getValues().entrySet()) {
+                        Property _property = _bs.getBlock().getStateDefinition().getProperty(entry.getKey().getName());
+                        if (_property != null && _bs.getValue(_property) != null)
+                            try {
+                                _bs = _bs.setValue(_property, (Comparable) entry.getValue());
+                            } catch (Exception e) {
+                            }
+                    }
+                    level.setBlock(blockpos, _bs, 3);
+                }
 
                 if ((blockstate.getMaterial() == Material.SAND)){
                     if (blockstate.getBlock() == Blocks.GRAVEL && blockstate.getDestroySpeed(level ,blockpos) < 5){

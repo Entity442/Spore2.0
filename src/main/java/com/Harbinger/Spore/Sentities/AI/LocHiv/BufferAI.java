@@ -35,8 +35,8 @@ public class BufferAI extends Goal {
         }
         if (infected instanceof EvolvedInfected evolved && evolved.getTarget() != null && Math.random() < 0.01){
 
-            if (!evolved.hasEffect(MobEffects.MOVEMENT_SPEED) && evolved.getKills() >= 2 && evolved.isAggressive() && evolved.distanceToSqr(evolved.getTarget()) > 300){
-                evolved.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,200,0));
+            if (!evolved.hasEffect(MobEffects.MOVEMENT_SPEED) && evolved.getKills() >= 2 && evolved.isAggressive() && evolved.distanceToSqr(evolved.getTarget()) > 200){
+                evolved.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED,200,1));
                 evolved.setKills(evolved.getKills() - 2);
             }
             if (!evolved.hasEffect(MobEffects.DAMAGE_BOOST) && evolved.getKills() >= 2 && evolved.isAggressive() && evolved.distanceToSqr(evolved.getTarget()) < 60){

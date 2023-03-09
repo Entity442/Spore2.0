@@ -212,20 +212,7 @@ public class InfectedDrowned extends UtilityEntity implements Enemy {
         super.awardKillScore(entity, i, damageSource);
     }
 
-    public static boolean checkUnderwaterInfectedRules(EntityType<InfectedDrowned> p_218956_, ServerLevelAccessor levelAccessor, MobSpawnType spawnType, BlockPos pos, RandomSource source) {
-        if (!levelAccessor.getFluidState(pos.below()).is(FluidTags.WATER)) {
-            return false;
-        } else {
-            Holder<Biome> holder = levelAccessor.getBiome(pos);
-            boolean flag = levelAccessor.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(levelAccessor, pos, source) && (spawnType == MobSpawnType.SPAWNER || levelAccessor.getFluidState(pos).is(FluidTags.WATER));
-            if (holder.is(BiomeTags.MORE_FREQUENT_DROWNED_SPAWNS)) {
-                return source.nextInt(15) == 0 && flag;
-            } else {
-                return source.nextInt(40) == 0 && isDeepEnoughToSpawn(levelAccessor, pos) && flag;
-            }
-        }
-    }
-    private static boolean isDeepEnoughToSpawn(LevelAccessor levelAccessor, BlockPos pos) {
-        return pos.getY() < levelAccessor.getSeaLevel() - 5;
+    public static boolean checkUnderwaterInfectedRules(EntityType<InfectedDrowned> drownedEntityType, ServerLevelAccessor levelAccessor, MobSpawnType spawnType, BlockPos pos, RandomSource source) {
+       return levelAccessor.isWaterAt(pos) && levelAccessor.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(levelAccessor, pos, source) && checkMobSpawnRules(drownedEntityType, levelAccessor, spawnType, pos, source);
     }
 }

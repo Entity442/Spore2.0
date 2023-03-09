@@ -254,7 +254,7 @@ public class SConfig {
             builder.pop();
             builder.push("TargetingTasks");
             this.at_mob = builder.comment("Default true").define("Should attack other mobs?",true);
-            this.at_an = builder.comment("Default true").define("Should attack Animals?",false);
+            this.at_an = builder.comment("Default false").define("Should attack Animals?",false);
 
             this.blacklist = builder.defineList("Mobs Not Targeted",
                     Lists.newArrayList(
@@ -657,6 +657,8 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> sca_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> innards_loot;
 
+        public final ForgeConfigSpec.ConfigValue<Integer> days;
+        public final ForgeConfigSpec.ConfigValue<Boolean> spawn;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> spawns;
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> name;
@@ -744,6 +746,8 @@ public class SConfig {
 
             builder.pop();
             builder.push("Spawns");
+            this.spawn = builder.comment("Default false").define("Should mobs spawn after a few days?",false);
+            this.days = builder.comment("Default 3").define("Days before infected start spawning",3);
             this.spawns = builder.defineList("mob|weight|minimum|maximum",
                     Lists.newArrayList("spore:inf_human|100|2|5","spore:inf_drowned|60|1|2","spore:inf_pillager|60|1|3","spore:inf_villager|80|1|3","spore:inf_player|20|1|2"
                             ,"spore:inf_wanderer|25|1|2","spore:inf_witch|25|1|2","spore:inf_vindicator|20|1|2","spore:inf_evoker|10|1|2") , o -> o instanceof String);

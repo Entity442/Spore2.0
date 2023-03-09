@@ -31,6 +31,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -118,6 +119,10 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
                             Math.cos(i) * 0.15d, Math.sin(i) * Math.cos(i) * 0.15d, Math.sin(i) * 0.15d);
                 }
             }
+        }
+        if (this.getTarget() != null && this.distanceToSqr(this.getTarget()) < 80.0D){
+            if (!this.getTarget().isAlive())
+            {entityData.set(KILLS,entityData.get(KILLS)+1);}
         }
     }
 

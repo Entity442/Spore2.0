@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.Core;
 
+import com.Harbinger.Spore.SBlockEntities.BiomassLumpEntity;
 import com.Harbinger.Spore.SBlockEntities.ContainerBlockEntity;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -17,6 +18,11 @@ public class SblockEntities {
             BLOCK_ENTITIES.register("container", () ->
                     BlockEntityType.Builder.of(ContainerBlockEntity::new,
                             Sblocks.CONTAINER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<BiomassLumpEntity>> BIOMASS_LUMP =
+            BLOCK_ENTITIES.register("biomass_lump", () ->
+                    BlockEntityType.Builder.of(BiomassLumpEntity::new,
+                            Sblocks.BIOMASS_LUMP.get()).build(null));
+
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

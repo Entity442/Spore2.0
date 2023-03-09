@@ -28,7 +28,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.goal.FleeSunGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.AbstractGolem;
@@ -119,6 +118,7 @@ public class Infected extends Monster{
     }
 
 
+
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(3,new LocalTargettingGoal(this));
@@ -147,6 +147,7 @@ public class Infected extends Monster{
     }
     public void aiStep() {
         super.aiStep();
+
         if (!this.level.isClientSide) {
             int i = Mth.floor(this.getX());
             int j = Mth.floor(this.getY());
@@ -225,6 +226,8 @@ public class Infected extends Monster{
     }
 
     public static boolean checkMonsterInfectedRules(EntityType<? extends Infected> p_219014_, ServerLevelAccessor levelAccessor, MobSpawnType p_219016_, BlockPos pos, RandomSource source) {
+        if (SConfig.DATAGEN.spawn.get()){if (levelAccessor.dayTime() < (24000L * SConfig.DATAGEN.days.get())){return false;}}
+
         return (levelAccessor.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(levelAccessor, pos, source) && checkMobSpawnRules(p_219014_, levelAccessor, p_219016_, pos, source));
     }
 }
