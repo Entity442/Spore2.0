@@ -238,7 +238,7 @@ public class Mound extends UtilityEntity{
                 areaeffectcloud.setParticle(Sparticles.SPORE_PARTICLE.get());
                 areaeffectcloud.setRadius(2.0F);
                 areaeffectcloud.setDuration(300);
-                areaeffectcloud.setRadiusPerTick(((4.0F * entityData.get(AGE)) - areaeffectcloud.getRadius()) / (float)areaeffectcloud.getDuration());
+                areaeffectcloud.setRadiusPerTick(((2.5F * entityData.get(AGE)) - areaeffectcloud.getRadius()) / (float)areaeffectcloud.getDuration());
                 areaeffectcloud.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(), 200, 1));
                 entity.level.addFreshEntity(areaeffectcloud);
                 this.playSound(Ssounds.PUFF.get() ,0.5f ,0.5f);

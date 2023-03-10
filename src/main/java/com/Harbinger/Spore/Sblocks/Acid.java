@@ -5,6 +5,7 @@ import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.Sentities.Infected;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -23,7 +24,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class Acid extends FallingBlock {
     public Acid() {
-        super(BlockBehaviour.Properties.of(Material.PLANT).noOcclusion());
+        super(BlockBehaviour.Properties.of(Material.PLANT).noOcclusion().randomTicks());
     }
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
@@ -38,6 +39,11 @@ public class Acid extends FallingBlock {
         world.scheduleTick(pos, this, 1);
     }
 
+    @Override
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource randomSource) {
+        level.removeBlock(pos,false);
+        super.randomTick(state, level, pos, randomSource);
+    }
 
     @Override
     public void entityInside(BlockState blockState, Level level, BlockPos pos, Entity entity) {
