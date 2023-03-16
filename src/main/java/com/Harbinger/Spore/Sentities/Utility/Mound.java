@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -35,6 +36,7 @@ import java.util.Map;
 
 public class Mound extends UtilityEntity{
     private static final EntityDataAccessor<Integer> AGE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> MAX_AGE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> STRUCTURE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.BOOLEAN);
     private int counter;
     private final  int maxCounter = SConfig.SERVER.mound_cooldown.get();
@@ -54,7 +56,7 @@ public class Mound extends UtilityEntity{
     public void tick() {
         super.tick();
         Entity entity = this;
-        if (entity.isAlive() && entityData.get(AGE) < 3){
+        if (entity.isAlive() && entityData.get(AGE) < entityData.get(MAX_AGE)){
             this.getPersistentData().putInt("age", 1 + this.getPersistentData().getInt("age"));
             if (this.getPersistentData().getInt("age") >= SConfig.SERVER.mound_age.get()) {
                 this.getPersistentData().putInt("age",0);
@@ -90,6 +92,7 @@ public class Mound extends UtilityEntity{
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("age",entityData.get(AGE));
+        tag.putInt("max_age",entityData.get(MAX_AGE));
         tag.putBoolean("structure",entityData.get(STRUCTURE));
     }
 
@@ -97,6 +100,7 @@ public class Mound extends UtilityEntity{
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         entityData.set(AGE, tag.getInt("age"));
+        entityData.set(MAX_AGE, tag.getInt("max_age"));
         entityData.set(STRUCTURE, tag.getBoolean("structure"));
     }
 
@@ -108,13 +112,19 @@ public class Mound extends UtilityEntity{
         return counter;
     }
 
+    public void setMaxAge(int maxAge){
+        entityData.set(MAX_AGE,maxAge);
+    }
+
+    public  int getMaxAge(){
+        return entityData.get(MAX_AGE);
+    }
+
     private void Spread(Entity entity , LevelAccessor level) {
         int range;
-        if (entityData.get(AGE) == 2){
-            range = 8;
-        }else if (entityData.get(AGE) == 3){
-            range = 10;
-        }else {
+        if (entityData.get(AGE) > 1){
+            range = entityData.get(AGE) + 6;
+        } else {
             range = 6;
         }
 
@@ -129,6 +139,9 @@ public class Mound extends UtilityEntity{
                     .getRandomElement(RandomSource.create()).orElse(Blocks.AIR)).defaultBlockState();
             BlockState block4 =  (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.create(new ResourceLocation("spore:block_st")))
                     .getRandomElement(RandomSource.create()).orElse(Blocks.AIR)).defaultBlockState();
+            BlockState block5 =  (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.create(new ResourceLocation("spore:underwater_blocks")))
+                    .getRandomElement(RandomSource.create()).orElse(Blocks.AIR)).defaultBlockState();
+
 
             BlockState nord = level.getBlockState(blockpos.north());
             BlockState south = level.getBlockState(blockpos.south());
@@ -175,8 +188,9 @@ public class Mound extends UtilityEntity{
                     }else {level.setBlock(blockpos,Sblocks.INFESTED_STONE.get().defaultBlockState(),3);}}
                 }
 
+            if (blockstate.isSolidRender(level,blockpos )&& above.getFluidState().is(Fluids.WATER) && Math.random() < 0.01){ level.setBlock(blockpos.above(),block5,3);}
             if (above.isAir() && blockstate.isSolidRender(level ,blockpos) && Math.random() < 0.01){level.setBlock(blockpos.above(),block1,3);}
-            if (above.isAir() && blockstate.isSolidRender(level ,blockpos) && Math.random() < 0.01 && entityData.get(STRUCTURE) && entityData.get(AGE) == 3 && this.distanceToSqr(blockpos.getX(),blockpos.getY(),blockpos.getZ()) > 80){
+            if (above.isAir() && blockstate.isSolidRender(level ,blockpos) && Math.random() < 0.01 && entityData.get(STRUCTURE) && entityData.get(AGE) >= entityData.get(MAX_AGE) && this.distanceToSqr(blockpos.getX(),blockpos.getY(),blockpos.getZ()) > 80){
                 level.setBlock(blockpos.above(),block4,3);
                 entityData.set(STRUCTURE,false);
             }
@@ -215,15 +229,10 @@ public class Mound extends UtilityEntity{
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
-        if (getAge() == 2){
+        if (getAge() > 1){
             AttributeInstance health = this.getAttribute(Attributes.MAX_HEALTH);
             assert health != null;
-            health.setBaseValue(SConfig.SERVER.mound_hp.get() * 2 * SConfig.SERVER.global_health.get());
-        }
-        if (getAge() == 3){
-            AttributeInstance health = this.getAttribute(Attributes.MAX_HEALTH);
-            assert health != null;
-            health.setBaseValue(SConfig.SERVER.mound_hp.get() * 3 * SConfig.SERVER.global_health.get());
+            health.setBaseValue(SConfig.SERVER.mound_hp.get() * ((double)entityData.get(AGE) / 0.75) * SConfig.SERVER.global_health.get());
         }
     }
 
@@ -261,6 +270,7 @@ public class Mound extends UtilityEntity{
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(AGE, 1);
+        this.entityData.define(MAX_AGE, 3);
         this.entityData.define(STRUCTURE, true);
     }
 

@@ -1,23 +1,17 @@
 package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Ssounds;
-import com.Harbinger.Spore.Sentities.AI.*;
-import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
+import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
+import com.Harbinger.Spore.Sentities.AI.ReturnToWater;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedMovementControl;
-import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -26,30 +20,19 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
-import net.minecraft.world.entity.animal.AbstractFish;
-import net.minecraft.world.entity.animal.AbstractGolem;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.npc.AbstractVillager;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.network.NetworkHooks;
 
-public class InfectedDrowned extends UtilityEntity implements Enemy {
-    public int kills;
+public class InfectedDrowned extends Infected implements WaterInfected{
     protected final WaterBoundPathNavigation waterNavigation;
     protected final GroundPathNavigation groundNavigation;
-    public InfectedDrowned(EntityType<? extends PathfinderMob> type, Level level) {
+    public InfectedDrowned(EntityType<? extends Infected> type, Level level) {
         super(type, level);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
         this.moveControl = new InfectedMovementControl(this);
@@ -91,7 +74,7 @@ public class InfectedDrowned extends UtilityEntity implements Enemy {
                     this.setDeltaMovement(this.getDeltaMovement().add(0.0D, 0.015D, 0.0D));
                 }
             }
-            if (this.isEffectiveAi() && this.isInWater() && isEyeInFluidType(ForgeMod.WATER_TYPE.get())) {
+            if (this.isEffectiveAi() && isEyeInFluidType(ForgeMod.WATER_TYPE.get())) {
                 this.navigation = this.waterNavigation;
                 this.setSwimming(true);
             } else {
@@ -124,28 +107,10 @@ public class InfectedDrowned extends UtilityEntity implements Enemy {
             }
         });
 
-        this.goalSelector.addGoal(3, new HurtTargetGoal(this , entity -> {return !SConfig.SERVER.blacklist.get().contains(entity.getEncodeId());}, Infected.class));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
-                (this, Player.class,  true));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
-                (this, AbstractGolem.class,  true));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
-                (this, AbstractVillager.class,  true));
-
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, true, (en) -> {
-            return !(en instanceof Animal || en instanceof AbstractFish || en instanceof Infected || en instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(en.getEncodeId())) && SConfig.SERVER.at_mob.get();
-        }));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Animal.class, 5, false, true, (en) -> {
-            return !SConfig.SERVER.blacklist.get().contains(en.getEncodeId()) && SConfig.SERVER.at_an.get();
-        }));
-
         this.goalSelector.addGoal(4 , new ReturnToWater(this, 1.2));
         this.goalSelector.addGoal(4, new RandomStrollGoal(this ,0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(5,new FloatDiveGoalDR(this));
         this.goalSelector.addGoal(6,new MoveTowardsRestrictionGoal(this , 1.0));
-        this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7 , 32));
-
         this.goalSelector.addGoal(1, new CustomMeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
@@ -188,31 +153,8 @@ public class InfectedDrowned extends UtilityEntity implements Enemy {
 
     }
 
-    public boolean doHurtTarget(Entity p_32257_) {
-        if (super.doHurtTarget(p_32257_)) {
-            if (p_32257_ instanceof LivingEntity) {
-
-                ((LivingEntity)p_32257_).addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(),  600, 0), this);
-
-            }
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-    @Override
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
-    @Override
-    public void awardKillScore(Entity entity, int i, DamageSource damageSource) {
-        if (this.getHealth() < this.getMaxHealth()){ this.heal(this.getMaxHealth()/5);}
-        kills = kills + 1;
-        super.awardKillScore(entity, i, damageSource);
-    }
-
     public static boolean checkUnderwaterInfectedRules(EntityType<InfectedDrowned> drownedEntityType, ServerLevelAccessor levelAccessor, MobSpawnType spawnType, BlockPos pos, RandomSource source) {
-       return levelAccessor.isWaterAt(pos) && levelAccessor.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(levelAccessor, pos, source) && checkMobSpawnRules(drownedEntityType, levelAccessor, spawnType, pos, source);
+        if (SConfig.DATAGEN.spawn.get()){if (levelAccessor.dayTime() < (24000L * SConfig.DATAGEN.days.get())){return false;}}
+       return  levelAccessor.getFluidState(pos.below()).is(FluidTags.WATER) && levelAccessor.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(levelAccessor, pos, source);
     }
 }

@@ -5,8 +5,8 @@ import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Sentities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.Infected;
-import com.Harbinger.Spore.Sentities.InfectedHuman;
 import com.Harbinger.Spore.Sentities.InfectedPlayer;
+import com.Harbinger.Spore.Sentities.Utility.Proto;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -19,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -26,7 +27,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Mod.EventBusSubscriber
 public class Infection {
@@ -46,6 +46,25 @@ public class Infection {
                         Mob entityToSpawn = new ScentEntity(Sentities.SCENT.get(), _level);
                         entityToSpawn.moveTo(x, y + 4, z, world.getRandom().nextFloat() * 360F, 0);
                         world.addFreshEntity(entityToSpawn);
+                    }
+                }
+            }
+        }
+
+        if (entity instanceof Infected infected && infected.getLinked()){
+            if (event.getSource().getDirectEntity() != null && event.getSource().getDirectEntity() instanceof LivingEntity){
+                AABB searchbox = AABB.ofSize(new Vec3(event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ()), 32, 32, 32);
+                AABB box = AABB.ofSize(new Vec3(event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ()), 300, 200, 300);
+                List<Entity> entities = event.getEntity().level.getEntities(event.getEntity(), searchbox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
+                List<Entity> values = event.getEntity().level.getEntities(event.getEntity(), box , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
+                for (Entity en : entities) {
+                    if (en instanceof Infected infected1){
+                        infected1.setSearchPos(new BlockPos(x,y,z));
+                    }
+                }
+                for (Entity en : values) {
+                    if (en instanceof Proto proto){
+                        proto.setSignal(new BlockPos(x,y,z));
                     }
                 }
             }

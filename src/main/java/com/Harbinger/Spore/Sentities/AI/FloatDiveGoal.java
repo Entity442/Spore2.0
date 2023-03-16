@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.Sentities.AI;
 
+import com.Harbinger.Spore.Sentities.WaterInfected;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraftforge.common.ForgeMod;
@@ -15,7 +16,7 @@ public class FloatDiveGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.mob.isInWater();
+        return this.mob.isInWater() && !(mob instanceof WaterInfected);
     }
     public void tick() {
         if (this.mob.getRandom().nextFloat() < 0.8F && (this.mob.getAirSupply() < this.mob.getMaxAirSupply()/2) || mob.getXRot() < -5 || this.mob.getTarget() == null || (this.mob.getTarget() != null && !this.mob.getTarget().isEyeInFluidType(ForgeMod.WATER_TYPE.get()))) {

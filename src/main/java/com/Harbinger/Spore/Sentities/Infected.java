@@ -49,6 +49,7 @@ import javax.annotation.Nullable;
 
 public class Infected extends Monster{
     public static final EntityDataAccessor<Integer> KILLS = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Boolean> LINKED = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.BOOLEAN);
     @Nullable
     BlockPos searchPos;
 
@@ -130,7 +131,7 @@ public class Infected extends Monster{
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
                 (this, AbstractVillager.class,  true));
 
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, true, (en) -> {
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 5, false, true, (en) -> {
             return !(en instanceof Animal || en instanceof AbstractFish || en instanceof Infected || en instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(en.getEncodeId())) && SConfig.SERVER.at_mob.get();
         }));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Animal.class, 5, false, true, (en) -> {
@@ -160,7 +161,7 @@ public class Infected extends Monster{
             }
         }
 
-        if (this.horizontalCollision && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) {
+        if (this.horizontalCollision && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) && this.isAggressive()) {
             boolean flag = false;
             AABB aabb = this.getBoundingBox().inflate(0.2D);
             for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
@@ -169,10 +170,11 @@ public class Infected extends Monster{
                         (blockstate.getMaterial() == Material.LEAVES && blockstate.getDestroySpeed(level ,blockpos) < 2)) {
                     flag = this.level.destroyBlock(blockpos, true, this) || flag;
                 }
+                if (!flag && this.onGround) {
+                    this.jumpFromGround();
+                }
             }
-            if (!flag && this.onGround) {
-                this.jumpFromGround();
-            }
+
         }
         if ((this.getLastDamageSource() == DamageSource.IN_WALL || this.horizontalCollision) && this.isOnGround()){
             this.jumpFromGround();
@@ -195,27 +197,37 @@ public class Infected extends Monster{
         this.entityData.set(KILLS,entityData.get(KILLS) + 1);
         super.awardKillScore(entity, i, damageSource);
     }
+    public void setKills(Integer count){
+        entityData.set(KILLS,count);
+    }
+    public  int getKills(){return entityData.get(KILLS);}
+
+    public void setLinked(Boolean count){
+        entityData.set(LINKED,count);
+    }
+    public boolean getLinked(){return entityData.get(LINKED);}
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("kills",entityData.get(KILLS));
+        tag.putBoolean("linked",entityData.get(LINKED));
     }
 
 
-    public void setKills(Integer count){
-        entityData.set(KILLS,count);
-    }
-    public  int getKills(){return entityData.get(KILLS);}
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         entityData.set(KILLS, tag.getInt("kills"));
+        entityData.set(LINKED, tag.getBoolean("linked"));
     }
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(KILLS, 0);
+        this.entityData.define(LINKED,false);
     }
+
+
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
@@ -230,4 +242,6 @@ public class Infected extends Monster{
 
         return (levelAccessor.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(levelAccessor, pos, source) && checkMobSpawnRules(p_219014_, levelAccessor, p_219016_, pos, source));
     }
+
+
 }

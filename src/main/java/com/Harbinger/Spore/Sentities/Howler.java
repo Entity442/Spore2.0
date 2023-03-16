@@ -177,7 +177,7 @@ public class Howler extends EvolvedInfected {
 
 
     boolean checkForInfected(Entity entity){
-        AABB boundingBox = entity.getBoundingBox().inflate(12);
+        AABB boundingBox = entity.getBoundingBox().inflate(8);
         List<Entity> entities = entity.level.getEntities(entity, boundingBox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
 
         for (Entity en : entities) {

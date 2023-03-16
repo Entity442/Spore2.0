@@ -3,14 +3,13 @@ package com.Harbinger.Spore.sEvents;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
 import com.Harbinger.Spore.Sentities.*;
-import com.Harbinger.Spore.Sentities.Utility.Mound;
+import com.Harbinger.Spore.Sentities.Utility.Proto;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -29,10 +28,8 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.server.ServerLifecycleHooks;
 
 import java.util.List;
-import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = Spore.MODID)
 public class HandlerEvents {
@@ -74,6 +71,7 @@ public class HandlerEvents {
         }
     }
 
+
     @SubscribeEvent
     public static  void Command(RegisterCommandsEvent event){
         event.getDispatcher().register(Commands.literal("spore:set_area")
@@ -114,6 +112,7 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Kills " + infected.getKills()),false);
                                     player.displayClientMessage(Component.literal("Position to be Searched " + infected.getSearchPos()),false);
                                     player.displayClientMessage(Component.literal("Buffs " + infected.getActiveEffects()),false);
+                                    player.displayClientMessage(Component.literal("Is Linked ? " + infected.getLinked()),false);
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
 
                                 }
@@ -123,6 +122,32 @@ public class HandlerEvents {
                     return 0;
                 }));
 
+        event.getDispatcher().register(Commands.literal("spore:check_hive")
+                .executes(arguments -> {
+                    ServerLevel world = arguments.getSource().getLevel();
+                    Entity entity = arguments.getSource().getEntity();
+                    if (entity == null)
+                        entity = FakePlayerFactory.getMinecraft(world);
+                    if (entity != null){
+                        AABB hitbox = entity.getBoundingBox().inflate(5);
+                        List<Entity> entities = entity.level.getEntities(entity, hitbox);
+                        for (Entity entity1 : entities) {
+                            if(entity1 instanceof Proto proto) {
+                                if (entity instanceof Player player && !player.level.isClientSide){
+                                    player.displayClientMessage(Component.literal("Entity "+ proto.getEncodeId() + " " + proto.getCustomName()),false);
+                                    player.displayClientMessage(Component.literal("Current Health " + proto.getHealth()),false);
+                                    player.displayClientMessage(Component.literal("Biomass " + proto.getBiomass()),false);
+                                    player.displayClientMessage(Component.literal("Alert " + proto.getAlert()),false);
+                                    player.displayClientMessage(Component.literal("Last Signaled Position " + proto.getSignal()),false);
+                                    player.displayClientMessage(Component.literal("Targeted Location " + proto.getLocation()),false);
+                                    player.displayClientMessage(Component.literal("-------------------------"),false);
+
+                                }
+                            }
+                        }
+                    }
+                    return 0;
+                }));
     }
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event) {

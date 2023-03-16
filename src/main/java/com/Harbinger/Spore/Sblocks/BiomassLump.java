@@ -41,7 +41,7 @@ public class BiomassLump extends Block implements EntityBlock {
     public void tick(BlockState state, ServerLevel level, BlockPos blockPos, RandomSource source) {
         BlockEntity entity = level.getBlockEntity(blockPos);
         level.scheduleTick(blockPos, this, 40);
-        if (entity != null && level.canSeeSkyFromBelowWater(blockPos)) {
+        if (entity != null) {
             AABB searchbox = AABB.ofSize(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ()), 33, 33, 33);
             AABB box = AABB.ofSize(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ()), 5, 5, 5);
             List<Infected> entities = level.getEntitiesOfClass(Infected.class, searchbox);

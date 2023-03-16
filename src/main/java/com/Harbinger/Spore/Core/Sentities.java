@@ -7,6 +7,7 @@ import com.Harbinger.Spore.Sentities.Projectile.ThrownTumor;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
 import com.Harbinger.Spore.Sentities.InfEvoClaw;
 import com.Harbinger.Spore.Sentities.Utility.Mound;
+import com.Harbinger.Spore.Sentities.Utility.Proto;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.resources.ResourceLocation;
@@ -144,6 +145,9 @@ public class Sentities {
             () -> EntityType.Builder.of(Mound::new, MobCategory.MONSTER).sized(0.5f, 0.9f)
                     .build(new ResourceLocation(Spore.MODID, "mound").toString()));
 
+    public static final RegistryObject<EntityType<Proto>> PROTO = SPORE_ENTITIES.register("proto",
+            () -> EntityType.Builder.of(Proto::new, MobCategory.MONSTER).sized(1f, 2f)
+                    .build(new ResourceLocation(Spore.MODID, "proto").toString()));
 
 
 }

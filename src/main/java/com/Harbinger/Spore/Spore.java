@@ -2,6 +2,7 @@ package com.Harbinger.Spore;
 
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.ExtremelySusThings.BiomeModification;
+import com.Harbinger.Spore.ExtremelySusThings.StructureModification;
 import com.Harbinger.Spore.Sentities.Infected;
 import com.Harbinger.Spore.Sentities.InfectedDrowned;
 import com.mojang.serialization.Codec;
@@ -9,6 +10,7 @@ import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeModifier;
+import net.minecraftforge.common.world.StructureModifier;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -54,7 +56,9 @@ public class Spore
                 DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Spore.MODID);
         biomeModifiers.register(modEventBus);
         biomeModifiers.register("inf_spawns", BiomeModification::makeCodec);
-
+        final DeferredRegister<Codec<? extends StructureModifier>> structureModifiers = DeferredRegister.create(ForgeRegistries.Keys.STRUCTURE_MODIFIER_SERIALIZERS, Spore.MODID);
+        structureModifiers.register(modEventBus);
+        structureModifiers.register("spore_structure_spawns", StructureModification::makeCodec);
     }
 
     private void setup(final FMLCommonSetupEvent event) {

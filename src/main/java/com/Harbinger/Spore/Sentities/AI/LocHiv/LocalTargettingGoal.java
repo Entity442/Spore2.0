@@ -10,18 +10,18 @@ import net.minecraft.world.phys.AABB;
 import java.util.List;
 
 public class LocalTargettingGoal extends Goal {
-    private final Mob mob;
-    public LocalTargettingGoal(Mob mob){
+    private final Infected mob;
+    public LocalTargettingGoal(Infected mob){
         this.mob = mob;
     }
     @Override
     public boolean canUse() {
-        return mob.getTarget() != null;
+        return mob.getTarget() != null && mob.getLinked();
     }
 
     @Override
     public boolean canContinueToUse() {
-        return mob.getTarget() != null;
+        return mob.getTarget() != null && mob.getLinked();
     }
 
     @Override
