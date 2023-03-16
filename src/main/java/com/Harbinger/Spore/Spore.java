@@ -2,6 +2,7 @@ package com.Harbinger.Spore;
 
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.ExtremelySusThings.BiomeModification;
+import com.Harbinger.Spore.Core.SporeFeatures;
 import com.Harbinger.Spore.ExtremelySusThings.StructureModification;
 import com.Harbinger.Spore.Sentities.Infected;
 import com.Harbinger.Spore.Sentities.InfectedDrowned;
@@ -52,6 +53,7 @@ public class Spore
         Ssounds.register(modEventBus);
         SMenu.register(modEventBus);
         SblockEntities.register(modEventBus);
+        SporeFeatures.register(modEventBus);
         final DeferredRegister<Codec<? extends BiomeModifier>> biomeModifiers =
                 DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Spore.MODID);
         biomeModifiers.register(modEventBus);

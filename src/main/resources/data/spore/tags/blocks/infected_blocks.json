@@ -1,6 +1,7 @@
 {
   "values": [
     "minecraft:bedrock",
+    "minecraft:mycelium",
     "spore:growths_big",
     "spore:growths_small",
     "spore:blomfung",
@@ -12,6 +13,9 @@
     "spore:infested_sand",
     "spore:infested_gravel",
     "spore:infested_stone",
-    "spore:infested_deepslate"
+    "spore:infested_deepslate",
+    "spore:rooted_mycelium",
+    "spore:biomass_block",
+    "spore:rooted_biomass"
   ]
 }
