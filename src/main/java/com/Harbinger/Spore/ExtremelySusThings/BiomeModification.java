@@ -1,7 +1,6 @@
 package com.Harbinger.Spore.ExtremelySusThings;
 
 import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Spore;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Holder;
@@ -12,7 +11,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -35,22 +33,6 @@ public class BiomeModification implements BiomeModifier {
                 builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER)
                         .add(new MobSpawnSettings.SpawnerData(entity, Integer.parseUnsignedInt(string[1]), Integer.parseUnsignedInt(string[2]), Integer.parseUnsignedInt(string[3])));
                 }
-            }
-        }
-        if (phase == Phase.ADD){
-            if (biome.is(Tags.Biomes.IS_MUSHROOM)){
-                builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(Sentities.KNIGHT.get(),10,1,1));
-                builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(Sentities.BRAIOMIL.get(),10,1,1));
-                builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(Sentities.GRIEFER.get(),10,1,1));
-                builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(Sentities.BUSSER.get(),10,1,1));
-
-                builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(Sentities.HOWLER.get(),10,1,1));
-                builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(Sentities.BRUTE.get(),10,1,1));
-                builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(Sentities.STALKER.get(),10,1,1));
-
-                builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(Sentities.SPITTER.get(),10,1,1));
-                builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(Sentities.SLASHER.get(),10,1,1));
-                builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(Sentities.LEAPER.get(),10,1,1));
             }
         }
     }

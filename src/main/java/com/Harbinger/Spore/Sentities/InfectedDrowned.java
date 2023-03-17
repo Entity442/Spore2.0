@@ -153,8 +153,4 @@ public class InfectedDrowned extends Infected implements WaterInfected{
 
     }
 
-    public static boolean checkUnderwaterInfectedRules(EntityType<InfectedDrowned> drownedEntityType, ServerLevelAccessor levelAccessor, MobSpawnType spawnType, BlockPos pos, RandomSource source) {
-        if (SConfig.DATAGEN.spawn.get()){if (levelAccessor.dayTime() < (24000L * SConfig.DATAGEN.days.get())){return false;}}
-       return  levelAccessor.getFluidState(pos.below()).is(FluidTags.WATER) && levelAccessor.getDifficulty() != Difficulty.PEACEFUL && isDarkEnoughToSpawn(levelAccessor, pos, source);
-    }
 }

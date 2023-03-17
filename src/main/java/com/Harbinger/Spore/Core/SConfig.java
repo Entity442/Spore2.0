@@ -749,8 +749,8 @@ public class SConfig {
             this.spawn = builder.comment("Default false").define("Should mobs spawn after a few days?",false);
             this.days = builder.comment("Default 3").define("Days before infected start spawning",3);
             this.spawns = builder.defineList("mob|weight|minimum|maximum",
-                    Lists.newArrayList("spore:inf_human|100|2|5","spore:inf_drowned|60|1|2","spore:inf_pillager|60|1|3","spore:inf_villager|80|1|3","spore:inf_player|20|1|2"
-                            ,"spore:inf_wanderer|25|1|2","spore:inf_witch|25|1|2","spore:inf_vindicator|20|1|2","spore:inf_evoker|10|1|2") , o -> o instanceof String);
+                    Lists.newArrayList("spore:inf_human|80|2|5","spore:inf_drowned|30|1|2","spore:inf_pillager|40|1|3","spore:inf_villager|70|1|3","spore:inf_player|20|1|2"
+                            ,"spore:inf_wanderer|25|1|2","spore:inf_witch|25|1|2","spore:inf_vindicator|20|1|2","spore:inf_evoker|5|1|2") , o -> o instanceof String);
             builder.pop();
         }
     }
