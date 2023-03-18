@@ -94,6 +94,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> scamper_damage;
         public final ForgeConfigSpec.ConfigValue<Double> scamper_armor;
         public final ForgeConfigSpec.ConfigValue<Integer> scamper_age;
+        public final ForgeConfigSpec.ConfigValue<Boolean> scamper_summon;
 
         public final ForgeConfigSpec.ConfigValue<Double> brute_hp;
         public final ForgeConfigSpec.ConfigValue<Double> brute_damage;
@@ -479,6 +480,7 @@ public class SConfig {
             this.scamper_damage = builder.comment("Default 10").defineInRange("Sets Scamper Damage", 6, 1, Double.MAX_VALUE);
             this.scamper_armor = builder.comment("Default 2").defineInRange("Sets Scamper Armor", 3, 1, Double.MAX_VALUE);
             this.scamper_age = builder.comment("Default 6000").defineInRange("Sets Scamper Age", 6000, 1, Integer.MAX_VALUE);
+            this.scamper_summon = builder.comment("Default true").define("Should a Scamper Summon Mounds on death?",true);
             builder.pop();
 
             builder.push("Infected Player");
@@ -749,7 +751,7 @@ public class SConfig {
             this.spawn = builder.comment("Default false").define("Should mobs spawn after a few days?",false);
             this.days = builder.comment("Default 3").define("Days before infected start spawning",3);
             this.spawns = builder.defineList("mob|weight|minimum|maximum",
-                    Lists.newArrayList("spore:inf_human|80|2|5","spore:inf_drowned|30|1|2","spore:inf_pillager|40|1|3","spore:inf_villager|70|1|3","spore:inf_player|20|1|2"
+                    Lists.newArrayList("spore:inf_human|80|2|5","spore:inf_drowned|10|1|2","spore:inf_pillager|40|1|3","spore:inf_villager|70|1|3","spore:inf_player|20|1|2"
                             ,"spore:inf_wanderer|25|1|2","spore:inf_witch|25|1|2","spore:inf_vindicator|20|1|2","spore:inf_evoker|5|1|2") , o -> o instanceof String);
             builder.pop();
         }

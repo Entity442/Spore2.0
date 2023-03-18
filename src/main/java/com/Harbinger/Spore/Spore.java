@@ -89,6 +89,9 @@ public class Spore
             SpawnPlacements.register(Sentities.INF_PLAYER.get(),
                     SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                     Infected::checkMonsterInfectedRules);
+            SpawnPlacements.register(Sentities.INF_DROWNED.get(),
+                    SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    InfectedDrowned::checkMonsterInfectedRules);
             SpawnPlacements.register(Sentities.KNIGHT.get(),
                     SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                     Infected::checkMonsterInfectedRules);

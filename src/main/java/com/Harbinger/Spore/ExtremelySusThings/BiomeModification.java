@@ -11,6 +11,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -26,12 +27,14 @@ public class BiomeModification implements BiomeModifier {
 
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         if (phase == Phase.ADD) {
+            int biomesModifier;
+            if (biome.is(Tags.Biomes.IS_MUSHROOM)){biomesModifier = 20;}else{biomesModifier = 0;}
             for (String str : SConfig.DATAGEN.spawns.get()){
                 String[] string = str.split("\\|" );
                 EntityType<?> entity = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(string[0]));
                 if (entity != null && biome.is(TagKey.create(Registry.BIOME_REGISTRY , new ResourceLocation("minecraft:is_overworld")))){
                 builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER)
-                        .add(new MobSpawnSettings.SpawnerData(entity, Integer.parseUnsignedInt(string[1]), Integer.parseUnsignedInt(string[2]), Integer.parseUnsignedInt(string[3])));
+                        .add(new MobSpawnSettings.SpawnerData(entity, Integer.parseUnsignedInt(string[1]) + biomesModifier, Integer.parseUnsignedInt(string[2]), Integer.parseUnsignedInt(string[3])));
                 }
             }
         }

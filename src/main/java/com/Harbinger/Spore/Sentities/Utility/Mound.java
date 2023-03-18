@@ -77,11 +77,14 @@ public class Mound extends UtilityEntity{
         if (entity.isAlive() && attack_counter > 0){
             attack_counter = attack_counter - 1;
         }
-        if (this.getCounter() > (maxCounter - 50) && this.getCounter() < maxCounter && this.level instanceof ServerLevel serverLevel){
+        if (this.getCounter() > (maxCounter - 40) && this.getCounter() < maxCounter && this.level instanceof ServerLevel serverLevel){
                 double x0 = this.getX() - (random.nextFloat() - 0.2) * 0.2D;
                 double y0 = this.getY() + (random.nextFloat() - 0.5) * 0.5D * 10;
                 double z0 = this.getZ() + (random.nextFloat() - 0.2) * 0.2D;
                 serverLevel.sendParticles(Sparticles.SPORE_PARTICLE.get(), x0, y0, z0, 3,0, 0, 0,1);
+        }
+        if (this.getCounter() == (maxCounter - 40)){
+            this.playSound(Ssounds.PUFF.get() ,0.5f ,0.5f);
         }
     }
     public int getAge(){
@@ -222,7 +225,6 @@ public class Mound extends UtilityEntity{
                     }
               }
             }
-            this.playSound(Ssounds.PUFF.get(),0.5f ,0.5f);
         }
     }
 

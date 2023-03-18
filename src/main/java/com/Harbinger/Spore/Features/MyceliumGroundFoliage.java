@@ -44,7 +44,7 @@ public class MyceliumGroundFoliage extends RandomPatchFeature {
     private static RandomPatchConfiguration grassPatch(BlockStateProvider p_195203_, int p_195204_) {
         return FeatureUtils.simpleRandomPatchConfiguration(p_195204_, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(p_195203_)));
     }
-    private final Set<ResourceKey<Level>> generate_dimensions = Set.of(Level.OVERWORLD, Level.NETHER);
+    private final Set<ResourceKey<Level>> generate_dimensions = Set.of(Level.OVERWORLD);
 
     public MyceliumGroundFoliage() {
         super(RandomPatchConfiguration.CODEC);

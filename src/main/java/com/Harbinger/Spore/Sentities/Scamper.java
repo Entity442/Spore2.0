@@ -60,7 +60,8 @@ public class Scamper extends Infected{
                 if (!level.isClientSide){
                     RandomSource randomSource = RandomSource.create();
                     int chance = randomSource.nextInt(1,4);
-                    for (int i = 0; i < chance; ++i) {Summon();}
+                    for (int i = 0; i < chance; ++i) {
+                        if (SConfig.SERVER.scamper_summon.get()){Summon();}}
                     if (SConfig.SERVER.scent_spawn.get()){SummonScent();}
                     this.discard();
                 }

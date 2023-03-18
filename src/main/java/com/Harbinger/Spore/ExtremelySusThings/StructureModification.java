@@ -31,6 +31,10 @@ public class StructureModification implements StructureModifier {
             builder.getStructureSettings().getOrAddSpawnOverrides(MobCategory.MONSTER).addSpawn(new MobSpawnSettings.SpawnerData(Sentities.INF_PILLAGER.get(),60,2,4));
             builder.getStructureSettings().getOrAddSpawnOverrides(MobCategory.MONSTER).addSpawn(new MobSpawnSettings.SpawnerData(Sentities.MOUND.get(),1,1,2));
         }
+
+        if (structure.is(BuiltinStructures.OCEAN_RUIN_WARM)){
+            builder.getStructureSettings().getOrAddSpawnOverrides(MobCategory.MONSTER).addSpawn(new MobSpawnSettings.SpawnerData(Sentities.INF_DROWNED.get(),30,2,4));
+        }
     }
 
     public static Codec<StructureModification> makeCodec() {

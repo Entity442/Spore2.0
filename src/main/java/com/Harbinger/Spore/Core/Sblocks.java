@@ -20,7 +20,7 @@ public class Sblocks {
     }
     public static final RegistryObject<Block> ACID = BLOCKS.register("acid", Acid::new);
     public static final RegistryObject<Block> CONTAINER = BLOCKS.register("container", Container::new);
-    public static final RegistryObject<Block> LAB_BLOCK = BLOCKS.register("lab_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(4f, 20f)));
+    public static final RegistryObject<Block> LAB_BLOCK = BLOCKS.register("lab_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(6f, 20f)));
     public static final RegistryObject<Block> LAB_SLAB = BLOCKS.register("lab_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(Sblocks.LAB_BLOCK.get())));
     public static final RegistryObject<Block> LAB_STAIR = BLOCKS.register("lab_stair", () -> new StairBlock(()-> LAB_BLOCK.get().defaultBlockState(),BlockBehaviour.Properties.copy(Sblocks.LAB_BLOCK.get())));
     public static final RegistryObject<Block> IRON_LADDER = BLOCKS.register("iron_ladder", () -> new IronLadderBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2f, 4f).noOcclusion().sound(SoundType.METAL)));
