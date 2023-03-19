@@ -84,7 +84,7 @@ public class Mound extends UtilityEntity{
                 serverLevel.sendParticles(Sparticles.SPORE_PARTICLE.get(), x0, y0, z0, 3,0, 0, 0,1);
         }
         if (this.getCounter() == (maxCounter - 40)){
-            this.playSound(Ssounds.PUFF.get() ,0.5f ,0.5f);
+            this.playSound(Ssounds.PUFF.get());
         }
     }
     public int getAge(){
