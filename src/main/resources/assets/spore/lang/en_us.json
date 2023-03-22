@@ -16,7 +16,17 @@
   "block.spore.biomass_lump": "Biomass Lump",
   "block.spore.iron_ladder": "Iron Ladder",
   "block.spore.rotten_log": "Decayed Log",
+  "block.spore.organite": "Organite Block",
   "block.spore.acid": "Acid pool",
+
+  "block.spore.infested_dirt": "Infested Dirt",
+  "block.spore.infested_stone": "Infested Stone",
+  "block.spore.infested_netherrack": "Infested Netherrack",
+  "block.spore.infested_soul_sand": "Infested Soul Sand",
+  "block.spore.infested_end_stone": "Infested End Stone",
+  "block.spore.infested_sand": "Infested Sand",
+  "block.spore.infested_gravel": "Infested Gravel",
+  "block.spore.infested_deepslate": "Infested Deepslate",
 
   "item.spore.claw": "Claw",
   "item.spore.claw_fragment": "Claw Fragment",

@@ -657,6 +657,8 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_drow_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_player_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> sca_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> mound_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> organite_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> innards_loot;
 
         public final ForgeConfigSpec.ConfigValue<Integer> days;
@@ -670,6 +672,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_b;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_ho;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_hm;
+
+        public final ForgeConfigSpec.ConfigValue<Integer> biomass_lump_kills;
+
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> block_infection;
         public DataGen(ForgeConfigSpec.Builder builder){
             builder.push("LootTables");
             builder.comment("item|chance to drop(1-100)|minimum amount|maximum amount.Only values above 0 will be taken in consideration.");
@@ -719,6 +725,10 @@ public class SConfig {
 
             this.sca_loot = builder.defineList("Scamper ",
                     Lists.newArrayList("spore:mutated_fiber|50|1|4","spore:armor_fragment|80|1|3","spore:mutated_heart|10|1|1","spore:tumor|100|1|1") , o -> o instanceof String);
+            this.mound_loot = builder.defineList("Mound ",
+                    Lists.newArrayList("spore:mutated_fiber|70|2|5") , o -> o instanceof String);
+            this.organite_loot = builder.defineList("Organite Block",
+                    Lists.newArrayList("spore:mutated_fiber|50|1|4","spore:spine|80|1|3","spore:innards|70|1|5") , o -> o instanceof String);
 
             this.innards_loot = builder.defineList("Innards",
                     Lists.newArrayList("minecraft:bone_meal|50|1|2","minecraft:rotten_flesh|40|1|1","minecraft:wheat_seeds|40|1|1") , o -> o instanceof String);
@@ -753,6 +763,16 @@ public class SConfig {
             this.spawns = builder.defineList("mob|weight|minimum|maximum",
                     Lists.newArrayList("spore:inf_human|80|2|5","spore:inf_drowned|10|1|2","spore:inf_pillager|40|1|3","spore:inf_villager|70|1|3","spore:inf_player|20|1|2"
                             ,"spore:inf_wanderer|25|1|2","spore:inf_witch|25|1|2","spore:inf_vindicator|20|1|2","spore:inf_evoker|5|1|2") , o -> o instanceof String);
+            builder.pop();
+            builder.push("Structure data");
+            this.biomass_lump_kills = builder.comment("Default 5").defineInRange("Biomass Lump minimal kills", 5, 0, Integer.MAX_VALUE);
+            builder.pop();
+            builder.push("Block infection");
+            this.block_infection = builder.defineList("Blocks and their infected counterparts",
+                    Lists.newArrayList("minecraft:stone|spore:infested_stone","minecraft:grass_block|minecraft:mycelium","minecraft:dirt|spore:infested_dirt","minecraft:coarse_dirt|spore:infested_dirt"
+                            ,"minecraft:podzol|spore:infested_dirt","minecraft:rooted_dirt|spore:infested_dirt","minecraft:podzol|spore:infested_dirt","minecraft:deepslate|spore:infested_deepslate"
+                            ,"minecraft:sand|spore:infested_sand","minecraft:gravel|spore:infested_gravel","minecraft:netherrack|spore:infested_netherrack","minecraft:end_stone|spore:infested_end_stone"
+                            ,"minecraft:soulsand|spore:infested_soulsand","minecraft:soulsoil|spore:infested_soulsand") , o -> o instanceof String);
             builder.pop();
         }
     }

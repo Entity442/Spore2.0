@@ -1,8 +1,11 @@
 package com.Harbinger.Spore.Sblocks;
 
+import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Ssounds;
+import com.Harbinger.Spore.Sentities.Infected;
+import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -17,13 +20,13 @@ public class HangingPlantBub extends HangingPlant{
 
     @Override
     public void entityInside(BlockState state, Level level, BlockPos blockpos, Entity entity) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide && !(entity instanceof Infected || entity instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(entity.getEncodeId()) || SConfig.SERVER.mycelium.get().contains(entity.getEncodeId()))) {
             BlockState block2 = Sblocks.BLOOM_G.get().defaultBlockState();
             AreaEffectCloud areaeffectcloud = new AreaEffectCloud(level, blockpos.getX()+0.4, blockpos.getY(), blockpos.getZ()+0.4);
             areaeffectcloud.setRadius(2.5F);
             areaeffectcloud.setRadiusOnUse(-0.5F);
             areaeffectcloud.setWaitTime(10);
-            areaeffectcloud.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(), 100, 0));
+            areaeffectcloud.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(), 100, 2));
             areaeffectcloud.setDuration(areaeffectcloud.getDuration() / 2);
             areaeffectcloud.setRadiusPerTick(-areaeffectcloud.getRadius() / (float) areaeffectcloud.getDuration());
             if (state.getBlock().getStateDefinition().getProperty("hanging") instanceof BooleanProperty property) {

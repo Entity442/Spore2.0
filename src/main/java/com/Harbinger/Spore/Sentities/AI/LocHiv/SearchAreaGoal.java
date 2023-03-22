@@ -3,6 +3,8 @@ package com.Harbinger.Spore.Sentities.AI.LocHiv;
 import com.Harbinger.Spore.Sentities.Infected;
 import net.minecraft.world.entity.ai.goal.Goal;
 
+import java.util.EnumSet;
+
 public class SearchAreaGoal extends Goal {
     public final Infected infected;
     public final double speed;
@@ -10,6 +12,9 @@ public class SearchAreaGoal extends Goal {
     public SearchAreaGoal(Infected infected1 , double speed){
         this.infected = infected1;
         this.speed = speed;
+        this.setFlags(EnumSet.of(Flag.MOVE));
+        this.setFlags(EnumSet.of(Flag.LOOK));
+        this.setFlags(EnumSet.of(Flag.JUMP));
     }
 
 

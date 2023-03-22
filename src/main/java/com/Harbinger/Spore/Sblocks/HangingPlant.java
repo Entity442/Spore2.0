@@ -1,10 +1,18 @@
 package com.Harbinger.Spore.Sblocks;
 
+import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Sentities.Infected;
+import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -21,6 +29,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -89,5 +98,20 @@ public class HangingPlant extends FlowerBlock {
 
     public boolean isPathfindable(BlockState p_153469_, BlockGetter p_153470_, BlockPos p_153471_, PathComputationType p_153472_) {
         return true;
+    }
+
+
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (entity instanceof LivingEntity && !(entity instanceof Infected || entity instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(entity.getEncodeId()) || SConfig.SERVER.mycelium.get().contains(entity.getEncodeId()))) {
+            entity.makeStuckInBlock(state, new Vec3((double)0.8F, 0.75D, (double)0.8F));
+            if (!level.isClientSide && (entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
+                double d0 = Math.abs(entity.getX() - entity.xOld);
+                double d1 = Math.abs(entity.getZ() - entity.zOld);
+                if (d0 >= (double)0.003F || d1 >= (double)0.003F) {
+                    entity.hurt(DamageSource.CACTUS, 1.0F);
+                }
+            }
+
+        }
     }
 }

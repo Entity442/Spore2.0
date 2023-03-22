@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.Sblocks;
 
+import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.SBlockEntities.BiomassLumpEntity;
 import com.Harbinger.Spore.Sentities.Infected;
 import com.Harbinger.Spore.Spore;
@@ -48,17 +49,17 @@ public class BiomassLump extends Block implements EntityBlock {
             List<Infected> deliver = level.getEntitiesOfClass(Infected.class, box);
 
             for (Entity entity1 : entities) {
-                if (entity1 instanceof Infected infected && infected.getKills() > 1 && entity.getPersistentData().getInt("kills") <= 5) {
+                if (entity1 instanceof Infected infected && infected.getKills() > 1 && entity.getPersistentData().getInt("kills") <= SConfig.DATAGEN.biomass_lump_kills.get()) {
                     infected.setSearchPos(blockPos);
                 }
             }
             for (Entity entity1 : deliver) {
-                if (entity1 instanceof Infected infected && infected.getKills() > 1 && entity.getPersistentData().getInt("kills") <= 5) {
+                if (entity1 instanceof Infected infected && infected.getKills() > 1 && entity.getPersistentData().getInt("kills") <= SConfig.DATAGEN.biomass_lump_kills.get()) {
                     infected.setKills(infected.getKills() - 1);
                     entity.getPersistentData().putInt("kills",entity.getPersistentData().getInt("kills") + 1);
                 }
             }
-            if (entity.getPersistentData().getInt("kills") >= 5 && (Math.random() < 0.01)) {
+            if (entity.getPersistentData().getInt("kills") >= SConfig.DATAGEN.biomass_lump_kills.get() && (Math.random() < 0.01)) {
             level.destroyBlock(blockPos, false);
             RandomSource random = RandomSource.create();
              if (Math.random() < 0.4) {

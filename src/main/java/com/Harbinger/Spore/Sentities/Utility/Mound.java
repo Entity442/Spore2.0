@@ -19,8 +19,12 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -125,8 +129,10 @@ public class Mound extends UtilityEntity{
 
     private void Spread(Entity entity , LevelAccessor level) {
         int range;
-        if (entityData.get(AGE) > 1){
-            range = entityData.get(AGE) + 6;
+        if (entityData.get(AGE) == 2){
+            range = 10;
+        } else if (entityData.get(AGE) == 3){
+            range = 14;
         } else {
             range = 6;
         }
@@ -161,35 +167,34 @@ public class Mound extends UtilityEntity{
 
             BlockState blockstate = level.getBlockState(blockpos);
 
-            if (Math.random() < 0.02 && !blockstate.is(BlockTags.create(new ResourceLocation("spore:infected_blocks"))) && blockstate.isSolidRender(level,blockpos)
+            if (Math.random() < 0.02 && blockstate.isSolidRender(level,blockpos)
                     && (nordT || southT || westT || eastT || aboveT || belowT)){
-
-                if ((blockstate.getMaterial() == Material.DIRT || blockstate.getMaterial() == Material.GRASS) && blockstate.getDestroySpeed(level ,blockpos) < 5){
-                level.setBlock(blockpos,Sblocks.INFESTED_DIRT.get().defaultBlockState(),3);}
-
-                if (blockstate.is(BlockTags.create(new ResourceLocation("minecraft:logs"))) && blockstate.getDestroySpeed(level ,blockpos) < 5){
-                    BlockState _bs = Sblocks.ROTTEN_LOG.get().defaultBlockState();
-                    for (Map.Entry<Property<?>, Comparable<?>> entry : blockstate.getValues().entrySet()) {
-                        Property _property = _bs.getBlock().getStateDefinition().getProperty(entry.getKey().getName());
-                        if (_property != null && _bs.getValue(_property) != null)
-                            try {
-                                _bs = _bs.setValue(_property, (Comparable) entry.getValue());
-                            } catch (Exception e) {
-                            }
+                for (String str : SConfig.DATAGEN.block_infection.get()){
+                    String[] string = str.split("\\|" );
+                    ItemStack stack = new ItemStack(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(string[0])));
+                    if (stack != ItemStack.EMPTY && blockstate.getBlock().asItem() == stack.getItem()){
+                        ItemStack itemStack = new ItemStack(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(string[1])));
+                        if (itemStack != ItemStack.EMPTY && itemStack.getItem() instanceof BlockItem blockItem){
+                            level.setBlock(blockpos,blockItem.getBlock().defaultBlockState(),3);
+                        }
                     }
-                    level.setBlock(blockpos, _bs, 3);
                 }
+            }
 
-                if ((blockstate.getMaterial() == Material.SAND)){
-                    if (blockstate.getBlock() == Blocks.GRAVEL && blockstate.getDestroySpeed(level ,blockpos) < 5){
-                        level.setBlock(blockpos,Sblocks.INFESTED_GRAVEL.get().defaultBlockState(),3);}
-                    else {   level.setBlock(blockpos,Sblocks.INFESTED_SAND.get().defaultBlockState(),3);}}
 
-                if ((blockstate.getMaterial() == Material.STONE && blockstate.getDestroySpeed(level ,blockpos) < 5)){
-                    if (blockstate.getBlock() == Blocks.DEEPSLATE){
-                        level.setBlock(blockpos,Sblocks.INFESTED_DEEPSLATE.get().defaultBlockState(),3);
-                    }else {level.setBlock(blockpos,Sblocks.INFESTED_STONE.get().defaultBlockState(),3);}}
+
+            if (blockstate.is(BlockTags.create(new ResourceLocation("minecraft:logs"))) && blockstate.getDestroySpeed(level ,blockpos) < 5 && Math.random() < 0.3){
+                BlockState _bs = Sblocks.ROTTEN_LOG.get().defaultBlockState();
+                for (Map.Entry<Property<?>, Comparable<?>> entry : blockstate.getValues().entrySet()) {
+                    Property _property = _bs.getBlock().getStateDefinition().getProperty(entry.getKey().getName());
+                    if (_property != null && _bs.getValue(_property) != null)
+                        try {
+                            _bs = _bs.setValue(_property, (Comparable) entry.getValue());
+                        } catch (Exception e) {
+                        }
                 }
+                level.setBlock(blockpos, _bs, 3);
+            }
 
             if (blockstate.isSolidRender(level,blockpos )&& above.getFluidState().is(Fluids.WATER) && Math.random() < 0.01){ level.setBlock(blockpos.above(),block5,3);}
             if (above.isAir() && blockstate.isSolidRender(level ,blockpos) && Math.random() < 0.01){level.setBlock(blockpos.above(),block1,3);}
@@ -223,7 +228,7 @@ public class Mound extends UtilityEntity{
                     if (east.isAir()){
                         level.setBlock(blockpos.east(),block3.setValue(directionProperty,direction3),3);
                     }
-              }
+                }
             }
         }
     }

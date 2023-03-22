@@ -18,9 +18,6 @@ public class SelectableFallingBlock extends FallingBlock {
         this.stack = stack1;
     }
 
-    public ItemStack getCloneItemStack(BlockGetter p_57256_, BlockPos p_57257_, BlockState p_57258_) {
-        return stack;
-    }
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {

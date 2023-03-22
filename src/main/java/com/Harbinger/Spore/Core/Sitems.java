@@ -239,5 +239,15 @@ public class Sitems {
     public static final RegistryObject<Item> ROOTED_BIOMASS = block(Sblocks.ROOTED_BIOMASS, ScreativeTab.SPORE);
     public static final RegistryObject<Item> BIOMASS_BLOCK = block(Sblocks.BIOMASS_BLOCK, ScreativeTab.SPORE);
     public static final RegistryObject<Item> ROOTED_MYCELIUM = block(Sblocks.ROOTED_MYCELIUM, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> ORGANITE = block(Sblocks.ORGANITE, ScreativeTab.SPORE);
+
+    public static final RegistryObject<Item> INFESTED_DEEPSLATE = block(Sblocks.INFESTED_DEEPSLATE, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> INFESTED_DIRT = block(Sblocks.INFESTED_DIRT, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> INFESTED_END_STONE = block(Sblocks.INFESTED_END_STONE, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> INFESTED_GRAVEL = block(Sblocks.INFESTED_GRAVEL, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> INFESTED_NETHERRACK = block(Sblocks.INFESTED_NETHERRACK, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> INFESTED_SAND = block(Sblocks.INFESTED_SAND, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> INFESTED_SOUL_SAND = block(Sblocks.INFESTED_SOUL_SAND, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> INFESTED_STONE = block(Sblocks.INFESTED_STONE, ScreativeTab.SPORE);
 
 }

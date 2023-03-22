@@ -3,6 +3,7 @@ package com.Harbinger.Spore.sEvents;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
 import com.Harbinger.Spore.Sentities.*;
+import com.Harbinger.Spore.Sentities.Utility.Mound;
 import com.Harbinger.Spore.Sentities.Utility.Proto;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import com.Harbinger.Spore.Spore;
@@ -496,6 +497,23 @@ public class HandlerEvents {
 
                 if (event.getEntity() instanceof Scamper){
                     for (String str : SConfig.DATAGEN.sca_loot.get()){
+                        String[] string = str.split("\\|" );
+                        ItemStack itemStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0])));
+                        int m = 1;
+                        if (Integer.parseUnsignedInt(string[2]) == Integer.parseUnsignedInt(string[3])){
+                            m = Integer.parseUnsignedInt(string[3]);
+
+                        } else {if (Integer.parseUnsignedInt(string[2]) >= 1 && Integer.parseUnsignedInt(string[2]) >= 1){
+                            m = random.nextInt(Integer.parseUnsignedInt(string[2]), Integer.parseUnsignedInt(string[3]));}}
+
+                        if (Math.random() < (Integer.parseUnsignedInt(string[1]) / 100F)) {
+                            itemStack.setCount(m);
+                            ItemEntity item = new ItemEntity(event.getEntity().getLevel(), event.getEntity().getX() , event.getEntity().getY(),event.getEntity().getZ(),itemStack);
+                            item.setPickUpDelay(10);
+                            event.getEntity().getLevel().addFreshEntity(item);}}}
+
+                if (event.getEntity() instanceof Mound){
+                    for (String str : SConfig.DATAGEN.mound_loot.get()){
                         String[] string = str.split("\\|" );
                         ItemStack itemStack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0])));
                         int m = 1;

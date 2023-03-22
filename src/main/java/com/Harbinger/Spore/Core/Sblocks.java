@@ -42,12 +42,17 @@ public class Sblocks {
 
     public static final RegistryObject<Block> INFESTED_DIRT = BLOCKS.register("infested_dirt", () -> new SelectableBlock(new ItemStack(Blocks.COARSE_DIRT.asItem()),BlockBehaviour.Properties.copy(Blocks.COARSE_DIRT)));
     public static final RegistryObject<Block> INFESTED_STONE = BLOCKS.register("infested_stone", () -> new SelectableBlock(new ItemStack(Blocks.STONE.asItem()),BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public static final RegistryObject<Block> INFESTED_NETHERRACK = BLOCKS.register("infested_netherrack", () -> new SelectableBlock(new ItemStack(Blocks.NETHERRACK.asItem()),BlockBehaviour.Properties.copy(Blocks.NETHERRACK)));
+    public static final RegistryObject<Block> INFESTED_SOUL_SAND = BLOCKS.register("infested_soul_sand", () -> new SelectableBlock(new ItemStack(Blocks.SOUL_SAND.asItem()),BlockBehaviour.Properties.copy(Blocks.SOUL_SAND)));
+    public static final RegistryObject<Block> INFESTED_END_STONE = BLOCKS.register("infested_end_stone", () -> new SelectableBlock(new ItemStack(Blocks.END_STONE.asItem()),BlockBehaviour.Properties.copy(Blocks.END_STONE)));
     public static final RegistryObject<Block> INFESTED_SAND = BLOCKS.register("infested_sand", () -> new SelectableFallingBlock(new ItemStack(Blocks.SAND.asItem()),BlockBehaviour.Properties.copy(Blocks.SAND)));
     public static final RegistryObject<Block> INFESTED_GRAVEL = BLOCKS.register("infested_gravel", () -> new SelectableFallingBlock(new ItemStack(Blocks.GRAVEL.asItem()),BlockBehaviour.Properties.copy(Blocks.GRAVEL)));
     public static final RegistryObject<Block> INFESTED_DEEPSLATE = BLOCKS.register("infested_deepslate", () -> new SelectableBlock(new ItemStack(Blocks.DEEPSLATE.asItem()),BlockBehaviour.Properties.copy(Blocks.DEEPSLATE)));
     public static final RegistryObject<Block> ROTTEN_LOG = BLOCKS.register("rotten_log", () -> new FlamableRotatingBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).sound(SoundType.WOOD)));
     public static final RegistryObject<Block> BIOMASS_LUMP = BLOCKS.register("biomass_lump", BiomassLump::new);
 
+
+    public static final RegistryObject<Block> ORGANITE = BLOCKS.register("organite", OrganiteBlock::new);
     public static final RegistryObject<Block> ROOTED_BIOMASS = BLOCKS.register("rooted_biomass", () -> new Block(BlockBehaviour.Properties.of(Material.MOSS).strength(2f,2f).sound(SoundType.SLIME_BLOCK)));
     public static final RegistryObject<Block> BIOMASS_BLOCK = BLOCKS.register("biomass_block", () -> new Block(BlockBehaviour.Properties.of(Material.MOSS).strength(2f,2f).sound(SoundType.SLIME_BLOCK)));
     public static final RegistryObject<Block> ROOTED_MYCELIUM = BLOCKS.register("rooted_mycelium", () -> new Block(BlockBehaviour.Properties.of(Material.MOSS).strength(2f,2f).sound(SoundType.SLIME_BLOCK)));
