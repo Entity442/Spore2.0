@@ -121,7 +121,7 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
             }
         }
         if (this.getTarget() != null && this.distanceToSqr(this.getTarget()) < 80.0D){
-            if (!this.getTarget().isAlive())
+            if (this.getTarget() != null && !this.getTarget().isAlive())
             {entityData.set(KILLS,entityData.get(KILLS)+1);}
         }
     }

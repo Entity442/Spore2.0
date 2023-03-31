@@ -28,17 +28,21 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeMod;
 
 import java.util.Objects;
+import java.util.UUID;
 
-public class InfectedSpearItem extends Item implements Vanishable{
+public class InfectedSpearItem extends Item implements Vanishable {
     private final Multimap<Attribute, AttributeModifier> defaultModifiers;
+
     public InfectedSpearItem(Properties properties) {
         super(properties);
+        UUID BONUS_REACH_MODIFIER_UUID = UUID.fromString("30a9271c-d6b2-4651-b088-800acc43f282");
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", SConfig.SERVER.spear_damage.get() - 1, AttributeModifier.Operation.ADDITION));
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", -2.4, AttributeModifier.Operation.ADDITION));
-
+        builder.put(ForgeMod.ATTACK_RANGE.get(), new AttributeModifier(BONUS_REACH_MODIFIER_UUID, "Tool modifier",2.3f, AttributeModifier.Operation.ADDITION));
         this.defaultModifiers = builder.build();
     }
     @Override
