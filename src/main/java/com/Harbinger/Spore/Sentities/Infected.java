@@ -174,7 +174,7 @@ public class Infected extends Monster{
             }
 
         }
-        if ((this.getLastDamageSource() == DamageSource.IN_WALL || this.horizontalCollision) && this.isOnGround()){
+        if (this.getLastDamageSource() == DamageSource.IN_WALL && this.isOnGround()){
             this.jumpFromGround();
         }
     }

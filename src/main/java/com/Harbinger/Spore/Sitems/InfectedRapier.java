@@ -67,6 +67,9 @@ public class InfectedRapier extends SwordItem {
 
     @Override
     public boolean hurtEnemy(ItemStack itemStack, LivingEntity entity, LivingEntity livingEntity) {
+        itemStack.hurtAndBreak(2, livingEntity, (p_41007_) -> {
+            p_41007_.broadcastBreakEvent(EquipmentSlot.MAINHAND);
+        });
         entity.addEffect(new MobEffectInstance(Seffects.CORROSION.get(),60,1 ,true,true));
         return true;
     }

@@ -36,6 +36,8 @@ public class InfectedMovementControl extends MoveControl {
             this.mob.setSpeed(Mth.lerp(0.2F, this.mob.getSpeed(), f1));
             this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(0.0D, (double)this.mob.getSpeed() * d1 * 0.1D, 0.0D));
         } else {this.mob.setSpeed(0.0F);}
-
+        if (this.operation == Operation.JUMPING && this.mob.horizontalCollision && this.mob.isOnGround()){
+            this.mob.getJumpControl().jump();
+        }
     }
 }
