@@ -41,7 +41,6 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
     private static final int INVENTORY_SIZE = 5;
     private static final int SLOT_OFFSET = 300;
     private final SimpleContainer inventory = new SimpleContainer(5);
-    private int ev;
 
     public InfectedPillager(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -191,9 +190,9 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
     public void baseTick() {
         super.baseTick();
         if (!isFreazing() && this.entityData.get(KILLS) >= SConfig.SERVER.min_kills.get()) {
-            this.ev = this.ev + 1;
+            this.entityData.set(EVOLUTION,entityData.get(EVOLUTION) + 1);
         }
-        if (this.ev >= (20 * SConfig.SERVER.evolution_age_human.get()) && this.entityData.get(KILLS) >= SConfig.SERVER.min_kills.get()) {
+        if (entityData.get(EVOLUTION) >= (20 * SConfig.SERVER.evolution_age_human.get()) && this.entityData.get(KILLS) >= SConfig.SERVER.min_kills.get()) {
             this.entityData.set(KILLS,entityData.get(KILLS) - SConfig.SERVER.min_kills.get());
             Evolve(this);
         }

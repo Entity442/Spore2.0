@@ -45,7 +45,7 @@ public class Leaper extends EvolvedInfected implements Carrier{
             public boolean canContinueToUse() {
                 return (onGround);}
         });
-        this.goalSelector.addGoal(3, new TransportInfected<>(this,Mob.class,32,0.8 ,
+        this.goalSelector.addGoal(3, new TransportInfected<>(this,Mob.class, 0.8 ,
                 entity -> SConfig.SERVER.ranged.get().contains(entity.getEncodeId()) || SConfig.SERVER.support.get().contains(entity.getEncodeId())
                         && !(entity instanceof  Busser)));
         this.goalSelector.addGoal(4, new RandomStrollGoal(this, 0.8));

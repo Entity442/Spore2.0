@@ -37,6 +37,6 @@ public class InfectedHumanRenderer <Type extends InfectedHuman> extends MobRende
 
     @Override
     protected boolean isShaking(Type type) {
-        return type.evolution() || type.isFreazing();
+        return type.isFreazing();
     }
 }

@@ -49,6 +49,7 @@ import javax.annotation.Nullable;
 
 public class Infected extends Monster{
     public static final EntityDataAccessor<Integer> KILLS = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Integer> EVOLUTION = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Boolean> LINKED = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.BOOLEAN);
     @Nullable
     BlockPos searchPos;
@@ -141,8 +142,8 @@ public class Infected extends Monster{
         this.goalSelector.addGoal(4 , new BufferAI(this ));
         this.goalSelector.addGoal(6,new FloatDiveGoal(this));
         this.goalSelector.addGoal(7, new SwimToBlockGoal(this , 1.5, 8));
-        this.goalSelector.addGoal(9,new FollowOthersGoal(this, 1.2, ScentEntity.class , 128));
-        this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7 ,32 ));
+        this.goalSelector.addGoal(9,new FollowOthersGoal(this, 1.2, ScentEntity.class ));
+        this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7 ));
     }
     public void aiStep() {
         super.aiStep();
@@ -205,10 +206,15 @@ public class Infected extends Monster{
     }
     public boolean getLinked(){return entityData.get(LINKED);}
 
+    public int getEvolutionCoolDown(){
+        return this.entityData.get(EVOLUTION);
+    }
+
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("kills",entityData.get(KILLS));
+        tag.putInt("evolution",entityData.get(EVOLUTION));
         tag.putBoolean("linked",entityData.get(LINKED));
     }
 
@@ -218,11 +224,13 @@ public class Infected extends Monster{
         super.readAdditionalSaveData(tag);
         entityData.set(KILLS, tag.getInt("kills"));
         entityData.set(LINKED, tag.getBoolean("linked"));
+        entityData.set(EVOLUTION,tag.getInt("evolution"));
     }
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(KILLS, 0);
         this.entityData.define(LINKED,false);
+        this.entityData.define(EVOLUTION,0);
     }
 
 

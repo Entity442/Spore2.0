@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Random;
 
 public class InfectedHuman extends Infected {
-    private int ev;
 
     public InfectedHuman(EntityType<? extends Monster> p_33002_, Level p_33003_) {
         super(p_33002_, p_33003_);
@@ -68,9 +67,9 @@ public class InfectedHuman extends Infected {
     public void baseTick() {
         super.baseTick();
         if (!isFreazing() && this.entityData.get(KILLS) >= SConfig.SERVER.min_kills.get()) {
-            this.ev = this.ev + 1;
+            this.entityData.set(EVOLUTION,entityData.get(EVOLUTION) + 1);
         }
-        if (this.ev >= (20 * SConfig.SERVER.evolution_age_human.get()) && this.entityData.get(KILLS) >= SConfig.SERVER.min_kills.get()) {
+        if (this.entityData.get(EVOLUTION) >= (20 * SConfig.SERVER.evolution_age_human.get()) && this.entityData.get(KILLS) >= SConfig.SERVER.min_kills.get()) {
             this.entityData.set(KILLS,entityData.get(KILLS) - SConfig.SERVER.min_kills.get());
            Evolve(this);
         }
@@ -101,11 +100,6 @@ public class InfectedHuman extends Infected {
             level.addFreshEntity(scamper);
             entity.discard();
         }
-    }
-
-    public boolean evolution() {
-        int i = SConfig.SERVER.evolution_age_human.get() * 20;
-        return ev >= (i / 4) * 3;
     }
 
 

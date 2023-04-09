@@ -16,7 +16,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -34,7 +33,7 @@ public class Brute extends EvolvedInfected implements Carrier{
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1,new TransportInfected<>(this,Infected.class,16,1.1,entity -> {
+        this.goalSelector.addGoal(1,new TransportInfected<>(this,Infected.class, 1.1, entity -> {
             return SConfig.SERVER.ranged.get().contains(entity.getEncodeId());
         }));
         this.goalSelector.addGoal(2, new CustomMeleeAttackGoal(this, 1.5, false) {

@@ -48,23 +48,22 @@ public class HandlerEvents {
             }
 
             if (SConfig.SERVER.basic.get().contains(event.getEntity().getEncodeId())) {
-                mob.goalSelector.addGoal(8, new FollowOthersGoal(mob, 0.8, PathfinderMob.class, 32, entity -> {
-                    return
-                            SConfig.SERVER.evolved.get().contains(event.getEntity().getEncodeId());
+                mob.goalSelector.addGoal(8, new FollowOthersGoal(mob, 0.8, PathfinderMob.class, entity -> {
+                    return SConfig.SERVER.evolved.get().contains(event.getEntity().getEncodeId());
                 }));
             }
             if (SConfig.SERVER.ranged.get().contains(event.getEntity().getEncodeId())) {
-                mob.goalSelector.addGoal(6, new FollowOthersGoal(mob, 0.8, PathfinderMob.class, 32, entity -> {
+                mob.goalSelector.addGoal(6, new FollowOthersGoal(mob, 0.8, PathfinderMob.class, entity -> {
                     return entity instanceof Carrier;
                 }));
             }
             if (SConfig.SERVER.can_be_carried.get().contains(event.getEntity().getEncodeId())) {
-                mob.goalSelector.addGoal(7, new FollowOthersGoal(mob, 0.8, PathfinderMob.class, 32, entity -> {
+                mob.goalSelector.addGoal(7, new FollowOthersGoal(mob, 0.8, PathfinderMob.class, entity -> {
                     return entity instanceof Carrier;
                 }));
             }
             if (SConfig.SERVER.support.get().contains(event.getEntity().getEncodeId())) {
-                mob.goalSelector.addGoal(6, new FollowOthersGoal(mob, 0.8, PathfinderMob.class, 16, entity -> {
+                mob.goalSelector.addGoal(6, new FollowOthersGoal(mob, 0.8, PathfinderMob.class, entity -> {
                     return
                             SConfig.SERVER.evolved.get().contains(event.getEntity().getEncodeId());
                 }));
@@ -113,6 +112,7 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Kills " + infected.getKills()),false);
                                     player.displayClientMessage(Component.literal("Position to be Searched " + infected.getSearchPos()),false);
                                     player.displayClientMessage(Component.literal("Buffs " + infected.getActiveEffects()),false);
+                                    player.displayClientMessage(Component.literal("Ticks until evolution: " + infected.getEvolutionCoolDown() + "/" + (SConfig.SERVER.evolution_age_human.get() * 20)),false);
                                     player.displayClientMessage(Component.literal("Is Linked ? " + infected.getLinked()),false);
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
 

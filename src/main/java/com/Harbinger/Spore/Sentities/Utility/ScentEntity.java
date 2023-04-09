@@ -45,8 +45,6 @@ public class ScentEntity extends UtilityEntity {
             if (SConfig.SERVER.scent_summon.get()){
             this.getPersistentData().putInt("summon", 1 + this.getPersistentData().getInt("summon"));
             if (this.getPersistentData().getInt("summon") >= SConfig.SERVER.scent_summon_cooldown.get()) {
-                this.getPersistentData().putInt("summon", 0);
-
                 if (!this.level.isClientSide && checkForNonInfected(this)){
                 this.Summon(this);}
             }}
@@ -105,19 +103,23 @@ public class ScentEntity extends UtilityEntity {
         ServerLevelAccessor world = (ServerLevelAccessor) entity.level;
         Level level = entity.level;
         Random rand = new Random();
-        int d = random.nextInt(0 ,3);
+        int d = random.nextInt(0, 3);
         int r = random.nextInt(-12, 12);
         int c = random.nextInt(-12, 12);
         List<? extends String> ev = SConfig.SERVER.inf_summon.get();
 
-        for (int i = 0; i < 1; ++i) {
-            int randomIndex = rand.nextInt(ev.size());
-            ResourceLocation randomElement1 = new ResourceLocation(ev.get(randomIndex));
-            EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
-            Mob waveentity = (Mob) randomElement.create(level);
-            waveentity.setPos(entity.getX() + r, entity.getY() + 0.5D + d, entity.getZ() + c);
-            waveentity.finalizeSpawn(world, level.getCurrentDifficultyAt(new BlockPos(entity.getX()  ,entity.getY() ,entity.getZ() )),MobSpawnType.NATURAL, null,null);
-            level.addFreshEntity(waveentity);
+        if (world.isEmptyBlock(new BlockPos(this.getX() + r, this.getY() + d, this.getZ() + c))){
+            for (int i = 0; i < 1; ++i) {
+                int randomIndex = rand.nextInt(ev.size());
+                ResourceLocation randomElement1 = new ResourceLocation(ev.get(randomIndex));
+                EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
+                Mob waveentity = (Mob) randomElement.create(level);
+                assert waveentity != null;
+                waveentity.setPos(entity.getX() + r, entity.getY() + 0.5D + d, entity.getZ() + c);
+                waveentity.finalizeSpawn(world, level.getCurrentDifficultyAt(new BlockPos(entity.getX(), entity.getY(), entity.getZ())), MobSpawnType.NATURAL, null, null);
+                this.getPersistentData().putInt("summon", 0);
+                level.addFreshEntity(waveentity);
+            }
         }
     }
     public boolean addEffect(MobEffectInstance p_182397_, @Nullable Entity p_182398_) {

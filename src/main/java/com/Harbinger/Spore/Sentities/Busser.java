@@ -58,7 +58,7 @@ public class Busser extends EvolvedInfected implements Carrier{
     @Override
     protected void registerGoals() {
 
-        this.goalSelector.addGoal(1, new TransportInfected<>(this, Mob.class,32,0.8 ,
+        this.goalSelector.addGoal(1, new TransportInfected<>(this, Mob.class, 0.8 ,
                 e -> { return SConfig.SERVER.can_be_carried.get().contains(e.getEncodeId()) || SConfig.SERVER.ranged.get().contains(e.getEncodeId());}));
 
         this.goalSelector.addGoal(2, new CustomMeleeAttackGoal(this, 1.5, false) {

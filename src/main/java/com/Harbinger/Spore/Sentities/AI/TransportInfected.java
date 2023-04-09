@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sentities.AI;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.level.Level;
@@ -16,26 +17,24 @@ public class TransportInfected<T extends LivingEntity> extends Goal {
     private final Class<T> partnerClass;
     protected final TargetingConditions partneerT;
     protected Level level;
-    protected final  int searchrange;
     protected  final double speed;
     @Nullable
     protected T partner;
 
-    public TransportInfected(Mob mob, Class<T> partnerClass, int searchrange, double speed) {
-        this(mob ,partnerClass,searchrange,speed, null);
+    public TransportInfected(Mob mob, Class<T> partnerClass, double speed) {
+        this(mob ,partnerClass, speed, null);
     }
-    public TransportInfected(Mob mob, Class<T> partnerClass, int searchrange, double speed ,@Nullable Predicate<LivingEntity> en) {
+    public TransportInfected(Mob mob, Class<T> partnerClass, double speed, @Nullable Predicate<LivingEntity> en) {
         this.mob = mob;
         this.level = mob.level;
         this.partnerClass = partnerClass;
-        this.searchrange = searchrange;
         this.speed = speed;
-        partneerT = TargetingConditions.forNonCombat().range(searchrange).selector(en);
+        partneerT = TargetingConditions.forNonCombat().range(this.mob.getAttributeBaseValue(Attributes.FOLLOW_RANGE)).selector(en);
         this.setFlags(EnumSet.of(Goal.Flag.TARGET));
     }
     @Nullable
     private T getFreePartner() {
-        List<T> list = this.level.getNearbyEntities(this.partnerClass, partneerT, this.mob, this.mob.getBoundingBox().inflate(searchrange));
+        List<T> list = this.level.getNearbyEntities(this.partnerClass, partneerT, this.mob, this.mob.getBoundingBox().inflate(this.mob.getAttributeBaseValue(Attributes.FOLLOW_RANGE)));
         double d0 = Double.MAX_VALUE;
         T inf = null;
 

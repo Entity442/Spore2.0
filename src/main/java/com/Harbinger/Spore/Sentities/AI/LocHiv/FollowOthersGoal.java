@@ -2,6 +2,8 @@ package com.Harbinger.Spore.Sentities.AI.LocHiv;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.level.Level;
@@ -16,25 +18,23 @@ public class FollowOthersGoal extends Goal {
     protected final Level level;
     protected final PathfinderMob mob;
     private final Class<? extends PathfinderMob> partnerClass;
-    protected final int range;
     @Nullable
     protected PathfinderMob partner;
     private final double speedModifier;
 
-    public  FollowOthersGoal(PathfinderMob mob, double speedModifier, int range){
-        this(mob , speedModifier, mob.getClass(),range);
+    public  FollowOthersGoal(PathfinderMob mob, double speedModifier){
+        this(mob , speedModifier, mob.getClass());
     }
-    public FollowOthersGoal(PathfinderMob mob, double speedModifier, Class<? extends PathfinderMob> partnerClass, int range){
-        this(mob,speedModifier,partnerClass , range, null);
+    public FollowOthersGoal(PathfinderMob mob, double speedModifier, Class<? extends PathfinderMob> partnerClass){
+        this(mob,speedModifier,partnerClass , null);
     }
 
-    public  FollowOthersGoal(PathfinderMob mob, double speedModifier, Class<? extends PathfinderMob> partnerClass, int range, @Nullable Predicate<LivingEntity> en){
+    public  FollowOthersGoal(PathfinderMob mob, double speedModifier, Class<? extends PathfinderMob> partnerClass, @Nullable Predicate<LivingEntity> en){
     this.level = mob.level;
     this.mob = mob;
-    this.range = range;
     this.speedModifier = speedModifier;
     this.partnerClass = partnerClass;
-    PARTNER_TARGETING = TargetingConditions.forNonCombat().range(range).selector(en);
+    PARTNER_TARGETING = TargetingConditions.forNonCombat().range(this.mob.getAttributeBaseValue(Attributes.FOLLOW_RANGE)).selector(en);
     this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 }
 
@@ -43,7 +43,9 @@ public class FollowOthersGoal extends Goal {
     if (mob.getTarget() != null || this.getFreePartner() == null){
         return false;
     } else{
-        this.partner = this.getFreePartner();
+        if (this.mob.getRandom().nextInt(0,5) == 1){
+            this.partner = this.getFreePartner();
+        }
         return this.partnerClass != null;
      }
     }
@@ -67,7 +69,7 @@ public class FollowOthersGoal extends Goal {
 
     @Nullable
     private PathfinderMob getFreePartner() {
-        List<? extends PathfinderMob> list = this.level.getNearbyEntities(this.partnerClass, PARTNER_TARGETING, this.mob, this.mob.getBoundingBox().inflate(range));
+        List<? extends PathfinderMob> list = this.level.getNearbyEntities(this.partnerClass, PARTNER_TARGETING, this.mob, this.mob.getBoundingBox().inflate(this.mob.getAttributeBaseValue(Attributes.FOLLOW_RANGE)));
         double d0 = Double.MAX_VALUE;
         PathfinderMob inf = null;
 

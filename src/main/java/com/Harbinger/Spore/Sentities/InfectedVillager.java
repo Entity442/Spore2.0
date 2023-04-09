@@ -3,9 +3,7 @@ package com.Harbinger.Spore.Sentities;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Ssounds;
-import com.Harbinger.Spore.Sentities.AI.BreakBlockGoal;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
-import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -25,7 +23,6 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -33,7 +30,6 @@ import java.util.List;
 import java.util.Random;
 
 public class InfectedVillager extends Infected {
-    private int ev;
     public InfectedVillager(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }
@@ -59,23 +55,6 @@ public class InfectedVillager extends Infected {
             }
         });
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(4, new BreakBlockGoal(Blocks.COMPOSTER , this,1,4));
-        this.goalSelector.addGoal(4, new BreakBlockGoal(Blocks.SMOKER , this,1,4));
-        this.goalSelector.addGoal(4, new BreakBlockGoal(Blocks.BARREL , this,1,4));
-        this.goalSelector.addGoal(4, new BreakBlockGoal(Blocks.LOOM, this,1,4));
-        this.goalSelector.addGoal(4, new BreakBlockGoal(Blocks.BLAST_FURNACE, this,1,4));
-        this.goalSelector.addGoal(4, new BreakBlockGoal(Blocks.BREWING_STAND, this,1,4));
-        this.goalSelector.addGoal(4, new BreakBlockGoal(Blocks.CAULDRON, this,1,4));
-        this.goalSelector.addGoal(4, new BreakBlockGoal(Blocks.FLETCHING_TABLE, this,1,4));
-        this.goalSelector.addGoal(4, new BreakBlockGoal(Blocks.CARTOGRAPHY_TABLE, this,1,4));
-        this.goalSelector.addGoal(4, new BreakBlockGoal(Blocks.LECTERN, this,1,4));
-        this.goalSelector.addGoal(4, new BreakBlockGoal(Blocks.SMITHING_TABLE, this,1,4));
-        this.goalSelector.addGoal(4, new BreakBlockGoal(Blocks.STONECUTTER, this,1,4));
-        this.goalSelector.addGoal(4, new BreakBlockGoal(Blocks.GRINDSTONE, this,1,4));
-        this.goalSelector.addGoal(7, new FollowOthersGoal(this , 1 , EvolvedInfected.class, 32));
-
-
-
         super.registerGoals();
     }
 
@@ -101,9 +80,9 @@ public class InfectedVillager extends Infected {
     public void baseTick() {
         super.baseTick();
         if (!isFreazing() && this.entityData.get(KILLS) >= SConfig.SERVER.min_kills.get()) {
-            this.ev = this.ev + 1;
+            this.entityData.set(EVOLUTION,entityData.get(EVOLUTION) + 1);
         }
-        if (this.ev >= (20 * SConfig.SERVER.evolution_age_human.get()) && this.entityData.get(KILLS) >= SConfig.SERVER.min_kills.get()) {
+        if (entityData.get(EVOLUTION) >= (20 * SConfig.SERVER.evolution_age_human.get()) && this.entityData.get(KILLS) >= SConfig.SERVER.min_kills.get()) {
             this.entityData.set(KILLS,this.entityData.get(KILLS) - SConfig.SERVER.min_kills.get());
             Evolve(this);
         }
@@ -133,12 +112,6 @@ public class InfectedVillager extends Infected {
             level.addFreshEntity(scamper);
             entity.discard();
         }
-    }
-
-
-    public boolean evolution() {
-        int i = SConfig.SERVER.evolution_age_human.get() * 20;
-        return ev >= (i / 4) * 3;
     }
 
 

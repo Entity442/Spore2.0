@@ -3,6 +3,7 @@ package com.Harbinger.Spore.Sentities.AI;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.level.Level;
@@ -35,10 +36,10 @@ public class BuffAlliesGoal extends Goal {
         if (!(mob1 instanceof LivingEntity)) {
             throw new IllegalArgumentException("Buff");
         } else {
-            this.PARTNER_TARGETING = TargetingConditions.forNonCombat().range(8.0D).selector(en);
             this.level =((LivingEntity) mob1).level;
             this.rangedAttackMob = mob1;
             this.mob = (Mob)mob1;
+            this.PARTNER_TARGETING = TargetingConditions.forNonCombat().range(this.mob.getAttributeBaseValue(Attributes.FOLLOW_RANGE)).selector(en);
             this.speedModifier = speedModifier;
             this.attackIntervalMin = attackTime;
             this.attackIntervalMax = attackTime1;
@@ -58,7 +59,7 @@ public class BuffAlliesGoal extends Goal {
     }
 
     public boolean canContinueToUse() {
-        return this.partner.isAlive() || this.getFreePartner() != null;}
+        return this.partner != null && (this.partner.isAlive() || this.getFreePartner() != null);}
 
     public void stop() {
         this.partner = null;
@@ -73,10 +74,6 @@ public class BuffAlliesGoal extends Goal {
         assert this.partner != null;
         double d0 = this.mob.distanceToSqr(this.partner.getX(), this.partner.getY(), this.partner.getZ());
         boolean flag = this.mob.getSensing().hasLineOfSight(this.partner);
-        if (flag) {
-        } else {
-        }
-
             this.mob.getNavigation().moveTo(this.partner, this.speedModifier);
 
         this.mob.getLookControl().setLookAt(this.partner, 30.0F, 30.0F);
@@ -97,7 +94,7 @@ public class BuffAlliesGoal extends Goal {
 
     @Nullable
     private Mob getFreePartner() {
-        List<? extends Mob> list = this.level.getNearbyEntities(this.partnerClass, PARTNER_TARGETING, this.mob, this.mob.getBoundingBox().inflate(8.0D));
+        List<? extends Mob> list = this.level.getNearbyEntities(this.partnerClass, PARTNER_TARGETING, this.mob, this.mob.getBoundingBox().inflate(this.mob.getAttributeBaseValue(Attributes.FOLLOW_RANGE)));
         double d0 = Double.MAX_VALUE;
         Mob inf = null;
 
