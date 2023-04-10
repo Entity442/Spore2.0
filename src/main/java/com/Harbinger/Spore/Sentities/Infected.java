@@ -181,6 +181,11 @@ public class Infected extends Monster{
     }
 
 
+    @Override
+    public boolean removeWhenFarAway(double p_21542_) {
+        return this.entityData.get(KILLS) > 0;
+    }
+
     public boolean isFreazing(){
         int i = Mth.floor(this.getX());
         int j = Mth.floor(this.getY());

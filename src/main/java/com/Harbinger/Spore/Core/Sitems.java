@@ -250,4 +250,6 @@ public class Sitems {
     public static final RegistryObject<Item> INFESTED_SOUL_SAND = block(Sblocks.INFESTED_SOUL_SAND, ScreativeTab.SPORE);
     public static final RegistryObject<Item> INFESTED_STONE = block(Sblocks.INFESTED_STONE, ScreativeTab.SPORE);
 
+    public static final RegistryObject<Item> REMAINS = block(Sblocks.REMAINS, ScreativeTab.SPORE);
+
 }

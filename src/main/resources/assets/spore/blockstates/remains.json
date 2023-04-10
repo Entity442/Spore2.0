@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "spore:block/remains"
+      },
+      {
+        "model": "spore:block/remains",
+        "y": 90
+      },
+      {
+        "model": "spore:block/remains",
+        "y": 180
+      },
+      {
+        "model": "spore:block/remains",
+        "y": 270
+      }
+    ]
+  }
+}
