@@ -10,7 +10,6 @@ import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.LocalTargettingGoal;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.SearchAreaGoal;
 import com.Harbinger.Spore.Sentities.AI.SwimToBlockGoal;
-import com.Harbinger.Spore.Sentities.MovementControls.InfectedMovementControl;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
@@ -30,10 +29,8 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.AbstractFish;
-import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -62,7 +59,6 @@ public class Infected extends Monster{
         this.setPathfindingMalus(BlockPathTypes.DANGER_OTHER, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, 16.0F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
-        this.moveControl =  new InfectedMovementControl(this);
         this.xpReward = 5;
     }
 

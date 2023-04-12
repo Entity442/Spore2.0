@@ -19,26 +19,25 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.List;
 import java.util.Map;
 
 public class Mound extends UtilityEntity{
+    private static final EntityDataAccessor<Integer> TENDRILS = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> AGE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> MAX_AGE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> STRUCTURE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.BOOLEAN);
@@ -77,6 +76,9 @@ public class Mound extends UtilityEntity{
             Spread(entity , entity.level);
             this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,60,1));
             this.setCounter(0);
+            if (entityData.get(TENDRILS)>0 && entityData.get(AGE) == 3 && checkForTendrils(entity)){
+                SpreadKin(entity,entity.level);
+            }
         }
         if (entity.isAlive() && attack_counter > 0){
             attack_counter = attack_counter - 1;
@@ -98,6 +100,7 @@ public class Mound extends UtilityEntity{
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        tag.putInt("tendrils",entityData.get(TENDRILS));
         tag.putInt("age",entityData.get(AGE));
         tag.putInt("max_age",entityData.get(MAX_AGE));
         tag.putBoolean("structure",entityData.get(STRUCTURE));
@@ -106,6 +109,7 @@ public class Mound extends UtilityEntity{
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        entityData.set(TENDRILS, tag.getInt("tendrils"));
         entityData.set(AGE, tag.getInt("age"));
         entityData.set(MAX_AGE, tag.getInt("max_age"));
         entityData.set(STRUCTURE, tag.getBoolean("structure"));
@@ -232,7 +236,33 @@ public class Mound extends UtilityEntity{
             }
         }
     }
+    boolean checkForTendrils(Entity entity){
+        AABB boundingBox = entity.getBoundingBox().inflate(80);
+        List<Entity> entities = entity.level.getEntities(entity, boundingBox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
 
+        for (Entity en : entities) {
+            if (en instanceof InfectionTendril){
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    private void SpreadKin(Entity entity , Level level) {
+        AABB aabb = entity.getBoundingBox().inflate(80);
+        for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
+            BlockState blockState = level.getBlockState(blockpos);
+            if (blockState.is(Sblocks.REMAINS.get())){
+                InfectionTendril tendril = new InfectionTendril(Sentities.TENDRIL.get(),level);
+                tendril.setOwner(this);
+                tendril.setPos(this.getX(),this.getY()+0.5D,this.getZ());
+                level.addFreshEntity(tendril);
+                this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) -1);
+                break;
+            }
+            }
+        }
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
@@ -276,6 +306,7 @@ public class Mound extends UtilityEntity{
 
     protected void defineSynchedData() {
         super.defineSynchedData();
+        this.entityData.define(TENDRILS, 5);
         this.entityData.define(AGE, 1);
         this.entityData.define(MAX_AGE, 3);
         this.entityData.define(STRUCTURE, true);

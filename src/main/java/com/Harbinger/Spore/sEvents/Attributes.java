@@ -3,6 +3,7 @@ package com.Harbinger.Spore.sEvents;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.InfEvoClaw;
+import com.Harbinger.Spore.Sentities.Utility.InfectionTendril;
 import com.Harbinger.Spore.Sentities.Utility.Mound;
 import com.Harbinger.Spore.Sentities.Utility.Proto;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
@@ -46,6 +47,7 @@ public class Attributes {
         event.put(Sentities.SCAMPER.get(), Scamper.createAttributes().build());
         event.put(Sentities.MOUND.get(), Mound.createAttributes().build());
         event.put(Sentities.PROTO.get(), Proto.createAttributes().build());
+        event.put(Sentities.TENDRIL.get(), InfectionTendril.createAttributes().build());
     }
 }
 

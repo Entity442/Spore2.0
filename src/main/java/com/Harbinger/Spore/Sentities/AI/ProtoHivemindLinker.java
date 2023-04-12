@@ -17,7 +17,7 @@ public class ProtoHivemindLinker extends Goal {
     }
     @Override
     public boolean canUse() {
-        return proto.isAlive() && checkForInfected();
+        return proto.isAlive() && checkForInfected() && this.proto.getRandom().nextInt(0,10) == 3;
     }
 
 
@@ -40,7 +40,9 @@ public class ProtoHivemindLinker extends Goal {
         List<Entity> entities = this.proto.level.getEntities(this.proto, searchbox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
         for (Entity en : entities) {
             if (en instanceof Infected infected){
-                infected.setLinked(true);
+                if (!infected.getLinked()){
+                     infected.setLinked(true);
+                }
             }
         }
     }

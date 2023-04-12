@@ -6,6 +6,7 @@ import com.Harbinger.Spore.Sentities.Projectile.ThrownSpear;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownTumor;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
 import com.Harbinger.Spore.Sentities.InfEvoClaw;
+import com.Harbinger.Spore.Sentities.Utility.InfectionTendril;
 import com.Harbinger.Spore.Sentities.Utility.Mound;
 import com.Harbinger.Spore.Sentities.Utility.Proto;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
@@ -149,5 +150,7 @@ public class Sentities {
             () -> EntityType.Builder.of(Proto::new, MobCategory.MONSTER).sized(1f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "proto").toString()));
 
-
+    public static final RegistryObject<EntityType<InfectionTendril>> TENDRIL = SPORE_ENTITIES.register("tendril",
+            () -> EntityType.Builder.of(InfectionTendril::new, MobCategory.MONSTER).sized(1f, 0.1f)
+                    .build(new ResourceLocation(Spore.MODID, "tendril").toString()));
 }

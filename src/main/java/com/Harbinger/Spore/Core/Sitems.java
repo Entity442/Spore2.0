@@ -251,5 +251,6 @@ public class Sitems {
     public static final RegistryObject<Item> INFESTED_STONE = block(Sblocks.INFESTED_STONE, ScreativeTab.SPORE);
 
     public static final RegistryObject<Item> REMAINS = block(Sblocks.REMAINS, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> BIOMASS_LUMP = block(Sblocks.BIOMASS_LUMP, ScreativeTab.SPORE);
 
 }

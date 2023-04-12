@@ -4,7 +4,8 @@
 	"render_type": "cutout",
 	"textures": {
 		"1": "spore:block/remains",
-		"2": "spore:block/blomfung2"
+		"2": "spore:block/blomfung2",
+		"particle": "spore:block/biomass"
 	},
 	"elements": [
 		{

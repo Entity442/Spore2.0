@@ -4,13 +4,9 @@ import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.ReturnToWater;
-import com.Harbinger.Spore.Sentities.MovementControls.InfectedMovementControl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -23,8 +19,6 @@ import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
@@ -36,7 +30,6 @@ public class InfectedDrowned extends Infected implements WaterInfected{
     public InfectedDrowned(EntityType<? extends Infected> type, Level level) {
         super(type, level);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
-        this.moveControl = new InfectedMovementControl(this);
         this.waterNavigation = new WaterBoundPathNavigation(this, level);
         this.groundNavigation = new GroundPathNavigation(this, level);
     }
