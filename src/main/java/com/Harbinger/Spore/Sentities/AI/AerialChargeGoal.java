@@ -17,7 +17,7 @@ public class AerialChargeGoal  extends Goal {
     public boolean canUse() {
         LivingEntity livingentity =this.mob.getTarget();
         if (livingentity != null && livingentity.isAlive() && !this.mob.getMoveControl().hasWanted() && this.mob.getRandom().nextInt(0,6) == 2) {
-            return this.mob.distanceToSqr(livingentity) > 4.0D;
+            return true;
         } else {
             return false;
         }
@@ -38,9 +38,9 @@ public class AerialChargeGoal  extends Goal {
         if (livingentity != null) {
             Vec3 vec3 = livingentity.getEyePosition();
             if (vec3.lengthSqr() > 1.0E-7D) {
-                vec3 = vec3.normalize().scale(0.4D).add(vec31.scale(0.1D));
+                vec3 = vec3.normalize().scale(0.4D).add(vec31.scale(0.2D));
             }
-            this.mob.setDeltaMovement(vec3.x, vec3.y, vec3.z);
+            this.mob.setDeltaMovement(vec3.x, vec3.y,-vec3.z);
         }
     }
 

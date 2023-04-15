@@ -132,13 +132,13 @@ public class Mound extends UtilityEntity{
     }
 
     private void Spread(Entity entity , LevelAccessor level) {
-        int range;
+        double range;
         if (entityData.get(AGE) == 2){
-            range = 10;
+            range = SConfig.SERVER.mound_range_age2.get();
         } else if (entityData.get(AGE) == 3){
-            range = 14;
+            range = SConfig.SERVER.mound_range_age3.get();
         } else {
-            range = 6;
+            range = SConfig.SERVER.mound_range_default.get();
         }
 
         AABB aabb = entity.getBoundingBox().inflate(range);
@@ -255,7 +255,7 @@ public class Mound extends UtilityEntity{
             BlockState blockState = level.getBlockState(blockpos);
             if (blockState.is(Sblocks.REMAINS.get())){
                 InfectionTendril tendril = new InfectionTendril(Sentities.TENDRIL.get(),level);
-                tendril.setOwner(this);
+                tendril.setSearch(blockpos);
                 tendril.setPos(this.getX(),this.getY()+0.5D,this.getZ());
                 level.addFreshEntity(tendril);
                 this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) -1);

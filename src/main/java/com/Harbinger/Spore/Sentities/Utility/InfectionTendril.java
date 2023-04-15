@@ -11,9 +11,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -21,11 +19,11 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -35,7 +33,7 @@ import javax.annotation.Nullable;
 public class InfectionTendril extends UtilityEntity{
     private static final EntityDataAccessor<Integer> LIFE = SynchedEntityData.defineId(InfectionTendril.class, EntityDataSerializers.INT);
     @Nullable
-    Mob owner;
+    BlockPos search;
     public InfectionTendril(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         this.moveControl = new InfectedWallMovementControl(this);
@@ -55,7 +53,7 @@ public class InfectionTendril extends UtilityEntity{
 
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(LIFE, 2400);
+        this.entityData.define(LIFE, 4800);
     }
 
     public void addAdditionalSaveData(CompoundTag tag) {
@@ -69,19 +67,38 @@ public class InfectionTendril extends UtilityEntity{
     }
 
     @Nullable
-    public Mob getOwner() {
-        return this.owner;
+    public BlockPos getSearch() {
+        return search;
     }
 
-    public void setOwner(@Nullable Mob owner) {
-        this.owner = owner;
+    public void setSearch(@Nullable BlockPos search) {
+        this.search = search;
     }
-
 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new BreakBlockGoal(Sblocks.REMAINS.get(),this,1,80));
+        this.goalSelector.addGoal(2,new GoToArea(this));
         super.registerGoals();
+    }
+
+    static class GoToArea extends Goal {
+        InfectionTendril tendril;
+        public GoToArea(InfectionTendril t){
+            this.tendril = t;
+        }
+        @Override
+        public boolean canUse() {
+            return this.tendril.getSearch() != null;
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+            if (this.tendril.getSearch() != null){
+                this.tendril.getNavigation().moveTo(this.tendril.getSearch().getX(),this.tendril.getSearch().getY(),this.tendril.getSearch().getZ(),1);
+            }
+        }
     }
 
     @Override
@@ -141,9 +158,7 @@ public class InfectionTendril extends UtilityEntity{
                     }
                 }
             }
-            BlockState block1 =  (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.create(new ResourceLocation("spore:ground_foliage")))
-                    .getRandomElement(RandomSource.create()).orElse(Blocks.AIR)).defaultBlockState();
-            if (above.isAir() && blockstate.isSolidRender(level ,blockpos) && Math.random() < 0.01){level.setBlock(blockpos.above(),block1,3);}
+            if (above.isAir() && blockstate.isSolidRender(level ,blockpos) && Math.random() < 0.1){level.setBlock(blockpos.above(),Sblocks.MYCELIUM_VEINS.get().defaultBlockState(),3);}
 
             if (blockstate.is(Sblocks.REMAINS.get())){
                 Mound mound = new Mound(Sentities.MOUND.get(),level);

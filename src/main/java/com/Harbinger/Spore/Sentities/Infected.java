@@ -180,6 +180,9 @@ public class Infected extends Monster{
         if (this.getLastDamageSource() == DamageSource.IN_WALL && this.isOnGround()){
             this.jumpFromGround();
         }
+        if (this.horizontalCollision && this.isInWater()){
+            this.jumpFromGround();
+        }
     }
 
 
