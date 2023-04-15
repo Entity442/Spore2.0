@@ -21,6 +21,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> global_damage;
         public final ForgeConfigSpec.ConfigValue<Double> global_health;
         public final ForgeConfigSpec.ConfigValue<Double> global_armor;
+        public final ForgeConfigSpec.ConfigValue<Integer> hunger;
         public final ForgeConfigSpec.ConfigValue<Boolean> at_mob;
         public final ForgeConfigSpec.ConfigValue<Boolean> inf_player;
         public final ForgeConfigSpec.ConfigValue<Boolean> at_an;
@@ -252,6 +253,7 @@ public class SConfig {
             this.global_damage = builder.define("Global Damage Modifier",1.0);
             this.global_health = builder.define("Global Health Modifier",1.0);
             this.global_armor = builder.define("Global Armor Modifier",1.0);
+            this.hunger = builder.define("Hunger in ticks",12000);
 
             builder.pop();
             builder.push("TargetingTasks");
@@ -766,7 +768,7 @@ public class SConfig {
             this.days = builder.comment("Default 3").define("Days before infected start spawning",3);
             this.spawns = builder.defineList("mob|weight|minimum|maximum",
                     Lists.newArrayList("spore:inf_human|80|2|5","spore:inf_drowned|10|1|2","spore:inf_pillager|40|1|3","spore:inf_villager|70|1|3","spore:inf_player|20|1|2"
-                            ,"spore:inf_wanderer|25|1|2","spore:inf_witch|25|1|2","spore:inf_vindicator|20|1|2","spore:inf_evoker|5|1|2") , o -> o instanceof String);
+                            ,"spore:inf_wanderer|25|1|2","spore:inf_witch|25|1|2","spore:inf_vindicator|1|1|2","spore:inf_evoker|5|1|2") , o -> o instanceof String);
             builder.pop();
             builder.push("Structure data");
             this.biomass_lump_kills = builder.comment("Default 5").defineInRange("Biomass Lump minimal kills", 5, 0, Integer.MAX_VALUE);

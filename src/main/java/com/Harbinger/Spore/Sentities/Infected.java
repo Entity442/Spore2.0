@@ -1,7 +1,9 @@
 package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Core.Seffects;
+import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.Sentities.AI.FloatDiveGoal;
 import com.Harbinger.Spore.Sentities.AI.HurtTargetGoal;
 import com.Harbinger.Spore.Sentities.AI.InfectedPanicGoal;
@@ -20,6 +22,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
@@ -45,6 +48,7 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 
 public class Infected extends Monster{
+    public static final EntityDataAccessor<Integer> HUNGER = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Integer> KILLS = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Integer> EVOLUTION = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Boolean> LINKED = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.BOOLEAN);
@@ -144,17 +148,19 @@ public class Infected extends Monster{
     public void aiStep() {
         super.aiStep();
 
-        if (!this.level.isClientSide) {
-            int i = Mth.floor(this.getX());
-            int j = Mth.floor(this.getY());
-            int k = Mth.floor(this.getZ());
-            Entity entity = this;
-            BlockPos blockpos = new BlockPos(i, j, k);
-            Biome biome = this.level.getBiome(blockpos).value();
-            if ((biome.getBaseTemperature() <= 0.2) && (!entity.isOnFire())) {
-                this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 2, 1, false, false), Infected.this);
-            }
+        if (isFreazing() && !this.level.isClientSide  && this.getRandom().nextInt(0,10) == 3) {
+            this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1, false, false), Infected.this);
+            this.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 0, false, false), Infected.this);
         }
+
+        if (!(this instanceof EvolvedInfected) && entityData.get(HUNGER) > 0){
+            int i;
+            if (isFreazing()){i = 2;}else {i = 1;}
+            entityData.set(HUNGER , entityData.get(HUNGER) - i);
+        }else if (entityData.get(HUNGER) <= 0 && !this.hasEffect(Seffects.STARVATION.get()) && this.random.nextInt(0,7) == 3){
+            this.addEffect(new MobEffectInstance(Seffects.STARVATION.get(),100,0));
+        }
+
 
         if (this.horizontalCollision && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) && this.isAggressive()) {
             boolean flag = false;
@@ -195,18 +201,19 @@ public class Infected extends Monster{
     @Override
     public void awardKillScore(Entity entity, int i, DamageSource damageSource) {
         this.entityData.set(KILLS,entityData.get(KILLS) + 1);
+        setHunger(SConfig.SERVER.hunger.get());
         super.awardKillScore(entity, i, damageSource);
     }
+    public void setHunger(Integer count){entityData.set(HUNGER,count);}
+    public int getHunger(){return entityData.get(HUNGER);}
     public void setKills(Integer count){
         entityData.set(KILLS,count);
     }
     public  int getKills(){return entityData.get(KILLS);}
-
     public void setLinked(Boolean count){
         entityData.set(LINKED,count);
     }
     public boolean getLinked(){return entityData.get(LINKED);}
-
     public int getEvolutionCoolDown(){
         return this.entityData.get(EVOLUTION);
     }
@@ -214,6 +221,7 @@ public class Infected extends Monster{
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        tag.putInt("hunger",entityData.get(HUNGER));
         tag.putInt("kills",entityData.get(KILLS));
         tag.putInt("evolution",entityData.get(EVOLUTION));
         tag.putBoolean("linked",entityData.get(LINKED));
@@ -223,12 +231,14 @@ public class Infected extends Monster{
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        entityData.set(HUNGER, tag.getInt("hunger"));
         entityData.set(KILLS, tag.getInt("kills"));
         entityData.set(LINKED, tag.getBoolean("linked"));
         entityData.set(EVOLUTION,tag.getInt("evolution"));
     }
     protected void defineSynchedData() {
         super.defineSynchedData();
+        this.entityData.define(HUNGER, SConfig.SERVER.hunger.get());
         this.entityData.define(KILLS, 0);
         this.entityData.define(LINKED,false);
         this.entityData.define(EVOLUTION,0);
@@ -238,6 +248,12 @@ public class Infected extends Monster{
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        if (this.hasEffect(Seffects.STARVATION.get()) && source == DamageSource.GENERIC && this.level instanceof ServerLevel serverLevel){
+            double x0 = this.getX() - (random.nextFloat() - 0.1) * 0.1D;
+            double y0 = this.getY() + (random.nextFloat() - 0.25) * 0.25D * 5;
+            double z0 = this.getZ() + (random.nextFloat() - 0.1) * 0.1D;
+            serverLevel.sendParticles(Sparticles.SPORE_PARTICLE.get(), x0, y0, z0, 4,0, 0, 0,1);
+        }
         if (source.getDirectEntity() instanceof AcidBall || source.getDirectEntity() instanceof Vomit){
             return  false;
         }
@@ -251,4 +267,36 @@ public class Infected extends Monster{
     }
 
 
+    @Override
+    public boolean addEffect(MobEffectInstance effectInstance, @org.jetbrains.annotations.Nullable Entity entity) {
+        if (entityData.get(HUNGER) <= 0 && (effectInstance.getEffect() == MobEffects.HEAL || effectInstance.getEffect() == MobEffects.REGENERATION)){
+           setHunger(SConfig.SERVER.hunger.get());
+        }
+        return super.addEffect(effectInstance, entity);
+    }
+
+
+    @Override
+    public void die(DamageSource source) {
+        if (this.hasEffect(Seffects.STARVATION.get()) && source == DamageSource.GENERIC){
+            AABB aabb = this.getBoundingBox().inflate(1);
+            for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
+                BlockState blockState = level.getBlockState(blockpos);
+                BlockState above = level.getBlockState(blockpos.above());
+                if (!level.isClientSide() && blockState.isSolidRender(level,blockpos) && !above.isSolidRender(level,blockpos)){
+                    if (Math.random() < 0.9){
+                        if (Math.random() < 0.5) {
+                            level.setBlock(blockpos.above(), Sblocks.GROWTHS_BIG.get().defaultBlockState(), 3);
+                        } else {
+                            level.setBlock(blockpos.above(), Sblocks.GROWTHS_SMALL.get().defaultBlockState(), 3);
+                        }
+                    }if (Math.random() < 0.3){
+                        level.setBlock(blockpos.above(), Sblocks.REMAINS.get().defaultBlockState(), 3);
+                        break;
+                    }
+                }
+            }
+        }
+        super.die(source);
+    }
 }

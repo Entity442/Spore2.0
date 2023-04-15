@@ -46,7 +46,13 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
         }));
         this.goalSelector.addGoal(0, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRONG_HEALING), SoundEvents.WITCH_DRINK, (p_35882_) -> {
             return this.getHealth() < this.getMaxHealth();
-        }));
+        }){
+            @Override
+            public void start() {
+                setHunger(SConfig.SERVER.hunger.get());
+                super.start();
+            }
+        });
         this.goalSelector.addGoal(2, new BuffAlliesGoal(this,Infected.class,1.2,35,45,3));
         this.goalSelector.addGoal(1, new BuffAlliesGoal(this,Mob.class,1.2,35,45,3,entity -> {
             return SConfig.SERVER.evolved.get().contains(entity.getEncodeId());

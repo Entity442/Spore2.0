@@ -19,7 +19,7 @@ public class FlyingWanderAround extends Goal {
     }
 
     public boolean canUse() {
-        return mob.getNavigation().isDone() && mob.getRandom().nextInt(10) == 0;
+        return mob.getNavigation().isDone() && mob.getRandom().nextInt(1,10) == 3;
     }
 
     public boolean canContinueToUse() {
@@ -38,9 +38,6 @@ public class FlyingWanderAround extends Goal {
     private Vec3 findPos() {
         Vec3 vec3;
             vec3 = mob.getViewVector(0.0F);
-
-
-        int i = 8;
         Vec3 vec32 = HoverRandomPos.getPos(mob, 8, 7, vec3.x, vec3.z, ((float)Math.PI / 2F), 3, 1);
         return vec32 != null ? vec32 : AirAndWaterRandomPos.getPos(mob, 8, 4, -2, vec3.x, vec3.z, (float)Math.PI / 2F);
     }

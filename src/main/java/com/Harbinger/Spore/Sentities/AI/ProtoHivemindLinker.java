@@ -17,7 +17,7 @@ public class ProtoHivemindLinker extends Goal {
     }
     @Override
     public boolean canUse() {
-        return proto.isAlive() && checkForInfected() && this.proto.getRandom().nextInt(0,10) == 3;
+        return proto.isAlive() && this.proto.getRandom().nextInt(0,10) == 3 && checkForInfected();
     }
 
 

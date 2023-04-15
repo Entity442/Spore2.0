@@ -16,7 +16,7 @@ public class FloatDiveGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.mob.isInWater() && !(mob instanceof WaterInfected);
+        return this.mob.isInWater() && !(mob instanceof WaterInfected) && this.mob.getRandom().nextInt(0,10) == 5;
     }
     public void tick() {
         if (this.mob.getRandom().nextFloat() < 0.8F && (this.mob.getAirSupply() < this.mob.getMaxAirSupply()/2) || mob.getXRot() < -5 || this.mob.getTarget() == null || (this.mob.getTarget() != null && !this.mob.getTarget().isEyeInFluidType(ForgeMod.WATER_TYPE.get()))) {
