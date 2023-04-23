@@ -113,7 +113,7 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Position to be Searched " + infected.getSearchPos()),false);
                                     player.displayClientMessage(Component.literal("Buffs " + infected.getActiveEffects()),false);
                                     player.displayClientMessage(Component.literal("Ticks until evolution: " + infected.getEvolutionCoolDown() + "/" + (SConfig.SERVER.evolution_age_human.get() * 20)),false);
-                                    player.displayClientMessage(Component.literal("Ticks until starvation: " + infected.getHunger() + "/0 , hunger value " + (SConfig.SERVER.hunger.get())),false);
+                                    player.displayClientMessage(Component.literal("Ticks until starvation: " + infected.getHunger() + "/" + (SConfig.SERVER.hunger.get())),false);
                                     player.displayClientMessage(Component.literal("Is Linked ? " + infected.getLinked()),false);
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
 

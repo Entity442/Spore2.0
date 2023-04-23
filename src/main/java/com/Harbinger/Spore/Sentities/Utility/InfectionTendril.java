@@ -28,22 +28,25 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nullable;
-
 public class InfectionTendril extends UtilityEntity{
+    private static final EntityDataAccessor<BlockPos> SEARCH_AREA = SynchedEntityData.defineId(InfectionTendril.class, EntityDataSerializers.BLOCK_POS);
     private static final EntityDataAccessor<Integer> LIFE = SynchedEntityData.defineId(InfectionTendril.class, EntityDataSerializers.INT);
-    @Nullable
-    BlockPos search;
     public InfectionTendril(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
+        setPersistenceRequired();
         this.moveControl = new InfectedWallMovementControl(this);
         this.navigation = new WallClimberNavigation(this,level);
     }
 
-    int getPos() {
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
+    int getLife() {
         return this.entityData.get(LIFE);
     }
-    public void setPosi(int blockPos) {
+    public void setLife(int blockPos) {
         this.entityData.set(LIFE, blockPos);
     }
     @Override
@@ -54,25 +57,32 @@ public class InfectionTendril extends UtilityEntity{
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(LIFE, 4800);
+        this.entityData.define(SEARCH_AREA,BlockPos.ZERO);
+    }
+
+    public void setSearchArea(BlockPos blockPos) {
+        this.entityData.set(SEARCH_AREA, blockPos);
+    }
+
+    BlockPos getSearchArea() {
+        return this.entityData.get(SEARCH_AREA);
     }
 
     public void addAdditionalSaveData(CompoundTag tag) {
+        tag.putInt("life", this.getLife());
+        tag.putInt("AreaX", this.getSearchArea().getX());
+        tag.putInt("AreaY", this.getSearchArea().getY());
+        tag.putInt("AreaZ", this.getSearchArea().getZ());
         super.addAdditionalSaveData(tag);
-        tag.putInt("life", this.getPos());
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {
-        this.setPosi(tag.getInt("life"));
+        this.setLife(tag.getInt("life"));
+        int i = tag.getInt("AreaX");
+        int j = tag.getInt("AreaY");
+        int k = tag.getInt("AreaZ");
+        this.setSearchArea(new BlockPos(i, j, k));
         super.readAdditionalSaveData(tag);
-    }
-
-    @Nullable
-    public BlockPos getSearch() {
-        return search;
-    }
-
-    public void setSearch(@Nullable BlockPos search) {
-        this.search = search;
     }
 
     @Override
@@ -89,16 +99,22 @@ public class InfectionTendril extends UtilityEntity{
         }
         @Override
         public boolean canUse() {
-            return this.tendril.getSearch() != null;
+            return this.tendril.getSearchArea() != null;
         }
 
         @Override
         public void tick() {
             super.tick();
-            if (this.tendril.getSearch() != null){
-                this.tendril.getNavigation().moveTo(this.tendril.getSearch().getX(),this.tendril.getSearch().getY(),this.tendril.getSearch().getZ(),1);
+            if (this.tendril.getSearchArea() != null){
+                this.tendril.getNavigation().moveTo(this.tendril.getSearchArea().getX(),this.tendril.getSearchArea().getY(),this.tendril.getSearchArea().getZ(),1);
             }
         }
+    }
+
+
+    @Override
+    public boolean isInvulnerable() {
+        return true;
     }
 
     @Override

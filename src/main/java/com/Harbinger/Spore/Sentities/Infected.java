@@ -52,6 +52,7 @@ public class Infected extends Monster{
     public static final EntityDataAccessor<Integer> KILLS = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Integer> EVOLUTION = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Boolean> LINKED = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Boolean> PERSISTENT = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.BOOLEAN);
     @Nullable
     BlockPos searchPos;
 
@@ -153,11 +154,11 @@ public class Infected extends Monster{
             this.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 0, false, false), Infected.this);
         }
 
-        if (!(this instanceof EvolvedInfected) && entityData.get(HUNGER) > 0){
+        if (!(this instanceof EvolvedInfected) && entityData.get(HUNGER) < SConfig.SERVER.hunger.get()){
             int i;
             if (isFreazing()){i = 2;}else {i = 1;}
-            entityData.set(HUNGER , entityData.get(HUNGER) - i);
-        }else if (entityData.get(HUNGER) <= 0 && !this.hasEffect(Seffects.STARVATION.get()) && this.random.nextInt(0,7) == 3){
+            entityData.set(HUNGER , entityData.get(HUNGER) + i);
+        }else if (!(this instanceof EvolvedInfected) && entityData.get(HUNGER) >= SConfig.SERVER.hunger.get() && !this.hasEffect(Seffects.STARVATION.get()) && this.random.nextInt(0,7) == 3){
             this.addEffect(new MobEffectInstance(Seffects.STARVATION.get(),100,0));
         }
 
@@ -188,7 +189,7 @@ public class Infected extends Monster{
 
     @Override
     public boolean removeWhenFarAway(double p_21542_) {
-        return this.entityData.get(KILLS) > 0;
+        return this.entityData.get(KILLS) <= 0 && !this.entityData.get(PERSISTENT);
     }
 
     public boolean isFreazing(){
@@ -204,7 +205,7 @@ public class Infected extends Monster{
     @Override
     public void awardKillScore(Entity entity, int i, DamageSource damageSource) {
         this.entityData.set(KILLS,entityData.get(KILLS) + 1);
-        setHunger(SConfig.SERVER.hunger.get());
+        setHunger(0);
         super.awardKillScore(entity, i, damageSource);
     }
     public void setHunger(Integer count){entityData.set(HUNGER,count);}
@@ -220,7 +221,9 @@ public class Infected extends Monster{
     public int getEvolutionCoolDown(){
         return this.entityData.get(EVOLUTION);
     }
-
+    public void setPersistent(Boolean count){
+        entityData.set(PERSISTENT,count);
+    }
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
@@ -228,6 +231,7 @@ public class Infected extends Monster{
         tag.putInt("kills",entityData.get(KILLS));
         tag.putInt("evolution",entityData.get(EVOLUTION));
         tag.putBoolean("linked",entityData.get(LINKED));
+        tag.putBoolean("persistent",entityData.get(PERSISTENT));
     }
 
 
@@ -236,14 +240,16 @@ public class Infected extends Monster{
         super.readAdditionalSaveData(tag);
         entityData.set(HUNGER, tag.getInt("hunger"));
         entityData.set(KILLS, tag.getInt("kills"));
-        entityData.set(LINKED, tag.getBoolean("linked"));
         entityData.set(EVOLUTION,tag.getInt("evolution"));
+        entityData.set(LINKED, tag.getBoolean("linked"));
+        entityData.set(PERSISTENT, tag.getBoolean("persistent"));
     }
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(HUNGER, SConfig.SERVER.hunger.get());
+        this.entityData.define(HUNGER, 0);
         this.entityData.define(KILLS, 0);
         this.entityData.define(LINKED,false);
+        this.entityData.define(PERSISTENT,false);
         this.entityData.define(EVOLUTION,0);
     }
 
@@ -272,8 +278,8 @@ public class Infected extends Monster{
 
     @Override
     public boolean addEffect(MobEffectInstance effectInstance, @org.jetbrains.annotations.Nullable Entity entity) {
-        if (entityData.get(HUNGER) <= 0 && (effectInstance.getEffect() == MobEffects.HEAL || effectInstance.getEffect() == MobEffects.REGENERATION)){
-           setHunger(SConfig.SERVER.hunger.get());
+        if (entityData.get(HUNGER) >= SConfig.SERVER.hunger.get() && (effectInstance.getEffect() == MobEffects.HEAL || effectInstance.getEffect() == MobEffects.REGENERATION)){
+           setHunger(0);
         }
         return super.addEffect(effectInstance, entity);
     }

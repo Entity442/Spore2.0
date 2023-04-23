@@ -2,7 +2,6 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
-import com.Harbinger.Spore.Sentities.AI.FollowTargetGoal;
 import com.Harbinger.Spore.Sentities.Utility.Mound;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.core.BlockPos;
@@ -26,7 +25,7 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class Scamper extends Infected{
+public class Scamper extends EvolvedInfected{
     public int deployClock = 0;
     public boolean deploying;
 

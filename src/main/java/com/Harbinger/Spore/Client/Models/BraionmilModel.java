@@ -124,8 +124,11 @@ public class BraionmilModel<T extends Braionmil> extends EntityModel<T> {
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
-
-		 if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
+		if (entity.swinging){
+			this.RightArm.xRot = -90F;
+			this.LeftArm.xRot = -90F;
+		}
+		else if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
 			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
 

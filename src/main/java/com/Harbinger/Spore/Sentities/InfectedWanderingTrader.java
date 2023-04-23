@@ -36,7 +36,7 @@ public class InfectedWanderingTrader extends Infected {
         }){
             @Override
             public void start() {
-                setHunger(SConfig.SERVER.hunger.get());
+                setHunger(0);
                 super.start();
             }
         });

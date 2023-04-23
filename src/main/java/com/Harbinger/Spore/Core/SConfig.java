@@ -72,9 +72,11 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<Double> inf_witch_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_witch_armor;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_witch_melee_damage;
 
         public final ForgeConfigSpec.ConfigValue<Double> braio_armor;
         public final ForgeConfigSpec.ConfigValue<Double> braio_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> braio_melee_damage;
 
 
         public final ForgeConfigSpec.ConfigValue<Double> griefer_armor;
@@ -454,14 +456,15 @@ public class SConfig {
             builder.push("Infected Witch");
             this.inf_witch_hp = builder.comment("Default 25").defineInRange("Sets Infected Witch Max health", 25, 1, Double.MAX_VALUE);
             this.inf_witch_armor = builder.comment("Default 1").defineInRange("Sets Infected Witch Armor", 1, 0, Double.MAX_VALUE);
+            this.inf_witch_melee_damage = builder.comment("Default 4").defineInRange("Sets Infected Witch Melee Damage", 4, 0, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Braiomil");
             this.braio_hp = builder.comment("Default 25").defineInRange("Sets Braiomil Max health", 25, 1, Double.MAX_VALUE);
-            this.braio_armor = builder.comment("Default 4").defineInRange("Sets Braiomil armor", 4, 1, Double.MAX_VALUE);
-
+            this.braio_armor = builder.comment("Default 4").defineInRange("Sets Braiomil Armor", 4, 1, Double.MAX_VALUE);
+            this.braio_melee_damage = builder.comment("Default 6").defineInRange("Sets Braiomil Melee Damage", 6, 1, Double.MAX_VALUE);
             this.braio_effects = builder.comment("Default values: minecraft:poison|120|0 ,spore:mycelium|600|0 ,spore:marker|2400|1").defineList("Braiomil Effects",
-                    Lists.newArrayList("minecraft:poison|120|0" , "spore:mycelium_ef|600|0","spore:marker|2400|1") , o -> o instanceof String);
+                    Lists.newArrayList("minecraft:poison|120|0" , "spore:mycelium_ef|600|1","spore:marker|2400|1") , o -> o instanceof String);
             builder.pop();
 
 

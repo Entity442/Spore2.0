@@ -36,6 +36,11 @@ public class ScentEntity extends UtilityEntity {
     }
 
     @Override
+    public boolean isInvulnerable() {
+        return true;
+    }
+
+    @Override
     public void tick() {
         if (this.isAlive()){
             this.getPersistentData().putInt("dissipate", 1 + this.getPersistentData().getInt("dissipate"));

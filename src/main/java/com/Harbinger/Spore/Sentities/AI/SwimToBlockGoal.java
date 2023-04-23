@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.Sentities.AI;
 
+import com.Harbinger.Spore.Sentities.WaterInfected;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
@@ -17,7 +18,7 @@ public class SwimToBlockGoal extends MoveToBlockGoal {
 
     @Override
     public boolean canUse() {
-        return this.mob.isInWater();
+        return this.mob.isInWater() && !(this.mob instanceof WaterInfected);
     }
 
     @Override

@@ -255,7 +255,7 @@ public class Mound extends UtilityEntity{
             BlockState blockState = level.getBlockState(blockpos);
             if (blockState.is(Sblocks.REMAINS.get())){
                 InfectionTendril tendril = new InfectionTendril(Sentities.TENDRIL.get(),level);
-                tendril.setSearch(blockpos);
+                tendril.setSearchArea(blockpos);
                 tendril.setPos(this.getX(),this.getY()+0.5D,this.getZ());
                 level.addFreshEntity(tendril);
                 this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) -1);

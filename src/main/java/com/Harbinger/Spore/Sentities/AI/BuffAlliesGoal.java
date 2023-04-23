@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 
 public class BuffAlliesGoal extends Goal {
     protected final Level level;
-    private final Mob mob;
+    public final Mob mob;
     private final RangedBuff rangedAttackMob;
     private final TargetingConditions PARTNER_TARGETING;
     private final Class<? extends Mob> partnerClass;

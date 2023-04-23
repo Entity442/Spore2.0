@@ -3,6 +3,7 @@ package com.Harbinger.Spore.Sentities;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.BraionmilSwellGoal;
+import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -35,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
+public class Braionmil extends EvolvedInfected  {
     public Braionmil(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }
@@ -95,7 +96,7 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
                 for (String str : SConfig.SERVER.braio_effects.get()){
                      String[] string = str.split("\\|" );
                       MobEffect effect = ForgeRegistries.MOB_EFFECTS.getValue(new ResourceLocation(string[0]));
-                      if (effect != null){
+                      if (effect != null && !livingEntity.hasEffect(effect)){
                         livingEntity.addEffect(new MobEffectInstance(effect , Integer.parseUnsignedInt(string[1]), Integer.parseUnsignedInt(string[2])));
                        }
 
@@ -120,10 +121,6 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
                 }
             }
         }
-        if (this.getTarget() != null && this.distanceToSqr(this.getTarget()) < 120.0D){
-            if (this.getTarget() != null && !this.getTarget().isAlive())
-            {entityData.set(KILLS,entityData.get(KILLS)+1);}
-        }
     }
 
 
@@ -131,8 +128,17 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
 
     @Override
     protected void registerGoals() {
+        this.goalSelector.addGoal(0, new CustomMeleeAttackGoal(this, 1.5, false) {
+            @Override
+            public boolean canUse() {
+                return super.canUse() && this.mob.getRandom().nextInt(0,5) == 4;
+            }
+            @Override
+            protected double getAttackReachSqr(LivingEntity entity) {
+                return 2 + entity.getBbWidth() * entity.getBbWidth();
+            }
+        });
         this.goalSelector.addGoal(1,new BraionmilSwellGoal(this, 1.1));
-        this.goalSelector.addGoal(2, new RangedAttackGoal(this,1,3,3,6));
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 
@@ -142,16 +148,12 @@ public class Braionmil extends EvolvedInfected  implements RangedAttackMob {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
+                .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.braio_melee_damage.get() * SConfig.SERVER.global_damage.get())
                 .add(Attributes.ARMOR, SConfig.SERVER.braio_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.MAX_HEALTH, SConfig.SERVER.braio_hp.get() * SConfig.SERVER.global_health.get())
                 .add(Attributes.MOVEMENT_SPEED, 0.2)
                 .add(Attributes.FOLLOW_RANGE, 28)
                 .add(Attributes.ATTACK_DAMAGE, 1);
-
-    }
-
-    @Override
-    public void performRangedAttack(LivingEntity p_33317_, float p_33318_) {
 
     }
 

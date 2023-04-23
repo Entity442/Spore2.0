@@ -5,16 +5,14 @@ import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Spotion;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.BuffAlliesGoal;
+import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.RangedBuff;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
@@ -41,25 +39,38 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
     }
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(0, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.LONG_FIRE_RESISTANCE), SoundEvents.WITCH_DRINK, (p_35882_) -> {
+        this.goalSelector.addGoal(2, new CustomMeleeAttackGoal(this, 1.5, false) {
+            @Override
+            public boolean canUse() {
+                return super.canUse() && this.mob.getRandom().nextInt(0,10) == 8;
+            }
+            @Override
+            protected double getAttackReachSqr(LivingEntity entity) {
+                return 1.5 + entity.getBbWidth() * entity.getBbWidth();
+            }
+        });
+        this.goalSelector.addGoal(1, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.LONG_FIRE_RESISTANCE), SoundEvents.WITCH_DRINK, (p_35882_) -> {
             return (this.isOnFire() || this.getLastDamageSource() != null && this.getLastDamageSource().isFire()) && !this.hasEffect(MobEffects.FIRE_RESISTANCE);
         }));
-        this.goalSelector.addGoal(0, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRONG_HEALING), SoundEvents.WITCH_DRINK, (p_35882_) -> {
+        this.goalSelector.addGoal(1, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRONG_HEALING), SoundEvents.WITCH_DRINK, (p_35882_) -> {
             return this.getHealth() < this.getMaxHealth();
         }){
             @Override
             public void start() {
-                setHunger(SConfig.SERVER.hunger.get());
+                setHunger(0);
                 super.start();
             }
         });
-        this.goalSelector.addGoal(2, new BuffAlliesGoal(this,Infected.class,1.2,35,45,3));
-        this.goalSelector.addGoal(1, new BuffAlliesGoal(this,Mob.class,1.2,35,45,3,entity -> {
+        this.goalSelector.addGoal(1, new BuffAlliesGoal(this,Infected.class,1.3,35,45,3,entity -> {
+            return entity.hasEffect(Seffects.STARVATION.get());
+        }));
+        this.goalSelector.addGoal(1, new BuffAlliesGoal(this,Mob.class,1.3,35,45,3,entity -> {
             return SConfig.SERVER.evolved.get().contains(entity.getEncodeId());
         }));
-        this.goalSelector.addGoal(3, new RangedAttackGoal(this, 1.0D, 40, 10.0F));
-        this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(1, new BuffAlliesGoal(this,Infected.class,1.3,35,45,3));
 
+        this.goalSelector.addGoal(4, new RangedAttackGoal(this, 1.0D, 60, 10.0F));
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
     }
 
     @Override
@@ -72,6 +83,7 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
+                .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.inf_witch_melee_damage.get() * SConfig.SERVER.global_damage.get())
                 .add(Attributes.MAX_HEALTH, SConfig.SERVER.inf_witch_hp.get() * SConfig.SERVER.global_health.get())
                 .add(Attributes.ARMOR, SConfig.SERVER.inf_witch_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.MOVEMENT_SPEED, 0.2)
@@ -95,7 +107,10 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
             }else if (entity.getHealth() >= 8.0F && !entity.hasEffect(MobEffects.POISON)) {
                 potion = Potions.POISON;
             }else {
-                 potion = Potions.HARMING;
+                 if (entity.getMobType().equals(MobType.UNDEAD)){
+                     potion = Potions.HEALING;
+                 }
+                 else {potion = Potions.HARMING;}
              }
             ThrownPotion thrownpotion = new ThrownPotion(this.level, this);
             thrownpotion.setItem(PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), potion));
