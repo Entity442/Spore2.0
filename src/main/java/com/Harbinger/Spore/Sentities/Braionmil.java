@@ -131,7 +131,7 @@ public class Braionmil extends EvolvedInfected  {
         this.goalSelector.addGoal(0, new CustomMeleeAttackGoal(this, 1.5, false) {
             @Override
             public boolean canUse() {
-                return super.canUse() && this.mob.getRandom().nextInt(0,5) == 4;
+                return super.canUse() && this.mob.getRandom().nextInt(0,3) == 2;
             }
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {

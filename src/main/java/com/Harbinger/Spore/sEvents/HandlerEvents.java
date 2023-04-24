@@ -124,32 +124,6 @@ public class HandlerEvents {
                     return 0;
                 }));
 
-        event.getDispatcher().register(Commands.literal("spore:check_hive")
-                .executes(arguments -> {
-                    ServerLevel world = arguments.getSource().getLevel();
-                    Entity entity = arguments.getSource().getEntity();
-                    if (entity == null)
-                        entity = FakePlayerFactory.getMinecraft(world);
-                    if (entity != null){
-                        AABB hitbox = entity.getBoundingBox().inflate(5);
-                        List<Entity> entities = entity.level.getEntities(entity, hitbox);
-                        for (Entity entity1 : entities) {
-                            if(entity1 instanceof Proto proto) {
-                                if (entity instanceof Player player && !player.level.isClientSide){
-                                    player.displayClientMessage(Component.literal("Entity "+ proto.getEncodeId() + " " + proto.getCustomName()),false);
-                                    player.displayClientMessage(Component.literal("Current Health " + proto.getHealth()),false);
-                                    player.displayClientMessage(Component.literal("Biomass " + proto.getBiomass()),false);
-                                    player.displayClientMessage(Component.literal("Alert " + proto.getAlert()),false);
-                                    player.displayClientMessage(Component.literal("Last Signaled Position " + proto.getSignal()),false);
-                                    player.displayClientMessage(Component.literal("Targeted Location " + proto.getLocation()),false);
-                                    player.displayClientMessage(Component.literal("-------------------------"),false);
-
-                                }
-                            }
-                        }
-                    }
-                    return 0;
-                }));
     }
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event) {

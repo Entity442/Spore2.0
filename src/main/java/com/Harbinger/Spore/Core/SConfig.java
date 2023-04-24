@@ -32,6 +32,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Integer> scent_summon_cooldown;
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_particles;
         public final ForgeConfigSpec.ConfigValue<Integer> scent_life;
+        public final ForgeConfigSpec.ConfigValue<Integer> scent_kills;
         public final ForgeConfigSpec.ConfigValue<Integer> scent_spawn_chance;
 
         public final ForgeConfigSpec.ConfigValue<Double> inf_human_hp;
@@ -244,6 +245,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> mycelium;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> corrosion;
 
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> scent_effects_buff;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_human_conv;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> braio_effects;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> support;
@@ -423,6 +425,9 @@ public class SConfig {
             this.scent_spawn = builder.comment("Default true").define("Should scent spawn?",true);
             this.scent_particles = builder.comment("Default true").define("Should scent have particles?",true);
             this.scent_life = builder.comment("Default 4000").define("Scent life",4000);
+            this.scent_effects_buff = builder.defineList("Overcharged Scent buff effect list",
+                    Lists.newArrayList("minecraft:regeneration","minecraft:speed","minecraft:health_boost","minecraft:strength","minecraft:resistance" ) , o -> o instanceof String);
+            this.scent_kills = builder.comment("Default 4").define("OverCharged Scent bonus kill points",4);
             this.scent_spawn_chance = builder.comment("Default 5").define("The Chance for the scent to spawn from a mob dying 1-100",5);
             this.inf_summon = builder.defineList("Mobs that can be summoned by the Scent",
                     Lists.newArrayList(

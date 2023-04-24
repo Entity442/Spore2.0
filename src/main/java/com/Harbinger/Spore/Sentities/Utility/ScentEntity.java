@@ -2,24 +2,23 @@ package com.Harbinger.Spore.Sentities.Utility;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sparticles;
-import com.Harbinger.Spore.Sentities.Carrier;
 import com.Harbinger.Spore.Sentities.Infected;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -29,7 +28,7 @@ import java.util.List;
 import java.util.Random;
 
 public class ScentEntity extends UtilityEntity {
-
+    private static final EntityDataAccessor<Boolean> OVERCHARGED = SynchedEntityData.defineId(ScentEntity.class, EntityDataSerializers.BOOLEAN);
     public ScentEntity(EntityType<? extends PathfinderMob> mob, Level level) {
         super(mob, level);
         this.isNoGravity();
@@ -50,7 +49,7 @@ public class ScentEntity extends UtilityEntity {
             if (SConfig.SERVER.scent_summon.get()){
             this.getPersistentData().putInt("summon", 1 + this.getPersistentData().getInt("summon"));
             if (this.getPersistentData().getInt("summon") >= SConfig.SERVER.scent_summon_cooldown.get()) {
-                if (!this.level.isClientSide && checkForNonInfected(this)){
+                if (!this.level.isClientSide && (getOvercharged() || checkForNonInfected(this))){
                 this.Summon(this);}
             }}
         }
@@ -69,7 +68,27 @@ public class ScentEntity extends UtilityEntity {
         return false;
     }
 
+    public boolean getOvercharged(){return entityData.get(OVERCHARGED);}
+    public void setOvercharged(boolean b) {
+        this.entityData.set(OVERCHARGED,b);
+    }
 
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("overcharged",entityData.get(OVERCHARGED));
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        entityData.set(OVERCHARGED, tag.getBoolean("overcharged"));
+    }
+
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(OVERCHARGED, false);
+    }
     @Override
     public void setNoGravity(boolean ignored) {
         super.setNoGravity(true);
@@ -99,6 +118,9 @@ public class ScentEntity extends UtilityEntity {
                 BlockState blockstate = world.getBlockState(blockpos$mutableblockpos);
                 if (!blockstate.isCollisionShapeFullBlock(world, blockpos$mutableblockpos)) {
                     world.addParticle(Sparticles.SPORE_PARTICLE.get(), (double) blockpos$mutableblockpos.getX() + randomSource.nextDouble(), (double) blockpos$mutableblockpos.getY() + randomSource.nextDouble(), (double) blockpos$mutableblockpos.getZ() + randomSource.nextDouble(), 0.0D, 0.1D, 0.0D);
+                    if (getOvercharged()){
+                        world.addParticle(Sparticles.BLOOD_PARTICLE.get(), (double) blockpos$mutableblockpos.getX() + randomSource.nextDouble(), (double) blockpos$mutableblockpos.getY() + randomSource.nextDouble(), (double) blockpos$mutableblockpos.getZ() + randomSource.nextDouble(), 0.0D, 0.1D, 0.0D);
+                    }
                 }
             }
         }
@@ -123,6 +145,18 @@ public class ScentEntity extends UtilityEntity {
                 waveentity.setPos(entity.getX() + r, entity.getY() + 0.5D + d, entity.getZ() + c);
                 waveentity.finalizeSpawn(world, level.getCurrentDifficultyAt(new BlockPos(entity.getX(), entity.getY(), entity.getZ())), MobSpawnType.NATURAL, null, null);
                 this.getPersistentData().putInt("summon", 0);
+                if (this.getOvercharged()){
+                    List<? extends String> buffer = SConfig.SERVER.scent_effects_buff.get();
+                    if(waveentity instanceof Infected infected){
+                        infected.setKills(SConfig.SERVER.scent_kills.get());
+                    }
+                    for (int l = 0; l < 1; ++l) {
+                        ResourceLocation randomElement2 = new ResourceLocation(buffer.get(randomIndex));
+                        MobEffect randomElement3 = ForgeRegistries.MOB_EFFECTS.getValue(randomElement2);
+                        assert randomElement3 != null;
+                        waveentity.addEffect(new MobEffectInstance(randomElement3,3600,0));
+                    }
+                }
                 level.addFreshEntity(waveentity);
             }
         }

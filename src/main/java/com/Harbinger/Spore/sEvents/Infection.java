@@ -35,11 +35,14 @@ public class Infection {
             double z = event.getEntity().getZ();
             Entity entity = event.getEntity();
 
-        if (entity instanceof Infected && SConfig.SERVER.scent_spawn.get()) {
+        if (entity instanceof Infected infected && SConfig.SERVER.scent_spawn.get()) {
             if (world instanceof ServerLevel _level) {
                 if (Math.random() < (SConfig.SERVER.scent_spawn_chance.get() / 100f)) {
                     {
-                        Mob entityToSpawn = new ScentEntity(Sentities.SCENT.get(), _level);
+                        ScentEntity entityToSpawn = new ScentEntity(Sentities.SCENT.get(), _level);
+                        if (infected.getLinked()){
+                            entityToSpawn.setOvercharged(true);
+                        }
                         entityToSpawn.moveTo(x, y + 4, z, world.getRandom().nextFloat() * 360F, 0);
                         world.addFreshEntity(entityToSpawn);
                     }

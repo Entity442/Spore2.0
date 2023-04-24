@@ -17,6 +17,9 @@ public class Sparticles {
 
     public static final RegistryObject<SimpleParticleType> ACID_PARTICLE =
             PARTICLE_TYPES.register("acid_particle", () -> new SimpleParticleType(true));
+
+    public static final RegistryObject<SimpleParticleType> BLOOD_PARTICLE =
+            PARTICLE_TYPES.register("blood_particle", () -> new SimpleParticleType(true));
     public static void register(IEventBus eventBus) {
         PARTICLE_TYPES.register(eventBus);
     }

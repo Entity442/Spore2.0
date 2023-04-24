@@ -6,6 +6,7 @@ import com.Harbinger.Spore.Core.SMenu;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.Particles.AcidParticle;
+import com.Harbinger.Spore.Particles.BloodParticle;
 import com.Harbinger.Spore.Particles.SporeParticle;
 import com.Harbinger.Spore.Screens.ContainerScreen;
 import com.Harbinger.Spore.Sitems.Elytron;
@@ -124,5 +125,8 @@ public class ClientModEvents {
 
         Minecraft.getInstance().particleEngine.register(Sparticles.ACID_PARTICLE.get(),
                 AcidParticle.Provider::new);
+
+        Minecraft.getInstance().particleEngine.register(Sparticles.BLOOD_PARTICLE.get(),
+                BloodParticle.Provider::new);
     }
 }
