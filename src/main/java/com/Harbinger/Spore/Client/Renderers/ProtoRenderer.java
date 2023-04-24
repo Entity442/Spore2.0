@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class ProtoRenderer<Type extends Proto> extends MobRenderer<Type , protomodel<Type>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Spore.MODID,
-            "textures/entity/blank.png");
+            "textures/entity/proto.png");
 
 
     public ProtoRenderer(EntityRendererProvider.Context context) {
