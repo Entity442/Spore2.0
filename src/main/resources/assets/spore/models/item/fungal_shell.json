@@ -2,7 +2,9 @@
 	"credit": "Made with Blockbench",
 	"render_type": "cutout",
 	"textures": {
-
+		"0": "spore:block/fungal_shell",
+		"1": "spore:block/fungal_shell_overlay",
+		"particle": "spore:block/fungal_shell"
 	},
 	"elements": [
 		{
@@ -19,8 +21,8 @@
 		},
 		{
 			"name": "overlay",
-			"from": [0, 0, 0],
-			"to": [16, 16, 16],
+			"from": [-0.1, -0.1, -0.1],
+			"to": [16.1, 16.1, 16.1],
 			"faces": {
 				"down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#0", "cullface": "down" },
 				"up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#0",    "cullface": "up" },

@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 
 public class BraionmilSwellGoal extends Goal {
-    private final Braionmil griefer;
+    public final Braionmil griefer;
     @Nullable
     private LivingEntity target;
     private final double speedModifier;

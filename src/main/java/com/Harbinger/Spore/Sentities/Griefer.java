@@ -34,7 +34,6 @@ import net.minecraft.world.phys.Vec3;
 
 public class Griefer extends EvolvedInfected{
     private static final EntityDataAccessor<Integer> DATA_SWELL_DIR = SynchedEntityData.defineId(Griefer.class, EntityDataSerializers.INT);
-    private int oldSwell;
     private int swell;
     private final int maxSwell = 30;
     private final int explosionRadius = SConfig.SERVER.explosion.get();
@@ -57,7 +56,6 @@ public class Griefer extends EvolvedInfected{
 
     public void tick() {
         if (this.isAlive()) {
-            this.oldSwell = this.swell;
 
             int i = this.getSwellDir();
             if (i > 0 && this.swell == 0) {
@@ -116,16 +114,14 @@ public class Griefer extends EvolvedInfected{
 
     private void summonScent(LevelAccessor world, double x, double y, double z) {
         if (world instanceof ServerLevel _level) {
-            if (world.getEntitiesOfClass(ScentEntity.class, AABB.ofSize(new Vec3(x, y, z)
-                            , 32, 32, 32), e -> true).isEmpty()) {
                 {
-                    Mob entityToSpawn = new ScentEntity(Sentities.SCENT.get(), _level);
+                    ScentEntity entityToSpawn = new ScentEntity(Sentities.SCENT.get(), _level);
                     entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
                     entityToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null,
                             null);
                     world.addFreshEntity(entityToSpawn);
                 }
-            }
+
         }
     }
 

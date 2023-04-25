@@ -3,7 +3,7 @@ package com.Harbinger.Spore.Sentities.AI.LocHiv;
 import com.Harbinger.Spore.Sentities.Infected;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.AABB;
 
@@ -16,7 +16,7 @@ public class LocalTargettingGoal extends Goal {
     }
     @Override
     public boolean canUse() {
-        return mob.getTarget() != null && mob.getLinked();
+        return mob.getTarget() != null && mob.getLinked() && this.mob.getRandom().nextInt(0,10) == 7;
     }
 
     @Override
@@ -31,12 +31,19 @@ public class LocalTargettingGoal extends Goal {
     }
 
     public void Targeting(Entity entity){
-        AABB boundingBox = entity.getBoundingBox().inflate(16);
+        double range;
+        if (this.mob.getAttributeBaseValue(Attributes.FOLLOW_RANGE) < 32){
+            range = this.mob.getAttributeBaseValue(Attributes.FOLLOW_RANGE);
+        }else{
+            range = 32;
+        }
+
+        AABB boundingBox = entity.getBoundingBox().inflate(range);
         List<Entity> entities = entity.level.getEntities(entity, boundingBox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
 
         for (Entity entity1 : entities) {
             if(entity1 instanceof Infected livingEntity) {
-                if (livingEntity.getTarget() == null && this.mob.getTarget() != null && this.mob.getTarget().isAlive()){
+                if (livingEntity.getTarget() == null && this.mob.getTarget() != null && this.mob.getTarget().isAlive() && !this.mob.getTarget().isInvulnerable()){
                     livingEntity.setTarget(mob.getTarget());
                 }
             }

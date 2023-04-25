@@ -18,6 +18,9 @@
   "block.spore.rotten_log": "Decayed Log",
   "block.spore.organite": "Organite Block",
   "block.spore.mycelium_veins": "Mycelium Veins",
+  "block.spore.fungal_shell": "Fungal Shell",
+  "block.spore.mycelium_block": "Mycelium Block",
+  "block.spore.mycelium_slab": "Mycelium Slab",
   "block.spore.remains": "Human remains",
   "block.spore.acid": "Acid pool",
 
@@ -112,6 +115,7 @@
   "item.spore.inf_player_spawnegg": "Infected Adventurer",
   "item.spore.scamper_spawnegg": "Scamper",
   "item.spore.mound_spawnegg": "Mound",
+  "item.spore.proto_spawnegg": "Proto Hivemind",
 
 
   "item.spore.scent_spawnegg": "Scent",

@@ -154,10 +154,20 @@ public class protomodel<T extends Proto> extends EntityModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.tentacleBase.xRot = - (Mth.sin(ageInTicks/9)/7);
-		this.tentacleBase2.xRot = - (Mth.sin(ageInTicks/7)/6);
-		this.tentacleBase3.xRot =  (Mth.sin(ageInTicks/9)/8);
-		this.tentacleBase4.xRot = - (Mth.sin(ageInTicks/8)/9);
+		this.tentacleBase.xRot =   (Mth.sin(ageInTicks/8)/9);
+		this.tentacleBase2.xRot = -(Mth.sin(ageInTicks/8)/9);
+		this.tentacleBase3.xRot = -(Mth.sin(ageInTicks/8)/9);
+		this.tentacleBase4.xRot =  (Mth.sin(ageInTicks/8)/9);
+
+		this.tentacleBase.getChild("tentacle").getChild("tentacle2").getChild("tentacle3").xRot =20 + (Mth.sin(ageInTicks/8)/4);
+		this.tentacleBase2.getChild("tentacle5").getChild("tentacle6").getChild("tentacle7").xRot =20 - (Mth.sin(ageInTicks/8)/4);
+		this.tentacleBase3.getChild("tentacle9").getChild("tentacle10").getChild("tentacle11").xRot =20 - (Mth.sin(ageInTicks/8)/4);
+		this.tentacleBase4.getChild("tentacle13").getChild("tentacle14").getChild("tentacle15").xRot =20 + (Mth.sin(ageInTicks/8)/4);
+
+		this.body.getChild("lowerB").y = -10 + Mth.sin(ageInTicks/6);
+		this.body.getChild("lowerB2").y =-10 - Mth.sin(ageInTicks/6);
+		this.body.getChild("lowerB3").y =-10 - Mth.sin(ageInTicks/6);
+		this.body.getChild("lowerB4").y =-10 + Mth.sin(ageInTicks/6);
 	}
 
 	@Override

@@ -128,17 +128,19 @@ public class Braionmil extends EvolvedInfected  {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new CustomMeleeAttackGoal(this, 1.5, false) {
-            @Override
-            public boolean canUse() {
-                return super.canUse() && this.mob.getRandom().nextInt(0,3) == 2;
-            }
+
+        this.goalSelector.addGoal(1, new CustomMeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 return 2 + entity.getBbWidth() * entity.getBbWidth();
             }
         });
-        this.goalSelector.addGoal(1,new BraionmilSwellGoal(this, 1.1));
+        this.goalSelector.addGoal(0,new BraionmilSwellGoal(this, 1.1){
+            @Override
+            public boolean canUse() {
+                return super.canUse() && this.griefer.getRandom().nextInt(0,3) == 2;
+            }
+        });
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 

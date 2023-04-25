@@ -7,6 +7,10 @@
     "spore:iron_ladder",
     "spore:container",
     "spore:infested_stone",
-    "spore:infested_deepslate"
+    "spore:infested_deepslate",
+
+    "spore:fungal_shell",
+    "spore:mycelium_block",
+    "spore:mycelium_slab"
   ]
 }

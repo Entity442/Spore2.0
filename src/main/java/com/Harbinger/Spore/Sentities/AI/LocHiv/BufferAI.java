@@ -15,7 +15,7 @@ public class BufferAI extends Goal {
     }
     @Override
     public boolean canUse() {
-        return infected.isAlive() && infected.getKills() > 1;
+        return infected.isAlive() && infected.getKills() > 1 && infected.getRandom().nextInt(0,10) == 7;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class BufferAI extends Goal {
                 infected.setKills(infected.getKills() - 1);
             }
         }
-        if (infected instanceof EvolvedInfected evolved && evolved.getTarget() != null && Math.random() < 0.01){
+        if (infected instanceof EvolvedInfected evolved && evolved.getTarget() != null && infected.getRandom().nextInt(0,30) == 28){
 
             if (!evolved.hasEffect(MobEffects.MOVEMENT_SPEED) && evolved.getKills() >= 2 && evolved.isAggressive() && evolved.distanceToSqr(evolved.getTarget()) > 200){
                 evolved.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED,200,1));
@@ -44,7 +44,7 @@ public class BufferAI extends Goal {
                 evolved.setKills(evolved.getKills() - 2);
             }
         }
-        if (infected instanceof InfectedEvoker evoker && !evoker.hasArm() && evoker.getKills() >= 5 && Math.random() < 0.1){
+        if (infected instanceof InfectedEvoker evoker && !evoker.hasArm() && evoker.getKills() >= 5 && infected.getRandom().nextInt(0,30) == 28){
             evoker.setArm(true);
             evoker.setKills(evoker.getKills() -5);
         }

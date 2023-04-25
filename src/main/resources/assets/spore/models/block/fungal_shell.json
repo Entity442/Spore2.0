@@ -2,7 +2,9 @@
 	"credit": "Made with Blockbench",
 	"render_type": "cutout",
 	"textures": {
-
+		"0": "spore:block/fungal_shell",
+		"1": "spore:block/fungal_shell_overlay",
+		"particle": "spore:block/fungal_shell"
 	},
 	"elements": [
 		{
