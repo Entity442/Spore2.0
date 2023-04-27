@@ -12,9 +12,10 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class UnderWaterFungalStem extends UnderWaterFolliage{
+public class UnderWaterFungalStem extends GenericFoliageBlock{
     public UnderWaterFungalStem() {
         super(BlockBehaviour.Properties.of(Material.PLANT).strength(0f, 0f).noCollission().noOcclusion().sound(SoundType.CROP));
+        this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.TRUE));
     }
 
     @Override

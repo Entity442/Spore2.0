@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sblocks;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -32,4 +33,20 @@ public class MyceliumVeins extends Block {
         Vec3 offset = state.getOffset(world, pos);
         return box(0, 0, 0, 16, 0.2, 16).move(offset.x, offset.y, offset.z);
     }
+
+    @Override
+    public boolean isFlammable(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
+        return true;
+    }
+
+    @Override
+    public int getFlammability(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
+        return 5;
+    }
+
+    @Override
+    public int getFireSpreadSpeed(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
+        return 5;
+    }
+
 }

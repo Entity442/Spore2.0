@@ -11,6 +11,9 @@
         "model": "spore:block/remains3"
       },
       {
+        "model": "spore:block/remains4"
+      },
+      {
         "model": "spore:block/remains",
         "y": 90
       },
@@ -23,6 +26,10 @@
         "y": 90
       },
       {
+        "model": "spore:block/remains4",
+        "y": 90
+      },
+      {
         "model": "spore:block/remains",
         "y": 180
       },
@@ -32,6 +39,10 @@
       },
       {
         "model": "spore:block/remains3",
+        "y": 180
+      },
+      {
+        "model": "spore:block/remains4",
         "y": 180
       },
       {
@@ -44,6 +55,10 @@
       },
       {
         "model": "spore:block/remains3",
+        "y": 270
+      },
+      {
+        "model": "spore:block/remains4",
         "y": 270
       }
     ]

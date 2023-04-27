@@ -39,9 +39,9 @@ import java.util.Map;
 public class Mound extends UtilityEntity{
     private static final EntityDataAccessor<Integer> TENDRILS = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> AGE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> COUNTER = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> MAX_AGE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> STRUCTURE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.BOOLEAN);
-    private int counter;
     private final  int maxCounter = SConfig.SERVER.mound_cooldown.get();
     private int attack_counter = 0;
     public Mound(EntityType<? extends PathfinderMob> type, Level level) {
@@ -69,7 +69,7 @@ public class Mound extends UtilityEntity{
         if (entity.isOnGround()){
             entity.makeStuckInBlock(Blocks.AIR.defaultBlockState(), new Vec3(0, 1, 0));
         }
-        if (counter < maxCounter){
+        if (entityData.get(COUNTER) < maxCounter){
             this.setCounter(this.getCounter() + 1);
         }
         if (entity.isAlive() && this.getCounter() >= maxCounter && !level.isClientSide){
@@ -102,6 +102,7 @@ public class Mound extends UtilityEntity{
         super.addAdditionalSaveData(tag);
         tag.putInt("tendrils",entityData.get(TENDRILS));
         tag.putInt("age",entityData.get(AGE));
+        tag.putInt("counter",entityData.get(COUNTER));
         tag.putInt("max_age",entityData.get(MAX_AGE));
         tag.putBoolean("structure",entityData.get(STRUCTURE));
     }
@@ -111,16 +112,17 @@ public class Mound extends UtilityEntity{
         super.readAdditionalSaveData(tag);
         entityData.set(TENDRILS, tag.getInt("tendrils"));
         entityData.set(AGE, tag.getInt("age"));
+        entityData.set(COUNTER, tag.getInt("counter"));
         entityData.set(MAX_AGE, tag.getInt("max_age"));
         entityData.set(STRUCTURE, tag.getBoolean("structure"));
     }
 
     public void setCounter(int counter) {
-        this.counter = counter;
+        this.entityData.set(COUNTER,counter);
     }
 
     public int getCounter() {
-        return counter;
+        return this.entityData.get(COUNTER);
     }
 
     public void setMaxAge(int maxAge){
@@ -140,7 +142,6 @@ public class Mound extends UtilityEntity{
         } else {
             range = SConfig.SERVER.mound_range_default.get();
         }
-
         AABB aabb = entity.getBoundingBox().inflate(range);
         for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
 
@@ -153,7 +154,7 @@ public class Mound extends UtilityEntity{
             BlockState block4 =  (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.create(new ResourceLocation("spore:block_st")))
                     .getRandomElement(RandomSource.create()).orElse(Blocks.AIR)).defaultBlockState();
             BlockState block5 =  (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.create(new ResourceLocation("spore:underwater_blocks")))
-                    .getRandomElement(RandomSource.create()).orElse(Blocks.AIR)).defaultBlockState();
+                    .getRandomElement(RandomSource.create()).orElse(Blocks.WATER)).defaultBlockState();
 
 
             BlockState nord = level.getBlockState(blockpos.north());
@@ -200,7 +201,16 @@ public class Mound extends UtilityEntity{
                 level.setBlock(blockpos, _bs, 3);
             }
 
-            if (blockstate.isSolidRender(level,blockpos )&& above.getFluidState().is(Fluids.WATER) && Math.random() < 0.01){ level.setBlock(blockpos.above(),block5,3);}
+            if (blockstate.isSolidRender(level,blockpos ) && (above.getFluidState().is(Fluids.WATER) || above.getFluidState().is(Fluids.FLOWING_WATER)) && Math.random() < 0.01){
+                if (block5.getBlock().getStateDefinition().getProperty("waterlogged") instanceof BooleanProperty property){
+                    level.setBlock(blockpos.above(),block5.setValue(property, true),3);
+                }else {
+                    level.setBlock(blockpos.above(),block5,3);
+                }
+
+            }
+
+
             if (above.isAir() && blockstate.isSolidRender(level ,blockpos) && Math.random() < 0.01){level.setBlock(blockpos.above(),block1,3);}
             if (above.isAir() && blockstate.isSolidRender(level ,blockpos) && Math.random() < 0.01 && entityData.get(STRUCTURE) && entityData.get(AGE) >= entityData.get(MAX_AGE) && this.distanceToSqr(blockpos.getX(),blockpos.getY(),blockpos.getZ()) > 80){
                 level.setBlock(blockpos.above(),block4,3);
@@ -308,6 +318,7 @@ public class Mound extends UtilityEntity{
         super.defineSynchedData();
         this.entityData.define(TENDRILS, 5);
         this.entityData.define(AGE, 1);
+        this.entityData.define(COUNTER, 0);
         this.entityData.define(MAX_AGE, 3);
         this.entityData.define(STRUCTURE, true);
     }

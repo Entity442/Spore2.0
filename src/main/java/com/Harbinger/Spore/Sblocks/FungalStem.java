@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sblocks;
 
 import com.Harbinger.Spore.Core.Sblocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.SoundType;
@@ -33,4 +34,20 @@ public class FungalStem extends GenericFoliageBlock{
     protected boolean mayPlaceOn(BlockState blockState, BlockGetter p_51043_, BlockPos p_51044_) {
         return blockState.canOcclude() || blockState.getBlock() == Sblocks.FUNGAL_STEM.get();
     }
+
+    @Override
+    public boolean isFlammable(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
+        return true;
+    }
+
+    @Override
+    public int getFlammability(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
+        return 5;
+    }
+
+    @Override
+    public int getFireSpreadSpeed(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
+        return 5;
+    }
+
 }

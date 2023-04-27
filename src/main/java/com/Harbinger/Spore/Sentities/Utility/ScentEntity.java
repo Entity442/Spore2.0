@@ -148,7 +148,9 @@ public class ScentEntity extends UtilityEntity {
                 if (this.getOvercharged()){
                     List<? extends String> buffer = SConfig.SERVER.scent_effects_buff.get();
                     if(waveentity instanceof Infected infected){
-                        infected.setKills(SConfig.SERVER.scent_kills.get());
+                        int k = SConfig.SERVER.scent_kills.get();
+                        infected.setKills(random.nextInt(k ,k+3));
+                        infected.setLinked(true);
                     }
                     for (int l = 0; l < 1; ++l) {
                         ResourceLocation randomElement2 = new ResourceLocation(buffer.get(randomIndex));

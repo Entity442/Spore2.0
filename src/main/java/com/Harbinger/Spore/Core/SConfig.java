@@ -120,6 +120,11 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> mound_range_age2;
         public final ForgeConfigSpec.ConfigValue<Double> mound_range_age3;
 
+
+
+        public final ForgeConfigSpec.ConfigValue<Double> proto_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> proto_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> how_hp;
         public final ForgeConfigSpec.ConfigValue<Double> how_damage;
         public final ForgeConfigSpec.ConfigValue<Double> how_armor;
@@ -401,6 +406,11 @@ public class SConfig {
             this.mound_range_default = builder.comment("Default 5").defineInRange("Sets Mound default range", 5, 1, Double.MAX_VALUE);
             this.mound_range_age2 = builder.comment("Default 10").defineInRange("Sets Mound range at the age of 2", 10, 1, Double.MAX_VALUE);
             this.mound_range_age3 = builder.comment("Default 15").defineInRange("Sets Mound range at the age of 3", 15, 1, Double.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Proto Hivemind");
+            this.proto_hp = builder.comment("Default 100").defineInRange("Sets Mound Max health", 100, 1, Double.MAX_VALUE);
+            this.proto_armor = builder.comment("Default 10").defineInRange("Sets Mound Armor", 10, 1, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Howler");

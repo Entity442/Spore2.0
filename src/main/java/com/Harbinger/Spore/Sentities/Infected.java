@@ -43,6 +43,8 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -154,7 +156,7 @@ public class Infected extends Monster{
             this.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 0, false, false), Infected.this);
         }
 
-        if (!(this instanceof EvolvedInfected) && entityData.get(HUNGER) < SConfig.SERVER.hunger.get()){
+        if (!(this instanceof EvolvedInfected) && entityData.get(HUNGER) < SConfig.SERVER.hunger.get() && entityData.get(KILLS) <= 0){
             int i;
             if (isFreazing()){i = 2;}else {i = 1;}
             entityData.set(HUNGER , entityData.get(HUNGER) + i);
@@ -179,10 +181,10 @@ public class Infected extends Monster{
 
         }
         if (this.getLastDamageSource() == DamageSource.IN_WALL && this.isOnGround()){
-            this.jumpFromGround();
+            this.jumpControl.jump();
         }
         if (this.horizontalCollision && this.isInWater()){
-            this.jumpFromGround();
+            this.jumpInFluid(ForgeMod.WATER_TYPE.get());
         }
     }
 
