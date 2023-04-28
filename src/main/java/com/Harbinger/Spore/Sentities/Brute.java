@@ -63,13 +63,13 @@ public class Brute extends EvolvedInfected implements Carrier{
 
     @Override
     public void tick() {
-        if (this.isAlive() && this.getTarget() != null && checkForInfected(this) && !switchy()){performRangedAttack(this);}
+        if (this.isAlive() && this.getTarget() != null && this.getRandom().nextInt(0,6) == 3 && checkForInfected(this) && switchy()){performRangedAttack(this);}
         super.tick();
     }
     private boolean switchy() {
         if (this.getTarget() != null){
             double ze = this.distanceToSqr(this.getTarget());
-            return (ze < 60.0D);
+            return (ze > 60.0D && ze < 400);
         }
         return false;
     }
@@ -96,7 +96,7 @@ public class Brute extends EvolvedInfected implements Carrier{
         List<Entity> entities = entity.level.getEntities(entity, boundingBox);
 
         for (Entity en : entities) {
-            if (en instanceof Mob){
+            if (en instanceof Mob && SConfig.SERVER.can_be_carried.get().contains(en.getEncodeId())){
                 en.setDeltaMovement(d0 * -0.2D, (d1 + d3) * 0.02D, d2 * -0.2D);
                 ((Mob) en).addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING , 200,0));
             }

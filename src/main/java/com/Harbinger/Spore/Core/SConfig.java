@@ -235,6 +235,8 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> human_ev;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> villager_ev;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> pil_ev;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> undespawn;
+        public final ForgeConfigSpec.ConfigValue<Boolean> starve;
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_summon;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> howler_summon;
@@ -330,6 +332,9 @@ public class SConfig {
                                      "spore:stalker",
                                      "spore:brute") , o -> o instanceof String);
 
+            this.undespawn = builder.defineList("Mobs that won't despawn after being created from assimilation",
+                    Lists.newArrayList("spore:inf_villager", "spore:inf_pillager", "spore:inf_witch") , o -> o instanceof String);
+            this.starve = builder.comment("Default true").define("Should mobs with no kills starve?",true);
             this.evolution_age_human = builder.comment("Default 150").define("Evolution Timer in seconds",150);
             this.min_kills = builder.comment("Default 1").define("Minimum amount of kills to start the evolution",1);
             builder.pop();

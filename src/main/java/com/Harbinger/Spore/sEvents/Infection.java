@@ -111,7 +111,7 @@ public class Infection {
                     mobT.setCustomName(entity.getCustomName());
                     mobT.setPos(entity.getX(), entity.getY(), entity.getZ());
                     mobT.finalizeSpawn(worlder, world.getCurrentDifficultyAt(new BlockPos(entity.getX(), entity.getY(), entity.getZ())), MobSpawnType.NATURAL, null, null);
-                    if (mobT instanceof Infected infected && (infected instanceof InfectedVillager || infected instanceof InfectedPillager || infected instanceof InfectedWitch)){
+                    if (mobT instanceof Infected infected && SConfig.SERVER.undespawn.get().contains(entity.getEncodeId())){
                         infected.setPersistent(true);
                     }
                     world.addFreshEntity(mobT);
