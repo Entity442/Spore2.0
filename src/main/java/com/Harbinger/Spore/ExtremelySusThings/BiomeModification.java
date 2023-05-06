@@ -27,8 +27,8 @@ public class BiomeModification implements BiomeModifier {
 
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         if (phase == Phase.ADD) {
-            int biomesModifier;
-            if (biome.is(Tags.Biomes.IS_MUSHROOM)){biomesModifier = 20;}else{biomesModifier = 0;}
+            int biomesModifier = 0;
+            if (biome.is(Tags.Biomes.IS_MUSHROOM)){biomesModifier = 20;}
             for (String str : SConfig.DATAGEN.spawns.get()){
                 String[] string = str.split("\\|" );
                 EntityType<?> entity = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(string[0]));

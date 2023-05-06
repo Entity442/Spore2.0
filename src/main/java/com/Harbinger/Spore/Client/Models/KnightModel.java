@@ -1,5 +1,5 @@
-package com.Harbinger.Spore.Client.Models;// Made with Blockbench 4.3.1
-// Exported for Minecraft version 1.17 - 1.18 with Mojang mappings
+package com.Harbinger.Spore.Client.Models;// Made with Blockbench 4.7.2
+// Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
 
@@ -37,6 +37,16 @@ public class KnightModel<T extends Knight> extends EntityModel<T> {
 		.texOffs(27, 55).addBox(-2.0F, -0.25F, -2.5F, 5.0F, 8.0F, 5.0F, new CubeDeformation(0.0F))
 		.texOffs(19, 66).addBox(-2.0F, 7.75F, -2.0F, 5.0F, 3.0F, 4.0F, new CubeDeformation(0.1F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
+		PartDefinition cube_r1 = body.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(-6, 81).addBox(1.0F, -15.0F, -5.0F, 7.0F, 0.0F, 6.0F, new CubeDeformation(0.0F))
+		.texOffs(-6, 81).addBox(4.0F, -20.0F, -5.0F, 7.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 24.0F, 0.0F, 0.0F, 0.0F, -0.2182F));
+
+		PartDefinition cube_r2 = body.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(-6, 81).addBox(-3.0F, -25.0F, 0.0F, 7.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 24.0F, 0.0F, 0.2182F, 0.0F, 0.2182F));
+
+		PartDefinition cube_r3 = body.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(-6, 81).addBox(-2.0F, -21.0F, -6.0F, 7.0F, 0.0F, 6.0F, new CubeDeformation(0.0F))
+		.texOffs(-6, 81).addBox(-6.0F, -18.0F, -4.0F, 7.0F, 0.0F, 6.0F, new CubeDeformation(0.0F))
+		.texOffs(-6, 81).addBox(-12.0F, -28.0F, -6.0F, 7.0F, 0.0F, 6.0F, new CubeDeformation(0.0F))
+		.texOffs(-6, 81).addBox(-12.0F, -30.0F, -9.0F, 7.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 24.0F, 0.0F, -0.2182F, 0.0F, 0.2182F));
+
 		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 6.0F, 8.0F, new CubeDeformation(0.0F))
 		.texOffs(24, 0).addBox(-4.0F, -2.0F, 0.0F, 8.0F, 2.0F, 4.0F, new CubeDeformation(0.0F))
 		.texOffs(32, 22).addBox(-4.0F, -2.0F, -4.0F, 8.0F, 1.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.2618F));
@@ -52,8 +62,8 @@ public class KnightModel<T extends Knight> extends EntityModel<T> {
 
 		PartDefinition RightForArm = RightArm.addOrReplaceChild("RightForArm", CubeListBuilder.create().texOffs(52, 27).addBox(-2.0F, 0.0F, -1.5F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(0.0F, 4.0F, 0.0F, -0.0873F, 0.0F, 0.0F));
 
-		PartDefinition fingers = RightForArm.addOrReplaceChild("fingers", CubeListBuilder.create().texOffs(12, 55).addBox(-2.0F, -1.0F, -1.0F, 4.0F, 9.0F, 0.0F, new CubeDeformation(0.0F))
-		.texOffs(12, 55).addBox(-2.0F, -1.0F, 1.0F, 4.0F, 9.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, 6.0F, 0.0F));
+		PartDefinition fingers = RightForArm.addOrReplaceChild("fingers", CubeListBuilder.create().texOffs(12, 55).addBox(-2.0F, -1.0F, 1.0F, 4.0F, 9.0F, 0.0F, new CubeDeformation(0.0F))
+		.texOffs(12, 55).addBox(-2.0F, -1.0F, -1.0F, 4.0F, 9.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, 6.0F, 0.0F));
 
 		PartDefinition tumb = RightForArm.addOrReplaceChild("tumb", CubeListBuilder.create().texOffs(58, -3).addBox(0.0F, -1.0F, -3.0F, 0.0F, 6.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 6.0F, -1.0F));
 
@@ -65,25 +75,25 @@ public class KnightModel<T extends Knight> extends EntityModel<T> {
 
 		PartDefinition leftForLeg = LeftLeg.addOrReplaceChild("leftForLeg", CubeListBuilder.create().texOffs(0, 44).addBox(-1.25F, 0.0F, -2.0F, 3.0F, 6.0F, 4.0F, new CubeDeformation(0.1F)), PartPose.offset(0.0F, 6.0F, 0.0F));
 
-		PartDefinition mushroom = body.addOrReplaceChild("mushroom", CubeListBuilder.create().texOffs(32, 27).addBox(0.0F, -1.0F, 0.0F, 3.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
-		.texOffs(32, 6).addBox(-0.5F, 0.25F, -0.5F, 3.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 30).addBox(-1.0F, 1.5F, -1.0F, 3.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 2.0F, 2.0F));
+		PartDefinition mushroom = body.addOrReplaceChild("mushroom", CubeListBuilder.create(), PartPose.offset(0.0F, 2.0F, 2.0F));
 
 		PartDefinition tendril = body.addOrReplaceChild("tendril", CubeListBuilder.create(), PartPose.offset(5.0F, 6.0F, 2.0F));
 
-		PartDefinition cube_r1 = tendril.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(52, 59).addBox(-2.0F, -11.0F, 2.0F, 6.0F, 11.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, -2.0F, 0.0F, 0.0F, 0.6981F));
-
 		PartDefinition tendril2 = body.addOrReplaceChild("tendril2", CubeListBuilder.create(), PartPose.offset(5.0F, 6.0F, -2.0F));
-
-		PartDefinition cube_r2 = tendril2.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(52, 59).addBox(-1.0F, -10.0F, -2.0F, 6.0F, 11.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 2.0F, 0.0F, 0.0F, 0.6981F));
 
 		PartDefinition tendril3 = body.addOrReplaceChild("tendril3", CubeListBuilder.create(), PartPose.offset(7.0F, 0.0F, -1.0F));
 
-		PartDefinition cube_r3 = tendril3.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(52, 59).addBox(-5.0F, -15.0F, -1.0F, 6.0F, 11.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.0F, 6.0F, 1.0F, 0.0F, 0.0F, 0.6981F));
-
 		PartDefinition tendril4 = body.addOrReplaceChild("tendril4", CubeListBuilder.create(), PartPose.offset(7.0F, -3.0F, 1.0F));
 
-		PartDefinition cube_r4 = tendril4.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(52, 59).addBox(-7.0F, -17.0F, 1.0F, 6.0F, 11.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.0F, 9.0F, -1.0F, 0.0F, 0.0F, 0.6981F));
+		PartDefinition flower = body.addOrReplaceChild("flower", CubeListBuilder.create(), PartPose.offsetAndRotation(5.0F, -5.0F, -1.0F, 0.3054F, 0.0F, 0.4363F));
+
+		PartDefinition cube_r4 = flower.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(10, 75).addBox(-6.0F, 0.0F, -3.0F, 6.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.3927F));
+
+		PartDefinition cube_r5 = flower.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(10, 75).addBox(0.0F, 0.0F, -3.0F, 6.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.3927F));
+
+		PartDefinition cube_r6 = flower.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(10, 75).addBox(-4.0F, 0.0F, 0.0F, 7.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.0F, 0.0F, 0.3927F, 0.0F, 0.0F));
+
+		PartDefinition cube_r7 = flower.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(10, 75).addBox(-4.0F, 0.0F, -6.0F, 7.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.0F, 0.0F, -0.3927F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 128);
 	}
@@ -91,27 +101,22 @@ public class KnightModel<T extends Knight> extends EntityModel<T> {
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
-		 if (entity.isAggressive()){
+		if (entity.isAggressive()){
 			this.body.getChild("head").getChild("jaw").xRot = (Mth.sin(ageInTicks/6)/10);
 			this.body.getChild("RightArm").xRot = 25F + Mth.cos(limbSwing * 0.2F)  * limbSwingAmount;
 			this.body.getChild("RightArm").getChild("RightForArm").xRot = - 88.5F;
 			this.body.zRot = Mth.cos(limbSwing/4)/10;
+			if (entity.swinging){
 
-			 this.body.getChild("tendril").yRot = -1;
-			 this.body.getChild("tendril2").yRot = -1;
-			 this.body.getChild("tendril3").yRot = -1;
-			 this.body.getChild("tendril4").yRot = -1;
-			 if (entity.swinging){
-
-				 float f = 0;
-				 f = f + 1F;
-				 this.body.getChild("RightArm").xRot = -90F + f;
-				 this.body.getChild("RightArm").getChild("RightForArm").xRot = 0;
-			 }
-			 if (entity.attackAnim > 0) {
-				 float f1 = 1.0F - Mth.abs(10 - 2 * entity.attackAnim) / 10.0F;
-				 this.body.getChild("RightArm").xRot =  Mth.sin(f1) * 2.0F;
-			 }
+				float f = 0;
+				f = f + 1F;
+				this.body.getChild("RightArm").xRot = -90F + f;
+				this.body.getChild("RightArm").getChild("RightForArm").xRot = 0;
+			}
+			if (entity.attackAnim > 0) {
+				float f1 = 1.0F - Mth.abs(10 - 2 * entity.attackAnim) / 10.0F;
+				this.body.getChild("RightArm").xRot =  Mth.sin(f1) * 2.0F;
+			}
 
 		}else if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
 			this.body.getChild("RightArm").xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
@@ -125,10 +130,6 @@ public class KnightModel<T extends Knight> extends EntityModel<T> {
 			this.body.getChild("RightArm").getChild("RightForArm").getChild("fingers").zRot = Mth.sin(ageInTicks/4)/8;
 			this.body.getChild("RightArm").getChild("RightForArm").getChild("tumb").xRot = -Mth.sin(ageInTicks/4)/8;
 			this.body.getChild("RightArm").getChild("RightForArm").xRot = 0;
-			 this.body.getChild("tendril").yRot = 0;
-			 this.body.getChild("tendril2").yRot = 0;
-			 this.body.getChild("tendril3").yRot = 0;
-			 this.body.getChild("tendril4").yRot = 0;
 		}
 
 		this.body.getChild("LeftLeg").xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
@@ -139,14 +140,6 @@ public class KnightModel<T extends Knight> extends EntityModel<T> {
 			this.body.getChild("RightLeg").getChild("rightForLeg").xRot = -2 * body.getChild("RightLeg").xRot;}
 
 		this.body.getChild("head").getChild("jaw").xRot = Mth.sin(ageInTicks/8)/10;
-		this.body.getChild("tendril").xRot = (Mth.sin(ageInTicks/6)/6);
-		this.body.getChild("tendril2").xRot = -(Mth.sin(ageInTicks/6)/7);
-		this.body.getChild("tendril3").xRot = (Mth.sin(ageInTicks/7)/6);
-		this.body.getChild("tendril4").xRot = -(Mth.sin(ageInTicks/7)/7);
-		this.body.getChild("tendril").zRot = (Mth.sin(ageInTicks/6)/6);
-		this.body.getChild("tendril2").zRot = -(Mth.sin(ageInTicks/6)/7);
-		this.body.getChild("tendril3").zRot = (Mth.sin(ageInTicks/7)/6);
-		this.body.getChild("tendril4").zRot = -(Mth.sin(ageInTicks/7)/7);
 	}
 
 	@Override

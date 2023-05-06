@@ -5,9 +5,15 @@ import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedWallMovementControl;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -19,9 +25,12 @@ import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class Stalker extends EvolvedInfected{
+    public static final EntityDataAccessor<Integer> CAMO = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
+    int timerCamo;
     public Stalker(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         this.navigation = new WallClimberNavigation(this,level);
@@ -75,5 +84,58 @@ public class Stalker extends EvolvedInfected{
 
     protected void playStepSound(BlockPos p_34316_, BlockState p_34317_) {
         this.playSound(this.getStepSound(), 0.15F, 1.0F);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putInt("camo",entityData.get(CAMO));
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        entityData.set(CAMO, tag.getInt("camo"));
+    }
+
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(CAMO, 0);
+    }
+    public int getCamo(){
+        return this.entityData.get(CAMO);
+    }
+    public void setCamo(int i){
+        this.entityData.set(CAMO,i);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.timerCamo < 3600){
+            this.timerCamo = this.timerCamo +1;
+        }else{
+            if (timerCamo <= 3600){
+                if (temperature() > 0.2 && temperature() < 1.2){
+                    setCamo(1);
+                }else if (temperature() <= 0.2){
+                    setCamo(2);
+                }else if ( temperature() >= 1.2){
+                    setCamo(3);
+                }else {
+                    setCamo(0);
+                }
+                timerCamo = 0;
+            }
+        }
+    }
+
+    public float temperature(){
+        int i = Mth.floor(this.getX());
+        int j = Mth.floor(this.getY());
+        int k = Mth.floor(this.getZ());
+        BlockPos blockpos = new BlockPos(i, j, k);
+        Biome biome = this.level.getBiome(blockpos).value();
+        return biome.getBaseTemperature();
     }
 }

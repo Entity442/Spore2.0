@@ -20,6 +20,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -73,7 +74,7 @@ public class HandlerEvents {
 
     @SubscribeEvent
     public static  void Command(RegisterCommandsEvent event){
-        event.getDispatcher().register(Commands.literal("spore:set_area")
+        event.getDispatcher().register(Commands.literal(Spore.MODID+"set_area")
         .executes(arguments -> {
             ServerLevel world = arguments.getSource().getLevel();
             double x = arguments.getSource().getPosition().x();
@@ -94,7 +95,7 @@ public class HandlerEvents {
              }
             return 0;
         }));
-        event.getDispatcher().register(Commands.literal("spore:check_entity")
+        event.getDispatcher().register(Commands.literal(Spore.MODID+"check_entity")
                 .executes(arguments -> {
                     ServerLevel world = arguments.getSource().getLevel();
                     Entity entity = arguments.getSource().getEntity();
@@ -123,7 +124,7 @@ public class HandlerEvents {
                     return 0;
                 }));
 
-        event.getDispatcher().register(Commands.literal("spore:check_hivemind")
+        event.getDispatcher().register(Commands.literal(Spore.MODID+"check_hivemind")
                 .executes(arguments -> {
                     ServerLevel world = arguments.getSource().getLevel();
                     Entity entity = arguments.getSource().getEntity();
@@ -151,7 +152,7 @@ public class HandlerEvents {
     }
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event) {
-        if (event != null && event.getEntity() != null) {
+        if (event != null && event.getEntity() != null && event.getEntity().level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
             RandomSource random = RandomSource.create();
             List<? extends String> lootList;
             if (event.getEntity() instanceof InfectedHuman){

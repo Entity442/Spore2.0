@@ -1,9 +1,12 @@
 package com.Harbinger.Spore.Sitems;
 
 import com.Harbinger.Spore.Core.ScreativeTab;
+import com.Harbinger.Spore.Core.Seffects;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -14,7 +17,7 @@ import java.util.List;
 
 public class Biomass extends Item {
     public Biomass() {
-        super(new Item.Properties().tab(ScreativeTab.SPORE_T));
+        super(new Item.Properties().tab(ScreativeTab.SPORE_T).food(new FoodProperties.Builder().nutrition(4).saturationMod(0.3F).meat().effect(new MobEffectInstance(Seffects.MYCELIUM.get(),100,0),0.5f).build()));
     }
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {

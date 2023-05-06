@@ -241,4 +241,18 @@ public class Proto extends UtilityEntity{
     public void setHosts(int i){
         entityData.set(HOSTS,i);
     }
+
+
+    @Override
+    public boolean dampensVibrations() {
+        return true;
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (amount > 20){
+            return super.hurt(source,20f);
+        }
+        return super.hurt(source, amount);
+    }
 }

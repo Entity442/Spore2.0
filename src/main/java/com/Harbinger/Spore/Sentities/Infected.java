@@ -151,14 +151,14 @@ public class Infected extends Monster{
     public void aiStep() {
         super.aiStep();
 
-        if (isFreazing() && !this.level.isClientSide  && this.getRandom().nextInt(0,10) == 3) {
+        if (!this.level.isClientSide  && this.getRandom().nextInt(0,10) == 3 && (this.isInPowderSnow || this.isFreazing())) {
             this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1, false, false), Infected.this);
             this.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 0, false, false), Infected.this);
         }
 
         if (!(this instanceof EvolvedInfected) && entityData.get(HUNGER) < SConfig.SERVER.hunger.get() && entityData.get(KILLS) <= 0 && SConfig.SERVER.starve.get()){
             int i;
-            if (isFreazing()){i = 2;}else {i = 1;}
+            if (this.isInPowderSnow || this.isFreazing()){i = 2;}else {i = 1;}
             entityData.set(HUNGER , entityData.get(HUNGER) + i);
         }else if (!(this instanceof EvolvedInfected) && entityData.get(HUNGER) >= SConfig.SERVER.hunger.get() &&
                 !this.hasEffect(Seffects.STARVATION.get()) && this.random.nextInt(0,7) == 3 && SConfig.SERVER.starve.get()){

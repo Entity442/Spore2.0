@@ -1,9 +1,7 @@
 package com.Harbinger.Spore.Client.Renderers;
 
 import com.Harbinger.Spore.Client.Models.BruteModel;
-import com.Harbinger.Spore.Client.Models.StalkerModel;
 import com.Harbinger.Spore.Sentities.Brute;
-import com.Harbinger.Spore.Sentities.Stalker;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

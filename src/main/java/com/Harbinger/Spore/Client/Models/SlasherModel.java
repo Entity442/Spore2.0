@@ -1,5 +1,5 @@
-package com.Harbinger.Spore.Client.Models;// Made with Blockbench 4.4.2
-// Exported for Minecraft version 1.17 - 1.18 with Mojang mappings
+package com.Harbinger.Spore.Client.Models;// Made with Blockbench 4.7.2
+// Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
 
@@ -20,32 +20,20 @@ public class SlasherModel<T extends Slasher> extends EntityModel<T> {
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Spore.MODID, "slashermodel"), "main");
 	private final ModelPart body;
 	private final ModelPart bodywear;
-	private final ModelPart RightArm;
 	private final ModelPart LeftArm;
 	private final ModelPart RightLeg;
 	private final ModelPart LeftLeg;
 	private final ModelPart HeadJoint;
 	private final ModelPart Marm;
-	private final ModelPart flesh;
-	private final ModelPart flesh2;
-	private final ModelPart flesh3;
-	private final ModelPart flesh4;
-	private final ModelPart flesh5;
 
 	public SlasherModel(ModelPart root) {
 		this.body = root.getChild("body");
 		this.bodywear = root.getChild("bodywear");
-		this.RightArm = root.getChild("RightArm");
 		this.LeftArm = root.getChild("LeftArm");
 		this.RightLeg = root.getChild("RightLeg");
 		this.LeftLeg = root.getChild("LeftLeg");
 		this.HeadJoint = root.getChild("HeadJoint");
 		this.Marm = root.getChild("Marm");
-		this.flesh = root.getChild("flesh");
-		this.flesh2 = root.getChild("flesh2");
-		this.flesh3 = root.getChild("flesh3");
-		this.flesh4 = root.getChild("flesh4");
-		this.flesh5 = root.getChild("flesh5");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -53,27 +41,36 @@ public class SlasherModel<T extends Slasher> extends EntityModel<T> {
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
 		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(36, 21).addBox(-4.0F, 9.0F, -3.0F, 8.0F, 3.0F, 6.0F, new CubeDeformation(0.0F))
-		.texOffs(59, 41).addBox(1.5F, -5.0F, -2.0F, 3.0F, 5.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		.texOffs(59, 41).addBox(0.5F, -3.75F, -2.0F, 4.0F, 3.75F, 4.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 75).addBox(-3.0F, -9.0F, -5.0F, 4.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition cube_r1 = body.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(28, 47).addBox(-3.5F, 7.0F, -3.25F, 6.0F, 3.0F, 6.0F, new CubeDeformation(0.0F))
+		PartDefinition cube_r1 = body.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(-7, 87).addBox(-4.0F, -32.0F, -4.0F, 7.0F, 0.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 24.0F, 0.0F, 0.0F, 0.0F, 0.2618F));
+
+		PartDefinition cube_r2 = body.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(-7, 87).addBox(-1.0F, -33.0F, -12.0F, 7.0F, 0.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 24.0F, 0.0F, -0.3054F, 0.0F, 0.0F));
+
+		PartDefinition cube_r3 = body.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(-7, 87).addBox(-3.0F, -29.0F, -6.0F, 7.0F, 0.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 24.0F, 0.0F, -0.1731F, 0.0227F, 0.1289F));
+
+		PartDefinition cube_r4 = body.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(-7, 87).addBox(-2.0F, -22.0F, 7.0F, 7.0F, 0.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 24.0F, 0.0F, 0.6109F, 0.0F, -0.1309F));
+
+		PartDefinition cube_r5 = body.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(-7, 87).addBox(-5.0F, -24.0F, -1.0F, 7.0F, 0.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 24.0F, 0.0F, 0.0F, 0.0F, -0.1309F));
+
+		PartDefinition cube_r6 = body.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(18, 66).addBox(-16.0F, -32.0F, -4.0F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 24.0F, 0.0F, 0.0F, 0.0F, 0.4363F));
+
+		PartDefinition cube_r7 = body.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(28, 47).addBox(-1.5F, 6.5F, -3.25F, 5.0F, 2.0F, 6.0F, new CubeDeformation(0.0F))
 		.texOffs(32, 0).addBox(-4.5F, -1.0F, -4.0F, 8.0F, 5.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.5F, -2.0F, 0.0F, 0.0F, 0.0F, 0.7854F));
 
 		PartDefinition body_r1 = body.addOrReplaceChild("body_r1", CubeListBuilder.create().texOffs(36, 12).addBox(-4.0F, -2.5F, -3.0F, 8.0F, 3.0F, 6.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(0.0F, 9.0F, 0.0F, 0.0436F, 0.0F, 0.0F));
 
-		PartDefinition body_r2 = body.addOrReplaceChild("body_r2", CubeListBuilder.create().texOffs(0, 34).addBox(-9.0F, -11.0F, -3.0F, 8.0F, 7.0F, 6.0F, new CubeDeformation(0.1F))
+		PartDefinition body_r2 = body.addOrReplaceChild("body_r2", CubeListBuilder.create().texOffs(0, 34).addBox(-6.0F, -11.0F, -3.0F, 6.0F, 7.0F, 6.0F, new CubeDeformation(0.1F))
 		.texOffs(28, 34).addBox(-4.0F, -7.0F, -3.0F, 8.0F, 7.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 7.0F, -0.25F, 0.0436F, 0.0F, 0.0F));
 
 		PartDefinition bodywear = partdefinition.addOrReplaceChild("bodywear", CubeListBuilder.create().texOffs(75, 0).addBox(-4.0F, 0.0F, -3.25F, 8.0F, 18.0F, 6.0F, new CubeDeformation(0.25F)), PartPose.offsetAndRotation(0.0F, 0.0F, -0.25F, 0.0436F, 0.0F, 0.0F));
-
-		PartDefinition RightArm = partdefinition.addOrReplaceChild("RightArm", CubeListBuilder.create().texOffs(0, 66).addBox(-2.0F, -2.0F, -1.5F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-8.0F, 4.0F, 0.0F));
-
-		PartDefinition RightForArm = RightArm.addOrReplaceChild("RightForArm", CubeListBuilder.create().texOffs(62, 59).addBox(-2.0F, 0.0F, -1.5F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(0.0F, 4.0F, 0.0F, -0.0873F, 0.0F, 0.0F));
 
 		PartDefinition LeftArm = partdefinition.addOrReplaceChild("LeftArm", CubeListBuilder.create().texOffs(62, 50).addBox(-1.0F, -2.0F, -1.5F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(5.0F, 2.0F, 0.0F));
 
 		PartDefinition LeftForArm = LeftArm.addOrReplaceChild("LeftForArm", CubeListBuilder.create(), PartPose.offset(0.0F, 4.0F, 0.0F));
 
-		PartDefinition cube_r2 = LeftForArm.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(61, 18).addBox(-1.0F, 0.0F, -1.5F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.0873F, 0.0F, 0.0F));
+		PartDefinition cube_r8 = LeftForArm.addOrReplaceChild("cube_r8", CubeListBuilder.create().texOffs(61, 18).addBox(-1.0F, 0.0F, -1.5F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.0873F, 0.0F, 0.0F));
 
 		PartDefinition RightLeg = partdefinition.addOrReplaceChild("RightLeg", CubeListBuilder.create().texOffs(32, 56).addBox(-1.75F, 0.0F, -2.5F, 3.0F, 6.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.9F, 12.0F, 0.0F));
 
@@ -89,32 +86,40 @@ public class SlasherModel<T extends Slasher> extends EntityModel<T> {
 		.texOffs(0, 0).addBox(-4.0F, -10.0F, -5.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F))
 		.texOffs(55, 0).addBox(-4.0F, -2.0F, 1.0F, 8.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
 		.texOffs(24, 1).addBox(-3.5F, -2.0F, -4.0F, 0.0F, 1.0F, 5.0F, new CubeDeformation(0.0F))
-		.texOffs(24, 0).addBox(3.5F, -2.0F, -4.0F, 0.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.6981F));
+		.texOffs(24, 0).addBox(3.5F, -2.0F, -4.0F, 0.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, 0.0F, -0.5F, 0.1733F, -0.0298F, 0.3438F));
 
 		PartDefinition nose = head.addOrReplaceChild("nose", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -1.0F, -6.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -2.0F, -1.0F));
 
 		PartDefinition jaw = head.addOrReplaceChild("jaw", CubeListBuilder.create().texOffs(0, 47).addBox(-4.0F, -1.0F, -6.0F, 8.0F, 2.0F, 6.0F, new CubeDeformation(-0.05F)), PartPose.offset(0.0F, -1.0F, 1.0F));
 
-		PartDefinition Marm = partdefinition.addOrReplaceChild("Marm", CubeListBuilder.create(), PartPose.offset(-6.0F, -4.0F, -1.0F));
+		PartDefinition flower2 = HeadJoint.addOrReplaceChild("flower2", CubeListBuilder.create(), PartPose.offsetAndRotation(2.0F, -6.5F, -4.25F, 0.7039F, -0.1949F, -0.1078F));
 
-		PartDefinition MarmJoint = Marm.addOrReplaceChild("MarmJoint", CubeListBuilder.create().texOffs(58, 8).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 3.0F, 4.0F, new CubeDeformation(0.0F))
-		.texOffs(52, 47).addBox(-1.0F, -18.0F, -1.5F, 2.0F, 16.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.5236F, 0.0F, 0.0F));
+		PartDefinition cube_r9 = flower2.addOrReplaceChild("cube_r9", CubeListBuilder.create().texOffs(-8, 87).addBox(0.0F, 0.0F, -3.84F, 7.68F, 0.0F, 7.68F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.3927F));
 
-		PartDefinition MArm2 = MarmJoint.addOrReplaceChild("MArm2", CubeListBuilder.create(), PartPose.offset(0.0F, -17.0F, 0.0F));
+		PartDefinition cube_r10 = flower2.addOrReplaceChild("cube_r10", CubeListBuilder.create().texOffs(-8, 87).addBox(-7.68F, 0.0F, -3.84F, 7.68F, 0.0F, 7.68F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.3927F));
 
-		PartDefinition MarmJoint2 = MArm2.addOrReplaceChild("MarmJoint2", CubeListBuilder.create().texOffs(13, 13).addBox(-1.0F, -2.0F, -17.0F, 2.0F, 2.0F, 19.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.5236F, 0.0F, 0.0F));
+		PartDefinition cube_r11 = flower2.addOrReplaceChild("cube_r11", CubeListBuilder.create().texOffs(-8, 87).addBox(-5.12F, 0.0F, -7.68F, 8.96F, 0.0F, 7.68F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.64F, 0.0F, 0.0F, -0.3927F, 0.0F, 0.0F));
 
-		PartDefinition claw = MarmJoint2.addOrReplaceChild("claw", CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, -9.0F, -16.0F, 0.0F, 16.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -1.0F, -17.0F));
+		PartDefinition cube_r12 = flower2.addOrReplaceChild("cube_r12", CubeListBuilder.create().texOffs(-8, 87).addBox(-5.12F, 0.0F, 0.0F, 8.96F, 0.0F, 7.68F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.64F, 0.0F, 0.0F, 0.3927F, 0.0F, 0.0F));
 
-		PartDefinition flesh = partdefinition.addOrReplaceChild("flesh", CubeListBuilder.create().texOffs(22, 34).addBox(0.0F, -1.0F, -1.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-5.0F, -1.0F, 3.0F));
+		PartDefinition flower = HeadJoint.addOrReplaceChild("flower", CubeListBuilder.create(), PartPose.offsetAndRotation(-2.0F, -9.0F, -2.0F, 0.162F, 0.1468F, -0.7298F));
 
-		PartDefinition flesh2 = partdefinition.addOrReplaceChild("flesh2", CubeListBuilder.create().texOffs(32, 1).addBox(0.0F, -1.0F, -1.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-7.0F, 1.0F, 3.0F));
+		PartDefinition cube_r13 = flower.addOrReplaceChild("cube_r13", CubeListBuilder.create().texOffs(-6, 87).addBox(-6.0F, 0.0F, -3.0F, 6.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.3927F));
 
-		PartDefinition flesh3 = partdefinition.addOrReplaceChild("flesh3", CubeListBuilder.create().texOffs(0, 32).addBox(0.0F, -1.0F, -1.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, 1.0F, 2.75F));
+		PartDefinition cube_r14 = flower.addOrReplaceChild("cube_r14", CubeListBuilder.create().texOffs(-6, 87).addBox(-4.0F, 0.0F, -6.0F, 7.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.0F, 0.0F, -0.3927F, 0.0F, 0.0F));
 
-		PartDefinition flesh4 = partdefinition.addOrReplaceChild("flesh4", CubeListBuilder.create().texOffs(28, 2).addBox(0.0F, -1.0F, -1.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-5.0F, -3.0F, 3.25F));
+		PartDefinition cube_r15 = flower.addOrReplaceChild("cube_r15", CubeListBuilder.create().texOffs(-6, 87).addBox(-4.0F, 0.0F, 0.0F, 7.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.0F, 0.0F, 0.3927F, 0.0F, 0.0F));
 
-		PartDefinition flesh5 = partdefinition.addOrReplaceChild("flesh5", CubeListBuilder.create().texOffs(24, 1).addBox(0.0F, -1.0F, -1.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(-7.0F, -2.0F, 2.5F));
+		PartDefinition Marm = partdefinition.addOrReplaceChild("Marm", CubeListBuilder.create(), PartPose.offset(-6.0F, -4.0F, -2.0F));
+
+		PartDefinition MarmJoint = Marm.addOrReplaceChild("MarmJoint", CubeListBuilder.create().texOffs(58, 8).addBox(-2.0F, -3.0F, -1.75F, 4.0F, 5.0F, 4.0F, new CubeDeformation(0.0F))
+		.texOffs(52, 47).addBox(-1.0F, -14.0F, -1.0F, 2.0F, 12.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 1.0F, -1.0F, 0.7854F, 0.0F, 0.0F));
+
+		PartDefinition MArm2 = MarmJoint.addOrReplaceChild("MArm2", CubeListBuilder.create(), PartPose.offset(0.0F, -14.0F, 1.0F));
+
+		PartDefinition MarmJoint2 = MArm2.addOrReplaceChild("MarmJoint2", CubeListBuilder.create().texOffs(19, 19).addBox(-1.0F, -1.0F, -13.0F, 2.0F, 2.0F, 13.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.0436F, 0.0F, 0.0F));
+
+		PartDefinition claw = MarmJoint2.addOrReplaceChild("claw", CubeListBuilder.create().texOffs(0, 0).addBox(0.1F, -9.0F, -16.0F, 0.0F, 16.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, -13.0F));
 
 		return LayerDefinition.create(meshdefinition, 128, 128);
 	}
@@ -122,36 +127,25 @@ public class SlasherModel<T extends Slasher> extends EntityModel<T> {
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
+
 		if (entity.attackAnim > 0) {
-			float f1 = 1.0F - Mth.abs(10 - 2 * entity.attackAnim) / 10.0F;
+			float f1 = 1.0F - Mth.abs(10 - 3 * entity.attackAnim) / 10.0F;
 			this.Marm.xRot = Mth.sin(f1) * 2.0F;
 			this.Marm.getChild("MarmJoint").getChild("MArm2").xRot = -Mth.sin(f1) * 3.0F;
 		}
-
-
-		else if (entity.isAggressive()){
-			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
-			this.LeftArm.xRot = -89F + (Mth.sin(ageInTicks/4)/7);
-			this.Marm.xRot = Mth.sin(ageInTicks/8)/10;
-			this.Marm.getChild("MarmJoint").getChild("MArm2").xRot = -Mth.sin(ageInTicks/8)/10;
-			this.Marm.getChild("MarmJoint").getChild("MArm2").getChild("MarmJoint2").getChild("claw").xRot = -Mth.sin(ageInTicks/8)/10;
-		}
 		else if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
-			this.RightArm.xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 			this.LeftArm.xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-			this.RightArm.zRot = 0;
 			this.LeftArm.zRot = 0;
 			this.Marm.xRot = Mth.sin(ageInTicks/8)/10;
 			this.Marm.getChild("MarmJoint").getChild("MArm2").xRot = -Mth.sin(ageInTicks/8)/10;
-			this.Marm.getChild("MarmJoint").getChild("MArm2").getChild("MarmJoint2").getChild("claw").xRot = -Mth.sin(ageInTicks/8)/10;
+			this.Marm.getChild("MarmJoint").getChild("MArm2").getChild("MarmJoint2").getChild("claw").xRot = -Mth.sin(ageInTicks/6)/8;
 
 		}
 		else {
-			this.Marm.xRot = Mth.sin(ageInTicks/8)/10;
+			this.Marm.xRot = Mth.sin(ageInTicks/6)/8;
 			this.Marm.getChild("MarmJoint").getChild("MArm2").xRot = -Mth.sin(ageInTicks/8)/10;
-			this.Marm.getChild("MarmJoint").getChild("MArm2").getChild("MarmJoint2").getChild("claw").xRot = -Mth.sin(ageInTicks/8)/10;
-			this.RightArm.zRot = Mth.sin(ageInTicks/8)/10;
-			this.LeftArm.zRot = -Mth.sin(ageInTicks/8)/10;
+			this.Marm.getChild("MarmJoint").getChild("MArm2").getChild("MarmJoint2").getChild("claw").xRot = -Mth.sin(ageInTicks/6)/8;
+			this.LeftArm.zRot = -Mth.sin(ageInTicks/6)/8;
 		}
 
 
@@ -163,31 +157,16 @@ public class SlasherModel<T extends Slasher> extends EntityModel<T> {
 			this.RightLeg.getChild("rightForLeg").xRot = -RightLeg.xRot;}
 
 		this.HeadJoint.getChild("head").getChild("jaw").xRot = Mth.sin(ageInTicks/8)/10;
-		this.HeadJoint.zRot = Mth.sin(ageInTicks/10)/10;
-
-		this.flesh.z =-1 +Mth.cos(ageInTicks/5)/5;
-		this.flesh2.z =-1 +Mth.cos(ageInTicks/5)/6;
-		this.flesh3.z =-1 +Mth.cos(ageInTicks/7)/5;
-		this.flesh4.z =-1 +Mth.cos(ageInTicks/5)/8;
-		this.flesh5.z =-1 +Mth.cos(ageInTicks/9)/5;
-		}
-
-
+	}
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		bodywear.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		RightArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		LeftArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		RightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		LeftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		HeadJoint.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		Marm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		flesh.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		flesh2.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		flesh3.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		flesh4.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		flesh5.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 }

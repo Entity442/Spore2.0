@@ -25,7 +25,7 @@ public class SlasherRenderer <Type extends Slasher> extends MobRenderer<Type , S
         this.addLayer(new Eyes<>(this));
     }
 
-    private  class Eyes<Type extends Slasher,M extends SlasherModel<Type>> extends EyesLayer<Type,M> {
+    private static class Eyes<Type extends Slasher,M extends SlasherModel<Type>> extends EyesLayer<Type,M> {
         private static final RenderType EYES = RenderType.eyes(new ResourceLocation(Spore.MODID,"textures/entity/eyes/slasher.png"));
         public Eyes(RenderLayerParent layer) {
             super(layer);
