@@ -52,8 +52,8 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
         this.goalSelector.addGoal(1, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.LONG_FIRE_RESISTANCE), SoundEvents.WITCH_DRINK, (p_35882_) -> {
             return (this.isOnFire() || this.getLastDamageSource() != null && this.getLastDamageSource().isFire()) && !this.hasEffect(MobEffects.FIRE_RESISTANCE);
         }));
-        this.goalSelector.addGoal(1, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRONG_HEALING), SoundEvents.WITCH_DRINK, (p_35882_) -> {
-            return this.getHealth() < this.getMaxHealth();
+        this.goalSelector.addGoal(1, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.HEALING), SoundEvents.WITCH_DRINK, (p_35882_) -> {
+            return this.getHealth() < this.getMaxHealth()/2;
         }){
             @Override
             public void start() {
@@ -64,12 +64,12 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
         this.goalSelector.addGoal(1, new BuffAlliesGoal(this,Infected.class,1.3,35,45,3,entity -> {
             return entity.hasEffect(Seffects.STARVATION.get());
         }));
-        this.goalSelector.addGoal(1, new BuffAlliesGoal(this,Mob.class,1.3,35,45,3,entity -> {
+        this.goalSelector.addGoal(1, new BuffAlliesGoal(this,Mob.class,1.3,50,60,3,entity -> {
             return SConfig.SERVER.evolved.get().contains(entity.getEncodeId());
         }));
         this.goalSelector.addGoal(1, new BuffAlliesGoal(this,Infected.class,1.3,35,45,3));
 
-        this.goalSelector.addGoal(4, new RangedAttackGoal(this, 1.0D, 60, 10.0F));
+        this.goalSelector.addGoal(4, new RangedAttackGoal(this, 1.0D, 80, 10.0F));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
     }
 
@@ -142,7 +142,7 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
         }else if (d3 <= 2.0D && !entity.hasEffect(MobEffects.MOVEMENT_SPEED) && this.random.nextFloat() < 0.25F) {
             potion = Potions.SWIFTNESS;
         }else {
-            potion = Potions.STRONG_HEALING;
+            potion = Potions.HEALING;
         }
         ThrownPotion thrownpotion = new ThrownPotion(this.level, this);
         thrownpotion.setItem(PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), potion));

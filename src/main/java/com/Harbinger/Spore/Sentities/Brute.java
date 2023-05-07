@@ -33,7 +33,7 @@ public class Brute extends EvolvedInfected implements Carrier{
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1,new TransportInfected<>(this,Infected.class, 1.1, entity -> {
+        this.goalSelector.addGoal(1,new TransportInfected<>(this,Mob.class, 1.1, entity -> {
             return SConfig.SERVER.ranged.get().contains(entity.getEncodeId());
         }));
         this.goalSelector.addGoal(2, new CustomMeleeAttackGoal(this, 1.5, false) {

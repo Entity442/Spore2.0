@@ -26,6 +26,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Boolean> inf_player;
         public final ForgeConfigSpec.ConfigValue<Boolean> at_an;
 
+        public final ForgeConfigSpec.ConfigValue<Integer> days;
+        public final ForgeConfigSpec.ConfigValue<Integer> mob_cap;
+        public final ForgeConfigSpec.ConfigValue<Boolean> spawn;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> spawns;
 
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_spawn;
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_summon;
@@ -541,6 +545,16 @@ public class SConfig {
             builder.pop();
 
 
+            builder.push("Spawns");
+            this.spawn = builder.comment("Default false").define("Should mobs spawn after a few days?",false);
+            this.mob_cap = builder.comment("Default 50").define("MobCap",50);
+            this.days = builder.comment("Default 3").define("Days before infected start spawning",3);
+            this.spawns = builder.defineList("mob|weight|minimum|maximum",
+                    Lists.newArrayList("spore:inf_human|80|2|5","spore:inf_drowned|10|1|2","spore:inf_pillager|40|1|3","spore:inf_villager|70|1|3","spore:inf_player|20|1|2"
+                            ,"spore:inf_wanderer|25|1|2","spore:inf_witch|25|1|2","spore:inf_vindicator|1|1|2","spore:inf_evoker|5|1|2") , o -> o instanceof String);
+            builder.pop();
+
+
             builder.push("Weapons and Tools OwO");
             builder.push("Spear");
             this.spear_durability = builder.comment("Default 800").define("Durability",800);
@@ -696,9 +710,6 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> organite_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> innards_loot;
 
-        public final ForgeConfigSpec.ConfigValue<Integer> days;
-        public final ForgeConfigSpec.ConfigValue<Boolean> spawn;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> spawns;
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> name;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_h;
@@ -791,13 +802,6 @@ public class SConfig {
             this.player_ho = builder.defineList("OffHand Slot",
                     Lists.newArrayList("minecraft:torch|50","minecraft:shield|30") , o -> o instanceof String);
 
-            builder.pop();
-            builder.push("Spawns");
-            this.spawn = builder.comment("Default false").define("Should mobs spawn after a few days?",false);
-            this.days = builder.comment("Default 3").define("Days before infected start spawning",3);
-            this.spawns = builder.defineList("mob|weight|minimum|maximum",
-                    Lists.newArrayList("spore:inf_human|80|2|5","spore:inf_drowned|10|1|2","spore:inf_pillager|40|1|3","spore:inf_villager|70|1|3","spore:inf_player|20|1|2"
-                            ,"spore:inf_wanderer|25|1|2","spore:inf_witch|25|1|2","spore:inf_vindicator|1|1|2","spore:inf_evoker|5|1|2") , o -> o instanceof String);
             builder.pop();
             builder.push("Structure data");
             this.biomass_lump_kills = builder.comment("Default 5").defineInRange("Biomass Lump minimal kills", 5, 0, Integer.MAX_VALUE);

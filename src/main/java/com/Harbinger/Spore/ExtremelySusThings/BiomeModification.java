@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.ExtremelySusThings;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Spore;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Holder;
@@ -29,11 +30,15 @@ public class BiomeModification implements BiomeModifier {
         if (phase == Phase.ADD) {
             int biomesModifier = 0;
             if (biome.is(Tags.Biomes.IS_MUSHROOM)){biomesModifier = 20;}
-            for (String str : SConfig.DATAGEN.spawns.get()){
+            for (String str : SConfig.SERVER.spawns.get()){
                 String[] string = str.split("\\|" );
                 EntityType<?> entity = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(string[0]));
                 if (entity != null && biome.is(TagKey.create(Registry.BIOME_REGISTRY , new ResourceLocation("minecraft:is_overworld")))){
-                builder.getMobSpawnSettings().getSpawner(MobCategory.MONSTER)
+                    MobCategory category = MobCategory.MONSTER;
+                    if (entity.getCategory().getSerializedName().equals("infected")){
+                        category = Sentities.INFECTED;
+                    }
+                    builder.getMobSpawnSettings().getSpawner(category)
                         .add(new MobSpawnSettings.SpawnerData(entity, Integer.parseUnsignedInt(string[1]) + biomesModifier, Integer.parseUnsignedInt(string[2]), Integer.parseUnsignedInt(string[3])));
                 }
             }
