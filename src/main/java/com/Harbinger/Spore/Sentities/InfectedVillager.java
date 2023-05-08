@@ -79,12 +79,14 @@ public class InfectedVillager extends Infected {
     @Override
     public void baseTick() {
         super.baseTick();
-        if (!isFreazing() && this.entityData.get(KILLS) >= SConfig.SERVER.min_kills.get()) {
-            this.entityData.set(EVOLUTION,entityData.get(EVOLUTION) + 1);
-        }
+
         if (entityData.get(EVOLUTION) >= (20 * SConfig.SERVER.evolution_age_human.get()) && this.entityData.get(KILLS) >= SConfig.SERVER.min_kills.get()) {
             this.entityData.set(KILLS,this.entityData.get(KILLS) - SConfig.SERVER.min_kills.get());
             Evolve(this);
+        }else{
+            if (!isFreazing() && this.entityData.get(KILLS) >= SConfig.SERVER.min_kills.get()) {
+                this.entityData.set(EVOLUTION,entityData.get(EVOLUTION) + 1);
+            }
         }
     }
 

@@ -74,7 +74,7 @@ public class HandlerEvents {
 
     @SubscribeEvent
     public static  void Command(RegisterCommandsEvent event){
-        event.getDispatcher().register(Commands.literal(Spore.MODID+"set_area")
+        event.getDispatcher().register(Commands.literal(Spore.MODID+":set_area")
         .executes(arguments -> {
             ServerLevel world = arguments.getSource().getLevel();
             double x = arguments.getSource().getPosition().x();
@@ -95,7 +95,7 @@ public class HandlerEvents {
              }
             return 0;
         }));
-        event.getDispatcher().register(Commands.literal(Spore.MODID+"check_entity")
+        event.getDispatcher().register(Commands.literal(Spore.MODID+":check_entity")
                 .executes(arguments -> {
                     ServerLevel world = arguments.getSource().getLevel();
                     Entity entity = arguments.getSource().getEntity();
@@ -124,7 +124,7 @@ public class HandlerEvents {
                     return 0;
                 }));
 
-        event.getDispatcher().register(Commands.literal(Spore.MODID+"check_hivemind")
+        event.getDispatcher().register(Commands.literal(Spore.MODID+":check_hivemind")
                 .executes(arguments -> {
                     ServerLevel world = arguments.getSource().getLevel();
                     Entity entity = arguments.getSource().getEntity();

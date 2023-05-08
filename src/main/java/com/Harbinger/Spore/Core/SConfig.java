@@ -25,6 +25,8 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Boolean> at_mob;
         public final ForgeConfigSpec.ConfigValue<Boolean> inf_player;
         public final ForgeConfigSpec.ConfigValue<Boolean> at_an;
+        public final ForgeConfigSpec.ConfigValue<Boolean> weaktocold;
+        public final ForgeConfigSpec.ConfigValue<Boolean> should_starve;
 
         public final ForgeConfigSpec.ConfigValue<Integer> days;
         public final ForgeConfigSpec.ConfigValue<Integer> mob_cap;
@@ -271,6 +273,8 @@ public class SConfig {
             this.global_damage = builder.define("Global Damage Modifier",1.0);
             this.global_health = builder.define("Global Health Modifier",1.0);
             this.global_armor = builder.define("Global Armor Modifier",1.0);
+            this.weaktocold = builder.comment("Default true").define("Should the infected be weak to cold?",true);
+            this.should_starve = builder.comment("Default true").define("Should the infected starve overtime?",true);
             this.hunger = builder.define("Hunger in ticks",12000);
 
             builder.pop();
