@@ -3,7 +3,7 @@ package com.Harbinger.Spore.Sblocks;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
-import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
+import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;

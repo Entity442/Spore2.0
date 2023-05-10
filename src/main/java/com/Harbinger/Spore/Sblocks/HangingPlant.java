@@ -2,7 +2,7 @@ package com.Harbinger.Spore.Sblocks;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
-import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
+import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.damagesource.DamageSource;

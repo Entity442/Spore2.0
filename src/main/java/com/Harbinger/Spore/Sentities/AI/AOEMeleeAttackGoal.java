@@ -2,7 +2,7 @@ package com.Harbinger.Spore.Sentities.AI;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
-import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
+import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;

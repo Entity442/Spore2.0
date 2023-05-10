@@ -4,6 +4,7 @@ import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Sentities.AI.BreakBlockGoal;
+import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedWallMovementControl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -28,7 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class InfectionTendril extends UtilityEntity{
+public class InfectionTendril extends UtilityEntity {
     private static final EntityDataAccessor<BlockPos> SEARCH_AREA = SynchedEntityData.defineId(InfectionTendril.class, EntityDataSerializers.BLOCK_POS);
     private static final EntityDataAccessor<Integer> LIFE = SynchedEntityData.defineId(InfectionTendril.class, EntityDataSerializers.INT);
     public InfectionTendril(EntityType<? extends PathfinderMob> type, Level level) {

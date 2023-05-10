@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sentities.Utility;
 
 import com.Harbinger.Spore.Core.*;
+import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -36,7 +37,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.List;
 import java.util.Map;
 
-public class Mound extends UtilityEntity{
+public class Mound extends UtilityEntity {
     private static final EntityDataAccessor<Integer> TENDRILS = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> AGE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> COUNTER = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);

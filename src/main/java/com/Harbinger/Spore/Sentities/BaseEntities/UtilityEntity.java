@@ -1,4 +1,4 @@
-package com.Harbinger.Spore.Sentities.Utility;
+package com.Harbinger.Spore.Sentities.BaseEntities;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
