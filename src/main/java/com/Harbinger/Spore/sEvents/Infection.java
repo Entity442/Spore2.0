@@ -4,6 +4,8 @@ import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Sentities.*;
+import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
+import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

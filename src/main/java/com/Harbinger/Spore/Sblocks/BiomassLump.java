@@ -2,7 +2,7 @@ package com.Harbinger.Spore.Sblocks;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.SBlockEntities.BiomassLumpEntity;
-import com.Harbinger.Spore.Sentities.Infected;
+import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;

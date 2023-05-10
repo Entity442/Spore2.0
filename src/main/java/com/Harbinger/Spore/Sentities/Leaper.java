@@ -5,6 +5,7 @@ import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.LeapGoal;
 import com.Harbinger.Spore.Sentities.AI.TransportInfected;
+import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedWallMovementControl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;

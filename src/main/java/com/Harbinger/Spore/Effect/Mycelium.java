@@ -2,7 +2,7 @@ package com.Harbinger.Spore.Effect;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
-import com.Harbinger.Spore.Sentities.Infected;
+import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;

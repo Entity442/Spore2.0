@@ -1,6 +1,6 @@
 package com.Harbinger.Spore.Sentities.AI.LocHiv;
 
-import com.Harbinger.Spore.Sentities.Infected;
+import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.ai.attributes.Attributes;

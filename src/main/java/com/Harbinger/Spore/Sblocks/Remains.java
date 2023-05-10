@@ -3,7 +3,7 @@ package com.Harbinger.Spore.Sblocks;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sparticles;
-import com.Harbinger.Spore.Sentities.Infected;
+import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffectInstance;

@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
+import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

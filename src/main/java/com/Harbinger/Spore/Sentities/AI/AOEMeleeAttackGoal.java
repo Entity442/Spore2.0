@@ -1,7 +1,7 @@
 package com.Harbinger.Spore.Sentities.AI;
 
 import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Sentities.Infected;
+import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -12,7 +12,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.AABB;

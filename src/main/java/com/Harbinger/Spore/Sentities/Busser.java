@@ -5,6 +5,7 @@ import com.Harbinger.Spore.Sentities.AI.AerialChargeGoal;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.FlyingWanderAround;
 import com.Harbinger.Spore.Sentities.AI.TransportInfected;
+import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedArialMovementControl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;

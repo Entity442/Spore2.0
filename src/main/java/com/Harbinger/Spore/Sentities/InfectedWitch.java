@@ -6,6 +6,7 @@ import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.BuffAlliesGoal;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.RangedBuff;
+import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -89,7 +90,7 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
             }
         });
 
-        this.goalSelector.addGoal(1, new BuffAlliesGoal(this,Infected.class,1.3,SConfig.SERVER.buff_potion_meter.get(),SConfig.SERVER.buff_potion_meter.get(),3)
+        this.goalSelector.addGoal(1, new BuffAlliesGoal(this, Infected.class,1.3,SConfig.SERVER.buff_potion_meter.get(),SConfig.SERVER.buff_potion_meter.get(),3)
         {
             @Override
             public boolean canUse() {

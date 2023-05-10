@@ -3,6 +3,7 @@ package com.Harbinger.Spore.Sentities;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
+import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -31,7 +32,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class InfectedPlayer extends Infected{
+public class InfectedPlayer extends Infected {
 
     public InfectedPlayer(EntityType<? extends Monster> type, Level level) {
         super(type, level);

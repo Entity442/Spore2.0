@@ -1,6 +1,6 @@
 package com.Harbinger.Spore.Sentities.AI.LocHiv;
 
-import com.Harbinger.Spore.Sentities.Infected;
+import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;

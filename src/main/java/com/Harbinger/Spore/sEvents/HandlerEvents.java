@@ -3,6 +3,7 @@ package com.Harbinger.Spore.sEvents;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
 import com.Harbinger.Spore.Sentities.*;
+import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.Utility.Mound;
 import com.Harbinger.Spore.Sentities.Utility.Proto;
 import com.Harbinger.Spore.Sentities.Utility.UtilityEntity;
