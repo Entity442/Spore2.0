@@ -29,10 +29,10 @@ public class InfectedWanderingTrader extends Infected {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.LONG_INVISIBILITY), SoundEvents.WANDERING_TRADER_DRINK_POTION, (p_35882_) -> {
-            return !this.isInvisible() && isAggressive();
+            return !this.isInvisible() && isAggressive() && SConfig.SERVER.inf_van_potion.get();
         }));
         this.goalSelector.addGoal(0, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRONG_HEALING), SoundEvents.WANDERING_TRADER_DRINK_POTION, (p_35882_) -> {
-            return this.getHealth() < this.getMaxHealth()/2 && !isAggressive();
+            return this.getHealth() < this.getMaxHealth()/2 && !isAggressive() && SConfig.SERVER.inf_van_potion.get();
         }){
             @Override
             public void start() {

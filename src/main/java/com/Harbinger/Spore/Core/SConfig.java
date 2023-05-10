@@ -56,6 +56,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> inf_van_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_van_damage;
         public final ForgeConfigSpec.ConfigValue<Double> inf_van_armor;
+        public final ForgeConfigSpec.ConfigValue<Boolean> inf_van_potion;
 
         public final ForgeConfigSpec.ConfigValue<Double> inf_vin_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_vin_damage;
@@ -80,6 +81,11 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> inf_witch_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_witch_armor;
         public final ForgeConfigSpec.ConfigValue<Double> inf_witch_melee_damage;
+        public final ForgeConfigSpec.ConfigValue<Integer> at_potion_meter;
+        public final ForgeConfigSpec.ConfigValue<Integer> buff_potion_meter;
+        public final ForgeConfigSpec.ConfigValue<Boolean> use_potions;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> buffing_potions;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> harming_potions;
 
         public final ForgeConfigSpec.ConfigValue<Double> braio_armor;
         public final ForgeConfigSpec.ConfigValue<Double> braio_hp;
@@ -479,12 +485,20 @@ public class SConfig {
             this.inf_van_hp = builder.comment("Default 20").defineInRange("Sets Infected Wandering Trader Max health", 20, 1, Double.MAX_VALUE);
             this.inf_van_damage = builder.comment("Default 6").defineInRange("Sets Infected Wandering Trader Damage", 6, 1, Double.MAX_VALUE);
             this.inf_van_armor = builder.comment("Default 1").defineInRange("Sets Infected Wandering Trader Armor", 1, 0, Double.MAX_VALUE);
+            this.inf_van_potion = builder.comment("Default true").define("Can the Infected Wandering Trader use Potions", true);
             builder.pop();
 
             builder.push("Infected Witch");
             this.inf_witch_hp = builder.comment("Default 25").defineInRange("Sets Infected Witch Max health", 25, 1, Double.MAX_VALUE);
             this.inf_witch_armor = builder.comment("Default 1").defineInRange("Sets Infected Witch Armor", 1, 0, Double.MAX_VALUE);
             this.inf_witch_melee_damage = builder.comment("Default 4").defineInRange("Sets Infected Witch Melee Damage", 4, 0, Double.MAX_VALUE);
+            this.buffing_potions = builder.defineList("Potions that are used to buff infected , NOT effects",
+                    Lists.newArrayList("minecraft:invisibility","minecraft:swiftness","minecraft:strength" ) , o -> o instanceof String);
+            this.harming_potions = builder.defineList("Potions that are used to attack others , NOT effects",
+                    Lists.newArrayList("minecraft:weakness","minecraft:poison","spore:mycelium_potion","spore:marker_potion" ) , o -> o instanceof String);
+            this.use_potions = builder.comment("Default true").define("Should Witches use Potions?",true);
+            this.at_potion_meter = builder.comment("Default 60").defineInRange("Sets the time before throwing a potion when attacking", 60, 1, Integer.MAX_VALUE);
+            this.buff_potion_meter = builder.comment("Default 40").defineInRange("Sets the time before throwing a potion when buffing", 40, 1, Integer.MAX_VALUE);
             builder.pop();
 
             builder.push("Braiomil");
