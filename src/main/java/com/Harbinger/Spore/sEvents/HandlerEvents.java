@@ -3,6 +3,7 @@ package com.Harbinger.Spore.sEvents;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
 import com.Harbinger.Spore.Sentities.*;
+import com.Harbinger.Spore.Sentities.BaseEntities.Calamity;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.Utility.Mound;
 import com.Harbinger.Spore.Sentities.Utility.Proto;
@@ -89,8 +90,9 @@ public class HandlerEvents {
                  List<Entity> entities = entity.level.getEntities(entity, hitbox);
                  for (Entity entity1 : entities) {
                      if(entity1 instanceof Infected infected) {
-                         BlockPos pos = new BlockPos(x ,y,z);
-                         infected.setSearchPos(pos);
+                         infected.setSearchPos(new BlockPos(x ,y,z));
+                     }else if (entity1 instanceof Calamity calamity){
+                         calamity.setSearchArea(new BlockPos(x,y,z));
                      }
                  }
              }
@@ -118,6 +120,15 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Is Linked ? " + infected.getLinked()),false);
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
 
+                                }
+                            }else if (entity1 instanceof Calamity calamity){
+                                if (entity instanceof Player player && !player.level.isClientSide){
+                                    player.displayClientMessage(Component.literal("Entity "+ calamity.getEncodeId() + " " + calamity.getCustomName()),false);
+                                    player.displayClientMessage(Component.literal("Current Health " + calamity.getHealth()),false);
+                                    player.displayClientMessage(Component.literal("Kills " + calamity.getKills()),false);
+                                    player.displayClientMessage(Component.literal("Position to be Searched " + calamity.getSearchArea()),false);
+                                    player.displayClientMessage(Component.literal("Buffs " + calamity.getActiveEffects()),false);
+                                    player.displayClientMessage(Component.literal("-------------------------"),false);
                                 }
                             }
                         }

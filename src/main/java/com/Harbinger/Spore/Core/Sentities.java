@@ -156,4 +156,8 @@ public class Sentities {
     public static final RegistryObject<EntityType<InfectionTendril>> TENDRIL = SPORE_ENTITIES.register("tendril",
             () -> EntityType.Builder.of(InfectionTendril::new, MobCategory.MISC).sized(1f, 0.1f)
                     .build(new ResourceLocation(Spore.MODID, "tendril").toString()));
+
+    public static final RegistryObject<EntityType<Sieger>> SIEGER = SPORE_ENTITIES.register("sieger",
+            () -> EntityType.Builder.of(Sieger::new, INFECTED).sized(3f, 4f)
+                    .build(new ResourceLocation(Spore.MODID, "sieger").toString()));
 }

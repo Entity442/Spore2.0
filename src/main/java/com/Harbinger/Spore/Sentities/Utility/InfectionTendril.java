@@ -88,13 +88,13 @@ public class InfectionTendril extends UtilityEntity {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new BreakBlockGoal(Sblocks.REMAINS.get(),this,1,80));
         this.goalSelector.addGoal(2,new GoToArea(this));
         super.registerGoals();
     }
 
     static class GoToArea extends Goal {
         InfectionTendril tendril;
+        public  int tryTicks;
         public GoToArea(InfectionTendril t){
             this.tendril = t;
         }
@@ -103,12 +103,35 @@ public class InfectionTendril extends UtilityEntity {
             return this.tendril.getSearchArea() != null;
         }
 
+
+        protected void moveMobToBlock() {
+            this.tendril.getNavigation().moveTo((double)((float)this.tendril.getSearchArea().getX()) + 0.5D, (double)(this.tendril.getSearchArea().getY() + 1), (double)((float)this.tendril.getSearchArea().getZ()) + 0.5D, 1);
+        }
+
+        @Override
+        public void start() {
+            this.moveMobToBlock();
+            this.tryTicks = 0;
+            super.start();
+        }
+
         @Override
         public void tick() {
             super.tick();
-            if (this.tendril.getSearchArea() != null){
+            ++this.tryTicks;
+            if (this.tendril.getSearchArea() != null && shouldRecalculatePath()){
                 this.tendril.getNavigation().moveTo(this.tendril.getSearchArea().getX(),this.tendril.getSearchArea().getY(),this.tendril.getSearchArea().getZ(),1);
             }
+        }
+
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
+        }
+
+        public boolean shouldRecalculatePath() {
+            return this.tryTicks % 40 == 0;
         }
     }
 

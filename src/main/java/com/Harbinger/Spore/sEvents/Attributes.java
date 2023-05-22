@@ -48,6 +48,7 @@ public class Attributes {
         event.put(Sentities.MOUND.get(), Mound.createAttributes().build());
         event.put(Sentities.PROTO.get(), Proto.createAttributes().build());
         event.put(Sentities.TENDRIL.get(), InfectionTendril.createAttributes().build());
+        event.put(Sentities.SIEGER.get(), Sieger.createAttributes().build());
     }
 }
 

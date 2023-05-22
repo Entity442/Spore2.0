@@ -143,6 +143,7 @@ public class Infected extends Monster{
         this.goalSelector.addGoal(4 , new BufferAI(this ));
         this.goalSelector.addGoal(6,new FloatDiveGoal(this));
         this.goalSelector.addGoal(7, new SwimToBlockGoal(this , 1.5, 8));
+        this.goalSelector.addGoal(8,new FollowOthersGoal(this, 1.2, Calamity.class ));
         this.goalSelector.addGoal(9,new FollowOthersGoal(this, 1.2, ScentEntity.class ));
         this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7 ));
     }

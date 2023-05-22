@@ -59,6 +59,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(WingedChestplate.LAYER_LOCATION, WingedChestplate::createBodyLayer);
         event.registerLayerDefinition(MoundModel.LAYER_LOCATION, MoundModel::createBodyLayer);
         event.registerLayerDefinition(protomodel.LAYER_LOCATION, protomodel::createBodyLayer);
+        event.registerLayerDefinition(SiegerModel.LAYER_LOCATION, SiegerModel::createBodyLayer);
     }
 
 
@@ -91,6 +92,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.SCAMPER.get(), ScamperHumanRenderer::new);
         event.registerEntityRenderer(Sentities.MOUND.get(), MoundRenderer::new);
         event.registerEntityRenderer(Sentities.PROTO.get(), ProtoRenderer::new);
+        event.registerEntityRenderer(Sentities.SIEGER.get(), SiegerRenderer::new);
 
 
         event.registerEntityRenderer(Sentities.ACID_BALL.get(), ThrownItemRenderer::new);

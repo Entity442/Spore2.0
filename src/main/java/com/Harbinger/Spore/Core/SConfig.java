@@ -116,6 +116,12 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> brute_damage;
         public final ForgeConfigSpec.ConfigValue<Double> brute_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> sieger_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> sieger_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> sieger_armor;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> sieger_buffs;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> sieger_debuffs;
+
         public final ForgeConfigSpec.ConfigValue<Double> leap_hp;
         public final ForgeConfigSpec.ConfigValue<Double> leap_damage;
         public final ForgeConfigSpec.ConfigValue<Double> leap_armor;
@@ -411,6 +417,18 @@ public class SConfig {
             this.bus_armor = builder.comment("Default 4").defineInRange("Sets Phayres Armor", 4, 1, Double.MAX_VALUE);
             builder.pop();
 
+            builder.push("Sieger");
+            this.sieger_hp = builder.comment("Default 300").defineInRange("Sets Sieger Max health", 300, 1, Double.MAX_VALUE);
+            this.sieger_damage = builder.comment("Default 25").defineInRange("Sets Sieger Damage", 25, 1, Double.MAX_VALUE);
+            this.sieger_armor = builder.comment("Default 10").defineInRange("Sets Sieger Armor", 10, 1, Double.MAX_VALUE);
+
+            this.sieger_buffs = builder.comment("Default values: minecraft:speed|600|0 ,minecraft:mycelium|600|0 ,minecraft:resistance|600|1").defineList("Sieger buffs",
+                    Lists.newArrayList("minecraft:speed|600|0" , "minecraft:strength|600|0","minecraft:resistance|600|1") , o -> o instanceof String);
+
+            this.sieger_debuffs = builder.comment("Default values: minecraft:weakness|600|0 ,spore:mycelium|600|0 ,minecraft:slowness|600|0").defineList("Sieger debuffs",
+                    Lists.newArrayList("minecraft:weakness|600|0" , "spore:mycelium_ef|600|0","minecraft:slowness|600|0") , o -> o instanceof String);
+            builder.pop();
+
             builder.push("Brute");
             this.brute_hp = builder.comment("Default 70").defineInRange("Sets Brute Max health", 70, 1, Double.MAX_VALUE);
             this.brute_damage = builder.comment("Default 7").defineInRange("Sets Brute Damage", 7, 1, Double.MAX_VALUE);
@@ -428,8 +446,8 @@ public class SConfig {
             builder.pop();
 
             builder.push("Proto Hivemind");
-            this.proto_hp = builder.comment("Default 100").defineInRange("Sets Mound Max health", 100, 1, Double.MAX_VALUE);
-            this.proto_armor = builder.comment("Default 10").defineInRange("Sets Mound Armor", 10, 1, Double.MAX_VALUE);
+            this.proto_hp = builder.comment("Default 100").defineInRange("Sets Proto Max health", 100, 1, Double.MAX_VALUE);
+            this.proto_armor = builder.comment("Default 10").defineInRange("Sets Proto Armor", 10, 1, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Howler");
