@@ -12,13 +12,9 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.AreaEffectCloud;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -89,7 +85,6 @@ public class Scamper extends EvolvedInfected {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new ScamperAreaCloud(this));
         this.goalSelector.addGoal(2, new CustomMeleeAttackGoal(this ,1.2, true));
         this.goalSelector.addGoal(3, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
@@ -128,29 +123,21 @@ public class Scamper extends EvolvedInfected {
     }
 
 
-    private static class ScamperAreaCloud extends Goal{
-        Scamper scamper;
-        public ScamperAreaCloud(Scamper scamper){
-            this.scamper = scamper;
-        }
-        @Override
-        public boolean canUse() {
-            return scamper.getTarget() != null && scamper.isAggressive();
-        }
-
-        @Override
-        public void tick() {
-            if (scamper.getTarget() != null){
-                if (scamper.distanceToSqr(this.scamper.getTarget()) < 10 && scamper.deployClock == 0 && !scamper.isDeploying() ){
-                    scamper.setDeploying(true);
-                    setcloud(scamper);
-                    scamper.deployClock = 800;
+    public boolean doHurtTarget(Entity entity) {
+        if (super.doHurtTarget(entity)) {
+            if (entity instanceof LivingEntity livingEntity) {
+                livingEntity.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(),  600, 1), this);
+                if (this.deployClock == 0 && !this.isDeploying()){
+                    this.setDeploying(true);
+                    setcloud(this);
+                    this.deployClock = 800;
                 }
             }
-            super.tick();
+            return true;
+        } else {
+            return false;
         }
     }
-
 
     public static void setcloud(LivingEntity entity){
         if (!entity.level.isClientSide) {
@@ -160,7 +147,7 @@ public class Scamper extends EvolvedInfected {
             areaeffectcloud.setParticle(Sparticles.SPORE_PARTICLE.get());
             areaeffectcloud.setRadius(2.0F);
             areaeffectcloud.setDuration(600);
-            areaeffectcloud.setRadiusPerTick((10.0F - areaeffectcloud.getRadius()) / (float)areaeffectcloud.getDuration());
+            areaeffectcloud.setRadiusPerTick((4.0F - areaeffectcloud.getRadius()) / (float)areaeffectcloud.getDuration());
             areaeffectcloud.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(), 200, 1));
             entity.level.addFreshEntity(areaeffectcloud);
         }

@@ -108,10 +108,10 @@ public class InfectedVillager extends Infected {
                 if (waveentity instanceof Infected infected){infected.setKills(entityData.get(KILLS));}
                 level.addFreshEntity(waveentity);
                 if (this.level instanceof ServerLevel serverLevel){
-                    double x0 = this.getX() - (random.nextFloat() - 0.1) * 0.2D;
-                    double y0 = this.getY() + (random.nextFloat() - 0.25) * 0.25D * 5;
-                    double z0 = this.getZ() + (random.nextFloat() - 0.1) * 0.2D;
-                    serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x0, y0, z0, 3, 0, 0, 0, 1);
+                    double x0 = this.getX() - (random.nextFloat() - 0.1) * 0.1D;
+                    double y0 = this.getY() + (random.nextFloat() - 0.25) * 0.15D * 5;
+                    double z0 = this.getZ() + (random.nextFloat() - 0.1) * 0.1D;
+                    serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x0, y0, z0, 2, 0, 0, 0, 1);
                 }
                 entity.discard();
             }

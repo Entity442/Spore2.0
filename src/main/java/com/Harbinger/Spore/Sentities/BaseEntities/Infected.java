@@ -102,14 +102,11 @@ public class Infected extends Monster{
         return this.getMaxAirSupply();
     }
 
-    public boolean doHurtTarget(Entity p_32257_) {
-        if (super.doHurtTarget(p_32257_)) {
-            if (p_32257_ instanceof LivingEntity) {
-
-                    ((LivingEntity)p_32257_).addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(),  600, 0), this);
-
+    public boolean doHurtTarget(Entity entity) {
+        if (super.doHurtTarget(entity)) {
+            if (entity instanceof LivingEntity livingEntity) {
+                    livingEntity.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(),  600, 0), this);
             }
-
             return true;
         } else {
             return false;
