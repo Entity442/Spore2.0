@@ -6,8 +6,10 @@ import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -93,6 +95,12 @@ public class InfectedHuman extends Infected {
                 waveentity.setCustomName(entity.getCustomName());
                 if (waveentity instanceof Infected infected){infected.setKills(entityData.get(KILLS));}
                 level.addFreshEntity(waveentity);
+                if (this.level instanceof ServerLevel serverLevel){
+                    double x0 = this.getX() - (random.nextFloat() - 0.1) * 0.2D;
+                    double y0 = this.getY() + (random.nextFloat() - 0.25) * 0.25D * 5;
+                    double z0 = this.getZ() + (random.nextFloat() - 0.1) * 0.2D;
+                    serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x0, y0, z0, 3, 0, 0, 0, 1);
+                }
                 entity.discard();
             }
         }else {

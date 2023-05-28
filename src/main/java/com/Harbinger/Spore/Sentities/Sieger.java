@@ -10,6 +10,7 @@ import com.Harbinger.Spore.Sentities.BaseEntities.Calamity;
 import com.Harbinger.Spore.Sentities.BaseEntities.CalamityMultipart;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
+import com.Harbinger.Spore.Sentities.Projectile.ThrownTumor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -25,6 +26,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -96,17 +98,23 @@ public class Sieger extends Calamity implements RangedAttackMob {
 
     @Override
     public void registerGoals() {
-        this.goalSelector.addGoal(1, new LeapAtTargetGoal(this,0.4F));
-        this.goalSelector.addGoal(1, new AOEMeleeAttackGoal(this, 1.5, false,2.5 ,6){
+        this.goalSelector.addGoal(3, new RangedAttackGoal(this,1,20,32){
+            @Override
+            public boolean canUse() {
+                return super.canUse() && Sieger.this.getRandom().nextInt(400) == 0;
+            }
+        });
+        this.goalSelector.addGoal(4, new LeapAtTargetGoal(this,0.4F));
+        this.goalSelector.addGoal(4, new AOEMeleeAttackGoal(this, 1.5, false,2.5 ,6){
             protected double getAttackReachSqr(LivingEntity entity) {
                 float f = Sieger.this.getBbWidth() - 0.1F;
                 return (double)(f * 2.0F * f * 2.0F + entity.getBbWidth());
             }
         });
-        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8));
-        this.goalSelector.addGoal(5,new CalamityInfectedCommand(this));
-        this.goalSelector.addGoal(5,new SummonScentInCombat(this));
-        this.goalSelector.addGoal(6,new SporeBurstSupport(this){
+        this.goalSelector.addGoal(5, new RandomStrollGoal(this, 0.8));
+        this.goalSelector.addGoal(6,new CalamityInfectedCommand(this));
+        this.goalSelector.addGoal(7,new SummonScentInCombat(this));
+        this.goalSelector.addGoal(8,new SporeBurstSupport(this){
             @Override
             public void start() {
                 super.start();
@@ -120,7 +128,7 @@ public class Sieger extends Calamity implements RangedAttackMob {
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, SConfig.SERVER.sieger_hp.get() * SConfig.SERVER.global_health.get())
-                .add(Attributes.MOVEMENT_SPEED, 0.3)
+                .add(Attributes.MOVEMENT_SPEED, 0.25)
                 .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.sieger_damage.get() * SConfig.SERVER.global_damage.get())
                 .add(Attributes.ARMOR, SConfig.SERVER.sieger_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.FOLLOW_RANGE, 64)
@@ -188,8 +196,12 @@ public class Sieger extends Calamity implements RangedAttackMob {
 
 
     @Override
-    public void performRangedAttack(LivingEntity p_33317_, float p_33318_) {
-
+    public void performRangedAttack(LivingEntity entity, float p_33318_) {
+        if(!level.isClientSide){
+            ThrownTumor tumor = new ThrownTumor(level, entity);
+            tumor.shootFromRotation(entity, entity.getXRot(), entity.getYRot(), 0.0F, 1.5F, 1.0F);
+            level.addFreshEntity(tumor);
+        }
     }
 
     private void chemAttack() {

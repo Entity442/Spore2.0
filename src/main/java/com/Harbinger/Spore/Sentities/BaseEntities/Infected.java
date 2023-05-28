@@ -176,8 +176,8 @@ public class Infected extends Monster{
             AABB aabb = this.getBoundingBox().inflate(0.2D);
             for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
                 BlockState blockstate = this.level.getBlockState(blockpos);
-                if ((blockstate.getMaterial() == Material.GLASS && blockstate.getDestroySpeed(level ,blockpos) < 2) ||
-                        (blockstate.getMaterial() == Material.LEAVES && blockstate.getDestroySpeed(level ,blockpos) < 2)) {
+                if ((blockstate.getMaterial() == Material.GLASS || blockstate.getMaterial() == Material.LEAVES) &&
+                        (blockstate.getDestroySpeed(level ,blockpos) >= 0 && blockstate.getDestroySpeed(level ,blockpos) < 2)) {
                     flag = this.level.destroyBlock(blockpos, true, this) || flag;
                 }
                 if (!flag && this.onGround) {
