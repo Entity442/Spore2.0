@@ -31,6 +31,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Integer> days;
         public final ForgeConfigSpec.ConfigValue<Integer> mob_cap;
         public final ForgeConfigSpec.ConfigValue<Boolean> spawn;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> dimension_parameters;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> spawns;
 
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_spawn;
@@ -584,6 +585,8 @@ public class SConfig {
             builder.push("Spawns");
             this.spawn = builder.comment("Default false").define("Should mobs spawn after a few days?",false);
             this.mob_cap = builder.comment("Default 50").define("MobCap",50);
+            this.dimension_parameters = builder.comment("Default minecraft:is_overworld").defineList("Dictates in what biome the infected spawn",
+                    Lists.newArrayList("minecraft:is_overworld") , o -> o instanceof String);
             this.days = builder.comment("Default 3").define("Days before infected start spawning",3);
             this.spawns = builder.defineList("mob|weight|minimum|maximum",
                     Lists.newArrayList("spore:inf_human|80|2|5","spore:inf_drowned|10|1|2","spore:inf_pillager|40|1|3","spore:inf_villager|70|1|3","spore:inf_player|20|1|2"

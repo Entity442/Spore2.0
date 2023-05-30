@@ -4,14 +4,11 @@ import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sparticles;
-import com.Harbinger.Spore.Sentities.AI.FloatDiveGoal;
-import com.Harbinger.Spore.Sentities.AI.HurtTargetGoal;
-import com.Harbinger.Spore.Sentities.AI.InfectedPanicGoal;
+import com.Harbinger.Spore.Sentities.AI.*;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.BufferAI;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.LocalTargettingGoal;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.SearchAreaGoal;
-import com.Harbinger.Spore.Sentities.AI.SwimToBlockGoal;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
@@ -122,7 +119,7 @@ public class Infected extends Monster{
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(3,new LocalTargettingGoal(this));
-        this.goalSelector.addGoal(3, new HurtTargetGoal(this ,entity -> {return !SConfig.SERVER.blacklist.get().contains(entity.getEncodeId());}, Infected.class).setAlertOthers(Infected.class));
+        this.goalSelector.addGoal(2, new HurtTargetGoal(this ,entity -> {return !SConfig.SERVER.blacklist.get().contains(entity.getEncodeId());}, Infected.class).setAlertOthers(Infected.class));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
                 (this, Player.class,  true));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 5, false, true, (en) -> {
@@ -140,6 +137,7 @@ public class Infected extends Monster{
         this.goalSelector.addGoal(4 , new BufferAI(this ));
         this.goalSelector.addGoal(6,new FloatDiveGoal(this));
         this.goalSelector.addGoal(7, new SwimToBlockGoal(this , 1.5, 8));
+        this.goalSelector.addGoal(7, new InfectedConsumeFromRemains(this));
         this.goalSelector.addGoal(8,new FollowOthersGoal(this, 1.2, Calamity.class ));
         this.goalSelector.addGoal(9,new FollowOthersGoal(this, 1.2, ScentEntity.class ));
         this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7 ));
@@ -191,6 +189,10 @@ public class Infected extends Monster{
         }
     }
 
+
+    public boolean isStarving(){
+        return entityData.get(HUNGER) >= SConfig.SERVER.hunger.get();
+    }
 
     @Override
     public boolean removeWhenFarAway(double p_21542_) {

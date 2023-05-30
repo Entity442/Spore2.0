@@ -30,16 +30,14 @@ public class BiomeModification implements BiomeModifier {
         if (phase == Phase.ADD) {
             int biomesModifier = 0;
             if (biome.is(Tags.Biomes.IS_MUSHROOM)){biomesModifier = 20;}
-            for (String str : SConfig.SERVER.spawns.get()){
-                String[] string = str.split("\\|" );
+            for (String str : SConfig.SERVER.spawns.get()) {
+                String[] string = str.split("\\|");
                 EntityType<?> entity = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(string[0]));
-                if (entity != null && biome.is(TagKey.create(Registry.BIOME_REGISTRY , new ResourceLocation("minecraft:is_overworld")))){
-                    MobCategory category = MobCategory.MONSTER;
-                    if (entity.getCategory().getSerializedName().equals("infected")){
-                        category = Sentities.INFECTED;
+                for (String biomeString : SConfig.SERVER.dimension_parameters.get()){
+                    if (entity != null && (biome.is(TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(biomeString))) || biome.is(new ResourceLocation(biomeString)))) {
+                        builder.getMobSpawnSettings().getSpawner(entity.getCategory())
+                                .add(new MobSpawnSettings.SpawnerData(entity, Integer.parseUnsignedInt(string[1]) + biomesModifier, Integer.parseUnsignedInt(string[2]), Integer.parseUnsignedInt(string[3])));
                     }
-                    builder.getMobSpawnSettings().getSpawner(category)
-                        .add(new MobSpawnSettings.SpawnerData(entity, Integer.parseUnsignedInt(string[1]) + biomesModifier, Integer.parseUnsignedInt(string[2]), Integer.parseUnsignedInt(string[3])));
                 }
             }
         }

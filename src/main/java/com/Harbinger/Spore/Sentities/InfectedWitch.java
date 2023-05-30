@@ -72,25 +72,33 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
         });
 
 
-        this.goalSelector.addGoal(1, new BuffAlliesGoal(this,Infected.class,1.3,35,45,3,entity -> {
+        this.goalSelector.addGoal(4, new BuffAlliesGoal(this,Infected.class,1.3,35,45,3,entity -> {
             return entity.hasEffect(Seffects.STARVATION.get());
         }){
             @Override
             public boolean canUse() {
-                return super.canUse() && SConfig.SERVER.use_potions.get();
+                return super.canUse() && SConfig.SERVER.use_potions.get() && this.mob.getLastHurtByMob() == null;
             }
         });
 
-        this.goalSelector.addGoal(1, new BuffAlliesGoal(this,Mob.class,1.3,SConfig.SERVER.buff_potion_meter.get(),SConfig.SERVER.at_potion_meter.get(),3,entity -> {
+        this.goalSelector.addGoal(4, new BuffAlliesGoal(this,Mob.class,1.3,SConfig.SERVER.buff_potion_meter.get(),SConfig.SERVER.at_potion_meter.get(),3,entity -> {
             return SConfig.SERVER.evolved.get().contains(entity.getEncodeId());
         }){
             @Override
             public boolean canUse() {
-                return super.canUse() && SConfig.SERVER.use_potions.get();
+                return super.canUse() && SConfig.SERVER.use_potions.get() && this.mob.getLastHurtByMob() == null;
             }
         });
 
-        this.goalSelector.addGoal(1, new BuffAlliesGoal(this, Infected.class,1.3,SConfig.SERVER.buff_potion_meter.get(),SConfig.SERVER.buff_potion_meter.get(),3)
+        this.goalSelector.addGoal(4, new BuffAlliesGoal(this, Infected.class,1.3,SConfig.SERVER.buff_potion_meter.get(),SConfig.SERVER.buff_potion_meter.get(),3)
+        {
+            @Override
+            public boolean canUse() {
+                return super.canUse() && SConfig.SERVER.use_potions.get() && this.mob.getLastHurtByMob() == null;
+            }
+        });
+
+        this.goalSelector.addGoal(6, new RangedAttackGoal(this, 1.0D, SConfig.SERVER.at_potion_meter.get(), 10.0F)
         {
             @Override
             public boolean canUse() {
@@ -98,15 +106,7 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
             }
         });
 
-        this.goalSelector.addGoal(4, new RangedAttackGoal(this, 1.0D, SConfig.SERVER.at_potion_meter.get(), 10.0F)
-        {
-            @Override
-            public boolean canUse() {
-                return super.canUse() && SConfig.SERVER.use_potions.get();
-            }
-        });
-
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
 
     @Override
