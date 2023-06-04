@@ -2,7 +2,9 @@ package com.Harbinger.Spore.Sentities.Utility;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sentities;
+import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.HurtTargetGoal;
+import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import net.minecraft.core.BlockPos;
@@ -18,6 +20,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.Animal;
@@ -50,8 +53,9 @@ public class Proto extends UtilityEntity {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, SConfig.SERVER.proto_hp.get() * SConfig.SERVER.global_health.get())
                 .add(Attributes.ARMOR, SConfig.SERVER.proto_armor.get() * SConfig.SERVER.global_armor.get())
+                .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.proto_damage.get() * SConfig.SERVER.global_damage.get())
                 .add(Attributes.FOLLOW_RANGE, 64)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 1);
+                .add(Attributes.KNOCKBACK_RESISTANCE, 2);
 
     }
 
@@ -71,6 +75,8 @@ public class Proto extends UtilityEntity {
         }));
         this.goalSelector.addGoal(3,new ProtoScentDefense(this));
         this.goalSelector.addGoal(2,new ProtoTargeting(this));
+        this.goalSelector.addGoal(2,new AOEMeleeAttackGoal(this,0,false,2.5,4));
+        this.goalSelector.addGoal(4,new RandomLookAroundGoal(this));
         super.registerGoals();
     }
 
@@ -81,7 +87,7 @@ public class Proto extends UtilityEntity {
             this.makeStuckInBlock(Blocks.AIR.defaultBlockState(),new Vec3(0,1,0));
         }
         if (counter <1200){
-            counter= counter +1;
+            counter++;
         }else{
             AABB searchbox = AABB.ofSize(new Vec3(this.getX(), this.getY(), this.getZ()), 300, 200, 300);
             List<Entity> entities = this.level.getEntities(this, searchbox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
@@ -90,11 +96,6 @@ public class Proto extends UtilityEntity {
                 if (en instanceof Infected infected){
                     if (!infected.getLinked()){
                         infected.setLinked(true);
-                    }
-                    counter = 0;
-                }
-                if (en instanceof Infected infected){
-                    if (infected.getLinked()){
                         setHosts(getHosts() + 1);
                     }
                     counter = 0;
@@ -102,7 +103,7 @@ public class Proto extends UtilityEntity {
             }
         }
         if (breakCounter < 40){
-            breakCounter = breakCounter +1;
+            breakCounter++;
         }else{
             if (this.getLastDamageSource() == DamageSource.IN_WALL && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)){
                 AABB aabb = this.getBoundingBox().inflate(0.2);
@@ -197,8 +198,8 @@ public class Proto extends UtilityEntity {
 
         @Override
         public void start() {
-            Targeting(proto);
             super.start();
+            Targeting(proto);
         }
 
         public void Targeting(Entity entity){
@@ -206,9 +207,9 @@ public class Proto extends UtilityEntity {
             List<Entity> entities = entity.level.getEntities(entity, boundingBox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
 
             for (Entity entity1 : entities) {
-                if(entity1 instanceof Infected livingEntity) {
-                    if (livingEntity.getTarget() == null && this.proto.getTarget() != null && this.proto.getTarget().isAlive() && !this.proto.getTarget().isInvulnerable()){
-                        livingEntity.setTarget(proto.getTarget());
+                if(entity1 instanceof Infected infected) {
+                    if (infected.getTarget() == null && this.proto.getTarget() != null && this.proto.getTarget().isAlive() && !this.proto.getTarget().isInvulnerable()){
+                        infected.setTarget(proto.getTarget());
                     }
                 }
             }

@@ -27,6 +27,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Boolean> at_an;
         public final ForgeConfigSpec.ConfigValue<Boolean> weaktocold;
         public final ForgeConfigSpec.ConfigValue<Boolean> should_starve;
+        public final ForgeConfigSpec.ConfigValue<Boolean> higher_thinking;
 
         public final ForgeConfigSpec.ConfigValue<Integer> days;
         public final ForgeConfigSpec.ConfigValue<Integer> mob_cap;
@@ -143,6 +144,7 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<Double> proto_hp;
         public final ForgeConfigSpec.ConfigValue<Double> proto_armor;
+        public final ForgeConfigSpec.ConfigValue<Double> proto_damage;
 
         public final ForgeConfigSpec.ConfigValue<Double> how_hp;
         public final ForgeConfigSpec.ConfigValue<Double> how_damage;
@@ -288,6 +290,7 @@ public class SConfig {
             this.global_armor = builder.define("Global Armor Modifier",1.0);
             this.weaktocold = builder.comment("Default true").define("Should the infected be weak to cold?",true);
             this.should_starve = builder.comment("Default true").define("Should the infected starve overtime?",true);
+            this.higher_thinking = builder.comment("Default true").define("Should some infected have higher thinking such as opening doors or trying to break certain blocks?",true);
             this.hunger = builder.define("Hunger in ticks",12000);
 
             builder.pop();
@@ -311,6 +314,7 @@ public class SConfig {
                     Lists.newArrayList(
                             "minecraft:villager",
                             "minecraft:wandering_trader" , "roamers:bandit") , o -> o instanceof String);
+
             builder.pop();
 
             builder.push("MobRoles ,decides some of the interactions between the infected mobs");
@@ -449,6 +453,7 @@ public class SConfig {
             builder.push("Proto Hivemind");
             this.proto_hp = builder.comment("Default 100").defineInRange("Sets Proto Max health", 100, 1, Double.MAX_VALUE);
             this.proto_armor = builder.comment("Default 10").defineInRange("Sets Proto Armor", 10, 1, Double.MAX_VALUE);
+            this.proto_damage = builder.comment("Default 10").defineInRange("Sets Proto Melee damage", 10, 1, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Howler");

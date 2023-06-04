@@ -26,13 +26,13 @@ public class Knight extends EvolvedInfected {
     @Override
     protected void registerGoals() {
 
-        this.goalSelector.addGoal(1, new CustomMeleeAttackGoal(this, 1.5, false) {
+        this.goalSelector.addGoal(3, new CustomMeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 return 6.0 + entity.getBbWidth() * entity.getBbWidth();}});
 
-        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8));
-        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(4, new RandomStrollGoal(this, 0.8));
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 
         super.registerGoals();
     }

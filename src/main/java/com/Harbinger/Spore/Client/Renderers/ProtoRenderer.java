@@ -1,7 +1,7 @@
 package com.Harbinger.Spore.Client.Renderers;
 
 
-import com.Harbinger.Spore.Client.Models.protomodel;
+import com.Harbinger.Spore.Client.Models.ProtoHivemindModel;
 import com.Harbinger.Spore.Sentities.Utility.Proto;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -11,13 +11,13 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ProtoRenderer<Type extends Proto> extends MobRenderer<Type , protomodel<Type>> {
+public class ProtoRenderer<Type extends Proto> extends MobRenderer<Type , ProtoHivemindModel<Type>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Spore.MODID,
             "textures/entity/proto.png");
 
 
     public ProtoRenderer(EntityRendererProvider.Context context) {
-        super(context, new protomodel<>(context.bakeLayer(protomodel.LAYER_LOCATION)), 1.5f);
+        super(context, new ProtoHivemindModel<>(context.bakeLayer(ProtoHivemindModel.LAYER_LOCATION)), 1.5f);
 
     }
 

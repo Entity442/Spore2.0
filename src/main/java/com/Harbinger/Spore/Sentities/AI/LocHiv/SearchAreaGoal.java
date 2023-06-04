@@ -21,10 +21,7 @@ public class SearchAreaGoal extends Goal {
     }
     @Override
     public boolean canUse() {
-        if (this.infected.getSearchPos() != null && infected.getTarget() == null){
-            return this.infected.getSearchPos().distToCenterSqr(this.infected.position()) > 4.0;
-        }
-        return false;
+        return this.infected.getSearchPos() != null && infected.getTarget() == null;
     }
 
     @Override
@@ -47,7 +44,7 @@ public class SearchAreaGoal extends Goal {
         if (this.infected.getSearchPos() != null && shouldRecalculatePath()){
             this.infected.getNavigation().moveTo(this.infected.getSearchPos().getX(),this.infected.getSearchPos().getY(),this.infected.getSearchPos().getZ(),1);
         }
-        if (this.infected.getSearchPos() != null && this.infected.getSearchPos().distToCenterSqr(this.infected.position()) < 20.0){
+        if (this.infected.getSearchPos() != null && this.infected.getSearchPos().distToCenterSqr(this.infected.position()) < 5.0){
             infected.setSearchPos(null);
         }
     }

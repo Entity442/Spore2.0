@@ -51,6 +51,10 @@ public class InfectedVendicator extends EvolvedInfected {
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(3, new OpenDoorGoal(this, true) {
             @Override
+            public boolean canUse() {
+                return super.canUse() && SConfig.SERVER.higher_thinking.get();
+            }
+            @Override
             public void start() {
                 this.mob.swing(InteractionHand.MAIN_HAND);
                 super.start();
@@ -63,7 +67,7 @@ public class InfectedVendicator extends EvolvedInfected {
 
 
     protected void customServerAiStep() {
-        if (!this.isNoAi() && GoalUtils.hasGroundPathNavigation(this)) {
+        if (!this.isNoAi() && GoalUtils.hasGroundPathNavigation(this) && SConfig.SERVER.higher_thinking.get()) {
             ((GroundPathNavigation)this.getNavigation()).setCanOpenDoors(true);
         }
 
