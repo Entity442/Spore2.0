@@ -211,6 +211,10 @@ public class HandlerEvents {
                 lootList = SConfig.DATAGEN.inf_player_loot.get();
             }else if (event.getEntity() instanceof Mound){
                 lootList = SConfig.DATAGEN.mound_loot.get();
+            }else if (event.getEntity() instanceof Sieger){
+                lootList = SConfig.DATAGEN.sieger_loot.get();
+            }else if (event.getEntity() instanceof Proto){
+                lootList = SConfig.DATAGEN.proto_loot.get();
             }
             else{
                 lootList = null;

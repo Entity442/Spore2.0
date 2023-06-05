@@ -750,6 +750,8 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_drow_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_player_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> sca_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> sieger_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> proto_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> mound_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> organite_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> innards_loot;
@@ -815,8 +817,17 @@ public class SConfig {
 
             this.sca_loot = builder.defineList("Scamper ",
                     Lists.newArrayList("spore:mutated_fiber|50|1|4","spore:armor_fragment|80|1|3","spore:mutated_heart|10|1|1","spore:tumor|100|1|1") , o -> o instanceof String);
+
+            this.sieger_loot = builder.defineList("Sieger ",
+                    Lists.newArrayList("spore:mutated_fiber|100|13|75","spore:armor_fragment|100|15|38","spore:mutated_heart|70|3|7","spore:tumor|100|2|5","spore:cerebrum|70|2|7","spore:spine_fragment|56|4|9") , o -> o instanceof String);
+
+            this.proto_loot = builder.defineList("Proto Hivemind ",
+                    Lists.newArrayList("spore:mutated_fiber|100|5|20","spore:armor_fragment|80|4|14","spore:mutated_heart|80|1|6","spore:cerebrum|100|2|11","spore:spine_fragment|80|2|8") , o -> o instanceof String);
+
+
             this.mound_loot = builder.defineList("Mound ",
                     Lists.newArrayList("spore:mutated_fiber|70|2|5") , o -> o instanceof String);
+
             this.organite_loot = builder.defineList("Organite Block",
                     Lists.newArrayList("spore:mutated_fiber|50|1|4","spore:spine|80|1|3","spore:innards|70|1|5") , o -> o instanceof String);
 

@@ -40,10 +40,10 @@ public class Howler extends EvolvedInfected {
     @Override
     protected void registerGoals() {
 
-        this.goalSelector.addGoal(2, new CustomMeleeAttackGoal(this,1.1,true));
-        this.goalSelector.addGoal(1, new HowlerAttackGoal( this,1.5));
-        this.goalSelector.addGoal(3, new RandomStrollGoal(this, 0.8));
-        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(3, new CustomMeleeAttackGoal(this,1.2,true));
+        this.goalSelector.addGoal(2, new HowlerAttackGoal( this,1.5));
+        this.goalSelector.addGoal(4, new RandomStrollGoal(this, 0.8));
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(7, new FollowOthersGoal(this , 1 , EvolvedInfected.class));
 
 
@@ -80,26 +80,26 @@ public class Howler extends EvolvedInfected {
         @Override
         public void tick() {
             if (screamTimer <= 90){
-            this.screamTimer = screamTimer + 1;}
-
-            assert this.mob.getTarget() != null;
-            double ze = mob.distanceToSqr(mob.getTarget());
-            this.mob.getLookControl().setLookAt(this.mob.getTarget(), 10.0F, (float) this.mob.getMaxHeadXRot());
-            if (ze > 120.0D){
-            this.mob.getNavigation().moveTo(this.mob.getTarget(),this.speedModifier);
-            }else if (checkForInfected(this.mob) && screamTimer >= 40){
-                ScreamAOE(this.mob);
-                ScreamBuffInfected(this.mob);
-                this.screamTimer = 0;
-            } else {
-                this.mob.getNavigation().stop();
-                if (screamTimer >= 80 && !level.isClientSide){
-                    int r = random.nextInt(1,3);
+            this.screamTimer++;
+            }if (this.mob.getTarget() != null) {
+                double ze = mob.distanceToSqr(mob.getTarget());
+                this.mob.getLookControl().setLookAt(this.mob.getTarget(), 10.0F, (float) this.mob.getMaxHeadXRot());
+                if (ze > 120.0D) {
+                    this.mob.getNavigation().moveTo(this.mob.getTarget(), this.speedModifier);
+                } else if (checkForInfected(this.mob) && screamTimer >= 40) {
                     ScreamAOE(this.mob);
-                    for (int index0 = 0; index0 < r; index0++) {
-                        SummonScream(this.mob);}
-                this.screamTimer = 0;
-               }
+                    ScreamBuffInfected(this.mob);
+                    this.screamTimer = 0;
+                } else {
+                    if (screamTimer >= 80 && !level.isClientSide) {
+                        int r = random.nextInt(1, 3);
+                        ScreamAOE(this.mob);
+                        for (int index0 = 0; index0 < r; index0++) {
+                            SummonScream(this.mob);
+                        }
+                        this.screamTimer = 0;
+                    }
+                }
             }
         }
     }
@@ -108,7 +108,7 @@ public class Howler extends EvolvedInfected {
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, SConfig.SERVER.how_hp.get() * SConfig.SERVER.global_health.get())
-                .add(Attributes.MOVEMENT_SPEED, 0.1)
+                .add(Attributes.MOVEMENT_SPEED, 0.23)
                 .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.how_damage.get() * SConfig.SERVER.global_damage.get())
                 .add(Attributes.ARMOR, SConfig.SERVER.how_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.FOLLOW_RANGE, 24)
@@ -146,11 +146,9 @@ public class Howler extends EvolvedInfected {
                     livingEntity.addEffect( new MobEffectInstance(Seffects.MARKER.get() ,  400, 0));
 
                 }
-            }
-             for (Entity entity1 : entities) {
-            if (entity1 instanceof Player  livingEntity) {
-                livingEntity.addEffect( new MobEffectInstance(MobEffects.CONFUSION ,  100, 0));
-                livingEntity.addEffect( new MobEffectInstance(MobEffects.WEAKNESS ,  200, 0));
+                if (entity1 instanceof Player  livingEntity) {
+                    livingEntity.addEffect( new MobEffectInstance(MobEffects.CONFUSION ,  100, 0));
+                    livingEntity.addEffect( new MobEffectInstance(MobEffects.WEAKNESS ,  200, 0));
                 }
             }
     }

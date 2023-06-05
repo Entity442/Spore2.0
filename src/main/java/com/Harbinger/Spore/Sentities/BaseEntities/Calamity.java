@@ -247,6 +247,7 @@ public class Calamity extends UtilityEntity {
 
     @Override
     public void die(DamageSource source) {
+
         if (this.level instanceof ServerLevel serverLevel){
             double x0 = this.getX() - (random.nextFloat() - 0.1) * 1.2D;
             double y0 = this.getY() + (random.nextFloat() - 0.25) * 1.25D * 5;
@@ -255,7 +256,6 @@ public class Calamity extends UtilityEntity {
         }
 
         this.discard();
-        this.gameEvent(GameEvent.ENTITY_DIE);
         AABB aabb = this.getBoundingBox().inflate(2.5);
         for (BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
             BlockState blockState = level.getBlockState(blockpos);
@@ -275,8 +275,8 @@ public class Calamity extends UtilityEntity {
                         level.setBlock(blockpos.above(), Sblocks.REMAINS.get().defaultBlockState(), 2);
                     }
                 }
-                super.die(source);
             }
         }
+        super.die(source);
     }
 }

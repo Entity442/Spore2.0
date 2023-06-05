@@ -73,6 +73,10 @@ public class Infected extends Monster{
         this.searchPos = searchPos;
     }
 
+    public void setEvolution(int e){
+        entityData.set(EVOLUTION,e);
+    }
+
     public void travel(Vec3 p_32858_) {
         if (this.isEffectiveAi() && this.isInWater()) {
             this.moveRelative(0.1F, p_32858_);

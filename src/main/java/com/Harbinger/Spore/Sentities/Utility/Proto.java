@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sentities.Utility;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.HurtTargetGoal;
@@ -8,10 +9,12 @@ import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -28,6 +31,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -256,5 +260,51 @@ public class Proto extends UtilityEntity {
             return super.hurt(source,20f);
         }
         return super.hurt(source, amount);
+    }
+
+
+    @Override
+    public void die(DamageSource source) {
+        if (this.level instanceof ServerLevel serverLevel){
+            double x0 = this.getX() - (random.nextFloat() - 0.1) * 1.2D;
+            double y0 = this.getY() + (random.nextFloat() - 0.25) * 1.25D * 5;
+            double z0 = this.getZ() + (random.nextFloat() - 0.1) * 1.2D;
+            serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x0, y0, z0, 4, 0, 0, 0, 1);
+        }
+
+        this.discard();
+        AABB aabb = this.getBoundingBox().inflate(2.5);
+        for (BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
+            BlockState blockState = level.getBlockState(blockpos);
+            BlockState above = level.getBlockState(blockpos.above());
+            if (!level.isClientSide() && blockState.isSolidRender(level, blockpos) && !above.isSolidRender(level, blockpos)) {
+                if (Math.random() < 0.9) {
+                    if (Math.random() < 0.7) {
+                        level.setBlock(blockpos.above(), Sblocks.MYCELIUM_VEINS.get().defaultBlockState(), 2);
+                    }
+                    if (Math.random() < 0.3) {
+                        level.setBlock(blockpos.above(), Sblocks.BIOMASS_BLOCK.get().defaultBlockState(), 2);
+                    }
+                    if (Math.random() < 0.1) {
+                        level.setBlock(blockpos.above(), Sblocks.ROOTED_BIOMASS.get().defaultBlockState(), 2);
+                    }
+                    if (Math.random() < 0.15) {
+                        level.setBlock(blockpos.above(), Sblocks.FUNGAL_SHELL.get().defaultBlockState(), 2);
+                    }
+                }
+
+            }
+        }
+        AABB searchbox = AABB.ofSize(new Vec3(this.getX(), this.getY(), this.getZ()), 300, 200, 300);
+        List<Entity> entities = this.level.getEntities(this, searchbox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
+        entityData.set(HOSTS,0);
+        for (Entity en : entities) {
+            if (en instanceof Infected infected){
+                if (infected.getLinked()){
+                    infected.addEffect(new MobEffectInstance(MobEffects.WITHER,400,1));
+                }
+            }
+        }
+        super.die(source);
     }
 }
