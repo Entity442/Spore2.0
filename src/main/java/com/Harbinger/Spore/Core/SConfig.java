@@ -121,6 +121,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> sieger_hp;
         public final ForgeConfigSpec.ConfigValue<Double> sieger_damage;
         public final ForgeConfigSpec.ConfigValue<Double> sieger_armor;
+        public final ForgeConfigSpec.ConfigValue<Double> sieger_dpsr;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> sieger_buffs;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> sieger_debuffs;
 
@@ -145,6 +146,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> proto_hp;
         public final ForgeConfigSpec.ConfigValue<Double> proto_armor;
         public final ForgeConfigSpec.ConfigValue<Double> proto_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> proto_dpsr;
 
         public final ForgeConfigSpec.ConfigValue<Double> how_hp;
         public final ForgeConfigSpec.ConfigValue<Double> how_damage;
@@ -426,6 +428,7 @@ public class SConfig {
             this.sieger_hp = builder.comment("Default 300").defineInRange("Sets Sieger Max health", 300, 1, Double.MAX_VALUE);
             this.sieger_damage = builder.comment("Default 25").defineInRange("Sets Sieger Damage", 25, 1, Double.MAX_VALUE);
             this.sieger_armor = builder.comment("Default 10").defineInRange("Sets Sieger Armor", 10, 1, Double.MAX_VALUE);
+            this.sieger_dpsr = builder.comment("Default 70").defineInRange("Sets Sieger Damage Cap , set to 0 to disable", 70, 1, Double.MAX_VALUE);
 
             this.sieger_buffs = builder.comment("Default values: minecraft:speed|600|0 ,minecraft:mycelium|600|0 ,minecraft:resistance|600|1").defineList("Sieger buffs",
                     Lists.newArrayList("minecraft:speed|600|0" , "minecraft:strength|600|0","minecraft:resistance|600|1") , o -> o instanceof String);
@@ -454,6 +457,7 @@ public class SConfig {
             this.proto_hp = builder.comment("Default 100").defineInRange("Sets Proto Max health", 100, 1, Double.MAX_VALUE);
             this.proto_armor = builder.comment("Default 10").defineInRange("Sets Proto Armor", 10, 1, Double.MAX_VALUE);
             this.proto_damage = builder.comment("Default 10").defineInRange("Sets Proto Melee damage", 10, 1, Double.MAX_VALUE);
+            this.proto_dpsr = builder.comment("Default 20").defineInRange("Sets Proto Damage Cap , set to 0 to disable", 20, 1, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Howler");
@@ -819,10 +823,10 @@ public class SConfig {
                     Lists.newArrayList("spore:mutated_fiber|50|1|4","spore:armor_fragment|80|1|3","spore:mutated_heart|10|1|1","spore:tumor|100|1|1") , o -> o instanceof String);
 
             this.sieger_loot = builder.defineList("Sieger ",
-                    Lists.newArrayList("spore:mutated_fiber|100|13|75","spore:armor_fragment|100|15|38","spore:mutated_heart|70|3|7","spore:tumor|100|2|5","spore:cerebrum|70|2|7","spore:spine_fragment|56|4|9") , o -> o instanceof String);
+                    Lists.newArrayList("spore:mutated_fiber|100|33|75","spore:armor_fragment|100|15|38","spore:mutated_heart|70|3|7","spore:tumor|100|2|5","spore:cerebrum|70|2|7","spore:spine_fragment|56|4|9") , o -> o instanceof String);
 
             this.proto_loot = builder.defineList("Proto Hivemind ",
-                    Lists.newArrayList("spore:mutated_fiber|100|5|20","spore:armor_fragment|80|4|14","spore:mutated_heart|80|1|6","spore:cerebrum|100|2|11","spore:spine_fragment|80|2|8") , o -> o instanceof String);
+                    Lists.newArrayList("spore:mutated_fiber|100|10|20","spore:armor_fragment|80|4|14","spore:mutated_heart|80|1|6","spore:cerebrum|100|2|11","spore:spine_fragment|80|2|8") , o -> o instanceof String);
 
 
             this.mound_loot = builder.defineList("Mound ",

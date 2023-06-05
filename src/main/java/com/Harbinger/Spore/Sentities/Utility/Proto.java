@@ -256,8 +256,8 @@ public class Proto extends UtilityEntity {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (amount > 20){
-            return super.hurt(source,20f);
+        if(amount > SConfig.SERVER.proto_dpsr.get() && SConfig.SERVER.proto_dpsr.get() > 0){
+            return super.hurt(source, (float) (SConfig.SERVER.proto_dpsr.get() * 1F));
         }
         return super.hurt(source, amount);
     }
