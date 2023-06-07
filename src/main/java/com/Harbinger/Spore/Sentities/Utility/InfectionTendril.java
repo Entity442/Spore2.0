@@ -31,6 +31,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class InfectionTendril extends UtilityEntity {
     private static final EntityDataAccessor<BlockPos> SEARCH_AREA = SynchedEntityData.defineId(InfectionTendril.class, EntityDataSerializers.BLOCK_POS);
     private static final EntityDataAccessor<Integer> LIFE = SynchedEntityData.defineId(InfectionTendril.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> MOUND_AGE = SynchedEntityData.defineId(InfectionTendril.class, EntityDataSerializers.INT);
     public InfectionTendril(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         setPersistenceRequired();
@@ -43,12 +44,22 @@ public class InfectionTendril extends UtilityEntity {
         return false;
     }
 
-    int getLife() {
+    public int getLife() {
         return this.entityData.get(LIFE);
     }
-    public void setLife(int blockPos) {
-        this.entityData.set(LIFE, blockPos);
+
+    public void setLife(int s) {
+        this.entityData.set(LIFE, s);
     }
+
+    public int getAgeM() {
+        return this.entityData.get(MOUND_AGE);
+    }
+
+    public void setAgeM(int s) {
+        this.entityData.set(MOUND_AGE, s);
+    }
+
     @Override
     public boolean hurt(DamageSource p_21016_, float p_21017_) {
         return false;
@@ -56,9 +67,12 @@ public class InfectionTendril extends UtilityEntity {
 
     protected void defineSynchedData() {
         super.defineSynchedData();
+        this.entityData.define(MOUND_AGE,2);
         this.entityData.define(LIFE, 4800);
         this.entityData.define(SEARCH_AREA,BlockPos.ZERO);
     }
+
+
 
     public void setSearchArea(BlockPos blockPos) {
         this.entityData.set(SEARCH_AREA, blockPos);
@@ -69,6 +83,7 @@ public class InfectionTendril extends UtilityEntity {
     }
 
     public void addAdditionalSaveData(CompoundTag tag) {
+        tag.putInt("mound_age", this.getAgeM());
         tag.putInt("life", this.getLife());
         tag.putInt("AreaX", this.getSearchArea().getX());
         tag.putInt("AreaY", this.getSearchArea().getY());
@@ -77,6 +92,7 @@ public class InfectionTendril extends UtilityEntity {
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {
+        this.setAgeM(tag.getInt("mound_age"));
         this.setLife(tag.getInt("life"));
         int i = tag.getInt("AreaX");
         int j = tag.getInt("AreaY");
@@ -201,7 +217,7 @@ public class InfectionTendril extends UtilityEntity {
 
             if (blockstate.is(Sblocks.REMAINS.get())){
                 Mound mound = new Mound(Sentities.MOUND.get(),level);
-                mound.setMaxAge(2);
+                mound.setMaxAge(this.getAgeM());
                 mound.setPos(blockpos.getX() + 0.5,blockpos.getY(),blockpos.getZ() + 0.5);
                 level.addFreshEntity(mound);
                 level.removeBlock(blockpos,false);

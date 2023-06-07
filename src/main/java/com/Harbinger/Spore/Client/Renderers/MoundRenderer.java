@@ -15,6 +15,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class MoundRenderer<Type extends Mound> extends MobRenderer<Type , MoundModel<Type>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Spore.MODID,
             "textures/entity/mound.png");
+    private static final ResourceLocation TEXTURE_LARGE = new ResourceLocation(Spore.MODID,
+            "textures/entity/mound_large.png");
     public MoundRenderer(EntityRendererProvider.Context context) {
         super(context, new MoundModel<>(context.bakeLayer(MoundModel.LAYER_LOCATION)), 0.5f);
     }
@@ -28,7 +30,11 @@ public class MoundRenderer<Type extends Mound> extends MobRenderer<Type , MoundM
 
     @Override
     public ResourceLocation getTextureLocation(Type entity) {
-        return TEXTURE;
+        if (entity.getAge() >= 3){
+            return TEXTURE_LARGE;
+        }else {
+            return TEXTURE;
+        }
     }
 
 }

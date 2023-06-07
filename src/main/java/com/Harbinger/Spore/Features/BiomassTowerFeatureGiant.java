@@ -22,20 +22,19 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 import java.util.Set;
 
-public class BiomassTowerFeature extends Feature<NoneFeatureConfiguration> {
-    public static BiomassTowerFeature FEATURE = null;
+public class BiomassTowerFeatureGiant extends Feature<NoneFeatureConfiguration> {
+    public static BiomassTowerFeatureGiant FEATURE = null;
     public static Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> CONFIGURED_FEATURE = null;
     public static Holder<PlacedFeature> PLACED_FEATURE = null;
 
     public static Feature<?> feature() {
-        FEATURE = new BiomassTowerFeature();
-        CONFIGURED_FEATURE = FeatureUtils.register("spore:biomass_tower", FEATURE, FeatureConfiguration.NONE);
-        PLACED_FEATURE = PlacementUtils.register("spore:biomass_tower", CONFIGURED_FEATURE, List.of());
+        FEATURE = new BiomassTowerFeatureGiant();
+        CONFIGURED_FEATURE = FeatureUtils.register("spore:biomass_tower_giant", FEATURE, FeatureConfiguration.NONE);
+        PLACED_FEATURE = PlacementUtils.register("spore:biomass_tower_giant", CONFIGURED_FEATURE, List.of());
         return FEATURE;
     }
 
@@ -43,7 +42,7 @@ public class BiomassTowerFeature extends Feature<NoneFeatureConfiguration> {
     private final List<Block> base_blocks;
     private StructureTemplate template = null;
 
-    public BiomassTowerFeature() {
+    public BiomassTowerFeatureGiant() {
         super(NoneFeatureConfiguration.CODEC);
         base_blocks = List.of(Blocks.MYCELIUM);
     }
@@ -53,7 +52,8 @@ public class BiomassTowerFeature extends Feature<NoneFeatureConfiguration> {
         if (!generate_dimensions.contains(context.level().getLevel().dimension()))
             return false;
         if (template == null)
-                template = context.level().getLevel().getStructureManager().getOrCreate(new ResourceLocation(Spore.MODID, "biomass_tower_small"));
+                template = context.level().getLevel().getStructureManager().getOrCreate(new ResourceLocation(Spore.MODID, "biomass_tower"));
+
         boolean anyPlaced = false;
         if ((context.random().nextInt(1000000) + 1) <= 10000) {
             int count = context.random().nextInt(1) + 1;

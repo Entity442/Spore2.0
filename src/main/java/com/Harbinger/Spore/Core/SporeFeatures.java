@@ -1,6 +1,8 @@
 package com.Harbinger.Spore.Core;
 
 import com.Harbinger.Spore.Features.BiomassTowerFeature;
+import com.Harbinger.Spore.Features.BiomassTowerFeatureBig;
+import com.Harbinger.Spore.Features.BiomassTowerFeatureGiant;
 import com.Harbinger.Spore.Features.MyceliumGroundFoliage;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -15,6 +17,8 @@ public class SporeFeatures {
         FEATURES.register(eventBus);
     }
     public static final RegistryObject<Feature<?>> BIOMASS_TOWER = FEATURES.register("biomass_tower", BiomassTowerFeature::feature);
+    public static final RegistryObject<Feature<?>> BIOMASS_TOWER_SMALL = FEATURES.register("biomass_tower_big", BiomassTowerFeatureBig::feature);
+    public static final RegistryObject<Feature<?>> BIOMASS_TOWER_BIG = FEATURES.register("biomass_tower_giant", BiomassTowerFeatureGiant::feature);
     public static final RegistryObject<Feature<?>> GROUND_FOLIAGE = FEATURES.register("ground_foliage", MyceliumGroundFoliage::feature);
 
 

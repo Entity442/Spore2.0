@@ -77,7 +77,7 @@ public class Mound extends UtilityEntity {
             Spread(entity , entity.level);
             this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,60,1));
             this.setCounter(0);
-            if (entityData.get(TENDRILS)>0 && entityData.get(AGE) == 3 && checkForTendrils(entity)){
+            if (entityData.get(TENDRILS) > 0 && entityData.get(AGE) >= 3 && checkForTendrils(entity)){
                 SpreadKin(entity,entity.level);
             }
         }
@@ -140,6 +140,8 @@ public class Mound extends UtilityEntity {
             range = SConfig.SERVER.mound_range_age2.get();
         } else if (entityData.get(AGE) == 3){
             range = SConfig.SERVER.mound_range_age3.get();
+        }else if (entityData.get(AGE) == 4){
+            range = SConfig.SERVER.mound_range_age4.get();
         } else {
             range = SConfig.SERVER.mound_range_default.get();
         }
@@ -264,8 +266,9 @@ public class Mound extends UtilityEntity {
         AABB aabb = entity.getBoundingBox().inflate(80);
         for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
             BlockState blockState = level.getBlockState(blockpos);
-            if (blockState.is(Sblocks.REMAINS.get())){
+            if (blockState.is(Sblocks.REMAINS.get()) && Math.random() < 0.3){
                 InfectionTendril tendril = new InfectionTendril(Sentities.TENDRIL.get(),level);
+                tendril.setAgeM(this.getMaxAge() -1);
                 tendril.setSearchArea(blockpos);
                 tendril.setPos(this.getX(),this.getY()+0.5D,this.getZ());
                 level.addFreshEntity(tendril);
@@ -280,7 +283,7 @@ public class Mound extends UtilityEntity {
         if (getAge() > 1){
             AttributeInstance health = this.getAttribute(Attributes.MAX_HEALTH);
             assert health != null;
-            health.setBaseValue(SConfig.SERVER.mound_hp.get() * ((double)entityData.get(AGE) / 0.75) * SConfig.SERVER.global_health.get());
+            health.setBaseValue(SConfig.SERVER.mound_hp.get() * entityData.get(AGE) * SConfig.SERVER.global_health.get());
         }
     }
 
@@ -295,7 +298,7 @@ public class Mound extends UtilityEntity {
                 areaeffectcloud.setParticle(Sparticles.SPORE_PARTICLE.get());
                 areaeffectcloud.setRadius(2.0F);
                 areaeffectcloud.setDuration(300);
-                areaeffectcloud.setRadiusPerTick(((2.5F * entityData.get(AGE)) - areaeffectcloud.getRadius()) / (float)areaeffectcloud.getDuration());
+                areaeffectcloud.setRadiusPerTick(((1.5F * entityData.get(AGE)) - areaeffectcloud.getRadius()) / (float)areaeffectcloud.getDuration());
                 areaeffectcloud.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(), 200, 1));
                 entity.level.addFreshEntity(areaeffectcloud);
                 this.playSound(Ssounds.PUFF.get() ,0.5f ,0.5f);
@@ -320,9 +323,27 @@ public class Mound extends UtilityEntity {
         this.entityData.define(TENDRILS, 5);
         this.entityData.define(AGE, 1);
         this.entityData.define(COUNTER, 0);
-        this.entityData.define(MAX_AGE, 3);
+        this.entityData.define(MAX_AGE, 4);
         this.entityData.define(STRUCTURE, true);
     }
 
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> dataAccessor) {
+        if (AGE.equals(dataAccessor)){
+            this.refreshDimensions();
+        }
+        super.onSyncedDataUpdated(dataAccessor);
+    }
 
+    @Override
+    public EntityDimensions getDimensions(Pose pose) {
+        return super.getDimensions(pose).scale(this.getAge() >= 1 ? (1.0F * this.getAge()) : 1.0F);
+    }
+
+    @Override
+    public void die(DamageSource source) {
+        for (int i = 0;i < this.getAge(); i++){
+            super.die(source);
+        }
+    }
 }

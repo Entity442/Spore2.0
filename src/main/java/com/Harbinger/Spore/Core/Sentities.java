@@ -146,7 +146,7 @@ public class Sentities {
                     .build(new ResourceLocation(Spore.MODID, "claw").toString()));
 
     public static final RegistryObject<EntityType<Mound>> MOUND = SPORE_ENTITIES.register("mound",
-            () -> EntityType.Builder.of(Mound::new, INFECTED).sized(0.5f, 0.9f)
+            () -> EntityType.Builder.of(Mound::new, INFECTED).sized(0.3f, 0.3f)
                     .build(new ResourceLocation(Spore.MODID, "mound").toString()));
 
     public static final RegistryObject<EntityType<Proto>> PROTO = SPORE_ENTITIES.register("proto",

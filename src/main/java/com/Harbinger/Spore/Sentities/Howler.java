@@ -60,7 +60,7 @@ public class Howler extends EvolvedInfected {
     }
 
     private class HowlerAttackGoal extends Goal {
-        private int screamTimer;
+        private int screamTimer = 0;
         private final double speedModifier;
         protected Mob mob;
         protected Level level;
@@ -79,27 +79,29 @@ public class Howler extends EvolvedInfected {
 
         @Override
         public void tick() {
-            if (screamTimer <= 90){
-            this.screamTimer++;
+            if (screamTimer > 0){
+            --screamTimer;
             }if (this.mob.getTarget() != null) {
+
                 double ze = mob.distanceToSqr(mob.getTarget());
                 this.mob.getLookControl().setLookAt(this.mob.getTarget(), 10.0F, (float) this.mob.getMaxHeadXRot());
+
                 if (ze > 120.0D) {
                     this.mob.getNavigation().moveTo(this.mob.getTarget(), this.speedModifier);
-                } else if (checkForInfected(this.mob) && screamTimer >= 40) {
+                } else{
+                    if (checkForInfected(this.mob) && screamTimer <= 0) {
                     ScreamAOE(this.mob);
                     ScreamBuffInfected(this.mob);
-                    this.screamTimer = 0;
-                } else {
-                    if (screamTimer >= 80 && !level.isClientSide) {
+                        this.screamTimer = 120;
+                    }
+                    if (!checkForInfected(this.mob) && screamTimer <= 0){
                         int r = random.nextInt(1, 3);
-                        ScreamAOE(this.mob);
                         for (int index0 = 0; index0 < r; index0++) {
                             SummonScream(this.mob);
                         }
-                        this.screamTimer = 0;
+                        this.screamTimer = 120;
                     }
-                }
+                 }
             }
         }
     }
@@ -138,7 +140,7 @@ public class Howler extends EvolvedInfected {
     }
 
     public void ScreamAOE(Entity entity){
-            AABB boundingBox = entity.getBoundingBox().inflate(16);
+            AABB boundingBox = entity.getBoundingBox().inflate(12);
             List<Entity> entities = entity.level.getEntities(entity, boundingBox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
 
             for (Entity entity1 : entities) {
@@ -159,8 +161,8 @@ public class Howler extends EvolvedInfected {
         Level level = entity.level;
         Random rand = new Random();
         int d = random.nextInt(0 ,2);
-        int r = random.nextInt(-12, 12);
-        int c = random.nextInt(-12, 12);
+        int r = random.nextInt(-8, 8);
+        int c = random.nextInt(-8, 8);
         List<? extends String> ev = SConfig.SERVER.howler_summon.get();
 
         for (int i = 0; i < 1; ++i) {
@@ -177,7 +179,7 @@ public class Howler extends EvolvedInfected {
 
 
     boolean checkForInfected(Entity entity){
-        AABB boundingBox = entity.getBoundingBox().inflate(8);
+        AABB boundingBox = entity.getBoundingBox().inflate(4);
         List<Entity> entities = entity.level.getEntities(entity, boundingBox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
 
         for (Entity en : entities) {
