@@ -44,19 +44,11 @@ public class BiomassLump extends Block implements EntityBlock {
         level.scheduleTick(blockPos, this, 40);
         if (entity != null) {
             AABB searchbox = AABB.ofSize(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ()), 33, 33, 33);
-            AABB box = AABB.ofSize(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ()), 5, 5, 5);
             List<Infected> entities = level.getEntitiesOfClass(Infected.class, searchbox);
-            List<Infected> deliver = level.getEntitiesOfClass(Infected.class, box);
 
             for (Entity entity1 : entities) {
                 if (entity1 instanceof Infected infected && infected.getKills() > 1 && entity.getPersistentData().getInt("kills") <= SConfig.DATAGEN.biomass_lump_kills.get()) {
                     infected.setSearchPos(blockPos);
-                }
-            }
-            for (Entity entity1 : deliver) {
-                if (entity1 instanceof Infected infected && infected.getKills() > 1 && entity.getPersistentData().getInt("kills") <= SConfig.DATAGEN.biomass_lump_kills.get()) {
-                    infected.setKills(infected.getKills() - 1);
-                    entity.getPersistentData().putInt("kills",entity.getPersistentData().getInt("kills") + 1);
                 }
             }
             if (entity.getPersistentData().getInt("kills") >= SConfig.DATAGEN.biomass_lump_kills.get() && (Math.random() < 0.01)) {
@@ -77,6 +69,17 @@ public class BiomassLump extends Block implements EntityBlock {
              template.placeInWorld(level, pos, pos, new StructurePlaceSettings().setIgnoreEntities(true), random, 3);
              }}}
 
+    }
+
+
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity livingEntity) {
+        BlockEntity entity = level.getBlockEntity(pos);
+        if (entity != null && livingEntity instanceof Infected infected && infected.getKills() > 1 && entity.getPersistentData().getInt("kills") <= SConfig.DATAGEN.biomass_lump_kills.get()){
+            infected.setKills(infected.getKills() - 1);
+            entity.getPersistentData().putInt("kills",entity.getPersistentData().getInt("kills") + 1);
+        }
+        super.entityInside(state, level, pos, livingEntity);
     }
 
     @Nullable

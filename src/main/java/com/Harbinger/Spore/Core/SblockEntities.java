@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Core;
 
 import com.Harbinger.Spore.SBlockEntities.BiomassLumpEntity;
 import com.Harbinger.Spore.SBlockEntities.ContainerBlockEntity;
+import com.Harbinger.Spore.SBlockEntities.HiveSpawnBlockEntity;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -22,6 +23,10 @@ public class SblockEntities {
             BLOCK_ENTITIES.register("biomass_lump", () ->
                     BlockEntityType.Builder.of(BiomassLumpEntity::new,
                             Sblocks.BIOMASS_LUMP.get()).build(null));
+    public static final RegistryObject<BlockEntityType<HiveSpawnBlockEntity>> HIVE_SPAWN =
+            BLOCK_ENTITIES.register("hive_spawn", () ->
+                    BlockEntityType.Builder.of(HiveSpawnBlockEntity::new,
+                            Sblocks.HIVE_SPAWN.get()).build(null));
 
 
     public static void register(IEventBus eventBus) {

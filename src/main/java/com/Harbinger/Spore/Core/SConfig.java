@@ -772,6 +772,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_hm;
 
         public final ForgeConfigSpec.ConfigValue<Integer> biomass_lump_kills;
+        public final ForgeConfigSpec.ConfigValue<Integer> hive_spawn_kills;
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> block_infection;
         public DataGen(ForgeConfigSpec.Builder builder){
@@ -866,6 +867,7 @@ public class SConfig {
             builder.pop();
             builder.push("Structure data");
             this.biomass_lump_kills = builder.comment("Default 5").defineInRange("Biomass Lump minimal kills", 5, 0, Integer.MAX_VALUE);
+            this.hive_spawn_kills = builder.comment("Default 25").defineInRange("Reconstructed Mind Block kills", 25, 0, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Block infection");
             this.block_infection = builder.defineList("Blocks and their infected counterparts",

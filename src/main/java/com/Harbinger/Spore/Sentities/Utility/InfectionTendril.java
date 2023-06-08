@@ -3,6 +3,7 @@ package com.Harbinger.Spore.Sentities.Utility;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Core.Sentities;
+import com.Harbinger.Spore.SBlockEntities.HiveSpawnBlockEntity;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedWallMovementControl;
 import net.minecraft.core.BlockPos;
@@ -24,6 +25,7 @@ import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -178,7 +180,7 @@ public class InfectionTendril extends UtilityEntity {
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 1)
-                .add(Attributes.MOVEMENT_SPEED, 0.1);
+                .add(Attributes.MOVEMENT_SPEED, 0.15);
 
     }
 
@@ -222,6 +224,11 @@ public class InfectionTendril extends UtilityEntity {
                 level.addFreshEntity(mound);
                 level.removeBlock(blockpos,false);
                 this.discard();
+            }else if (blockstate.is(Sblocks.HIVE_SPAWN.get())){
+                BlockEntity blockEntity = level.getBlockEntity(blockpos);
+                if (blockEntity instanceof HiveSpawnBlockEntity){
+                    blockEntity.getPersistentData().putInt("kills",blockEntity.getPersistentData().getInt("kills") + 5);
+                }
             }
         }
     }

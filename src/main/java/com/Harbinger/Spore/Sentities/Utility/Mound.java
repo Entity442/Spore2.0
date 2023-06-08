@@ -274,9 +274,16 @@ public class Mound extends UtilityEntity {
                 level.addFreshEntity(tendril);
                 this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) -1);
                 break;
-            }
+            }else if (blockState.is(Sblocks.HIVE_SPAWN.get()) && Math.random() < 0.5){
+                InfectionTendril tendril = new InfectionTendril(Sentities.TENDRIL.get(),level);
+                tendril.setPos(this.getX(),this.getY()+0.5D,this.getZ());
+                tendril.setSearchArea(blockpos);
+                level.addFreshEntity(tendril);
+                this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) -1);
+                break;
             }
         }
+    }
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();

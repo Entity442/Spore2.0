@@ -1,10 +1,13 @@
 package com.Harbinger.Spore.Sblocks;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -42,7 +45,7 @@ public class HangingPlant extends FlowerBlock {
     protected static final VoxelShape HANGING_AABB = Shapes.or(Block.box(4.0D, 11.0D, 4.0D, 12.0D, 16.0D, 12.0D));
 
     public HangingPlant() {
-        super(MobEffects.WITHER, 1, BlockBehaviour.Properties.of(Material.PLANT).strength(0f, 0f).noCollission().noOcclusion().sound(SoundType.CROP));
+        super(MobEffects.WITHER, 1, BlockBehaviour.Properties.of(Material.PLANT).strength(0f, 0f).noCollission().noOcclusion().sound(SoundType.CROP).randomTicks());
         this.registerDefaultState(this.stateDefinition.any().setValue(HANGING, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
     }
 
@@ -129,4 +132,19 @@ public class HangingPlant extends FlowerBlock {
         return 5;
     }
 
+
+    @Override
+    public void randomTick(BlockState state, ServerLevel level, BlockPos blockpos, RandomSource randomSource) {
+        if (Math.random() < 0.1){
+            BlockState block2 = Sblocks.BLOOM_GG.get().defaultBlockState();
+        if (state.getBlock().getStateDefinition().getProperty("hanging") instanceof BooleanProperty property) {
+            if (state.getValue(property)) {
+                level.setBlock(blockpos, block2.setValue(property, true), 3);
+            } else {
+                level.setBlock(blockpos, block2, 3);
+            }
+        }
+      }
+        super.randomTick(state, level, blockpos, randomSource);
+    }
 }

@@ -263,5 +263,6 @@ public class Sitems {
 
     public static final RegistryObject<Item> REMAINS = block(Sblocks.REMAINS, ScreativeTab.SPORE);
     public static final RegistryObject<Item> BIOMASS_LUMP = block(Sblocks.BIOMASS_LUMP, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> HIVE_SPAWN = block(Sblocks.HIVE_SPAWN, ScreativeTab.SPORE);
 
 }

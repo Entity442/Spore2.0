@@ -39,7 +39,7 @@ public class OrganiteBlock extends Block {
         AABB searchbox = AABB.ofSize(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ()), 35, 35, 35);
         List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, searchbox);
         for (Entity entity1 : entities) {
-            if (entity1 instanceof LivingEntity entity && !(entity1 instanceof Infected || entity1 instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(entity1.getEncodeId()))) {
+            if (entity1 instanceof LivingEntity entity && !entity.hasEffect(Seffects.MYCELIUM.get()) && !(entity1 instanceof Infected || entity1 instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(entity1.getEncodeId()))) {
                 entity.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get() ,200,0));
             }
         }

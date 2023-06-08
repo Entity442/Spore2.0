@@ -44,7 +44,7 @@ public class SearchAreaGoal extends Goal {
         if (this.infected.getSearchPos() != null && shouldRecalculatePath()){
             this.infected.getNavigation().moveTo(this.infected.getSearchPos().getX(),this.infected.getSearchPos().getY(),this.infected.getSearchPos().getZ(),1);
         }
-        if (this.infected.getSearchPos() != null && this.infected.getSearchPos().distToCenterSqr(this.infected.position()) < 5.0){
+        if (this.infected.getSearchPos() != null && this.infected.getSearchPos().closerToCenterThan(this.infected.position(),9.0)){
             infected.setSearchPos(null);
         }
     }
