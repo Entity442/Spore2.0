@@ -40,6 +40,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -174,8 +175,7 @@ public class Infected extends Monster{
             AABB aabb = this.getBoundingBox().inflate(0.2D);
             for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
                 BlockState blockstate = this.level.getBlockState(blockpos);
-                if ((blockstate.getMaterial() == Material.GLASS || blockstate.getMaterial() == Material.LEAVES) &&
-                        (blockstate.getDestroySpeed(level ,blockpos) >= 0 && blockstate.getDestroySpeed(level ,blockpos) < 2)) {
+                if ((blockstate.getMaterial() == Material.GLASS || blockstate.getMaterial() == Material.LEAVES) && blockstate.getDestroySpeed(level ,blockpos) >= 0 && blockstate.getDestroySpeed(level ,blockpos) < 2) {
                     flag = this.level.destroyBlock(blockpos, true, this) || flag;
                 }
                 if (!flag && this.onGround) {
@@ -194,7 +194,7 @@ public class Infected extends Monster{
 
 
     public boolean isStarving(){
-        return entityData.get(HUNGER) >= SConfig.SERVER.hunger.get();
+        return entityData.get(HUNGER) >= SConfig.SERVER.hunger.get() || this.hasEffect(Seffects.STARVATION.get());
     }
 
     @Override
@@ -275,6 +275,9 @@ public class Infected extends Monster{
         }
         if (source.getDirectEntity() instanceof AcidBall || source.getDirectEntity() instanceof Vomit){
             return  false;
+        }
+        if (ModList.get().isLoaded("ad_astra") && source == DamageSource.DROWN){
+            return false;
         }
         return super.hurt(source, amount);
     }

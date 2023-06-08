@@ -4,6 +4,7 @@ import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
@@ -53,7 +54,7 @@ public class InfectedPanicGoal extends Goal {
     }
 
     protected boolean shouldPanic() {
-        return  this.mob.isFreezing() || this.mob.isOnFire() || this.mob.isStarving();
+        return  this.mob.isFreezing() || this.mob.isOnFire() || this.mob.isStarving() || this.mob.getLastDamageSource() == DamageSource.IN_WALL;
     }
 
     protected boolean findRandomPosition() {
