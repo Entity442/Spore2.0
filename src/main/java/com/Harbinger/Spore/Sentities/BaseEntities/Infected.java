@@ -276,9 +276,6 @@ public class Infected extends Monster{
         if (source.getDirectEntity() instanceof AcidBall || source.getDirectEntity() instanceof Vomit){
             return  false;
         }
-        if (ModList.get().isLoaded("ad_astra") && source == DamageSource.DROWN){
-            return false;
-        }
         return super.hurt(source, amount);
     }
 

@@ -13,11 +13,9 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -28,6 +26,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
@@ -151,6 +150,17 @@ public class InfectionTendril extends UtilityEntity {
     }
 
 
+    public void travel(Vec3 p_32858_) {
+        if (this.isEffectiveAi() && this.isInWater()) {
+            this.moveRelative(0.1F, p_32858_);
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.setDeltaMovement(this.getDeltaMovement());
+        } else {
+            super.travel(p_32858_);
+        }
+
+    }
+
     @Override
     public boolean isInvulnerable() {
         return true;
@@ -161,6 +171,15 @@ public class InfectionTendril extends UtilityEntity {
         super.tick();
         if (this.isAlive() && this.entityData.get(LIFE)>0){
             this.entityData.set(LIFE, this.entityData.get(LIFE) - 1);
+        }
+        if (this.getSearchArea() != null && this.distanceToSqr(this.getSearchArea().getX(),this.getSearchArea().getY(),this.getSearchArea().getZ()) > 400.0D && this.random.nextInt(200) == 0){
+            if (this.getY() > this.getSearchArea().getY()){
+                teleport(-1);
+            }else if (this.getY() < this.getSearchArea().getY()){
+                teleport(1);
+            }else{
+                teleport(0);
+            }
         }
     }
 
@@ -174,6 +193,25 @@ public class InfectionTendril extends UtilityEntity {
         }
         super.aiStep();
     }
+
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        return false;
+    }
+
+    protected boolean teleport(int c) {
+        if (!this.level.isClientSide() && this.isAlive()) {
+            double d0 = this.getX();
+            double d1 = this.getY() + (double)(this.random.nextInt(16) * c);
+            double d2 = this.getZ();
+            return this.randomTeleport(d0, d1, d2,true);
+        } else {
+            return false;
+        }
+    }
+
+
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
@@ -226,6 +264,7 @@ public class InfectionTendril extends UtilityEntity {
                 BlockEntity blockEntity = level.getBlockEntity(blockpos);
                 if (blockEntity instanceof HiveSpawnBlockEntity){
                     blockEntity.getPersistentData().putInt("kills",blockEntity.getPersistentData().getInt("kills") + 5);
+                    this.discard();
                 }
             }
         }

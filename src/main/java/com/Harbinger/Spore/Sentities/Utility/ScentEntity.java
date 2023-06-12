@@ -12,6 +12,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
@@ -120,6 +121,12 @@ public class ScentEntity extends UtilityEntity {
                 }
             }
         }
+    }
+
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        return false;
     }
 
     public void Summon(LivingEntity entity) {

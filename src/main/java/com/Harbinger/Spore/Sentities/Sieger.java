@@ -76,8 +76,8 @@ public class Sieger extends Calamity implements RangedAttackMob {
             avec3[j] = new Vec3(this.subEntities[j].getX(), this.subEntities[j].getY(), this.subEntities[j].getZ());
         }
 
-        this.tickPart(this.tailbody, (double)(f2 * 2.0F), 7.0D, (double)(-f15 * 2.0F));
-        this.tickPart(this.lowerbody, (double)(f2 * 4.5F), 0.0D, (double)(-f15 * 4.5F));
+        this.tickPart(this.tailbody, (double)(f2), 7.0D, (double)(-f15));
+        this.tickPart(this.lowerbody, (double)(f2 * 4.0F), 0.0D, (double)(-f15 * 4.0F));
         for(int l = 0; l < this.subEntities.length; ++l) {
             this.subEntities[l].xo = avec3[l].x;
             this.subEntities[l].yo = avec3[l].y;

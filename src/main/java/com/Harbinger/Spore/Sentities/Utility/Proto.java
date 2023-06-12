@@ -8,6 +8,7 @@ import com.Harbinger.Spore.Sentities.AI.HurtTargetGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
+import com.Harbinger.Spore.Sentities.Knight;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -16,6 +17,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -35,6 +37,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class Proto extends UtilityEntity {
@@ -43,8 +46,12 @@ public class Proto extends UtilityEntity {
         super(type, level);
         setPersistenceRequired();
     }
+
     int counter;
     int breakCounter;
+    @Nullable
+    public boolean signal;
+    public BlockPos position;
 
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
@@ -102,8 +109,14 @@ public class Proto extends UtilityEntity {
                         infected.setLinked(true);
                         setHosts(getHosts() + 1);
                     }
-                    counter = 0;
                 }
+                if (en instanceof Mound mound){
+                    if (!mound.getLinked()){
+                        mound.setLinked(true);
+                        setHosts(getHosts()+1);
+                    }
+                }
+                counter = 0;
             }
         }
         if (breakCounter < 40){
@@ -121,8 +134,19 @@ public class Proto extends UtilityEntity {
                 }
             }
         }
+
+        if (getSignal() && getPlace() != null){
+            this.SummonConstructor(this.level,this,this.getPlace());
+            this.setSignal(false);
+        }
     }
 
+    public void setSignal(boolean value){
+        this.signal = value;
+    }
+    public boolean getSignal(){
+        return this.signal;
+    }
 
 
     static class ProtoScentDefense extends Goal{
@@ -306,5 +330,31 @@ public class Proto extends UtilityEntity {
             }
         }
         super.die(source);
+    }
+
+    public void setPlace(BlockPos pos){
+        this.position = pos;
+    }
+    public BlockPos getPlace(){
+        return position;
+    }
+
+
+    public void SummonConstructor(Level level ,Entity entity,BlockPos pos){
+        RandomSource randomSource = RandomSource.create();
+        int a = randomSource.nextInt(-12,12);
+        int b = randomSource.nextInt(-12,12);
+        int c = randomSource.nextInt(-4,4);
+        BlockPos blockPos = new BlockPos(entity.getX()+a,entity.getY()+c,entity.getZ()+b);
+        BlockPos blockPosTop = new BlockPos(entity.getX()+a,entity.getY()+c+1,entity.getZ()+b);
+        if (level instanceof  ServerLevel serverLevel && serverLevel.isEmptyBlock(blockPos) && serverLevel.isEmptyBlock(blockPosTop)){
+            if (pos != null){
+                Knight creature = Sentities.KNIGHT.get().create(level);
+                assert creature != null;
+                creature.setSearchPos(pos);
+                creature.setPos(entity.getX()+a,entity.getY()+c,entity.getZ()+b);
+                level.addFreshEntity(creature);
+            }
+        }
     }
 }

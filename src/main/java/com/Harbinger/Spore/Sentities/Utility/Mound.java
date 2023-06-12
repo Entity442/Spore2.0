@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sentities.Utility;
 
 import com.Harbinger.Spore.Core.*;
+import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -43,6 +44,7 @@ public class Mound extends UtilityEntity {
     private static final EntityDataAccessor<Integer> COUNTER = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> MAX_AGE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> STRUCTURE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> LINKED = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.BOOLEAN);
     private final  int maxCounter = SConfig.SERVER.mound_cooldown.get();
     private int attack_counter = 0;
     public Mound(EntityType<? extends PathfinderMob> type, Level level) {
@@ -106,6 +108,7 @@ public class Mound extends UtilityEntity {
         tag.putInt("counter",entityData.get(COUNTER));
         tag.putInt("max_age",entityData.get(MAX_AGE));
         tag.putBoolean("structure",entityData.get(STRUCTURE));
+        tag.putBoolean("linked",entityData.get(LINKED));
     }
 
     @Override
@@ -116,6 +119,7 @@ public class Mound extends UtilityEntity {
         entityData.set(COUNTER, tag.getInt("counter"));
         entityData.set(MAX_AGE, tag.getInt("max_age"));
         entityData.set(STRUCTURE, tag.getBoolean("structure"));
+        entityData.set(LINKED, tag.getBoolean("linked"));
     }
 
     public void setCounter(int counter) {
@@ -134,6 +138,13 @@ public class Mound extends UtilityEntity {
         return entityData.get(MAX_AGE);
     }
 
+    public void setLinked(boolean value){
+        this.entityData.set(LINKED,value);
+    }
+
+    public boolean getLinked(){
+        return this.entityData.get(LINKED);
+    }
     private void Spread(Entity entity , LevelAccessor level) {
         double range;
         if (entityData.get(AGE) == 2){
@@ -332,6 +343,7 @@ public class Mound extends UtilityEntity {
         this.entityData.define(COUNTER, 0);
         this.entityData.define(MAX_AGE, 4);
         this.entityData.define(STRUCTURE, true);
+        this.entityData.define(LINKED, false);
     }
 
     @Override
@@ -349,7 +361,16 @@ public class Mound extends UtilityEntity {
 
     @Override
     public void die(DamageSource source) {
-        for (int i = 0;i < this.getAge(); i++){
+        if(this.getLinked() && source.getEntity() != null){
+            AABB searchbox = AABB.ofSize(new Vec3(this.getX(), this.getY(), this.getZ()), 300, 200, 300);
+            List<Entity> entities = this.level.getEntities(this, searchbox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
+            for (Entity en : entities) {
+                if (en instanceof Proto proto){
+                    proto.setSignal(true);
+                    proto.setPlace(new BlockPos(this.getX(),this.getY(),this.getZ()));
+                }}
+        }
+        for (int i = 0;i <= this.getAge(); i++){
             super.die(source);
         }
     }

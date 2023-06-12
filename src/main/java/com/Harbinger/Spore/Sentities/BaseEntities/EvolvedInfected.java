@@ -9,9 +9,5 @@ public class EvolvedInfected extends Infected {
         super(type, level);
         setPersistenceRequired();
     }
-    @Override
-    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-        return false;
-    }
 
 }

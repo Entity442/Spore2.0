@@ -6,6 +6,7 @@ import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
+import com.Harbinger.Spore.Sentities.Utility.Proto;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -18,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -70,6 +72,16 @@ public class Infection {
                     infected1.setSearchPos(pos);
                 }
             }
+        }
+
+        if (entity instanceof EvolvedInfected evolvedInfected && event.getSource().getEntity() != null && evolvedInfected.getLinked() && Math.random() < 0.1){
+            AABB searchbox = AABB.ofSize(new Vec3(entity.getX(), entity.getY(), entity.getZ()), 300, 200, 300);
+            List<Entity> entities = entity.level.getEntities(entity, searchbox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
+            for (Entity en : entities) {
+                if (en instanceof Proto proto){
+                    proto.setSignal(true);
+                    proto.setPlace(new BlockPos(entity.getX(),entity.getY(),entity.getZ()));
+                }}
         }
 
         if (entity instanceof Player player && player.hasEffect(Seffects.MYCELIUM.get()) && !world.isClientSide && SConfig.SERVER.inf_player.get()){
