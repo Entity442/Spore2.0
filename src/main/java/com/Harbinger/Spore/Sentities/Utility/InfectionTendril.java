@@ -41,6 +41,7 @@ public class InfectionTendril extends UtilityEntity {
         this.moveControl = new InfectedWallMovementControl(this);
         this.navigation = new WallClimberNavigation(this,level);
     }
+    private int counter;
 
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
@@ -172,13 +173,18 @@ public class InfectionTendril extends UtilityEntity {
         if (this.isAlive() && this.entityData.get(LIFE)>0){
             this.entityData.set(LIFE, this.entityData.get(LIFE) - 1);
         }
-        if (this.getSearchArea() != null && this.distanceToSqr(this.getSearchArea().getX(),this.getSearchArea().getY(),this.getSearchArea().getZ()) > 400.0D && this.random.nextInt(200) == 0){
-            if (this.getY() > this.getSearchArea().getY()){
-                teleport(-1);
-            }else if (this.getY() < this.getSearchArea().getY()){
-                teleport(1);
+        if (this.getSearchArea() != null && this.distanceToSqr(this.getSearchArea().getX(),this.getSearchArea().getY(),this.getSearchArea().getZ()) > 400.0D){
+            if (counter < 200){
+                counter++;
             }else{
-                teleport(0);
+                if (this.getY() > this.getSearchArea().getY()){
+                    teleport(-1);
+                }else if (this.getY() < this.getSearchArea().getY()){
+                    teleport(1);
+                }else{
+                    teleport(0);
+                }
+                counter = 0;
             }
         }
     }

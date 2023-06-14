@@ -130,15 +130,15 @@ public class InfectedEvoker extends EvolvedInfected implements InventoryCarrier 
     }
 
     protected SoundEvent getAmbientSound() {
-        return Ssounds.INF_GROWL.get();
+        return Ssounds.INF_EVOKER_GROWL.get();
     }
 
     protected SoundEvent getHurtSound(DamageSource p_34327_) {
-        return Ssounds.INF_DAMAGE.get();
+        return Ssounds.INF_EVOKER_DAMAGE.get();
     }
 
     protected SoundEvent getDeathSound() {
-        return Ssounds.INF_DAMAGE.get();
+        return Ssounds.INF_EVOKER_DEATH.get();
     }
 
     protected SoundEvent getStepSound() {

@@ -160,7 +160,7 @@ public class Calamity extends UtilityEntity {
             breakCounter++;
         } else {
             if ((this.getLastDamageSource() == DamageSource.IN_WALL || this.horizontalCollision) && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) {
-                AABB aabb = this.getBoundingBox().inflate(0.2);
+                AABB aabb = this.getBoundingBox().inflate(0.4,0,0.4);
                 boolean flag = false;
                 for (BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
                     BlockState blockstate = this.level.getBlockState(blockpos);

@@ -82,16 +82,17 @@ public class Leaper extends EvolvedInfected implements Carrier{
     }
 
     protected SoundEvent getAmbientSound() {
-        return Ssounds.INF_GROWL.get();
+        return Ssounds.INF_VILLAGER_GROWL.get();
     }
 
     protected SoundEvent getHurtSound(DamageSource p_34327_) {
-        return Ssounds.INF_DAMAGE.get();
+        return Ssounds.INF_VILLAGER_DAMAGE.get();
     }
 
     protected SoundEvent getDeathSound() {
-        return Ssounds.INF_DAMAGE.get();
+        return Ssounds.INF_VILLAGER_DEATH.get();
     }
+
 
     protected SoundEvent getStepSound() {
         return SoundEvents.ZOMBIE_STEP;

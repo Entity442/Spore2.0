@@ -19,12 +19,15 @@ public class CalamityInfectedCommand extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.calamity.getRandom().nextInt(300) == 0 && (this.calamity.getTarget() != null || this.calamity.getSearchArea() != BlockPos.ZERO);
+        return this.calamity.getRandom().nextInt(100) == 0 && (this.calamity.getTarget() != null || this.calamity.getSearchArea() != BlockPos.ZERO);
     }
 
 
-
-
+    @Override
+    public void start() {
+        Targeting(this.calamity);
+        super.start();
+    }
 
     public void Targeting(Entity entity){
         AABB boundingBox = entity.getBoundingBox().inflate(32);

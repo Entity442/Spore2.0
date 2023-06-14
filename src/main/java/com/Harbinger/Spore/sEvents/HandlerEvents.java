@@ -2,12 +2,12 @@ package com.Harbinger.Spore.sEvents;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
-import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.BaseEntities.Calamity;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
+import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
+import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.Utility.Mound;
 import com.Harbinger.Spore.Sentities.Utility.Proto;
-import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
@@ -86,13 +86,14 @@ public class HandlerEvents {
             if (entity == null)
                 entity = FakePlayerFactory.getMinecraft(world);
              if (entity != null){
+                 BlockPos pos = new BlockPos(x ,y,z);
                  AABB hitbox = entity.getBoundingBox().inflate(20);
                  List<Entity> entities = entity.level.getEntities(entity, hitbox);
                  for (Entity entity1 : entities) {
                      if(entity1 instanceof Infected infected) {
-                         infected.setSearchPos(new BlockPos(x ,y,z));
+                         infected.setSearchPos(pos);
                      }else if (entity1 instanceof Calamity calamity){
-                         calamity.setSearchArea(new BlockPos(x,y,z));
+                         calamity.setSearchArea(pos);
                      }
                  }
              }

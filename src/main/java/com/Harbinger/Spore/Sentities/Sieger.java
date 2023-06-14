@@ -17,6 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -101,7 +102,7 @@ public class Sieger extends Calamity implements RangedAttackMob {
         this.goalSelector.addGoal(3, new RangedAttackGoal(this,1,20,32){
             @Override
             public boolean canUse() {
-                return super.canUse() && Sieger.this.getRandom().nextInt(400) == 0;
+                return super.canUse() && Sieger.this.getRandom().nextInt(300) == 0;
             }
         });
         this.goalSelector.addGoal(4, new LeapAtTargetGoal(this,0.4F));
@@ -151,7 +152,7 @@ public class Sieger extends Calamity implements RangedAttackMob {
     }
 
     protected SoundEvent getStepSound() {
-        return SoundEvents.ZOMBIE_STEP;
+        return SoundEvents.RAVAGER_STEP;
     }
 
     protected void playStepSound(BlockPos p_34316_, BlockState p_34317_) {
@@ -198,9 +199,13 @@ public class Sieger extends Calamity implements RangedAttackMob {
     @Override
     public void performRangedAttack(LivingEntity entity, float p_33318_) {
         if(!level.isClientSide){
+            RandomSource randomSource = RandomSource.create();
+            int power = randomSource.nextInt(1,4);
             ThrownTumor tumor = new ThrownTumor(level, entity);
-            tumor.shootFromRotation(entity, entity.getXRot(), entity.getYRot(), 0.0F, 1.5F, 1.0F);
-            level.addFreshEntity(tumor);
+            for (int i = 0;i <= power;i++) {
+                tumor.shootFromRotation(entity, entity.getXRot(), entity.getYRot(), 0.0F, 1.5F, 0.5F * power);
+                level.addFreshEntity(tumor);
+            }
         }
     }
 
@@ -217,7 +222,7 @@ public class Sieger extends Calamity implements RangedAttackMob {
                     }
                 }
             }else if (entity instanceof LivingEntity livingEntity && (entity instanceof Infected || entity instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(entity.getEncodeId()))){
-                for (String str : SConfig.SERVER.sieger_debuffs.get()){
+                for (String str : SConfig.SERVER.sieger_buffs.get()){
                     String[] string = str.split("\\|" );
                     MobEffect effect = ForgeRegistries.MOB_EFFECTS.getValue(new ResourceLocation(string[0]));
                     if (effect != null && !livingEntity.hasEffect(effect)){

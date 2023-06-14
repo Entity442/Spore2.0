@@ -9,6 +9,7 @@ import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.Knight;
+import com.Harbinger.Spore.Sentities.Sieger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -123,7 +124,7 @@ public class Proto extends UtilityEntity {
             breakCounter++;
         }else{
             if (this.getLastDamageSource() == DamageSource.IN_WALL && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)){
-                AABB aabb = this.getBoundingBox().inflate(0.2);
+                AABB aabb = this.getBoundingBox().inflate(0.2,0,0.2);
                 boolean flag = false;
                 for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
                     BlockState blockstate = this.level.getBlockState(blockpos);
@@ -349,9 +350,9 @@ public class Proto extends UtilityEntity {
         BlockPos blockPosTop = new BlockPos(entity.getX()+a,entity.getY()+c+1,entity.getZ()+b);
         if (level instanceof  ServerLevel serverLevel && serverLevel.isEmptyBlock(blockPos) && serverLevel.isEmptyBlock(blockPosTop)){
             if (pos != null){
-                Knight creature = Sentities.KNIGHT.get().create(level);
+                Sieger creature = Sentities.SIEGER.get().create(level);
                 assert creature != null;
-                creature.setSearchPos(pos);
+                creature.setSearchArea(pos);
                 creature.setPos(entity.getX()+a,entity.getY()+c,entity.getZ()+b);
                 level.addFreshEntity(creature);
             }

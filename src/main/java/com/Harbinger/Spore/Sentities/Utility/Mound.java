@@ -67,6 +67,7 @@ public class Mound extends UtilityEntity {
             if (this.getPersistentData().getInt("age") >= SConfig.SERVER.mound_age.get()) {
                 this.getPersistentData().putInt("age",0);
                 entityData.set(AGE,entityData.get(AGE) + 1);
+                this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) +10);
             }
         }
         if (entity.isOnGround()){
@@ -80,6 +81,7 @@ public class Mound extends UtilityEntity {
             this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,60,1));
             this.setCounter(0);
             if (entityData.get(TENDRILS) > 0 && entityData.get(AGE) >= 3 && checkForTendrils(entity)){
+                this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) -1);
                 SpreadKin(entity,entity.level);
             }
         }
@@ -290,7 +292,6 @@ public class Mound extends UtilityEntity {
                 tendril.setPos(this.getX(),this.getY()+0.5D,this.getZ());
                 tendril.setSearchArea(blockpos);
                 level.addFreshEntity(tendril);
-                this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) -1);
                 break;
             }
         }
@@ -302,6 +303,9 @@ public class Mound extends UtilityEntity {
             AttributeInstance health = this.getAttribute(Attributes.MAX_HEALTH);
             assert health != null;
             health.setBaseValue(SConfig.SERVER.mound_hp.get() * entityData.get(AGE) * SConfig.SERVER.global_health.get());
+            AttributeInstance armor = this.getAttribute(Attributes.ARMOR);
+            assert armor != null;
+            armor.setBaseValue(SConfig.SERVER.mound_armor.get() * entityData.get(AGE) * SConfig.SERVER.global_armor.get());
         }
     }
 

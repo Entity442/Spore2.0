@@ -30,14 +30,14 @@ import javax.annotation.Nullable;
 public class ThrownSpear extends AbstractArrow {
     private static final EntityDataAccessor<Byte> ID_LOYALTY = SynchedEntityData.defineId(ThrownTrident.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> ID_FOIL = SynchedEntityData.defineId(ThrownTrident.class, EntityDataSerializers.BOOLEAN);
-    private ItemStack tridentItem = new ItemStack(Sitems.INFECTED_SPEAR.get());
+    private ItemStack spearItem = new ItemStack(Sitems.INFECTED_SPEAR.get());
     private boolean dealtDamage;
     public int clientSideReturnTridentTickCount;
 
 
     public ThrownSpear(Level p_37569_, LivingEntity p_37570_, ItemStack p_37571_) {
         super(Sentities.THROWN_SPEAR.get(), p_37570_, p_37569_);
-        this.tridentItem = p_37571_.copy();
+        this.spearItem = p_37571_.copy();
         this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(p_37571_));
         this.entityData.set(ID_FOIL, p_37571_.hasFoil());
     }
@@ -101,7 +101,7 @@ public class ThrownSpear extends AbstractArrow {
     }
 
     protected ItemStack getPickupItem() {
-        return this.tridentItem.copy();
+        return this.spearItem.copy();
     }
 
     public boolean isFoil() {
@@ -115,9 +115,9 @@ public class ThrownSpear extends AbstractArrow {
 
     protected void onHitEntity(EntityHitResult hit) {
         Entity entity = hit.getEntity();
-        float f = SConfig.SERVER.spear_range.get() + (0.5F * EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS , this.tridentItem));
+        float f = SConfig.SERVER.spear_range.get() + (0.5F * EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS , this.spearItem));
         if (entity instanceof LivingEntity livingentity) {
-            f += EnchantmentHelper.getDamageBonus(this.tridentItem, livingentity.getMobType());
+            f += EnchantmentHelper.getDamageBonus(this.spearItem, livingentity.getMobType());
         }
 
         Entity entity1 = this.getOwner();
@@ -135,8 +135,8 @@ public class ThrownSpear extends AbstractArrow {
                     EnchantmentHelper.doPostHurtEffects(livingentity1, entity1);
                     EnchantmentHelper.doPostDamageEffects((LivingEntity)entity1, livingentity1);
                 }
-                if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT , this.tridentItem) > 0) {
-                    int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, this.tridentItem);
+                if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT , this.spearItem) > 0) {
+                    int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, this.spearItem);
                     entity.setSecondsOnFire(4 * j);
                 }
 
@@ -168,16 +168,16 @@ public class ThrownSpear extends AbstractArrow {
     public void readAdditionalSaveData(CompoundTag p_37578_) {
         super.readAdditionalSaveData(p_37578_);
         if (p_37578_.contains("Trident", 10)) {
-            this.tridentItem = ItemStack.of(p_37578_.getCompound("Trident"));
+            this.spearItem = ItemStack.of(p_37578_.getCompound("Trident"));
         }
 
         this.dealtDamage = p_37578_.getBoolean("DealtDamage");
-        this.entityData.set(ID_LOYALTY, (byte)EnchantmentHelper.getLoyalty(this.tridentItem));
+        this.entityData.set(ID_LOYALTY, (byte)EnchantmentHelper.getLoyalty(this.spearItem));
     }
 
     public void addAdditionalSaveData(CompoundTag p_37582_) {
         super.addAdditionalSaveData(p_37582_);
-        p_37582_.put("Trident", this.tridentItem.save(new CompoundTag()));
+        p_37582_.put("Trident", this.spearItem.save(new CompoundTag()));
         p_37582_.putBoolean("DealtDamage", this.dealtDamage);
     }
 

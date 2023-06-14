@@ -13,6 +13,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -43,11 +44,11 @@ public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition smolleg = partdefinition.addOrReplaceChild("smolleg", CubeListBuilder.create(), PartPose.offsetAndRotation(-16.0F, -1.0F, 12.0F, 0.0F, 0.2618F, 0.0F));
+		PartDefinition smolleg = partdefinition.addOrReplaceChild("smolleg", CubeListBuilder.create(), PartPose.offsetAndRotation(-18.0F, -1.0F, 12.0F, 0.0F, 0.2618F, 0.0F));
 
-		PartDefinition cube_r1 = smolleg.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(164, 222).addBox(-25.7262F, -20.5F, -8.6754F, 21.0F, 5.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(5.7262F, 2.0F, 5.6754F, 0.0F, 0.0F, -1.5708F));
+		PartDefinition cube_r1 = smolleg.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(164, 222).addBox(-25.6581F, -20.5F, -8.6931F, 21.0F, 5.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(7.6581F, 2.0F, 6.1931F, 0.0F, 0.0F, -1.5708F));
 
-		PartDefinition cube_r2 = smolleg.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(270, 84).addBox(-18.7262F, -9.0F, -8.6754F, 14.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(5.7262F, 2.0F, 5.6754F, 0.0F, 0.0F, -0.5672F));
+		PartDefinition cube_r2 = smolleg.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(270, 84).addBox(-18.6581F, -9.0F, -8.6931F, 14.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(7.6581F, 2.0F, 6.1931F, 0.0F, 0.0F, -0.5672F));
 
 		PartDefinition mainbody = partdefinition.addOrReplaceChild("mainbody", CubeListBuilder.create().texOffs(0, 52).addBox(-15.0F, -13.0F, -14.0F, 30.0F, 13.0F, 38.0F, new CubeDeformation(0.0F))
 		.texOffs(199, 0).addBox(-15.0F, -4.0F, 24.0F, 30.0F, 17.0F, 18.0F, new CubeDeformation(0.0F))
@@ -398,35 +399,35 @@ public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 
 		PartDefinition cube_r51 = flower5.addOrReplaceChild("cube_r51", CubeListBuilder.create().texOffs(92, 117).addBox(-4.0F, 0.0F, 0.0F, 7.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.0F, 0.0F, 0.3927F, 0.0F, 0.0F));
 
-		PartDefinition mainbody2 = partdefinition.addOrReplaceChild("mainbody2", CubeListBuilder.create().texOffs(0, 115).addBox(-5.0F, -14.0F, -32.0F, 10.0F, 8.0F, 10.0F, new CubeDeformation(0.0F))
-		.texOffs(276, 175).addBox(-5.0F, -6.0F, -32.0F, 10.0F, 1.0F, 10.0F, new CubeDeformation(0.0F))
-		.texOffs(260, 61).addBox(-7.0F, -15.0F, -28.0F, 15.0F, 7.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -6.0F, -17.0F));
+		PartDefinition mainbody2 = partdefinition.addOrReplaceChild("mainbody2", CubeListBuilder.create().texOffs(0, 115).addBox(-5.0F, -8.0F, -32.0F, 10.0F, 8.0F, 10.0F, new CubeDeformation(0.0F))
+		.texOffs(276, 175).addBox(-5.0F, 0.0F, -32.0F, 10.0F, 1.0F, 10.0F, new CubeDeformation(0.0F))
+		.texOffs(260, 61).addBox(-7.0F, -9.0F, -28.0F, 15.0F, 7.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -12.0F, -17.0F));
 
-		PartDefinition cube_r52 = mainbody2.addOrReplaceChild("cube_r52", CubeListBuilder.create().texOffs(0, 206).addBox(-3.0F, -1.25F, 43.0F, 21.0F, 11.25F, 20.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(-7.0F, -38.1577F, -45.2909F, -0.48F, 0.0F, 0.0F));
+		PartDefinition cube_r52 = mainbody2.addOrReplaceChild("cube_r52", CubeListBuilder.create().texOffs(0, 206).addBox(-3.0F, -1.25F, 43.0F, 21.0F, 11.25F, 20.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(-7.0F, -32.1577F, -45.2909F, -0.48F, 0.0F, 0.0F));
 
-		PartDefinition cube_r53 = mainbody2.addOrReplaceChild("cube_r53", CubeListBuilder.create().texOffs(234, 190).addBox(-2.0F, -1.0F, 7.0F, 19.0F, 11.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-7.0F, -8.6058F, -27.4778F, 0.48F, 0.0F, 0.0F));
+		PartDefinition cube_r53 = mainbody2.addOrReplaceChild("cube_r53", CubeListBuilder.create().texOffs(234, 190).addBox(-2.0F, -1.0F, 7.0F, 19.0F, 11.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-7.0F, -2.6058F, -27.4778F, 0.48F, 0.0F, 0.0F));
 
-		PartDefinition cube_r54 = mainbody2.addOrReplaceChild("cube_r54", CubeListBuilder.create().texOffs(0, 6).addBox(-13.75F, -23.0F, -24.0F, 0.0F, 13.0F, 15.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 16.0F, 6.0F, 0.0F, -0.2618F, 0.0F));
+		PartDefinition cube_r54 = mainbody2.addOrReplaceChild("cube_r54", CubeListBuilder.create().texOffs(0, 6).addBox(-13.75F, -23.0F, -24.0F, 0.0F, 13.0F, 15.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 22.0F, 6.0F, 0.0F, -0.2618F, 0.0F));
 
-		PartDefinition e_r1 = mainbody2.addOrReplaceChild("e_r1", CubeListBuilder.create().texOffs(0, 83).addBox(-13.75F, -23.0F, -32.0F, 0.0F, 12.0F, 20.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(29.5F, 16.0F, 6.0F, 0.0F, 0.2618F, 0.0F));
+		PartDefinition e_r1 = mainbody2.addOrReplaceChild("e_r1", CubeListBuilder.create().texOffs(0, 83).addBox(-13.75F, -23.0F, -32.0F, 0.0F, 12.0F, 20.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(29.5F, 22.0F, 6.0F, 0.0F, 0.2618F, 0.0F));
 
-		PartDefinition cube_r55 = mainbody2.addOrReplaceChild("cube_r55", CubeListBuilder.create().texOffs(0, 37).addBox(-29.75F, -24.0F, -8.0F, 0.0F, 13.0F, 15.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 16.0F, 6.0F, 0.0F, -1.5708F, 0.0F));
+		PartDefinition cube_r55 = mainbody2.addOrReplaceChild("cube_r55", CubeListBuilder.create().texOffs(0, 37).addBox(-29.75F, -24.0F, -8.0F, 0.0F, 13.0F, 15.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 22.0F, 6.0F, 0.0F, -1.5708F, 0.0F));
 
 		PartDefinition Head_r1 = mainbody2.addOrReplaceChild("Head_r1", CubeListBuilder.create().texOffs(22, 303).addBox(4.0F, 0.0F, -3.0F, 8.0F, 2.0F, 8.0F, new CubeDeformation(0.0F))
-		.texOffs(301, 159).addBox(4.0F, -6.0F, -3.0F, 8.0F, 6.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(9.0F, -7.0F, -24.0F, 0.0F, -1.3963F, 0.0F));
+		.texOffs(301, 159).addBox(4.0F, -6.0F, -3.0F, 8.0F, 6.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(9.0F, -1.0F, -24.0F, 0.0F, -1.3963F, 0.0F));
 
 		PartDefinition Head_r2 = mainbody2.addOrReplaceChild("Head_r2", CubeListBuilder.create().texOffs(303, 117).addBox(-4.0F, 0.0F, -5.0F, 8.0F, 2.0F, 8.0F, new CubeDeformation(0.0F))
-		.texOffs(202, 301).addBox(-4.0F, -6.0F, -5.0F, 8.0F, 6.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(9.0F, -7.0F, -24.0F, 0.0F, -0.7418F, 0.0F));
+		.texOffs(202, 301).addBox(-4.0F, -6.0F, -5.0F, 8.0F, 6.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(9.0F, -1.0F, -24.0F, 0.0F, -0.7418F, 0.0F));
 
 		PartDefinition Head_r3 = mainbody2.addOrReplaceChild("Head_r3", CubeListBuilder.create().texOffs(283, 96).addBox(0.0F, -3.0F, -1.0F, 9.0F, 2.0F, 9.0F, new CubeDeformation(0.0F))
-		.texOffs(276, 143).addBox(0.0F, -10.0F, -1.0F, 9.0F, 7.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-10.0F, -7.0F, -23.0F, 0.0F, 1.1345F, 0.0F));
+		.texOffs(276, 143).addBox(0.0F, -10.0F, -1.0F, 9.0F, 7.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-10.0F, -1.0F, -23.0F, 0.0F, 1.1345F, 0.0F));
 
 		PartDefinition Head_r4 = mainbody2.addOrReplaceChild("Head_r4", CubeListBuilder.create().texOffs(278, 284).addBox(-7.0F, 0.0F, 1.0F, 9.0F, 2.0F, 9.0F, new CubeDeformation(0.0F))
-		.texOffs(277, 0).addBox(-7.0F, -7.0F, 1.0F, 9.0F, 7.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-10.0F, -7.0F, -23.0F, 0.0F, 0.9599F, 0.0F));
+		.texOffs(277, 0).addBox(-7.0F, -7.0F, 1.0F, 9.0F, 7.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-10.0F, -1.0F, -23.0F, 0.0F, 0.9599F, 0.0F));
 
-		PartDefinition cube_r56 = mainbody2.addOrReplaceChild("cube_r56", CubeListBuilder.create().texOffs(211, 98).addBox(-15.0F, -11.0F, -17.0F, 30.0F, 9.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.2182F, 0.0F, 0.0F));
+		PartDefinition cube_r56 = mainbody2.addOrReplaceChild("cube_r56", CubeListBuilder.create().texOffs(211, 98).addBox(-15.0F, -11.0F, -17.0F, 30.0F, 9.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 6.0F, 0.0F, -0.2182F, 0.0F, 0.0F));
 
-		PartDefinition bloomingFungus3 = mainbody2.addOrReplaceChild("bloomingFungus3", CubeListBuilder.create(), PartPose.offsetAndRotation(2.0F, -7.0F, 32.0F, -1.212F, -0.7832F, 0.9493F));
+		PartDefinition bloomingFungus3 = mainbody2.addOrReplaceChild("bloomingFungus3", CubeListBuilder.create(), PartPose.offsetAndRotation(2.0F, -1.0F, 32.0F, -1.212F, -0.7832F, 0.9493F));
 
 		PartDefinition cube_r57 = bloomingFungus3.addOrReplaceChild("cube_r57", CubeListBuilder.create().texOffs(0, 119).addBox(-11.25F, -12.0F, -7.0F, 0.0F, 12.0F, 14.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.7854F, 0.0F));
 
@@ -441,7 +442,7 @@ public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 
 		PartDefinition cube_r62 = bloomingFungus3.addOrReplaceChild("cube_r62", CubeListBuilder.create().texOffs(50, 133).addBox(-16.0F, 0.0F, 0.0F, 16.0F, 0.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-8.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.3927F));
 
-		PartDefinition flower = mainbody2.addOrReplaceChild("flower", CubeListBuilder.create(), PartPose.offsetAndRotation(17.0F, 2.0F, 0.0F, 0.1745F, 0.0F, 1.1345F));
+		PartDefinition flower = mainbody2.addOrReplaceChild("flower", CubeListBuilder.create(), PartPose.offsetAndRotation(17.0F, 8.0F, 0.0F, 0.1745F, 0.0F, 1.1345F));
 
 		PartDefinition cube_r63 = flower.addOrReplaceChild("cube_r63", CubeListBuilder.create().texOffs(0, 212).addBox(0.0F, 0.0F, -3.0F, 6.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.3927F));
 
@@ -451,7 +452,7 @@ public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 
 		PartDefinition cube_r66 = flower.addOrReplaceChild("cube_r66", CubeListBuilder.create().texOffs(65, 189).addBox(-4.0F, 0.0F, 0.0F, 7.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.0F, 0.0F, 0.3927F, 0.0F, 0.0F));
 
-		PartDefinition bigFlower = mainbody2.addOrReplaceChild("bigFlower", CubeListBuilder.create(), PartPose.offsetAndRotation(17.0F, -1.0F, 35.0F, -0.2618F, 0.0F, 0.8727F));
+		PartDefinition bigFlower = mainbody2.addOrReplaceChild("bigFlower", CubeListBuilder.create(), PartPose.offsetAndRotation(17.0F, 5.0F, 35.0F, -0.2618F, 0.0F, 0.8727F));
 
 		PartDefinition cube_r67 = bigFlower.addOrReplaceChild("cube_r67", CubeListBuilder.create().texOffs(191, 8).addBox(0.0F, 0.0F, -4.0F, 8.0F, 0.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.3927F));
 
@@ -461,7 +462,7 @@ public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 
 		PartDefinition cube_r70 = bigFlower.addOrReplaceChild("cube_r70", CubeListBuilder.create().texOffs(81, 173).addBox(-5.0F, 0.0F, 0.0F, 9.0F, 0.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.0F, 0.0F, 0.3927F, 0.0F, 0.0F));
 
-		PartDefinition flower2 = mainbody2.addOrReplaceChild("flower2", CubeListBuilder.create(), PartPose.offsetAndRotation(19.0F, -3.5F, 35.75F, -0.5236F, 0.0F, 1.1345F));
+		PartDefinition flower2 = mainbody2.addOrReplaceChild("flower2", CubeListBuilder.create(), PartPose.offsetAndRotation(19.0F, 2.5F, 35.75F, -0.5236F, 0.0F, 1.1345F));
 
 		PartDefinition cube_r71 = flower2.addOrReplaceChild("cube_r71", CubeListBuilder.create().texOffs(205, 143).addBox(0.0F, 0.0F, -3.0F, 6.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.3927F));
 
@@ -471,7 +472,7 @@ public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 
 		PartDefinition cube_r74 = flower2.addOrReplaceChild("cube_r74", CubeListBuilder.create().texOffs(152, 8).addBox(-4.0F, 0.0F, 0.0F, 7.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.0F, 0.0F, 0.3927F, 0.0F, 0.0F));
 
-		PartDefinition flower3 = mainbody2.addOrReplaceChild("flower3", CubeListBuilder.create(), PartPose.offsetAndRotation(7.0F, -13.5F, 28.75F, -0.1997F, -0.523F, -0.386F));
+		PartDefinition flower3 = mainbody2.addOrReplaceChild("flower3", CubeListBuilder.create(), PartPose.offsetAndRotation(7.0F, -7.5F, 28.75F, -0.1997F, -0.523F, -0.386F));
 
 		PartDefinition cube_r75 = flower3.addOrReplaceChild("cube_r75", CubeListBuilder.create().texOffs(205, 125).addBox(0.0F, 0.0F, -3.0F, 6.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.3927F));
 
@@ -481,7 +482,7 @@ public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 
 		PartDefinition cube_r78 = flower3.addOrReplaceChild("cube_r78", CubeListBuilder.create().texOffs(138, 8).addBox(-4.0F, 0.0F, 0.0F, 7.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.0F, 0.0F, 0.3927F, 0.0F, 0.0F));
 
-		PartDefinition bigFlower3 = mainbody2.addOrReplaceChild("bigFlower3", CubeListBuilder.create(), PartPose.offsetAndRotation(5.0F, -8.0F, 37.0F, -0.2024F, -0.1671F, 0.1915F));
+		PartDefinition bigFlower3 = mainbody2.addOrReplaceChild("bigFlower3", CubeListBuilder.create(), PartPose.offsetAndRotation(5.0F, -2.0F, 37.0F, -0.2024F, -0.1671F, 0.1915F));
 
 		PartDefinition cube_r79 = bigFlower3.addOrReplaceChild("cube_r79", CubeListBuilder.create().texOffs(148, 173).addBox(0.0F, 0.0F, -4.0F, 8.0F, 0.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.3927F));
 
@@ -491,7 +492,7 @@ public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 
 		PartDefinition cube_r82 = bigFlower3.addOrReplaceChild("cube_r82", CubeListBuilder.create().texOffs(58, 103).addBox(-5.0F, 0.0F, 0.0F, 9.0F, 0.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.0F, 0.0F, 0.3927F, 0.0F, 0.0F));
 
-		PartDefinition flower6 = mainbody2.addOrReplaceChild("flower6", CubeListBuilder.create(), PartPose.offsetAndRotation(11.0F, -23.5F, -10.25F, -0.1997F, -0.523F, -0.386F));
+		PartDefinition flower6 = mainbody2.addOrReplaceChild("flower6", CubeListBuilder.create(), PartPose.offsetAndRotation(11.0F, -17.5F, -10.25F, -0.1997F, -0.523F, -0.386F));
 
 		PartDefinition cube_r83 = flower6.addOrReplaceChild("cube_r83", CubeListBuilder.create().texOffs(200, 159).addBox(0.0F, 0.0F, -3.0F, 6.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.3927F));
 
@@ -501,7 +502,7 @@ public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 
 		PartDefinition cube_r86 = flower6.addOrReplaceChild("cube_r86", CubeListBuilder.create().texOffs(106, 84).addBox(-4.0F, 0.0F, 0.0F, 7.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.0F, 0.0F, 0.3927F, 0.0F, 0.0F));
 
-		PartDefinition bigFlower4 = mainbody2.addOrReplaceChild("bigFlower4", CubeListBuilder.create(), PartPose.offsetAndRotation(-19.0F, 16.0F, 5.0F, 0.0983F, 0.1213F, -1.551F));
+		PartDefinition bigFlower4 = mainbody2.addOrReplaceChild("bigFlower4", CubeListBuilder.create(), PartPose.offsetAndRotation(-19.0F, 22.0F, 5.0F, 0.0983F, 0.1213F, -1.551F));
 
 		PartDefinition cube_r87 = bigFlower4.addOrReplaceChild("cube_r87", CubeListBuilder.create().texOffs(22, 115).addBox(0.0F, 0.0F, -4.0F, 8.0F, 0.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.3927F));
 
@@ -530,21 +531,21 @@ public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 		PartDefinition tumor = tailjoint4.addOrReplaceChild("tumor", CubeListBuilder.create().texOffs(123, 243).addBox(-8.0F, -20.6187F, 25.0213F, 16.0F, 16.0F, 16.0F, new CubeDeformation(0.0F))
 		.texOffs(0, 0).addBox(-6.0F, -19.6187F, 18.0213F, 12.0F, 14.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -2.0F, 22.0F));
 
-		PartDefinition RightLegJointY = partdefinition.addOrReplaceChild("RightLegJointY", CubeListBuilder.create(), PartPose.offset(13.0F, -9.0F, -1.0F));
+		PartDefinition RightLegJointY = partdefinition.addOrReplaceChild("RightLegJointY", CubeListBuilder.create(), PartPose.offset(16.0F, -11.0F, 0.0F));
 
 		PartDefinition RightLegJointZ = RightLegJointY.addOrReplaceChild("RightLegJointZ", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition leg = RightLegJointZ.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(162, 77).addBox(64.0F, -5.0F, -5.0F, 44.0F, 11.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-47.0F, 39.0F, 1.0F, 0.0F, 0.0F, -0.6981F));
+		PartDefinition leg = RightLegJointZ.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(162, 77).addBox(64.0F, -5.0F, -5.0F, 44.0F, 11.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-50.0F, 41.0F, 0.0F, 0.0F, 0.0F, -0.6981F));
 
 		PartDefinition cube_r91 = leg.addOrReplaceChild("cube_r91", CubeListBuilder.create().texOffs(0, 237).addBox(10.0F, 37.0F, -6.5F, 12.0F, 38.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(104.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.6981F));
 
 		PartDefinition cube_r92 = leg.addOrReplaceChild("cube_r92", CubeListBuilder.create().texOffs(187, 243).addBox(1.0F, -7.0F, -4.5F, 9.0F, 48.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(104.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.4363F));
 
-		PartDefinition LeftLegJointY = partdefinition.addOrReplaceChild("LeftLegJointY", CubeListBuilder.create(), PartPose.offset(-12.0F, -20.0F, -7.0F));
+		PartDefinition LeftLegJointY = partdefinition.addOrReplaceChild("LeftLegJointY", CubeListBuilder.create(), PartPose.offset(-11.0F, -14.0F, -7.0F));
 
 		PartDefinition LeftLegJointZ = LeftLegJointY.addOrReplaceChild("LeftLegJointZ", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition leg2 = LeftLegJointZ.addOrReplaceChild("leg2", CubeListBuilder.create().texOffs(162, 53).addBox(-125.7328F, 62.4211F, 9.0F, 44.0F, 14.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(109.0F, 6.0F, -14.0F, 0.0F, 0.0F, 0.6981F));
+		PartDefinition leg2 = LeftLegJointZ.addOrReplaceChild("leg2", CubeListBuilder.create().texOffs(162, 53).addBox(-125.7328F, 62.4211F, 9.0F, 44.0F, 14.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(108.0F, 0.0F, -14.0F, 0.0F, 0.0F, 0.6981F));
 
 		PartDefinition twitstedleg2 = leg2.addOrReplaceChild("twitstedleg2", CubeListBuilder.create(), PartPose.offsetAndRotation(-40.0F, 0.0F, 12.0F, -0.818F, -0.6085F, 0.4711F));
 
@@ -584,11 +585,11 @@ public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 
 		PartDefinition BackRightLeg2 = legback3.addOrReplaceChild("BackRightLeg2", CubeListBuilder.create(), PartPose.offsetAndRotation(-0.5F, 7.0F, 58.0F, -2.2253F, 0.0F, 0.0F));
 
-		PartDefinition legback4 = BackRightLeg2.addOrReplaceChild("legback4", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition legback4 = BackRightLeg2.addOrReplaceChild("legback4", CubeListBuilder.create(), PartPose.offset(2.0F, 24.0F, 10.0F));
 
-		PartDefinition cube_r100 = legback4.addOrReplaceChild("cube_r100", CubeListBuilder.create().texOffs(145, 159).addBox(-15.0F, -19.0F, 39.0F, 14.0F, 14.0F, 33.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.4363F, 0.0F, 0.0F));
+		PartDefinition cube_r100 = legback4.addOrReplaceChild("cube_r100", CubeListBuilder.create().texOffs(145, 159).addBox(-15.0F, -19.0F, 39.0F, 14.0F, 14.0F, 33.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.0F, -24.0F, -10.0F, -0.4363F, 0.0F, 0.0F));
 
-		PartDefinition cube_r101 = legback4.addOrReplaceChild("cube_r101", CubeListBuilder.create().texOffs(66, 117).addBox(-3.0F, 23.0F, -7.0F, 10.0F, 10.0F, 46.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.5444F, -0.2635F, -0.1564F));
+		PartDefinition cube_r101 = legback4.addOrReplaceChild("cube_r101", CubeListBuilder.create().texOffs(66, 117).addBox(-3.0F, 23.0F, -7.0F, 10.0F, 10.0F, 46.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.0F, -24.0F, -10.0F, 0.5444F, -0.2635F, -0.1564F));
 
 		PartDefinition BackLeftLeg = partdefinition.addOrReplaceChild("BackLeftLeg", CubeListBuilder.create(), PartPose.offsetAndRotation(12.0F, -7.0F, 77.0F, 1.0908F, 0.3491F, 0.0F));
 
@@ -606,7 +607,15 @@ public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.RightLegJointY.yRot = Mth.cos(limbSwing * 0.2F) * -0.4F * limbSwingAmount;
+		this.LeftLegJointY.yRot = -Mth.cos(limbSwing * 0.4F) * -0.3F * limbSwingAmount;
+		this.BackRightLeg.getChild("legback3").xRot = Mth.cos(limbSwing * 0.4F) * -0.4F * limbSwingAmount;
+		this.BackRightLeg.getChild("legback3").getChild("BackRightLeg2").getChild("legback4").xRot = -BackRightLeg.getChild("legback3").xRot;
+		this.BackLeftLeg.getChild("legback").xRot = -Mth.cos(limbSwing * 0.3F) * -0.3F * limbSwingAmount;
+		this.BackLeftLeg.getChild("legback").getChild("BackLeftLeg2").getChild("legback2").xRot = -BackLeftLeg.getChild("legback").xRot;
+		this.smolleg.yRot = Mth.cos(limbSwing * 0.5F) * -0.5F * limbSwingAmount;
 
+		this.jaw.xRot =  Mth.sin(ageInTicks/8)/10;
 	}
 
 	@Override

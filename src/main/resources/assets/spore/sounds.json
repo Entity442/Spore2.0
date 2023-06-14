@@ -19,6 +19,42 @@
       "spore:howler"
     ]
   },
+  "inf_villager_damage" :{
+    "subtitle": "sounds.spore.damage",
+    "sounds": [
+      "spore:infected_villager_hurt"
+    ]
+  },
+  "inf_villager_growl" :{
+    "subtitle": "sounds.spore.growl",
+    "sounds": [
+      "spore:infected_villager_ambient"
+    ]
+  },
+  "inf_villager_death" :{
+    "subtitle": "sounds.spore.damage",
+    "sounds": [
+      "spore:infected_villager_death"
+    ]
+  },
+  "inf_evoker_damage" :{
+    "subtitle": "sounds.spore.damage",
+    "sounds": [
+      "spore:infected_evoker_hurt"
+    ]
+  },
+  "inf_evoker_growl" :{
+    "subtitle": "sounds.spore.growl",
+    "sounds": [
+      "spore:infected_evoker_ambient"
+    ]
+  },
+  "inf_evoker_death" :{
+    "subtitle": "sounds.spore.damage",
+    "sounds": [
+      "spore:infected_evoker_death"
+    ]
+  },
   "braiomil_attack" :{
     "subtitle": "sounds.spore.braiomil_attack",
     "sounds": [
