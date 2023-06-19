@@ -514,32 +514,32 @@ public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 
 		PartDefinition tail = partdefinition.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(-1.0F, -3.0F, 57.0F, 0.829F, 0.0F, 0.0F));
 
-		PartDefinition tailjoint = tail.addOrReplaceChild("tailjoint", CubeListBuilder.create().texOffs(97, 0).addBox(-5.0F, -22.2201F, -16.863F, 10.0F, 10.0F, 27.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition tailjoint = tail.addOrReplaceChild("tailjoint", CubeListBuilder.create().texOffs(97, 0).addBox(-5.0F, -4.2201F, 0.137F, 10.0F, 10.0F, 27.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -18.0F, -17.0F));
 
-		PartDefinition tail2 = tailjoint.addOrReplaceChild("tail2", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.0F, 25.0F, 0.829F, 0.0F, 0.0F));
+		PartDefinition tail2 = tailjoint.addOrReplaceChild("tail2", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 18.0F, 42.0F, 0.829F, 0.0F, 0.0F));
 
-		PartDefinition tailjoint2 = tail2.addOrReplaceChild("tailjoint2", CubeListBuilder.create().texOffs(119, 206).addBox(-4.5F, -27.9163F, -0.0826F, 9.0F, 10.0F, 27.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 2.0F));
+		PartDefinition tailjoint2 = tail2.addOrReplaceChild("tailjoint2", CubeListBuilder.create().texOffs(119, 206).addBox(-4.5F, -4.9163F, -0.0826F, 9.0F, 10.0F, 27.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -23.0F, 2.0F));
 
-		PartDefinition tail3 = tailjoint2.addOrReplaceChild("tail3", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.0F, 25.0F, 0.3491F, 0.0F, 0.0F));
+		PartDefinition tail3 = tailjoint2.addOrReplaceChild("tail3", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 23.0F, 25.0F, 0.3491F, 0.0F, 0.0F));
 
-		PartDefinition tailjoint3 = tail3.addOrReplaceChild("tailjoint3", CubeListBuilder.create().texOffs(191, 206).addBox(-4.0F, -25.9388F, 7.2976F, 8.0F, 10.0F, 27.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 2.0F));
+		PartDefinition tailjoint3 = tail3.addOrReplaceChild("tailjoint3", CubeListBuilder.create().texOffs(191, 206).addBox(-4.0F, -4.9388F, 0.2976F, 8.0F, 10.0F, 27.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -21.0F, 9.0F));
 
-		PartDefinition tail4 = tailjoint3.addOrReplaceChild("tail4", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.0F, 25.0F, 0.5236F, 0.0F, 0.0F));
+		PartDefinition tail4 = tailjoint3.addOrReplaceChild("tail4", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 21.0F, 18.0F, 0.5236F, 0.0F, 0.0F));
 
-		PartDefinition tailjoint4 = tail4.addOrReplaceChild("tailjoint4", CubeListBuilder.create().texOffs(55, 225).addBox(-3.5F, -18.6187F, 16.0213F, 7.0F, 10.0F, 27.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 2.0F));
+		PartDefinition tailjoint4 = tail4.addOrReplaceChild("tailjoint4", CubeListBuilder.create().texOffs(55, 225).addBox(-3.5F, -3.6187F, 1.0213F, 7.0F, 10.0F, 27.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -15.0F, 17.0F));
 
 		PartDefinition tumor = tailjoint4.addOrReplaceChild("tumor", CubeListBuilder.create().texOffs(123, 243).addBox(-8.0F, -20.6187F, 25.0213F, 16.0F, 16.0F, 16.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(-6.0F, -19.6187F, 18.0213F, 12.0F, 14.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -2.0F, 22.0F));
+		.texOffs(0, 0).addBox(-6.0F, -19.6187F, 18.0213F, 12.0F, 14.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 13.0F, 7.0F));
 
 		PartDefinition RightLegJointY = partdefinition.addOrReplaceChild("RightLegJointY", CubeListBuilder.create(), PartPose.offset(16.0F, -11.0F, 0.0F));
 
 		PartDefinition RightLegJointZ = RightLegJointY.addOrReplaceChild("RightLegJointZ", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition leg = RightLegJointZ.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(162, 77).addBox(64.0F, -5.0F, -5.0F, 44.0F, 11.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-50.0F, 41.0F, 0.0F, 0.0F, 0.0F, -0.6981F));
+		PartDefinition leg = RightLegJointZ.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(162, 77).addBox(-0.6565F, -5.7316F, -5.0F, 44.0F, 11.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.6981F));
 
-		PartDefinition cube_r91 = leg.addOrReplaceChild("cube_r91", CubeListBuilder.create().texOffs(0, 237).addBox(10.0F, 37.0F, -6.5F, 12.0F, 38.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(104.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.6981F));
+		PartDefinition cube_r91 = leg.addOrReplaceChild("cube_r91", CubeListBuilder.create().texOffs(0, 237).addBox(10.0F, 37.0F, -6.5F, 12.0F, 38.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(39.3435F, -0.7316F, 0.0F, 0.0F, 0.0F, 0.6981F));
 
-		PartDefinition cube_r92 = leg.addOrReplaceChild("cube_r92", CubeListBuilder.create().texOffs(187, 243).addBox(1.0F, -7.0F, -4.5F, 9.0F, 48.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(104.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.4363F));
+		PartDefinition cube_r92 = leg.addOrReplaceChild("cube_r92", CubeListBuilder.create().texOffs(187, 243).addBox(1.0F, -7.0F, -4.5F, 9.0F, 48.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(39.3435F, -0.7316F, 0.0F, 0.0F, 0.0F, 0.4363F));
 
 		PartDefinition LeftLegJointY = partdefinition.addOrReplaceChild("LeftLegJointY", CubeListBuilder.create(), PartPose.offset(-11.0F, -14.0F, -7.0F));
 
@@ -598,17 +598,17 @@ public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 
 		PartDefinition BackLeftLeg2 = legback.addOrReplaceChild("BackLeftLeg2", CubeListBuilder.create(), PartPose.offsetAndRotation(-0.5F, 9.0F, 62.0F, -2.2253F, 0.0F, 0.0F));
 
-		PartDefinition legback2 = BackLeftLeg2.addOrReplaceChild("legback2", CubeListBuilder.create().texOffs(0, 103).addBox(-2.0F, -1.0F, -7.0F, 10.0F, 10.0F, 46.0F, new CubeDeformation(0.1F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition legback2 = BackLeftLeg2.addOrReplaceChild("legback2", CubeListBuilder.create().texOffs(0, 103).addBox(-5.0F, -8.0F, -7.0F, 10.0F, 10.0F, 46.0F, new CubeDeformation(0.1F)), PartPose.offset(3.0F, 7.0F, 0.0F));
 
-		PartDefinition cube_r102 = legback2.addOrReplaceChild("cube_r102", CubeListBuilder.create().texOffs(0, 159).addBox(-1.0F, -21.0F, 25.0F, 10.0F, 10.0F, 37.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, 7.467F, 7.4673F, -0.4363F, 0.0F, 0.0F));
+		PartDefinition cube_r102 = legback2.addOrReplaceChild("cube_r102", CubeListBuilder.create().texOffs(0, 159).addBox(-1.0F, -21.0F, 25.0F, 10.0F, 10.0F, 37.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.0F, 0.467F, 7.4673F, -0.4363F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 512, 512);
 	}
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.RightLegJointY.yRot = Mth.cos(limbSwing * 0.2F) * -0.4F * limbSwingAmount;
-		this.LeftLegJointY.yRot = -Mth.cos(limbSwing * 0.4F) * -0.3F * limbSwingAmount;
+		this.RightLegJointY.yRot = Mth.cos(limbSwing * 0.2F) * -1F * limbSwingAmount;
+		this.LeftLegJointY.yRot = -Mth.cos(limbSwing * 0.4F) * -0.9F * limbSwingAmount;
 		this.BackRightLeg.getChild("legback3").xRot = Mth.cos(limbSwing * 0.4F) * -0.4F * limbSwingAmount;
 		this.BackRightLeg.getChild("legback3").getChild("BackRightLeg2").getChild("legback4").xRot = -BackRightLeg.getChild("legback3").xRot;
 		this.BackLeftLeg.getChild("legback").xRot = -Mth.cos(limbSwing * 0.3F) * -0.3F * limbSwingAmount;
@@ -616,6 +616,12 @@ public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 		this.smolleg.yRot = Mth.cos(limbSwing * 0.5F) * -0.5F * limbSwingAmount;
 
 		this.jaw.xRot =  Mth.sin(ageInTicks/8)/10;
+
+
+		this.tail.getChild("tailjoint").xRot = Mth.sin(ageInTicks/8)/10;
+		this.tail.getChild("tailjoint").getChild("tail2").getChild("tailjoint2").xRot = Mth.sin(ageInTicks/8)/10;
+		this.tail.getChild("tailjoint").getChild("tail2").getChild("tailjoint2").getChild("tail3").getChild("tailjoint3").xRot = Mth.sin(ageInTicks/8)/10;
+		this.tail.getChild("tailjoint").getChild("tail2").getChild("tailjoint2").getChild("tail3").getChild("tailjoint3").getChild("tail4").getChild("tailjoint4").xRot = Mth.sin(ageInTicks/8)/10;
 	}
 
 	@Override

@@ -3,32 +3,60 @@ package com.Harbinger.Spore.Sentities.AI;
 import com.Harbinger.Spore.Sentities.FlyingInfected;
 import com.Harbinger.Spore.Sentities.WaterInfected;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeMod;
 
 import java.util.EnumSet;
 
 public class FloatDiveGoal extends Goal {
     private final Mob mob;
 
-    public FloatDiveGoal(Mob p_25230_) {
-        this.mob = p_25230_;
+    public FloatDiveGoal(Mob mob) {
+        this.mob = mob;
         this.setFlags(EnumSet.of(Goal.Flag.JUMP));
-        p_25230_.getNavigation().setCanFloat(true);
+        mob.getNavigation().setCanFloat(true);
     }
 
     public boolean canUse() {
-        return !(this.mob instanceof WaterInfected || this.mob instanceof FlyingInfected) && (this.mob.isInWater() && this.mob.getFluidHeight(FluidTags.WATER) > this.mob.getFluidJumpThreshold() || this.mob.isInLava() || this.mob.isInFluidType((fluidType, height) -> this.mob.canSwimInFluidType(fluidType) && height > this.mob.getFluidJumpThreshold()));
+        if (this.mob instanceof WaterInfected){
+            return false;
+        }else if (this.mob instanceof FlyingInfected){
+            return false;
+        }
+        return this.mob.isInWater();
     }
 
     public boolean requiresUpdateEveryTick() {
         return true;
     }
 
+    @Override
     public void tick() {
-        if (this.mob.getRandom().nextFloat() < 0.8F) {
+        if (this.mob.getRandom().nextFloat() < 0.4F) {
             this.mob.getJumpControl().jump();
         }
-
+        super.tick();
     }
+
+    @Override
+    public void start() {
+        if (this.mob.getTarget() != null && this.mob.getTarget().isEyeInFluidType(ForgeMod.WATER_TYPE.get())) {
+            LivingEntity target = this.mob.getTarget();
+            if (Math.abs(target.getX()) - Math.abs(this.mob.getX()) < 8 && Math.abs(target.getZ()) - Math.abs(this.mob.getZ()) < 8){
+
+                Vec3 vec3 = this.mob.getDeltaMovement();
+            Vec3 vec31 = new Vec3(target.getX() - this.mob.getX(), target.getY() - this.mob.getY(), target.getZ() - this.mob.getZ());
+            if (vec31.lengthSqr() > 1.0E-7D) {
+                vec31 = vec31.normalize().scale(1D).add(vec3.scale(1D));
+            }
+            this.mob.setDeltaMovement(vec31.x, vec31.y, vec31.z);
+        }
+    }
+        super.start();
+    }
+
+
 }

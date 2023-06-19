@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class SiegerRenderer<Type extends Sieger> extends MobRenderer<Type , SiegerModel<Type>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Spore.MODID,
-            "textures/entity/blank.png");
+            "textures/entity/sieger.png");
 
 
     public SiegerRenderer(EntityRendererProvider.Context context) {

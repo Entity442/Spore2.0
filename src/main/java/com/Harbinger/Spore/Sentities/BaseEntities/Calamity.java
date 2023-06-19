@@ -4,6 +4,8 @@ import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sparticles;
+import com.Harbinger.Spore.Sentities.AI.CalamityPathNavigation;
+import com.Harbinger.Spore.Sentities.AI.FloatDiveGoal;
 import com.Harbinger.Spore.Sentities.AI.HurtTargetGoal;
 import com.Harbinger.Spore.Sentities.Utility.InfectionTendril;
 import net.minecraft.core.BlockPos;
@@ -17,10 +19,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.AbstractFish;
@@ -29,10 +28,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.network.NetworkHooks;
 
 import java.util.EnumSet;
@@ -51,7 +50,12 @@ public class Calamity extends UtilityEntity {
         this.setPathfindingMalus(BlockPathTypes.DANGER_OTHER, -1.0F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, 16.0F);
         this.setPathfindingMalus(BlockPathTypes.DANGER_POWDER_SNOW, -1.0F);
+        this.navigation = new CalamityPathNavigation(this,level);
         this.xpReward = 50;
+    }
+
+    protected int calculateFallDamage(float p_149389_, float p_149390_) {
+        return super.calculateFallDamage(p_149389_, p_149390_) - 25;
     }
 
     public void setStun(int i) {
@@ -79,6 +83,19 @@ public class Calamity extends UtilityEntity {
         super.awardKillScore(entity, i, damageSource);
     }
 
+    public void travel(Vec3 p_32858_) {
+        if (this.isEffectiveAi() && this.isInWater()) {
+            this.moveRelative(0.1F, p_32858_);
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.7D));
+            if (this.getTarget() == null) {
+                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
+            }
+        } else {
+            super.travel(p_32858_);
+        }
+
+    }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
@@ -87,6 +104,16 @@ public class Calamity extends UtilityEntity {
         tag.putInt("AreaX", this.getSearchArea().getX());
         tag.putInt("AreaY", this.getSearchArea().getY());
         tag.putInt("AreaZ", this.getSearchArea().getZ());
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    public boolean isPushedByFluid(FluidType type) {
+        return false;
     }
 
     public void setSearchArea(BlockPos blockPos) {
@@ -134,13 +161,12 @@ public class Calamity extends UtilityEntity {
 
     @Override
     public void registerGoals() {
-        this.goalSelector.addGoal(3, new HurtTargetGoal(this, entity -> {
-            return !SConfig.SERVER.blacklist.get().contains(entity.getEncodeId());
-        }, Infected.class).setAlertOthers(Infected.class));
+        this.goalSelector.addGoal(1, new GoToLocation(this, 1.1));
+        this.goalSelector.addGoal(2, new HurtTargetGoal(this ,entity -> {return !SConfig.SERVER.blacklist.get().contains(entity.getEncodeId());}, Infected.class).setAlertOthers(Infected.class));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
-                (this, Player.class, true));
+                (this, Player.class,  true));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 5, false, true, (en) -> {
-            return SConfig.SERVER.whitelist.get().contains(en.getEncodeId());
+            return SConfig.SERVER.whitelist.get().contains(en.getEncodeId()) || (en.hasEffect(Seffects.MARKER.get()) && !(en instanceof Infected || en instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(en.getEncodeId())));
         }));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 5, false, true, (en) -> {
             return !(en instanceof Animal || en instanceof AbstractFish || en instanceof Infected || en instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(en.getEncodeId())) && SConfig.SERVER.at_mob.get();
@@ -149,8 +175,28 @@ public class Calamity extends UtilityEntity {
             return !SConfig.SERVER.blacklist.get().contains(en.getEncodeId()) && SConfig.SERVER.at_an.get();
         }));
 
+        this.goalSelector.addGoal(6, new FloatDiveGoal(this));
 
-        this.goalSelector.addGoal(0, new GoToLocation(this, 1.1));
+
+    }
+    public  boolean tryToDigDown(){
+        if (this.getSearchArea() != BlockPos.ZERO && this.verticalCollisionBelow){
+            return this.getSearchArea().getY() < this.getY() && (Math.abs(this.getSearchArea().getX())  - Math.abs(this.getX()) < 6) && (Math.abs(this.getSearchArea().getZ()) - Math.abs(this.getZ()) < 6);
+        }
+        return false;
+    }
+
+    public AABB getMiningHitbox(){
+        if (this.getSearchArea() != BlockPos.ZERO){
+            if (this.getSearchArea().getY() < this.getY()){
+                return this.getBoundingBox().inflate(1,0.0,1).move(0.0,-1.0,0.0);
+            }else if (this.getSearchArea().getY() > this.getY()){
+                return this.getBoundingBox().inflate(1,0.0,1).move(0.0,1.0,0.0);
+            }else{
+                return this.getBoundingBox().inflate(1,0.0,1);
+            }
+        }
+        return this.getBoundingBox().inflate(1,0.0,1).move(0.0,1.0,0.0);
     }
 
     @Override
@@ -159,17 +205,17 @@ public class Calamity extends UtilityEntity {
         if (breakCounter < 80) {
             breakCounter++;
         } else {
-            if ((this.getLastDamageSource() == DamageSource.IN_WALL || this.horizontalCollision) && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) {
-                AABB aabb = this.getBoundingBox().inflate(0.4,0,0.4);
+            if ((this.getLastDamageSource() == DamageSource.IN_WALL || this.horizontalCollision || tryToDigDown()) && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) {
+                AABB aabb = getMiningHitbox();
                 boolean flag = false;
                 for (BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
                     BlockState blockstate = this.level.getBlockState(blockpos);
-                    if (blockstate.getDestroySpeed(level, blockpos) < 5 && blockstate.getDestroySpeed(level, blockpos) >= 0) {
-                        flag = this.level.destroyBlock(blockpos, true, this) || flag;
-                        breakCounter = 0;
-                    }
                     if (!flag && this.onGround) {
                         this.jumpFromGround();
+                    }
+                    if (blockstate.getDestroySpeed(level, blockpos) < getDestroySpeed() && blockstate.getDestroySpeed(level, blockpos) >= 0) {
+                        flag = this.level.destroyBlock(blockpos, false, this) || flag;
+                        breakCounter = 0;
                     }
                 }
             }
@@ -184,6 +230,9 @@ public class Calamity extends UtilityEntity {
         }
     }
 
+    public int getDestroySpeed(){
+        return 5;
+    }
 
     static class GoToLocation extends Goal {
         public final Calamity infected;

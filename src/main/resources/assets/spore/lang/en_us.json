@@ -117,6 +117,8 @@
   "item.spore.scamper_spawnegg": "Scamper",
   "item.spore.mound_spawnegg": "Mound",
   "item.spore.proto_spawnegg": "Proto Hivemind",
+  "item.spore.sieger_spawnegg": "Sieger",
+
 
   "item.spore.scent_spawnegg": "Scent",
   "item.spore.scent_overcharged_spawnegg": "OverChargedScent",
@@ -196,6 +198,9 @@
 
   "item.line.shift": "A nutrient soup made out of animal matter.",
   "item.line.normal": "Press shift for more info.",
+
+  "hivemind_summon_message": "Endure...",
+  "calamity_summon_message": "Prepare...",
 
   "container.biohazard": "BCU",
   "block.spore.container": "BCU",

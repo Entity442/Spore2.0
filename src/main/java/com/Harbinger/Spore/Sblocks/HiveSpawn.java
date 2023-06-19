@@ -7,6 +7,7 @@ import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.Utility.Proto;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -56,12 +57,15 @@ public class HiveSpawn extends Block implements EntityBlock {
                     infected.setSearchPos(blockPos);
                 }
             }
-            if (entity.getPersistentData().getInt("kills") >= SConfig.DATAGEN.hive_spawn_kills.get() && checkForOtherMinds(blockPos,level)){
-                level.removeBlock(blockPos,true);
+            if (entity.getPersistentData().getInt("kills") >= SConfig.DATAGEN.hive_spawn_kills.get() && checkForOtherMinds(blockPos,level)) {
+                level.removeBlock(blockPos, true);
                 Proto proto = Sentities.PROTO.get().create(level);
                 if (proto != null) {
-                    proto.setPos(blockPos.getX(),blockPos.getY(),blockPos.getZ());
+                    proto.setPos(blockPos.getX(), blockPos.getY(), blockPos.getZ());
                     level.addFreshEntity(proto);
+                }
+                if (!level.isClientSide()){
+                    level.getServer().getPlayerList().broadcastSystemMessage(Component.translatable("hivemind_summon_message"), false);
                 }
             }else if (entity.getPersistentData().getInt("kills") >= SConfig.DATAGEN.hive_spawn_kills.get() && !checkForOtherMinds(blockPos,level)){
                 StructureTemplate template = level.getStructureManager().getOrCreate(new ResourceLocation(Spore.MODID, "mega_biomass_tower"));

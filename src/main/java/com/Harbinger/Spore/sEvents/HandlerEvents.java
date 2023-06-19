@@ -133,6 +133,14 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Target ? " + calamity.getTarget()),false);
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
                                 }
+                            }else if (entity1 instanceof Mound calamity){
+                                if (entity instanceof Player player && !player.level.isClientSide){
+                                    player.displayClientMessage(Component.literal("Entity "+ calamity.getEncodeId() + " " + calamity.getCustomName()),false);
+                                    player.displayClientMessage(Component.literal("Current Health " + calamity.getHealth()),false);
+                                    player.displayClientMessage(Component.literal("Is Linked ? " + calamity.getLinked()),false);
+                                    player.displayClientMessage(Component.literal("Buffs " + calamity.getActiveEffects()),false);
+                                    player.displayClientMessage(Component.literal("-------------------------"),false);
+                                }
                             }
                         }
                     }

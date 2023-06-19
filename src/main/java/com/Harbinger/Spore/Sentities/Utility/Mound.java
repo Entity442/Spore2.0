@@ -365,8 +365,8 @@ public class Mound extends UtilityEntity {
 
     @Override
     public void die(DamageSource source) {
-        if(this.getLinked() && source.getEntity() != null){
-            AABB searchbox = AABB.ofSize(new Vec3(this.getX(), this.getY(), this.getZ()), 300, 200, 300);
+        if(this.getLinked() && source.getEntity() != null && this.getAge() > 3){
+            AABB searchbox = this.getBoundingBox().inflate(300);
             List<Entity> entities = this.level.getEntities(this, searchbox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
             for (Entity en : entities) {
                 if (en instanceof Proto proto){

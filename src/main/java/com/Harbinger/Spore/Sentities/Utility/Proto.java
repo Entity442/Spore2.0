@@ -13,6 +13,7 @@ import com.Harbinger.Spore.Sentities.Sieger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -101,7 +102,7 @@ public class Proto extends UtilityEntity {
         if (counter <1200){
             counter++;
         }else{
-            AABB searchbox = AABB.ofSize(new Vec3(this.getX(), this.getY(), this.getZ()), 300, 200, 300);
+            AABB searchbox = this.getBoundingBox().inflate(300);
             List<Entity> entities = this.level.getEntities(this, searchbox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
             entityData.set(HOSTS,0);
             for (Entity en : entities) {
@@ -109,11 +110,15 @@ public class Proto extends UtilityEntity {
                     if (!infected.getLinked()){
                         infected.setLinked(true);
                         setHosts(getHosts() + 1);
+                    }else{
+                        setHosts(getHosts()+1);
                     }
                 }
                 if (en instanceof Mound mound){
                     if (!mound.getLinked()){
                         mound.setLinked(true);
+                        setHosts(getHosts()+1);
+                    }else{
                         setHosts(getHosts()+1);
                     }
                 }
@@ -355,6 +360,9 @@ public class Proto extends UtilityEntity {
                 creature.setSearchArea(pos);
                 creature.setPos(entity.getX()+a,entity.getY()+c,entity.getZ()+b);
                 level.addFreshEntity(creature);
+            }
+            if (level.getServer() != null && !level.isClientSide()){
+                level.getServer().getPlayerList().broadcastSystemMessage(Component.translatable("calamity_summon_message"), false);
             }
         }
     }

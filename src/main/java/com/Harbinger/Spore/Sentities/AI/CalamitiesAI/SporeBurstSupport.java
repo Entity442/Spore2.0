@@ -12,13 +12,12 @@ public class SporeBurstSupport extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.calamity.isAlive() && this.calamity.getRandom().nextInt(300) == 0 && this.calamity.getKills() > 6 && calamity.getTarget() != null && this.calamity.distanceToSqr(this.calamity.getTarget())<200.0D;
+        return this.calamity.isAlive() && this.calamity.getRandom().nextInt(300) == 0  && calamity.getTarget() != null && this.calamity.distanceToSqr(this.calamity.getTarget())<200.0D;
     }
 
     @Override
     public void start() {
         this.calamity.setStun(60);
-        this.calamity.setKills(this.calamity.getKills()-2);
         super.start();
     }
 

@@ -122,8 +122,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> sieger_damage;
         public final ForgeConfigSpec.ConfigValue<Double> sieger_armor;
         public final ForgeConfigSpec.ConfigValue<Double> sieger_dpsr;
+        public final ForgeConfigSpec.ConfigValue<Integer> sieger_block_damage;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> sieger_buffs;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> sieger_debuffs;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> sieger_explosive_effects;
 
         public final ForgeConfigSpec.ConfigValue<Double> leap_hp;
         public final ForgeConfigSpec.ConfigValue<Double> leap_damage;
@@ -363,8 +365,8 @@ public class SConfig {
             this.undespawn = builder.defineList("Mobs that won't despawn after being created from assimilation",
                     Lists.newArrayList("spore:inf_villager", "spore:inf_pillager", "spore:inf_witch") , o -> o instanceof String);
             this.starve = builder.comment("Default true").define("Should mobs with no kills starve?",true);
-            this.evolution_age_human = builder.comment("Default 150").define("Evolution Timer in seconds",150);
-            this.min_kills = builder.comment("Default 1").define("Minimum amount of kills to start the evolution",1);
+            this.evolution_age_human = builder.comment("Default 150").define("Evolution Timer in seconds",300);
+            this.min_kills = builder.comment("Default 1").define("Minimum amount of kills to start the evolution",2);
             builder.pop();
             builder.push("Infections");
             this.inf_player = builder.comment("Default true").define("Should the player be infected on death?",true);
@@ -428,14 +430,19 @@ public class SConfig {
             builder.push("Sieger");
             this.sieger_hp = builder.comment("Default 300").defineInRange("Sets Sieger Max health", 300, 1, Double.MAX_VALUE);
             this.sieger_damage = builder.comment("Default 25").defineInRange("Sets Sieger Damage", 25, 1, Double.MAX_VALUE);
-            this.sieger_armor = builder.comment("Default 10").defineInRange("Sets Sieger Armor", 10, 1, Double.MAX_VALUE);
+            this.sieger_armor = builder.comment("Default 25").defineInRange("Sets Sieger Armor", 25, 1, Double.MAX_VALUE);
             this.sieger_dpsr = builder.comment("Default 70").defineInRange("Sets Sieger Damage Cap , set to 0 to disable", 70, 1, Double.MAX_VALUE);
+            this.sieger_block_damage = builder.comment("Default 5").defineInRange("Sets Sieger maximum hardness for a block to be broken", 5, 1, Integer.MAX_VALUE);
 
             this.sieger_buffs = builder.comment("Default values: minecraft:speed|600|0 ,minecraft:mycelium|600|0 ,minecraft:resistance|600|1").defineList("Sieger buffs",
                     Lists.newArrayList("minecraft:speed|600|0" , "minecraft:strength|600|0","minecraft:resistance|600|1") , o -> o instanceof String);
 
             this.sieger_debuffs = builder.comment("Default values: minecraft:weakness|600|0 ,spore:mycelium|600|0 ,minecraft:slowness|600|0").defineList("Sieger debuffs",
                     Lists.newArrayList("minecraft:weakness|600|0" , "spore:mycelium_ef|600|0","minecraft:slowness|600|0") , o -> o instanceof String);
+
+            this.sieger_explosive_effects = builder.comment("Default values: minecraft:wither ,spore:mycelium ,minecraft:weakness").defineList("Sieger explosion ranged effects",
+                    Lists.newArrayList("minecraft:wither" , "spore:mycelium_ef","minecraft:weakness") , o -> o instanceof String);
+
             builder.pop();
 
             builder.push("Brute");
