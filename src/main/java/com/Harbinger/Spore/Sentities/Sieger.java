@@ -6,7 +6,6 @@ import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.CalamitiesAI.CalamityInfectedCommand;
 import com.Harbinger.Spore.Sentities.AI.CalamitiesAI.SporeBurstSupport;
 import com.Harbinger.Spore.Sentities.AI.CalamitiesAI.SummonScentInCombat;
-import com.Harbinger.Spore.Sentities.AI.FloatDiveGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.Calamity;
 import com.Harbinger.Spore.Sentities.BaseEntities.CalamityMultipart;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
@@ -26,7 +25,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
-import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
@@ -34,21 +32,21 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class Sieger extends Calamity implements RangedAttackMob {
     private final CalamityMultipart[] subEntities;
     public final CalamityMultipart lowerbody;
+    public final CalamityMultipart mainbody;
     public final CalamityMultipart tailbody;
     public Sieger(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         this.lowerbody = new CalamityMultipart(this, "lowerbody", 3.0F, 3.0F);
         this.tailbody = new CalamityMultipart(this, "tail", 1.0F, 1.0F);
-        this.subEntities = new CalamityMultipart[]{ this.lowerbody, this.tailbody};
+        this.mainbody = new CalamityMultipart(this, "mainbody", 3F, 4F);
+        this.subEntities = new CalamityMultipart[]{ this.lowerbody, this.tailbody,this.mainbody};
         this.maxUpStep = 1.5F;
         this.setId(ENTITY_COUNTER.getAndAdd(this.subEntities.length + 1) + 1);
     }
@@ -81,6 +79,7 @@ public class Sieger extends Calamity implements RangedAttackMob {
         }
 
         this.tickPart(this.tailbody, (double)(f2), 7.0D, (double)(-f15));
+        this.tickPart(this.mainbody, (double)(f2 * -1.0F), 0.0D, (double)(-f15 * -1.0F));
         this.tickPart(this.lowerbody, (double)(f2 * 4.0F), 0.0D, (double)(-f15 * 4.0F));
         for(int l = 0; l < this.subEntities.length; ++l) {
             this.subEntities[l].xo = avec3[l].x;
@@ -202,7 +201,7 @@ public class Sieger extends Calamity implements RangedAttackMob {
 
     public boolean hurt(CalamityMultipart calamityMultipart, DamageSource damageSource, float amount) {
         if (calamityMultipart == tailbody){
-            amount = amount * 1.5F;
+            super.hurt(damageSource, amount * 2);
         }
         return super.hurt(damageSource, amount);
     }
