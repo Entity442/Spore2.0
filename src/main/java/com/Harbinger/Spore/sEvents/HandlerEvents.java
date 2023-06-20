@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.sEvents;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.Calamity;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
@@ -8,6 +9,7 @@ import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.Utility.Mound;
 import com.Harbinger.Spore.Sentities.Utility.Proto;
+import com.Harbinger.Spore.Sitems.*;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
@@ -15,17 +17,21 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -141,23 +147,7 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Buffs " + calamity.getActiveEffects()),false);
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
                                 }
-                            }
-                        }
-                    }
-                    return 0;
-                }));
-
-        event.getDispatcher().register(Commands.literal(Spore.MODID+":check_hivemind")
-                .executes(arguments -> {
-                    ServerLevel world = arguments.getSource().getLevel();
-                    Entity entity = arguments.getSource().getEntity();
-                    if (entity == null)
-                        entity = FakePlayerFactory.getMinecraft(world);
-                    if (entity != null){
-                        AABB hitbox = entity.getBoundingBox().inflate(5);
-                        List<Entity> entities = entity.level.getEntities(entity, hitbox);
-                        for (Entity entity1 : entities) {
-                            if(entity1 instanceof Proto proto) {
+                            }else if(entity1 instanceof Proto proto) {
                                 if (entity instanceof Player player && !player.level.isClientSide){
                                     player.displayClientMessage(Component.literal("Entity "+ proto.getEncodeId() + " " + proto.getCustomName()),false);
                                     player.displayClientMessage(Component.literal("Current Health " + proto.getHealth()),false);
@@ -171,6 +161,7 @@ public class HandlerEvents {
                     }
                     return 0;
                 }));
+
 
     }
     @SubscribeEvent

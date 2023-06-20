@@ -18,6 +18,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -189,14 +190,14 @@ public class Calamity extends UtilityEntity {
     public AABB getMiningHitbox(){
         if (this.getSearchArea() != BlockPos.ZERO){
             if (this.getSearchArea().getY() < this.getY()){
-                return this.getBoundingBox().inflate(1,0.0,1).move(0.0,-1.0,0.0);
+                return this.getBoundingBox().inflate(1.5,0.0,1.5).move(0.0,-1.0,0.0);
             }else if (this.getSearchArea().getY() > this.getY()){
-                return this.getBoundingBox().inflate(1,0.0,1).move(0.0,1.0,0.0);
+                return this.getBoundingBox().inflate(1.5,0.0,1.5).move(0.0,1.0,0.0);
             }else{
-                return this.getBoundingBox().inflate(1,0.0,1);
+                return this.getBoundingBox().inflate(1.5,0.0,1.5);
             }
         }
-        return this.getBoundingBox().inflate(1,0.0,1).move(0.0,1.0,0.0);
+        return this.getBoundingBox().inflate(1.5,0.0,1.5).move(0.0,1.0,0.0);
     }
 
     @Override
@@ -205,7 +206,7 @@ public class Calamity extends UtilityEntity {
         if (breakCounter < 80) {
             breakCounter++;
         } else {
-            if ((this.getLastDamageSource() == DamageSource.IN_WALL || this.horizontalCollision || tryToDigDown()) && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) {
+            if ((this.getLastDamageSource() == DamageSource.CACTUS || this.getLastDamageSource() == DamageSource.IN_WALL || this.horizontalCollision || tryToDigDown()) && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) {
                 AABB aabb = getMiningHitbox();
                 boolean flag = false;
                 for (BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
@@ -292,7 +293,6 @@ public class Calamity extends UtilityEntity {
             return true;
         }
     }
-
 
     @Override
     public void die(DamageSource source) {

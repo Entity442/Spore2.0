@@ -26,11 +26,16 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
@@ -40,7 +45,6 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -104,22 +108,55 @@ public class Infected extends Monster{
         return this.getMaxAirSupply();
     }
 
-    public boolean doHurtTarget(Entity entity) {
-        if (super.doHurtTarget(entity)) {
-            if (entity instanceof LivingEntity livingEntity) {
-                    livingEntity.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(),  600, 0), this);
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
     @Override
     public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
+    @Override
+    public boolean doHurtTarget(Entity entity) {
+        float f = (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
+        float f1 = (float) this.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
+        if (entity instanceof LivingEntity) {
+            f += EnchantmentHelper.getDamageBonus(this.getMainHandItem(), ((LivingEntity) entity).getMobType());
+            f1 += (float) EnchantmentHelper.getKnockbackBonus(this);
+        }
 
+        int i = EnchantmentHelper.getFireAspect(this);
+        if (i > 0) {
+            entity.setSecondsOnFire(i * 4);
+        }
+
+        boolean flag = entity.hurt(getCustomDamage(this), f);
+        if (flag) {
+            if (f1 > 0.0F && entity instanceof LivingEntity livingEntity) {
+                livingEntity.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(),  600, 0), this);
+                livingEntity.knockback((double) (f1 * 0.5F), (double) Mth.sin(this.getYRot() * ((float) Math.PI / 180F)), (double) (-Mth.cos(this.getYRot() * ((float) Math.PI / 180F))));
+                this.setDeltaMovement(this.getDeltaMovement().multiply(0.6D, 1.0D, 0.6D));
+            }
+
+            this.doEnchantDamageEffects(this, entity);
+            this.setLastHurtMob(entity);
+        }
+        if (entity instanceof Player player) {
+            this.maybeDisableShield(player, this.getMainHandItem(), player.isUsingItem() ? player.getUseItem() : ItemStack.EMPTY);
+        }
+        return flag;
+    }
+
+    public void maybeDisableShield(Player p_21425_, ItemStack p_21426_, ItemStack p_21427_) {
+        if (!p_21426_.isEmpty() && !p_21427_.isEmpty() && p_21426_.getItem() instanceof AxeItem && p_21427_.is(Items.SHIELD)) {
+            float f = 0.25F + (float)EnchantmentHelper.getBlockEfficiency(this) * 0.05F;
+            if (this.random.nextFloat() < f) {
+                p_21425_.getCooldowns().addCooldown(Items.SHIELD, 100);
+                this.level.broadcastEntityEvent(p_21425_, (byte)30);
+            }
+        }
+
+    }
+    public DamageSource getCustomDamage(LivingEntity entity){
+        return DamageSource.mobAttack(entity);
+    }
 
     @Override
     protected void registerGoals() {

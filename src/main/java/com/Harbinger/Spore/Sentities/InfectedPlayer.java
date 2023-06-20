@@ -13,6 +13,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -23,6 +24,7 @@ import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -52,7 +54,7 @@ public class InfectedPlayer extends Infected {
     protected void registerGoals() {
 
 
-        this.goalSelector.addGoal(1, new LeapAtTargetGoal(this,0.4F));
+        this.goalSelector.addGoal(1, new LeapAtTargetGoal(this,0.3F));
         this.goalSelector.addGoal(2, new CustomMeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
@@ -71,6 +73,12 @@ public class InfectedPlayer extends Infected {
         });
         super.registerGoals();
     }
+
+    @Override
+    public DamageSource getCustomDamage(LivingEntity entity) {
+        return super.getCustomDamage(entity);
+    }
+
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_33282_, DifficultyInstance p_33283_, MobSpawnType p_33284_, @Nullable SpawnGroupData p_33285_, @Nullable CompoundTag p_33286_) {
         ((GroundPathNavigation)this.getNavigation()).setCanOpenDoors(true);

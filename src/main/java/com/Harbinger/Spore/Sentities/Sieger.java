@@ -18,6 +18,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -103,17 +104,17 @@ public class Sieger extends Calamity implements RangedAttackMob {
     @Override
     public void registerGoals() {
 
-        this.goalSelector.addGoal(3, new RangedAttackGoal(this,1,80,48){
+        this.goalSelector.addGoal(3, new RangedAttackGoal(this,1.2,80,48){
             @Override
             public boolean canUse() {
-                return super.canUse() && Sieger.this.getTarget() != null && Sieger.this.distanceToSqr(Sieger.this.getTarget()) > 600.0D && Sieger.this.getRandom().nextInt(10)==1;
+                return super.canUse() && Sieger.this.getTarget() != null && Sieger.this.distanceToSqr(Sieger.this.getTarget()) > 1000.0D;
             }
         });
         this.goalSelector.addGoal(4, new LeapAtTargetGoal(this,0.4F));
         this.goalSelector.addGoal(4, new AOEMeleeAttackGoal(this, 1.5, false,2.5 ,6){
             protected double getAttackReachSqr(LivingEntity entity) {
-                float f = Sieger.this.getBbWidth() - 0.1F;
-                return (double)(f * 2.0F * f * 2.0F + entity.getBbWidth());
+                float f = Sieger.this.getBbWidth();
+                return (double)(f * 3.0F * f * 3.0F + entity.getBbWidth());
             }
         });
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.2));
@@ -143,6 +144,16 @@ public class Sieger extends Calamity implements RangedAttackMob {
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1)
                 .add(Attributes.ATTACK_KNOCKBACK, 2);
 
+    }
+
+    @Override
+    public DamageSource getCustomDamage(LivingEntity entity) {
+        if (Math.random() < 0.5){
+            return new EntityDamageSource("sieger_damage1",entity);
+        }else if (Math.random() < 0.5){
+            return new EntityDamageSource("sieger_damage2",entity);
+        }
+        return new EntityDamageSource("sieger_damage3",entity);
     }
 
     @Override
@@ -206,8 +217,6 @@ public class Sieger extends Calamity implements RangedAttackMob {
         return super.hurt(damageSource, amount);
     }
 
-
-
     @Override
     public void performRangedAttack(LivingEntity livingEntity, float p_33318_) {
         if(!level.isClientSide){
@@ -255,7 +264,6 @@ public class Sieger extends Calamity implements RangedAttackMob {
             }
         }
     }
-
 
 
 

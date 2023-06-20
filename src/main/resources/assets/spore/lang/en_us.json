@@ -147,6 +147,8 @@
   "entity.spore.inf_player": "Infected Adventurer",
   "entity.spore.scamper": "Scamper",
   "entity.spore.mound": "Flesh Mound",
+  "entity.spore.sieger": "Sieger",
+
 
   "entity.spore.thrown_tumor": "Tumor",
   "entity.spore.thrown_spear": "Infected Spear",
@@ -201,6 +203,16 @@
 
   "hivemind_summon_message": "Endure...",
   "calamity_summon_message": "Prepare...",
+
+  "death.attack.mycelium.overtake": "%1$s has succumbed to the infection",
+  "death.attack.corrosion": "%1$s has been melted away",
+
+
+  "death.attack.sieger_damage1": "%1$s was eaten by Sieger",
+  "death.attack.sieger_damage2": "%1$s was crushed by Sieger",
+  "death.attack.sieger_damage3": "%1$s was dismantled by Sieger",
+
+
 
   "container.biohazard": "BCU",
   "block.spore.container": "BCU",

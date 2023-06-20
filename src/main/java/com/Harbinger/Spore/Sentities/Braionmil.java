@@ -104,6 +104,10 @@ public class Braionmil extends EvolvedInfected {
         }
     }
 
+    @Override
+    public DamageSource getCustomDamage(LivingEntity entity) {
+        return super.getCustomDamage(entity);
+    }
 
     public void aiStep() {
         super.aiStep();

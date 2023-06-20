@@ -2,11 +2,10 @@ package com.Harbinger.Spore.Effect;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
-import net.minecraft.world.damagesource.DamageSource;
+import com.Harbinger.Spore.ExtremelySusThings.CoolDamageSources;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.IronGolem;
 
 public class Corrosion extends MobEffect {
     public Corrosion() {
@@ -15,11 +14,9 @@ public class Corrosion extends MobEffect {
     public void applyEffectTick(LivingEntity entity, int p_19468_) {
         if (SConfig.SERVER.corrosion.get().contains(entity.getEncodeId())){
             if (this == Seffects.CORROSION.get()) {
-                entity.hurt(DamageSource.GENERIC.bypassArmor(), 1.0F);
+                entity.hurt(CoolDamageSources.CORROSION, 1.0F);
             }
         }
-
-
     }
 
     public boolean isDurationEffectTick(int duration, int intensity) {
