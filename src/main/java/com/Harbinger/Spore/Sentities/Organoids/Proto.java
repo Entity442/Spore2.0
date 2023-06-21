@@ -1,15 +1,14 @@
-package com.Harbinger.Spore.Sentities.Utility;
+package com.Harbinger.Spore.Sentities.Organoids;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.HurtTargetGoal;
-import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
-import com.Harbinger.Spore.Sentities.Knight;
-import com.Harbinger.Spore.Sentities.Sieger;
+import com.Harbinger.Spore.Sentities.Calamities.Sieger;
+import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -35,7 +34,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 

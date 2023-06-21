@@ -4,7 +4,6 @@ package com.Harbinger.Spore.Client.Models;// Made with Blockbench 4.4.3
 
 
 import com.Harbinger.Spore.Sentities.Host;
-import com.Harbinger.Spore.Sentities.InfEvoClaw;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

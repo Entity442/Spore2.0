@@ -5,7 +5,7 @@ import com.Harbinger.Spore.ExtremelySusThings.BiomeModification;
 import com.Harbinger.Spore.Core.SporeFeatures;
 import com.Harbinger.Spore.ExtremelySusThings.StructureModification;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
-import com.Harbinger.Spore.Sentities.InfectedDrowned;
+import com.Harbinger.Spore.Sentities.BasicInfected.InfectedDrowned;
 import com.mojang.serialization.Codec;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;

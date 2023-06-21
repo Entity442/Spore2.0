@@ -3,11 +3,10 @@ package com.Harbinger.Spore.Client.Models;// Made with Blockbench 4.4.1
 // Paste this class into your mod and generate all required imports
 
 
-import com.Harbinger.Spore.Sentities.InfectedVillager;
+import com.Harbinger.Spore.Sentities.BasicInfected.InfectedVillager;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -15,7 +14,6 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.HumanoidArm;
 
 public class InfectedVillagerModel<T extends InfectedVillager> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor

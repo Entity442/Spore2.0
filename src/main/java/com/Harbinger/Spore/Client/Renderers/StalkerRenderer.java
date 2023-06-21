@@ -1,7 +1,7 @@
 package com.Harbinger.Spore.Client.Renderers;
 
 import com.Harbinger.Spore.Client.Models.StalkerModel;
-import com.Harbinger.Spore.Sentities.Stalker;
+import com.Harbinger.Spore.Sentities.EvolvedInfected.Stalker;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -15,8 +15,6 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
 public class StalkerRenderer<Type extends Stalker> extends MobRenderer<Type , StalkerModel<Type>> {

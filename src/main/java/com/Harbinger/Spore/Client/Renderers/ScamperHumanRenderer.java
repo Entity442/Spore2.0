@@ -2,7 +2,7 @@ package com.Harbinger.Spore.Client.Renderers;
 
 
 import com.Harbinger.Spore.Client.Models.ScamperModel;
-import com.Harbinger.Spore.Sentities.Scamper;
+import com.Harbinger.Spore.Sentities.EvolvedInfected.Scamper;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;

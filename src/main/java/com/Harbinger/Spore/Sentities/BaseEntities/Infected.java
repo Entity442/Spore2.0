@@ -23,6 +23,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -154,7 +155,14 @@ public class Infected extends Monster{
         }
 
     }
-    public DamageSource getCustomDamage(LivingEntity entity){
+    public DamageSource getCustomDamage(LivingEntity entity) {
+        if (Math.random() < 0.5){
+            return new EntityDamageSource("infected_damage1",entity);
+        }else if (Math.random() < 0.5){
+            return new EntityDamageSource("infected_damage2",entity);
+        }else  if (Math.random() < 0.5) {
+            return new EntityDamageSource("infected_damage3", entity);
+        }
         return DamageSource.mobAttack(entity);
     }
 

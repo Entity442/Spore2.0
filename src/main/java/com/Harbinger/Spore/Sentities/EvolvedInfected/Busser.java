@@ -1,4 +1,4 @@
-package com.Harbinger.Spore.Sentities;
+package com.Harbinger.Spore.Sentities.EvolvedInfected;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Sentities.AI.AerialChargeGoal;
@@ -6,6 +6,8 @@ import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.FlyingWanderAround;
 import com.Harbinger.Spore.Sentities.AI.TransportInfected;
 import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
+import com.Harbinger.Spore.Sentities.Carrier;
+import com.Harbinger.Spore.Sentities.FlyingInfected;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedArialMovementControl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
@@ -22,7 +24,7 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 
-public class Busser extends EvolvedInfected implements Carrier ,FlyingInfected{
+public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
 
     public Busser(EntityType<? extends Monster> type, Level level) {
         super(type, level);

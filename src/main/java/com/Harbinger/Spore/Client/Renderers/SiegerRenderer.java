@@ -1,7 +1,7 @@
 package com.Harbinger.Spore.Client.Renderers;
 
 import com.Harbinger.Spore.Client.Models.SiegerModel;
-import com.Harbinger.Spore.Sentities.Sieger;
+import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;

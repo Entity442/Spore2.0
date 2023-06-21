@@ -1,4 +1,4 @@
-package com.Harbinger.Spore.Sentities;
+package com.Harbinger.Spore.Sentities.BasicInfected;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
@@ -12,6 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -125,6 +126,14 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
                 .add(Attributes.MOVEMENT_SPEED, 0.2)
                 .add(Attributes.FOLLOW_RANGE, 16);
 
+    }
+
+    @Override
+    public DamageSource getCustomDamage(LivingEntity entity) {
+        if (Math.random() < 0.3){
+            return new EntityDamageSource("infected_witch_damage",entity);
+        }
+        return super.getCustomDamage(entity);
     }
 
     @Override

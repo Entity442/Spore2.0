@@ -1,9 +1,9 @@
-package com.Harbinger.Spore.Sentities;
+package com.Harbinger.Spore.Sentities.EvolvedInfected;
 
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
-import com.Harbinger.Spore.Sentities.Utility.Mound;
+import com.Harbinger.Spore.Sentities.Organoids.Mound;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;

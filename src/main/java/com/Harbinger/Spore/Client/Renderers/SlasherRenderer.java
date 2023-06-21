@@ -2,7 +2,7 @@ package com.Harbinger.Spore.Client.Renderers;
 
 
 import com.Harbinger.Spore.Client.Models.SlasherModel;
-import com.Harbinger.Spore.Sentities.Slasher;
+import com.Harbinger.Spore.Sentities.EvolvedInfected.Slasher;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

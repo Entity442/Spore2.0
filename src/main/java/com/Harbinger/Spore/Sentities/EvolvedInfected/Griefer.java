@@ -1,4 +1,4 @@
-package com.Harbinger.Spore.Sentities;
+package com.Harbinger.Spore.Sentities.EvolvedInfected;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sentities;
@@ -16,6 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -125,8 +126,13 @@ public class Griefer extends EvolvedInfected {
     }
 
 
-
-
+    @Override
+    public DamageSource getCustomDamage(LivingEntity entity) {
+        if (Math.random() < 0.3){
+                return new EntityDamageSource("griefer_damage",entity);
+        }
+        return super.getCustomDamage(entity);
+    }
 
     @Override
     protected void registerGoals() {

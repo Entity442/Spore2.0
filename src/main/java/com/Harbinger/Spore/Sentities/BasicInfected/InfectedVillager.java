@@ -1,10 +1,11 @@
-package com.Harbinger.Spore.Sentities;
+package com.Harbinger.Spore.Sentities.BasicInfected;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
+import com.Harbinger.Spore.Sentities.EvolvedInfected.Scamper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;

@@ -1,7 +1,7 @@
 package com.Harbinger.Spore.Client.Renderers;
 
 import com.Harbinger.Spore.Client.Models.SpitterModel;
-import com.Harbinger.Spore.Sentities.Spitter;
+import com.Harbinger.Spore.Sentities.EvolvedInfected.Spitter;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

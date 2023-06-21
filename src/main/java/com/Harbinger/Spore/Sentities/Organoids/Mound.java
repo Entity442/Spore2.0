@@ -1,8 +1,8 @@
-package com.Harbinger.Spore.Sentities.Utility;
+package com.Harbinger.Spore.Sentities.Organoids;
 
 import com.Harbinger.Spore.Core.*;
-import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
+import com.Harbinger.Spore.Sentities.Utility.InfectionTendril;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

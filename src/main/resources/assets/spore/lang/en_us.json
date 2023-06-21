@@ -206,11 +206,18 @@
 
   "death.attack.mycelium.overtake": "%1$s has succumbed to the infection",
   "death.attack.corrosion": "%1$s has been melted away",
+  "death.attack.infected_witch_damage": "%1$s played like Skyrill",
+  "death.attack.griefer_damage": "%1$s thought the %2$s wanted a hug",
 
 
-  "death.attack.sieger_damage1": "%1$s was eaten by Sieger",
-  "death.attack.sieger_damage2": "%1$s was crushed by Sieger",
-  "death.attack.sieger_damage3": "%1$s was dismantled by Sieger",
+
+  "death.attack.infected_damage1": "%1$s was eaten alive by %2$s",
+  "death.attack.infected_damage2": "%1$s was fungi-fied  by %2$s",
+  "death.attack.infected_damage3": "%1$s forgot %2$s was a bioweapon",
+
+  "death.attack.calamity_damage1": "%1$s was eaten by %2$s",
+  "death.attack.calamity_damage2": "%1$s was crushed by %2$s",
+  "death.attack.calamity_damage3": "%1$s was dismantled by %2$s",
 
 
 

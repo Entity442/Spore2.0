@@ -1,10 +1,11 @@
-package com.Harbinger.Spore.Sentities;
+package com.Harbinger.Spore.Sentities.EvolvedInfected;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.TransportInfected;
 import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
+import com.Harbinger.Spore.Sentities.Carrier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -27,7 +28,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class Brute extends EvolvedInfected implements Carrier{
+public class Brute extends EvolvedInfected implements Carrier {
     public Brute(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }

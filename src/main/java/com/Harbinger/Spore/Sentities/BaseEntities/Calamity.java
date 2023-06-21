@@ -108,6 +108,16 @@ public class Calamity extends UtilityEntity {
     }
 
     @Override
+    public DamageSource getCustomDamage(LivingEntity entity) {
+        if (Math.random() < 0.5){
+            return new EntityDamageSource("calamity_damage1",entity);
+        }else if (Math.random() < 0.5){
+            return new EntityDamageSource("calamity_damage2",entity);
+        }
+        return new EntityDamageSource("calamity_damage3",entity);
+    }
+
+    @Override
     public boolean isPushable() {
         return false;
     }

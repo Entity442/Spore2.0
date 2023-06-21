@@ -1,4 +1,4 @@
-package com.Harbinger.Spore.Sentities;
+package com.Harbinger.Spore.Sentities.EvolvedInfected;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;

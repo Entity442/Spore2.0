@@ -1,7 +1,7 @@
 package com.Harbinger.Spore.Client.Renderers;
 
 import com.Harbinger.Spore.Client.Models.InfectedModel;
-import com.Harbinger.Spore.Sentities.InfectedHuman;
+import com.Harbinger.Spore.Sentities.BasicInfected.InfectedHuman;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

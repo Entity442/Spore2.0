@@ -1,14 +1,17 @@
 package com.Harbinger.Spore.Core;
 
 import com.Harbinger.Spore.Sentities.*;
+import com.Harbinger.Spore.Sentities.BasicInfected.*;
+import com.Harbinger.Spore.Sentities.Calamities.Sieger;
+import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownSpear;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownTumor;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
-import com.Harbinger.Spore.Sentities.InfEvoClaw;
+import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
 import com.Harbinger.Spore.Sentities.Utility.InfectionTendril;
-import com.Harbinger.Spore.Sentities.Utility.Mound;
-import com.Harbinger.Spore.Sentities.Utility.Proto;
+import com.Harbinger.Spore.Sentities.Organoids.Mound;
+import com.Harbinger.Spore.Sentities.Organoids.Proto;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.resources.ResourceLocation;
@@ -19,8 +22,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.Locale;
 
 public class Sentities {
     public static DeferredRegister<EntityType<?>> SPORE_ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES,

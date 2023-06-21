@@ -2,7 +2,7 @@ package com.Harbinger.Spore.Client.Renderers;
 
 
 import com.Harbinger.Spore.Client.Models.ProtoHivemindModel;
-import com.Harbinger.Spore.Sentities.Utility.Proto;
+import com.Harbinger.Spore.Sentities.Organoids.Proto;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;

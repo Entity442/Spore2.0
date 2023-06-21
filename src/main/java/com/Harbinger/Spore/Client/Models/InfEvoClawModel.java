@@ -3,7 +3,7 @@ package com.Harbinger.Spore.Client.Models;// Made with Blockbench 4.4.3
 // Paste this class into your mod and generate all required imports
 
 
-import com.Harbinger.Spore.Sentities.InfEvoClaw;
+import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

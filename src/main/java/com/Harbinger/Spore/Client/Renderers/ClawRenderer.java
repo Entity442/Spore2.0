@@ -1,6 +1,6 @@
 package com.Harbinger.Spore.Client.Renderers;
 import com.Harbinger.Spore.Client.Models.InfEvoClawModel;
-import com.Harbinger.Spore.Sentities.InfEvoClaw;
+import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;

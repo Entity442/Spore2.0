@@ -1,6 +1,6 @@
 package com.Harbinger.Spore.Sentities.AI;
 
-import com.Harbinger.Spore.Sentities.Braionmil;
+import com.Harbinger.Spore.Sentities.EvolvedInfected.Braionmil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 

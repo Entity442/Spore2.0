@@ -2,7 +2,7 @@ package com.Harbinger.Spore.Client.Renderers;
 
 
 import com.Harbinger.Spore.Client.Models.MoundModel;
-import com.Harbinger.Spore.Sentities.Utility.Mound;
+import com.Harbinger.Spore.Sentities.Organoids.Mound;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

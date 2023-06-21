@@ -1,4 +1,4 @@
-package com.Harbinger.Spore.Sentities;
+package com.Harbinger.Spore.Sentities.EvolvedInfected;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
@@ -6,6 +6,8 @@ import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.LeapGoal;
 import com.Harbinger.Spore.Sentities.AI.TransportInfected;
 import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
+import com.Harbinger.Spore.Sentities.Carrier;
+import com.Harbinger.Spore.Sentities.EvolvedInfected.Busser;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedWallMovementControl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
@@ -24,7 +26,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class Leaper extends EvolvedInfected implements Carrier{
+public class Leaper extends EvolvedInfected implements Carrier {
     public Leaper(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         this.moveControl = new InfectedWallMovementControl(this);
@@ -48,7 +50,7 @@ public class Leaper extends EvolvedInfected implements Carrier{
         });
         this.goalSelector.addGoal(3, new TransportInfected<>(this,Mob.class, 0.8 ,
                 entity -> SConfig.SERVER.ranged.get().contains(entity.getEncodeId()) || SConfig.SERVER.support.get().contains(entity.getEncodeId())
-                        && !(entity instanceof  Busser)));
+                        && !(entity instanceof Busser)));
         this.goalSelector.addGoal(4, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 

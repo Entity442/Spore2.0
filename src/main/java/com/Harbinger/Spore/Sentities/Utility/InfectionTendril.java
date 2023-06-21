@@ -6,6 +6,7 @@ import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.SBlockEntities.HiveSpawnBlockEntity;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedWallMovementControl;
+import com.Harbinger.Spore.Sentities.Organoids.Mound;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -177,14 +178,16 @@ public class InfectionTendril extends UtilityEntity {
             if (counter < 200){
                 counter++;
             }else{
-                if (this.getY() > this.getSearchArea().getY()){
+                if (Math.abs(this.getSearchArea().getY()) - Math.abs(this.getY()) > 5){
+                  if (this.getY() > this.getSearchArea().getY()){
                     teleport(-1);
-                }else if (this.getY() < this.getSearchArea().getY()){
+                  }else if (this.getY() < this.getSearchArea().getY()){
                     teleport(1);
-                }else{
+                  }else{
                     teleport(0);
+                  }
+                  counter = 0;
                 }
-                counter = 0;
             }
         }
     }

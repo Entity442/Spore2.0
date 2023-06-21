@@ -1,4 +1,4 @@
-package com.Harbinger.Spore.Sentities;
+package com.Harbinger.Spore.Sentities.Calamities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
@@ -144,16 +144,6 @@ public class Sieger extends Calamity implements RangedAttackMob {
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1)
                 .add(Attributes.ATTACK_KNOCKBACK, 2);
 
-    }
-
-    @Override
-    public DamageSource getCustomDamage(LivingEntity entity) {
-        if (Math.random() < 0.5){
-            return new EntityDamageSource("sieger_damage1",entity);
-        }else if (Math.random() < 0.5){
-            return new EntityDamageSource("sieger_damage2",entity);
-        }
-        return new EntityDamageSource("sieger_damage3",entity);
     }
 
     @Override

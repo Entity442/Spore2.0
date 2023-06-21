@@ -1,6 +1,6 @@
 package com.Harbinger.Spore.Sentities.AI;
 
-import com.Harbinger.Spore.Sentities.Griefer;
+import com.Harbinger.Spore.Sentities.EvolvedInfected.Griefer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 

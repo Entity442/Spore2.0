@@ -1,10 +1,11 @@
-package com.Harbinger.Spore.Sentities;
+package com.Harbinger.Spore.Sentities.BasicInfected;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.ReturnToWater;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
+import com.Harbinger.Spore.Sentities.WaterInfected;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -28,7 +29,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
-public class InfectedDrowned extends Infected implements WaterInfected{
+public class InfectedDrowned extends Infected implements WaterInfected {
     protected final WaterBoundPathNavigation waterNavigation;
     protected final GroundPathNavigation groundNavigation;
     public InfectedDrowned(EntityType<? extends Infected> type, Level level) {

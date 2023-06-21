@@ -1,7 +1,7 @@
 package com.Harbinger.Spore.Client.Renderers;
 
 import com.Harbinger.Spore.Client.Models.InfectedVindicatorModel;
-import com.Harbinger.Spore.Sentities.InfectedVendicator;
+import com.Harbinger.Spore.Sentities.EvolvedInfected.InfectedVendicator;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

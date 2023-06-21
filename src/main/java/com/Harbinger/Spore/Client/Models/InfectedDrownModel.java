@@ -3,7 +3,7 @@ package com.Harbinger.Spore.Client.Models;// Made with Blockbench 4.6.3
 // Paste this class into your mod and generate all required imports
 
 
-import com.Harbinger.Spore.Sentities.InfectedDrowned;
+import com.Harbinger.Spore.Sentities.BasicInfected.InfectedDrowned;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -13,7 +13,6 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 
 public class InfectedDrownModel<T extends InfectedDrowned> extends EntityModel<T> {

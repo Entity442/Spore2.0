@@ -2,7 +2,7 @@ package com.Harbinger.Spore.Sentities.AI.LocHiv;
 
 import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
-import com.Harbinger.Spore.Sentities.InfectedEvoker;
+import com.Harbinger.Spore.Sentities.EvolvedInfected.InfectedEvoker;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
