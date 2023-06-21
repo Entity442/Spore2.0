@@ -62,10 +62,10 @@ public class StalkerRenderer<Type extends Stalker> extends MobRenderer<Type , St
                         "textures/entity/stalker/stalker_moss_layer.png");
             }else if (entity.getCamo() == 2){
                 STALKER_LAYER_LOCATION = new ResourceLocation(Spore.MODID,
-                        "minecraft:textures/block/snow.png");
+                        "textures/entity/stalker/stalker_snow_layer.png");
             }else if (entity.getCamo() == 3){
-                STALKER_LAYER_LOCATION = new ResourceLocation(
-                        "minecraft:textures/block/sand.png");
+                STALKER_LAYER_LOCATION = new ResourceLocation(Spore.MODID,
+                        "textures/entity/stalker/stalker_sand_layer.png");
             }else{
                 STALKER_LAYER_LOCATION = new ResourceLocation(Spore.MODID,
                         "textures/entity/empty.png");

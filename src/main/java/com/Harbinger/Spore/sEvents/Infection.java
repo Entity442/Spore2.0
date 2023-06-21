@@ -75,7 +75,7 @@ public class Infection {
         }
 
         if (entity instanceof EvolvedInfected evolvedInfected && event.getSource().getEntity() != null && evolvedInfected.getLinked() && Math.random() < 0.1){
-            AABB searchbox = AABB.ofSize(new Vec3(entity.getX(), entity.getY(), entity.getZ()), 300, 200, 300);
+            AABB searchbox = evolvedInfected.getBoundingBox().inflate(300);
             List<Entity> entities = entity.level.getEntities(entity, searchbox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
             for (Entity en : entities) {
                 if (en instanceof Proto proto){

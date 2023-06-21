@@ -201,9 +201,10 @@ public class Calamity extends UtilityEntity {
     public void relocateExitPoint(){
         RandomSource randomSource = RandomSource.create();
         if (this.getSearchArea().getY() > this.getY()){
-            if ((Math.abs(this.getSearchArea().getX())  - Math.abs(this.getX()) < 6) && (Math.abs(this.getSearchArea().getZ()) - Math.abs(this.getZ()) < 6) && (Math.abs(this.getSearchArea().getY()) - Math.abs(this.getY()) > 6)){
-               int x = randomSource.nextInt(-32,32);
-               int z = randomSource.nextInt(-32,32);
+            if ((Math.abs(this.getSearchArea().getX())  - Math.abs(this.getX()) < 6) && (Math.abs(this.getSearchArea().getZ()) - Math.abs(this.getZ()) < 6) && (Math.abs(this.getSearchArea().getY()) - Math.abs(this.getY()) > 4)){
+                int f = (int) (Math.abs(this.getSearchArea().getY()) - Math.abs(this.getY()));
+                int x = randomSource.nextInt(-f,f);
+                int z = randomSource.nextInt(-f,f);
                this.setSearchArea(new BlockPos(this.getSearchArea().getX() + x,this.getSearchArea().getY(),this.getSearchArea().getZ() + z));
             }
         }
