@@ -17,6 +17,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -197,6 +198,18 @@ public class Calamity extends UtilityEntity {
         return false;
     }
 
+    public void relocateExitPoint(){
+        RandomSource randomSource = RandomSource.create();
+        if (this.getSearchArea().getY() > this.getY()){
+            if ((Math.abs(this.getSearchArea().getX())  - Math.abs(this.getX()) < 6) && (Math.abs(this.getSearchArea().getZ()) - Math.abs(this.getZ()) < 6) && (Math.abs(this.getSearchArea().getY()) - Math.abs(this.getY()) > 6)){
+               int x = randomSource.nextInt(-32,32);
+               int z = randomSource.nextInt(-32,32);
+               this.setSearchArea(new BlockPos(this.getSearchArea().getX() + x,this.getSearchArea().getY(),this.getSearchArea().getZ() + z));
+            }
+        }
+
+    }
+
     public AABB getMiningHitbox(){
         if (this.getSearchArea() != BlockPos.ZERO){
             if (this.getSearchArea().getY() < this.getY()){
@@ -213,6 +226,9 @@ public class Calamity extends UtilityEntity {
     @Override
     public void tick() {
         super.tick();
+        if (this.getRandom().nextInt(300) == 0 && this.getSearchArea() != BlockPos.ZERO){
+            relocateExitPoint();
+        }
         if (breakCounter < 80) {
             breakCounter++;
         } else {

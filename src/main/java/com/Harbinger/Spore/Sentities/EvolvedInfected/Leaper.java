@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -61,6 +62,14 @@ public class Leaper extends EvolvedInfected implements Carrier {
 
     protected int calculateFallDamage(float p_149389_, float p_149390_) {
         return super.calculateFallDamage(p_149389_, p_149390_) - 10;
+    }
+
+    @Override
+    public DamageSource getCustomDamage(LivingEntity entity) {
+        if (Math.random() < 0.3){
+            return new EntityDamageSource("leaper_damage",entity);
+        }
+        return super.getCustomDamage(entity);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

@@ -206,9 +206,14 @@
 
   "death.attack.mycelium.overtake": "%1$s has succumbed to the infection",
   "death.attack.corrosion": "%1$s has been melted away",
+
+
   "death.attack.infected_witch_damage": "%1$s played like Skyrill",
   "death.attack.griefer_damage": "%1$s thought the %2$s wanted a hug",
-
+  "death.attack.knight_damage": "%1$s was disemboweled by %2$s",
+  "death.attack.braiomil_damage": "%1$s forgot how bad %2$s smelled",
+  "death.attack.leaper_damage": "%1$s got jumped by %2$s",
+  "death.attack.slasher_damage": "%2$s was happy to remove %1$s limbs",
 
 
   "death.attack.infected_damage1": "%1$s was eaten alive by %2$s",

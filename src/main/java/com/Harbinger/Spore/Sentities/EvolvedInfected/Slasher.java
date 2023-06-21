@@ -9,7 +9,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -34,7 +36,13 @@ public class Slasher extends EvolvedInfected {
                 .add(Attributes.ATTACK_KNOCKBACK, 0);
 
     }
-
+    @Override
+    public DamageSource getCustomDamage(LivingEntity entity) {
+        if (Math.random() < 0.3){
+            return new EntityDamageSource("slasher_damage",entity);
+        }
+        return super.getCustomDamage(entity);
+    }
     @Override
     protected void registerGoals() {
 

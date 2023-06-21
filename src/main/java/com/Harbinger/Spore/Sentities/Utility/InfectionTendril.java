@@ -178,7 +178,7 @@ public class InfectionTendril extends UtilityEntity {
             if (counter < 200){
                 counter++;
             }else{
-                if (Math.abs(this.getSearchArea().getY()) - Math.abs(this.getY()) > 5){
+                if ((Math.abs(this.getSearchArea().getX())  - Math.abs(this.getX()) < 6) && (Math.abs(this.getSearchArea().getZ()) - Math.abs(this.getZ()) < 6)){
                   if (this.getY() > this.getSearchArea().getY()){
                     teleport(-1);
                   }else if (this.getY() < this.getSearchArea().getY()){
@@ -212,7 +212,7 @@ public class InfectionTendril extends UtilityEntity {
     protected boolean teleport(int c) {
         if (!this.level.isClientSide() && this.isAlive()) {
             double d0 = this.getX();
-            double d1 = this.getY() + (double)(this.random.nextInt(16) * c);
+            double d1 = this.getY() + (double)(this.random.nextInt(32) * c);
             double d2 = this.getZ();
             return this.randomTeleport(d0, d1, d2,true);
         } else {

@@ -17,6 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -53,6 +54,7 @@ public class Braionmil extends EvolvedInfected {
 
         data.putShort("Fuse", (short)this.maxSwell);
     }
+
 
     public void tick() {
 
@@ -106,6 +108,9 @@ public class Braionmil extends EvolvedInfected {
 
     @Override
     public DamageSource getCustomDamage(LivingEntity entity) {
+        if (Math.random() < 0.3){
+            return new EntityDamageSource("braiomil_damage",entity);
+        }
         return super.getCustomDamage(entity);
     }
 
