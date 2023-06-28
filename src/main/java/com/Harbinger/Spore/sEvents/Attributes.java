@@ -5,6 +5,7 @@ import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.BasicInfected.*;
 import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
+import com.Harbinger.Spore.Sentities.Organoids.BiomassReformator;
 import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
 import com.Harbinger.Spore.Sentities.Utility.InfectionTendril;
 import com.Harbinger.Spore.Sentities.Organoids.Mound;
@@ -43,6 +44,7 @@ public class Attributes {
         event.put(Sentities.INF_PLAYER.get(), InfectedPlayer.createAttributes().build());
         event.put(Sentities.SCAMPER.get(), Scamper.createAttributes().build());
         event.put(Sentities.MOUND.get(), Mound.createAttributes().build());
+        event.put(Sentities.RECONSTRUCTOR.get(), BiomassReformator.createAttributes().build());
         event.put(Sentities.PROTO.get(), Proto.createAttributes().build());
         event.put(Sentities.TENDRIL.get(), InfectionTendril.createAttributes().build());
         event.put(Sentities.SIEGER.get(), Sieger.createAttributes().build());

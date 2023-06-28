@@ -19,7 +19,7 @@ public class InfectedConsumeFromRemains extends Goal {
     }
     @Override
     public boolean canUse() {
-        return infected.isStarving() && infected.hasEffect(Seffects.STARVATION.get()) && this.infected.getRandom().nextInt(0,10) == 6 && isCorpse(this.infected);
+        return infected.isStarving() && this.infected.getRandom().nextInt(0,10) == 6 && isCorpse(this.infected);
     }
 
 

@@ -33,8 +33,8 @@ import java.util.Random;
 
 public class InfectedHuman extends Infected {
 
-    public InfectedHuman(EntityType<? extends Monster> p_33002_, Level p_33003_) {
-        super(p_33002_, p_33003_);
+    public InfectedHuman(Level level) {
+        super(Sentities.INF_HUMAN.get(), level);
 
     }
 

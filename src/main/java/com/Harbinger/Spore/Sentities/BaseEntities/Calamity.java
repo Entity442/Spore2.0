@@ -202,7 +202,7 @@ public class Calamity extends UtilityEntity {
         RandomSource randomSource = RandomSource.create();
         if (this.getSearchArea().getY() > this.getY()){
             if ((Math.abs(this.getSearchArea().getX())  - Math.abs(this.getX()) < 6) && (Math.abs(this.getSearchArea().getZ()) - Math.abs(this.getZ()) < 6) && (Math.abs(this.getSearchArea().getY()) - Math.abs(this.getY()) > 4)){
-                int f = (int) (Math.abs(this.getSearchArea().getY()) - Math.abs(this.getY()));
+                int f = (int) Math.abs(Math.abs(this.getSearchArea().getY()) - Math.abs(this.getY()));
                 int x = randomSource.nextInt(-f,f);
                 int z = randomSource.nextInt(-f,f);
                this.setSearchArea(new BlockPos(this.getSearchArea().getX() + x,this.getSearchArea().getY(),this.getSearchArea().getZ() + z));
@@ -238,9 +238,6 @@ public class Calamity extends UtilityEntity {
                 boolean flag = false;
                 for (BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
                     BlockState blockstate = this.level.getBlockState(blockpos);
-                    if (!flag && this.onGround) {
-                        this.jumpFromGround();
-                    }
                     if (blockstate.getDestroySpeed(level, blockpos) < getDestroySpeed() && blockstate.getDestroySpeed(level, blockpos) >= 0) {
                         flag = this.level.destroyBlock(blockpos, false, this) || flag;
                         breakCounter = 0;

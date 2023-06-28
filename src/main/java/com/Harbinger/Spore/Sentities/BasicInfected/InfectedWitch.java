@@ -62,7 +62,7 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
         }));
 
 
-        this.goalSelector.addGoal(1, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.HEALING), SoundEvents.WITCH_DRINK, (p_35882_) -> {
+        this.goalSelector.addGoal(1, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRONG_HEALING), SoundEvents.WITCH_DRINK, (p_35882_) -> {
             return (this.getHealth() < this.getMaxHealth()/2) && SConfig.SERVER.use_potions.get();
         }){
             @Override
@@ -74,7 +74,7 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
 
 
         this.goalSelector.addGoal(4, new BuffAlliesGoal(this,Infected.class,1.3,35,45,3,entity -> {
-            return entity.hasEffect(Seffects.STARVATION.get());
+            return entity.hasEffect(Seffects.STARVATION.get()) && !(entity instanceof InfectedWitch);
         }){
             @Override
             public boolean canUse() {
@@ -83,7 +83,7 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
         });
 
         this.goalSelector.addGoal(4, new BuffAlliesGoal(this,Mob.class,1.3,SConfig.SERVER.buff_potion_meter.get(),SConfig.SERVER.at_potion_meter.get(),3,entity -> {
-            return SConfig.SERVER.evolved.get().contains(entity.getEncodeId());
+            return SConfig.SERVER.evolved.get().contains(entity.getEncodeId()) && !(entity instanceof InfectedWitch);
         }){
             @Override
             public boolean canUse() {
@@ -91,7 +91,9 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
             }
         });
 
-        this.goalSelector.addGoal(4, new BuffAlliesGoal(this, Infected.class,1.3,SConfig.SERVER.buff_potion_meter.get(),SConfig.SERVER.buff_potion_meter.get(),3)
+        this.goalSelector.addGoal(4, new BuffAlliesGoal(this, Infected.class,1.3,SConfig.SERVER.buff_potion_meter.get(),SConfig.SERVER.buff_potion_meter.get(),3,livingEntity -> {
+           return  !(livingEntity instanceof InfectedWitch);
+        })
         {
             @Override
             public boolean canUse() {

@@ -3,6 +3,7 @@ package com.Harbinger.Spore.Sentities.Utility;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Core.Sentities;
+import com.Harbinger.Spore.SBlockEntities.BiomassLumpEntity;
 import com.Harbinger.Spore.SBlockEntities.HiveSpawnBlockEntity;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedWallMovementControl;
@@ -174,7 +175,7 @@ public class InfectionTendril extends UtilityEntity {
         if (this.isAlive() && this.entityData.get(LIFE)>0){
             this.entityData.set(LIFE, this.entityData.get(LIFE) - 1);
         }
-        if (this.getSearchArea() != null && this.distanceToSqr(this.getSearchArea().getX(),this.getSearchArea().getY(),this.getSearchArea().getZ()) > 400.0D){
+        if (this.getSearchArea() != BlockPos.ZERO){
             if (counter < 200){
                 counter++;
             }else{
@@ -269,9 +270,9 @@ public class InfectionTendril extends UtilityEntity {
                 level.addFreshEntity(mound);
                 level.removeBlock(blockpos,false);
                 this.discard();
-            }else if (blockstate.is(Sblocks.HIVE_SPAWN.get())){
+            }else if (blockstate.is(Sblocks.HIVE_SPAWN.get()) || blockstate.is(Sblocks.BIOMASS_LUMP.get()) ){
                 BlockEntity blockEntity = level.getBlockEntity(blockpos);
-                if (blockEntity instanceof HiveSpawnBlockEntity){
+                if (blockEntity instanceof HiveSpawnBlockEntity || blockEntity instanceof BiomassLumpEntity){
                     blockEntity.getPersistentData().putInt("kills",blockEntity.getPersistentData().getInt("kills") + 5);
                     this.discard();
                 }

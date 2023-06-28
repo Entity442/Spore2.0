@@ -42,7 +42,6 @@ public class StalkerRenderer<Type extends Stalker> extends MobRenderer<Type , St
 
     @Override
     public ResourceLocation getTextureLocation(Type entity) {
-
         return TEXTURE;
     }
 
@@ -54,7 +53,6 @@ public class StalkerRenderer<Type extends Stalker> extends MobRenderer<Type , St
             super(p_174490_);
             this.model = new StalkerModel<>(set.bakeLayer(StalkerModel.LAYER_LOCATION));
         }
-
         public void render(PoseStack p_116924_, MultiBufferSource p_116925_, int p_116926_, T entity, float p_116928_, float p_116929_, float p_116930_, float p_116931_, float p_116932_, float p_116933_) {
             ResourceLocation STALKER_LAYER_LOCATION;
             if (entity.getCamo() == 1){

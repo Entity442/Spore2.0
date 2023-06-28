@@ -73,6 +73,15 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> inf_pil_armor;
         public final ForgeConfigSpec.ConfigValue<Double> inf_pil_range_damage;
 
+        public final ForgeConfigSpec.ConfigValue<Double> reconstructor_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> reconstructor_armor;
+        public final ForgeConfigSpec.ConfigValue<Integer> recontructor_clock;
+        public final ForgeConfigSpec.ConfigValue<Integer> reconstructor_biomass;
+        public final ForgeConfigSpec.ConfigValue<Integer> reconstructor_assimilation;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> reconstructor_terrain;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> reconstructor_air;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> reconstructor_water;
+
         public final ForgeConfigSpec.ConfigValue<Double> inf_evo_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_evo_damage;
         public final ForgeConfigSpec.ConfigValue<Double> inf_evo_armor;
@@ -366,7 +375,7 @@ public class SConfig {
                     Lists.newArrayList("spore:inf_villager", "spore:inf_pillager", "spore:inf_witch") , o -> o instanceof String);
             this.starve = builder.comment("Default true").define("Should mobs with no kills starve?",true);
             this.evolution_age_human = builder.comment("Default 150").define("Evolution Timer in seconds",300);
-            this.min_kills = builder.comment("Default 1").define("Minimum amount of kills to start the evolution",2);
+            this.min_kills = builder.comment("Default 1").define("Minimum amount of kills to start the evolution",1);
             builder.pop();
             builder.push("Infections");
             this.inf_player = builder.comment("Default true").define("Should the player be infected on death?",true);
@@ -452,7 +461,7 @@ public class SConfig {
             builder.pop();
 
             builder.push("Mound");
-            this.mound_hp = builder.comment("Default 20").defineInRange("Sets Mound Max health", 15, 1, Double.MAX_VALUE);
+            this.mound_hp = builder.comment("Default 20").defineInRange("Sets Mound Max health", 20, 1, Double.MAX_VALUE);
             this.mound_armor = builder.comment("Default 2").defineInRange("Sets Mound Armor", 2, 1, Double.MAX_VALUE);
             this.mound_cooldown = builder.comment("Default 600").defineInRange("Sets Mound Infection Cooldown", 600, 1, Integer.MAX_VALUE);
             this.mound_age = builder.comment("Default 12000").defineInRange("Sets Mound Ageing Cooldown", 18000, 1, Integer.MAX_VALUE);
@@ -484,8 +493,22 @@ public class SConfig {
             this.inf_pil_damage = builder.comment("Default 6").defineInRange("Sets Infected Pillager Damage", 6, 1, Double.MAX_VALUE);
             this.inf_pil_armor = builder.comment("Default 2").defineInRange("Sets Infected Pillager Armor", 2, 1, Double.MAX_VALUE);
             this.inf_pil_range_damage = builder.comment("Default 1.6f").define("Sets Infected Pillager Range Damage",1.6);
-
             builder.pop();
+
+            builder.push("Biomass Reconstructor");
+            this.reconstructor_hp = builder.comment("Default 20").defineInRange("Sets the base health of the reconstructor", 20, 1, Double.MAX_VALUE);
+            this.reconstructor_armor = builder.comment("Default 6").defineInRange("Sets the base armor of the reconstructor", 6, 1, Double.MAX_VALUE);
+            this.recontructor_clock = builder.comment("Default 30").defineInRange("Sets the time before it gains one biomass", 30, 1, Integer.MAX_VALUE);
+            this.reconstructor_assimilation = builder.comment("Default 10").defineInRange("How much biomass does it get from assimilating infected", 10, 1, Integer.MAX_VALUE);
+            this.reconstructor_biomass = builder.comment("Default 100").defineInRange("Sets the maximum biomass before it summons a calamity", 100, 1, Integer.MAX_VALUE);
+            this.reconstructor_terrain = builder.defineList("Mobs that are summoned for ground support",
+                    Lists.newArrayList("spore:sieger" ) , o -> o instanceof String);
+            this.reconstructor_air = builder.defineList("Mobs that are summoned for air support",
+                    Lists.newArrayList("spore:sieger" ) , o -> o instanceof String);
+            this.reconstructor_water = builder.defineList("Mobs that are summoned for water support",
+                    Lists.newArrayList("spore:sieger" ) , o -> o instanceof String);
+            builder.pop();
+
 
             builder.push("Scent");
             this.scent_spawn = builder.comment("Default true").define("Should scent spawn?",true);
@@ -541,7 +564,7 @@ public class SConfig {
             builder.push("Braiomil");
             this.braio_hp = builder.comment("Default 25").defineInRange("Sets Braiomil Max health", 25, 1, Double.MAX_VALUE);
             this.braio_armor = builder.comment("Default 4").defineInRange("Sets Braiomil Armor", 4, 1, Double.MAX_VALUE);
-            this.braio_melee_damage = builder.comment("Default 6").defineInRange("Sets Braiomil Melee Damage", 6, 1, Double.MAX_VALUE);
+            this.braio_melee_damage = builder.comment("Default 8").defineInRange("Sets Braiomil Melee Damage", 8, 1, Double.MAX_VALUE);
             this.braio_effects = builder.comment("Default values: minecraft:poison|120|0 ,spore:mycelium|600|0 ,spore:marker|2400|1").defineList("Braiomil Effects",
                     Lists.newArrayList("minecraft:poison|120|0" , "spore:mycelium_ef|600|1","spore:marker|2400|1") , o -> o instanceof String);
             builder.pop();

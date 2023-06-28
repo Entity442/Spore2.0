@@ -4,6 +4,7 @@ import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.BasicInfected.*;
 import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
+import com.Harbinger.Spore.Sentities.Organoids.BiomassReformator;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownSpear;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownTumor;
@@ -18,6 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -37,7 +39,7 @@ public class Sentities {
     public static final MobCategory INFECTED = MobCategory.create("infected","infected",SConfig.SERVER.mob_cap.get(),false,false,128);
 
     public static final RegistryObject<EntityType<InfectedHuman>> INF_HUMAN = SPORE_ENTITIES.register("inf_human",
-            () -> EntityType.Builder.of(InfectedHuman::new, INFECTED).sized(0.6f, 2f)
+            () -> EntityType.Builder.of((EntityType<InfectedHuman> p_33002_, Level level) -> new InfectedHuman(level), INFECTED).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "inf_human").toString()));
 
     public static final RegistryObject<EntityType<InfectedPlayer>> INF_PLAYER = SPORE_ENTITIES.register("inf_player",
@@ -149,6 +151,9 @@ public class Sentities {
     public static final RegistryObject<EntityType<Mound>> MOUND = SPORE_ENTITIES.register("mound",
             () -> EntityType.Builder.of(Mound::new, INFECTED).sized(0.3f, 0.3f)
                     .build(new ResourceLocation(Spore.MODID, "mound").toString()));
+    public static final RegistryObject<EntityType<BiomassReformator>> RECONSTRUCTOR = SPORE_ENTITIES.register("reconstructor",
+            () -> EntityType.Builder.of(BiomassReformator::new, INFECTED).sized(1f, 1f)
+                    .build(new ResourceLocation(Spore.MODID, "reconstructor").toString()));
 
     public static final RegistryObject<EntityType<Proto>> PROTO = SPORE_ENTITIES.register("proto",
             () -> EntityType.Builder.of(Proto::new, INFECTED).sized(1f, 3.5f)

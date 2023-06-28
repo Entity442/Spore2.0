@@ -98,10 +98,10 @@ public class InfectedModel<T extends InfectedHuman> extends EntityModel<T> {
 		}
 		this.body.getChild("LeftLeg").xRot = Mth.cos(limbSwing * 0.8F) * 0.8F * limbSwingAmount;
 		this.body.getChild("RightLeg").xRot = Mth.cos(limbSwing * 0.8F) * -0.8F * limbSwingAmount;
-		if (body.getChild("LeftLeg").xRot < 0){
-			this.body.getChild("LeftLeg").getChild("leftForLeg").xRot = -body.getChild("LeftLeg").xRot;}
-		if (body.getChild("RightLeg").xRot < 0){
-			this.body.getChild("RightLeg").getChild("rightForLeg").xRot = -body.getChild("RightLeg").xRot;}
+		if (this.body.getChild("LeftLeg").xRot < 0){
+			this.body.getChild("LeftLeg").getChild("leftForLeg").xRot = -this.body.getChild("LeftLeg").xRot;}
+		if (this.body.getChild("RightLeg").xRot < 0){
+			this.body.getChild("RightLeg").getChild("rightForLeg").xRot = -this.body.getChild("RightLeg").xRot;}
 
 		this.body.getChild("head").yRot = netHeadYaw / (180F / (float) Math.PI);
 		this.body.getChild("head").xRot = headPitch /  ( 90F / (float) Math.PI);

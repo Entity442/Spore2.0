@@ -162,7 +162,7 @@ public class Braionmil extends EvolvedInfected {
                 .add(Attributes.MAX_HEALTH, SConfig.SERVER.braio_hp.get() * SConfig.SERVER.global_health.get())
                 .add(Attributes.MOVEMENT_SPEED, 0.2)
                 .add(Attributes.FOLLOW_RANGE, 28)
-                .add(Attributes.ATTACK_DAMAGE, 1);
+                .add(Attributes.ATTACK_KNOCKBACK, 1);
 
     }
 

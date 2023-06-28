@@ -18,7 +18,7 @@ public class InfectedArialMovementControl extends MoveControl {
     public void tick() {
         if (this.operation == MoveControl.Operation.MOVE_TO) {
             this.operation = MoveControl.Operation.WAIT;
-            this.mob.setNoGravity(true);
+
             double d0 = this.wantedX - this.mob.getX();
             double d1 = this.wantedY - this.mob.getY();
             double d2 = this.wantedZ - this.mob.getZ();
@@ -36,6 +36,7 @@ public class InfectedArialMovementControl extends MoveControl {
                 f1 = (float)(this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED));
             } else {
                 f1 = (float)(this.speedModifier * this.mob.getAttributeValue(Attributes.FLYING_SPEED));
+                this.mob.setNoGravity(true);
             }
 
             this.mob.setSpeed(f1);

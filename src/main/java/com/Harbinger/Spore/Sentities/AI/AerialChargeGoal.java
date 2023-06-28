@@ -16,11 +16,11 @@ public class AerialChargeGoal  extends Goal {
 
     public boolean canUse() {
         LivingEntity livingentity = this.mob.getTarget();
-        return livingentity != null && livingentity.isAlive() && !this.mob.getMoveControl().hasWanted() && this.mob.getRandom().nextInt(0, 6) == 2;
+        return livingentity != null && livingentity.isAlive();
     }
 
     public boolean canContinueToUse() {
-        return this.mob.getMoveControl().hasWanted() && this.mob.getTarget() != null && this.mob.getTarget().isAlive();
+        return !this.mob.isOnGround() && this.mob.getTarget() != null && this.mob.getTarget().isAlive();
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.BasicInfected.*;
 import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
+import com.Harbinger.Spore.Sentities.Organoids.BiomassReformator;
 import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
 import com.Harbinger.Spore.Sentities.Organoids.Mound;
 import com.Harbinger.Spore.Sentities.Organoids.Proto;
@@ -46,6 +47,7 @@ public class HandlerEvents {
             if (event.getEntity() instanceof PathfinderMob mob){
             if (SConfig.SERVER.attack.get().contains(event.getEntity().getEncodeId())) {
                 mob.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(mob, Infected.class, false));
+                mob.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(mob, Calamity.class, false));
             }
 
             if (SConfig.SERVER.flee.get().contains(event.getEntity().getEncodeId())) {
@@ -137,12 +139,14 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Target ? " + calamity.getTarget()),false);
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
                                 }
-                            }else if (entity1 instanceof Mound calamity){
+                            }else if (entity1 instanceof Mound mound){
                                 if (entity instanceof Player player && !player.level.isClientSide){
-                                    player.displayClientMessage(Component.literal("Entity "+ calamity.getEncodeId() + " " + calamity.getCustomName()),false);
-                                    player.displayClientMessage(Component.literal("Current Health " + calamity.getHealth()),false);
-                                    player.displayClientMessage(Component.literal("Is Linked ? " + calamity.getLinked()),false);
-                                    player.displayClientMessage(Component.literal("Buffs " + calamity.getActiveEffects()),false);
+                                    player.displayClientMessage(Component.literal("Entity "+ mound.getEncodeId() + " " + mound.getCustomName()),false);
+                                    player.displayClientMessage(Component.literal("Current Health " + mound.getHealth()),false);
+                                    player.displayClientMessage(Component.literal("Is Linked ? " + mound.getLinked()),false);
+                                    player.displayClientMessage(Component.literal("Age " + mound.getAge()),false);
+                                    player.displayClientMessage(Component.literal("Ticks until growth " + mound.getCounter() + "/" + SConfig.SERVER.mound_age.get()),false);
+                                    player.displayClientMessage(Component.literal("Buffs " + mound.getActiveEffects()),false);
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
                                 }
                             }else if(entity1 instanceof Proto proto) {
@@ -152,6 +156,17 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Current Target " + proto.getTarget()),false);
                                     player.displayClientMessage(Component.literal("Buffs " + proto.getActiveEffects()),false);
                                     player.displayClientMessage(Component.literal("Mobs under control " + proto.getHosts()),false);
+                                    player.displayClientMessage(Component.literal("-------------------------"),false);
+                                }
+                            }
+                            else if(entity1 instanceof BiomassReformator reformator) {
+                                if (entity instanceof Player player && !player.level.isClientSide){
+                                    player.displayClientMessage(Component.literal("Entity "+ reformator.getEncodeId() + " " + reformator.getCustomName()),false);
+                                    player.displayClientMessage(Component.literal("Current Health " + reformator.getHealth()),false);
+                                    player.displayClientMessage(Component.literal("Stored Location " + reformator.getLocation()),false);
+                                    player.displayClientMessage(Component.literal("Buffs " + reformator.getActiveEffects()),false);
+                                    player.displayClientMessage(Component.literal("Biomass " + reformator.getBiomass()),false);
+                                    player.displayClientMessage(Component.literal("State " + reformator.getState()),false);
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
                                 }
                             }

@@ -1,15 +1,11 @@
 package com.Harbinger.Spore.Sentities.EvolvedInfected;
 
 import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Sentities.AI.AerialChargeGoal;
-import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
-import com.Harbinger.Spore.Sentities.AI.FlyingWanderAround;
-import com.Harbinger.Spore.Sentities.AI.TransportInfected;
+import com.Harbinger.Spore.Sentities.AI.*;
 import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.Carrier;
 import com.Harbinger.Spore.Sentities.FlyingInfected;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedArialMovementControl;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -20,38 +16,21 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 
 public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
-
     public Busser(EntityType<? extends Monster> type, Level level) {
         super(type, level);
-        this.moveControl = new InfectedArialMovementControl(this , 20 , true);
-
+        this.moveControl = new InfectedArialMovementControl(this , 20,true);
+        this.maxUpStep =1f;
     }
     public boolean causeFallDamage(float p_147105_, float p_147106_, DamageSource p_147107_) {
         return false;
     }
 
-
-    protected PathNavigation createNavigation(Level level) {
-        FlyingPathNavigation flyingpathnavigation = new FlyingPathNavigation(this, level) {
-            public boolean isStableDestination(BlockPos pos) {
-                for (int i = 0; i < 3; ++i){
-                if (this.mob.isVehicle()){
-                    return this.level.getBlockState(pos.below((int) this.mob.getY() - i)).isAir();
-                    }
-                }
-                return !this.level.getBlockState(pos.below()).isAir();
-            }
-        };
-        flyingpathnavigation.setCanOpenDoors(false);
-        flyingpathnavigation.setCanFloat(false);
-        flyingpathnavigation.setCanPassDoors(true);
-        return flyingpathnavigation;
-    }
 
     public void positionRider(Entity entity) {
         super.positionRider(entity);
@@ -68,6 +47,13 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 return 3.0 + entity.getBbWidth() * entity.getBbWidth();}});
+
+        this.goalSelector.addGoal(3,new LeapGoal(this,0.2F){
+            @Override
+            public boolean canUse() {
+                return super.canUse() && Busser.this.random.nextInt(0,10) == 5;
+            }
+        });
         this.goalSelector.addGoal(3, new AerialChargeGoal(this ));
         this.goalSelector.addGoal(4 , new FlyingWanderAround(this , 1.0));
         super.registerGoals();
@@ -84,13 +70,12 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, SConfig.SERVER.brute_hp.get() * SConfig.SERVER.global_health.get())
-                .add(Attributes.MOVEMENT_SPEED, 0.1)
+                .add(Attributes.MOVEMENT_SPEED, 0.2)
                 .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.brute_damage.get() * SConfig.SERVER.global_damage.get())
                 .add(Attributes.ARMOR, SConfig.SERVER.brute_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.FOLLOW_RANGE, 128)
                 .add(Attributes.ATTACK_KNOCKBACK, 1)
                 .add(Attributes.FLYING_SPEED, 0.4);
-
 
     }
 
@@ -106,4 +91,20 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
             }
         }
     }
+
+
+
+    @Override
+    protected PathNavigation createNavigation(Level level) {
+        if (this.isOnGround() || this.isVehicle()){
+            GroundPathNavigation navigation = new GroundPathNavigation(this,level);
+            navigation.canPassDoors();
+            return navigation;
+        }else {
+            FlyingPathNavigation navigation = new FlyingPathNavigation(this,level);
+            navigation.canPassDoors();
+            return navigation;
+        }
+    }
+
 }

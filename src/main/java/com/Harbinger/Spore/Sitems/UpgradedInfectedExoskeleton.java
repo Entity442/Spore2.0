@@ -164,7 +164,7 @@ public class UpgradedInfectedExoskeleton extends ArmorItem {
             });
         }
         @Override
-        public void onArmorTick(ItemStack itemstack, Level world, Player entity) {
+        public void onArmorTick(ItemStack stack, Level level, Player entity) {
             if (entity.horizontalCollision && Screen.hasShiftDown()) {
                 Vec3 initialVec = entity.getDeltaMovement();
                 Vec3 climbVec = new Vec3(initialVec.x, 0.2D, initialVec.z);
@@ -172,19 +172,19 @@ public class UpgradedInfectedExoskeleton extends ArmorItem {
                         climbVec.y * 0.98D, climbVec.z * 0.91D);
             }
             geteffect(entity);
+            super.onArmorTick(stack, level, entity);
         }
+
 
         private void geteffect(Entity entity) {
             if ((entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.FEET) : ItemStack.EMPTY)
                     .getItem() == Sitems.INF_BOOTS.get()
                     && (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.LEGS) : ItemStack.EMPTY)
                     .getItem() == Sitems.INF_PANTS.get()
-                    && (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.CHEST) : ItemStack.EMPTY)
-                    .getItem() == Sitems.INF_UP_CHESTPLATE.get()
                     && (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY)
                     .getItem() == Sitems.INF_HELMET.get()) {
-                if (entity instanceof LivingEntity _entity)
-                    _entity.addEffect(new MobEffectInstance(Seffects.SYMBIOSIS.get(), 60, 0, (false), (false)));
+                if (entity instanceof LivingEntity livingEntity)
+                    livingEntity.addEffect(new MobEffectInstance(Seffects.SYMBIOSIS.get(), 60, 0, (false), (false)));
             }
         }
         @Override

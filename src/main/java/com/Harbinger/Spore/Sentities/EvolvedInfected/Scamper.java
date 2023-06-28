@@ -57,8 +57,13 @@ public class Scamper extends EvolvedInfected {
                     RandomSource randomSource = RandomSource.create();
                     int chance = randomSource.nextInt(1,4);
                     for (int i = 0; i < chance; ++i) {
-                        if (SConfig.SERVER.scamper_summon.get()){Summon();}}
-                    if (SConfig.SERVER.scent_spawn.get()){SummonScent();}
+                        if (SConfig.SERVER.scamper_summon.get()){
+                            Summon();
+                        }
+                    }
+                    if (SConfig.SERVER.scent_spawn.get()){
+                        SummonScent();
+                    }
                     this.discard();
                 }
             }
@@ -74,8 +79,8 @@ public class Scamper extends EvolvedInfected {
         mound.moveTo(this.getX(),this.getY(),this.getZ());
         mound.addEffect(new MobEffectInstance(MobEffects.REGENERATION ,200,0));
         mound.setDeltaMovement(0.4 * vecx ,0.1,0.4 * vecz);
-        level.addFreshEntity(mound);
         level.explode(this,this.getX(),this.getY(), this.getZ(),1f, Explosion.BlockInteraction.NONE);
+        level.addFreshEntity(mound);
     }
     private void SummonScent(){
         ScentEntity scent = new ScentEntity(Sentities.SCENT.get(),level);

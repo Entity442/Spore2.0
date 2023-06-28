@@ -293,6 +293,12 @@ public class Mound extends UtilityEntity {
                 tendril.setSearchArea(blockpos);
                 level.addFreshEntity(tendril);
                 break;
+            }else if (blockState.is(Sblocks.BIOMASS_LUMP.get()) && Math.random() < 0.2){
+                InfectionTendril tendril = new InfectionTendril(Sentities.TENDRIL.get(),level);
+                tendril.setPos(this.getX(),this.getY()+0.5D,this.getZ());
+                tendril.setSearchArea(blockpos);
+                level.addFreshEntity(tendril);
+                break;
             }
         }
     }
