@@ -1,6 +1,8 @@
 package com.Harbinger.Spore.Sentities.Organoids;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Seffects;
+import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.Sentities.BaseEntities.Calamity;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
@@ -10,6 +12,9 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -126,6 +131,13 @@ public class BiomassReformator extends UtilityEntity {
             if (en instanceof Infected infected){
                 this.setBiomass(this.getBiomass() + SConfig.SERVER.reconstructor_assimilation.get() + infected.getKills());
                 infected.discard();
+                if (this.level instanceof ServerLevel serverLevel){
+                    double x0 = this.getX() - (random.nextFloat() - 0.1) * 0.1D;
+                    double y0 = this.getY() + (random.nextFloat() - 0.25) * 0.25D * 5;
+                    double z0 = this.getZ() + (random.nextFloat() - 0.1) * 0.1D;
+                    serverLevel.sendParticles(Sparticles.BLOOD_PARTICLE.get(), x0, y0, z0, 8,0, 0, 0,1);
+                }
+                this.playSound(SoundEvents.GENERIC_EAT);
                 break;
             }
         }
@@ -163,7 +175,10 @@ public class BiomassReformator extends UtilityEntity {
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1);
 
     }
-
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
 
     @Override
     protected void customServerAiStep() {
@@ -204,6 +219,7 @@ public class BiomassReformator extends UtilityEntity {
             int randomIndex = rand.nextInt(ev.size());
             ResourceLocation randomElement1 = new ResourceLocation(ev.get(randomIndex));
             EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
+            assert randomElement != null;
             Mob waveentity = (Mob) randomElement.create(level);
             assert waveentity != null;
             waveentity.setPos(entity.getX(), entity.getY(), entity.getZ());

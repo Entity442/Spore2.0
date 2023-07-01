@@ -32,7 +32,6 @@ public class ScentEntity extends UtilityEntity {
     private static final EntityDataAccessor<Boolean> OVERCHARGED = SynchedEntityData.defineId(ScentEntity.class, EntityDataSerializers.BOOLEAN);
     public ScentEntity(EntityType<? extends PathfinderMob> mob, Level level) {
         super(mob, level);
-        this.isNoGravity();
     }
 
     @Override
@@ -102,7 +101,9 @@ public class ScentEntity extends UtilityEntity {
 
     public void aiStep() {
         super.aiStep();
-        this.setNoGravity(true);
+        if (!this.isOnGround()){
+            this.getDeltaMovement().add(0.0,-0.01,0.0);
+        }
         if (SConfig.SERVER.scent_particles.get()) {
             int i = Mth.floor(this.getX());
             int j = Mth.floor(this.getY());

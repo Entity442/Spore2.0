@@ -64,6 +64,7 @@ public class Mound extends UtilityEntity {
         Entity entity = this;
         if (entity.isAlive() && entityData.get(AGE) < entityData.get(MAX_AGE)){
             this.getPersistentData().putInt("age", 1 + this.getPersistentData().getInt("age"));
+
             if (this.getPersistentData().getInt("age") >= SConfig.SERVER.mound_age.get()) {
                 this.getPersistentData().putInt("age",0);
                 entityData.set(AGE,entityData.get(AGE) + 1);
@@ -113,6 +114,9 @@ public class Mound extends UtilityEntity {
         tag.putBoolean("linked",entityData.get(LINKED));
     }
 
+    public int getAgeCounter(){
+        return this.getPersistentData().getInt("age");
+    }
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);

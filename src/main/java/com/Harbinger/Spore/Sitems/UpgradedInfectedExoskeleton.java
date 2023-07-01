@@ -89,6 +89,23 @@ public class UpgradedInfectedExoskeleton extends ArmorItem {
     }
 
 
+    @Override
+    public void onArmorTick(ItemStack stack, Level level, Player player) {
+        this.geteffect(player);
+        super.onArmorTick(stack, level, player);
+    }
+
+    public void geteffect(LivingEntity entity) {
+        if ((entity.getItemBySlot(EquipmentSlot.FEET).getItem() == Sitems.INF_BOOTS.get())
+                && (entity.getItemBySlot(EquipmentSlot.LEGS).getItem() == Sitems.INF_PANTS.get())
+                && (entity.getItemBySlot(EquipmentSlot.CHEST).getItem() == Sitems.INF_UP_CHESTPLATE.get())
+                && (entity.getItemBySlot(EquipmentSlot.HEAD).getItem() == Sitems.INF_HELMET.get())) {
+            if (!entity.hasEffect(Seffects.SYMBIOSIS.get())){
+                entity.addEffect(new MobEffectInstance(Seffects.SYMBIOSIS.get(), 200, 0, (false), (false)));
+            }
+        }
+    }
+
     public static  class InfectedUpChestplate extends UpgradedInfectedExoskeleton {
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
@@ -171,21 +188,7 @@ public class UpgradedInfectedExoskeleton extends ArmorItem {
                 entity.setDeltaMovement(climbVec.x * 0.91D,
                         climbVec.y * 0.98D, climbVec.z * 0.91D);
             }
-            geteffect(entity);
             super.onArmorTick(stack, level, entity);
-        }
-
-
-        private void geteffect(Entity entity) {
-            if ((entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.FEET) : ItemStack.EMPTY)
-                    .getItem() == Sitems.INF_BOOTS.get()
-                    && (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.LEGS) : ItemStack.EMPTY)
-                    .getItem() == Sitems.INF_PANTS.get()
-                    && (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY)
-                    .getItem() == Sitems.INF_HELMET.get()) {
-                if (entity instanceof LivingEntity livingEntity)
-                    livingEntity.addEffect(new MobEffectInstance(Seffects.SYMBIOSIS.get(), 60, 0, (false), (false)));
-            }
         }
         @Override
         public void appendHoverText(ItemStack itemStack, @org.jetbrains.annotations.Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {

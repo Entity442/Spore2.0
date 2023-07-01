@@ -141,7 +141,6 @@ public class Proto extends UtilityEntity {
 
         if (getSignal() && getPlace() != null){
             this.SummonConstructor(this.level,this,this.getPlace());
-            this.setSignal(false);
         }
     }
 
@@ -353,21 +352,22 @@ public class Proto extends UtilityEntity {
         BlockPos blockPosTop = new BlockPos(entity.getX()+a,entity.getY()+c+1,entity.getZ()+b);
         if (level instanceof  ServerLevel serverLevel && serverLevel.isEmptyBlock(blockPos) && serverLevel.isEmptyBlock(blockPosTop)){
             if (pos != null){
-                BiomassReformator creature = Sentities.RECONSTRUCTOR.get().create(level);
-                assert creature != null;
+                BiomassReformator creature = new BiomassReformator(Sentities.RECONSTRUCTOR.get(),level);
                 creature.setLocation(pos);
                 if (pos.getY() > 120){
                     creature.setState(2);
                 }else if (pos.getY()<63){
+
                     creature.setState(1);
                 }else {
                     creature.setState(0);
                 }
                 creature.setPos(entity.getX()+a,entity.getY()+c,entity.getZ()+b);
                 level.addFreshEntity(creature);
-            }
-            if (level.getServer() != null && !level.isClientSide()){
-                level.getServer().getPlayerList().broadcastSystemMessage(Component.translatable("calamity_summon_message"), false);
+                if (level.getServer() != null && !level.isClientSide()){
+                    level.getServer().getPlayerList().broadcastSystemMessage(Component.translatable("calamity_summon_message"), false);
+                }
+                this.setSignal(false);
             }
         }
     }

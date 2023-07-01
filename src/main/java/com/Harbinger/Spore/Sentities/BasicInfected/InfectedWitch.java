@@ -45,6 +45,16 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
     }
     protected void registerGoals() {
         super.registerGoals();
+        this.goalSelector.addGoal(1, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRONG_HEALING), SoundEvents.WITCH_DRINK, (p_35882_) -> {
+            return (this.getHealth() < this.getMaxHealth()/2) && SConfig.SERVER.use_potions.get();
+        }){
+            @Override
+            public void start() {
+                setHunger(0);
+                super.start();
+            }
+        });
+
         this.goalSelector.addGoal(2, new CustomMeleeAttackGoal(this, 1.5, false) {
             @Override
             public boolean canUse() {
@@ -60,17 +70,6 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
         this.goalSelector.addGoal(1, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.LONG_FIRE_RESISTANCE), SoundEvents.WITCH_DRINK, (p_35882_) -> {
             return (this.isOnFire() && this.getLastDamageSource() != null && this.getLastDamageSource().isFire()) && !this.hasEffect(MobEffects.FIRE_RESISTANCE) && SConfig.SERVER.use_potions.get();
         }));
-
-
-        this.goalSelector.addGoal(1, new UseItemGoal<>(this, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.STRONG_HEALING), SoundEvents.WITCH_DRINK, (p_35882_) -> {
-            return (this.getHealth() < this.getMaxHealth()/2) && SConfig.SERVER.use_potions.get();
-        }){
-            @Override
-            public void start() {
-                setHunger(0);
-                super.start();
-            }
-        });
 
 
         this.goalSelector.addGoal(4, new BuffAlliesGoal(this,Infected.class,1.3,35,45,3,entity -> {

@@ -14,6 +14,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -26,6 +27,7 @@ import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 public class Leaper extends EvolvedInfected implements Carrier {
     public Leaper(EntityType<? extends Monster> type, Level level) {
@@ -113,7 +115,10 @@ public class Leaper extends EvolvedInfected implements Carrier {
         this.playSound(this.getStepSound(), 0.15F, 1.0F);
     }
 
-
-
+    public void positionRider(Entity entity) {
+        super.positionRider(entity);
+        Vec3 vec3 = (new Vec3(-0.2D, 0.0D, 0.0D)).yRot(-this.getYRot() * ((float)Math.PI / 180F) - ((float)Math.PI / 2F));
+        entity.setPos(this.getX() + vec3.x, this.getY() + 1.6,this.getZ()+ vec3.z);
+    }
 
 }

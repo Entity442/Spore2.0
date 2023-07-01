@@ -179,7 +179,7 @@ public class InfectionTendril extends UtilityEntity {
             if (counter < 200){
                 counter++;
             }else{
-                if ((Math.abs(this.getSearchArea().getX())  - Math.abs(this.getX()) < 6) && (Math.abs(this.getSearchArea().getZ()) - Math.abs(this.getZ()) < 6)){
+                if ((Math.abs(this.getSearchArea().getY())  - Math.abs(this.getY()) > 6)){
                   if (this.getY() > this.getSearchArea().getY()){
                     teleport(-1);
                   }else if (this.getY() < this.getSearchArea().getY()){
@@ -273,7 +273,7 @@ public class InfectionTendril extends UtilityEntity {
             }else if (blockstate.is(Sblocks.HIVE_SPAWN.get()) || blockstate.is(Sblocks.BIOMASS_LUMP.get()) ){
                 BlockEntity blockEntity = level.getBlockEntity(blockpos);
                 if (blockEntity instanceof HiveSpawnBlockEntity || blockEntity instanceof BiomassLumpEntity){
-                    blockEntity.getPersistentData().putInt("kills",blockEntity.getPersistentData().getInt("kills") + 5);
+                    blockEntity.getPersistentData().putInt("kills",blockEntity.getPersistentData().getInt("kills") + SConfig.SERVER.mound_tendril_feed.get());
                     this.discard();
                 }
             }

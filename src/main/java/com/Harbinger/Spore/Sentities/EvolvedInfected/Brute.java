@@ -188,8 +188,8 @@ public class Brute extends EvolvedInfected implements Carrier, RangedAttackMob {
             double dy = livingEntity.getY() + livingEntity.getEyeHeight();
             double dz = livingEntity.getZ() - this.getZ();
             FallingBlockEntity blockEntity = FallingBlockEntity.fall(level, new BlockPos(this.getX(), this.getY(), this.getZ()), getCarriedBlock());
-            blockEntity.setDeltaMovement(dx * 0.0245F, dy - blockEntity.getY() + Math.hypot(dx, dz) * 0.02F, dz * 0.0245F);
-            blockEntity.setHurtsEntities(2f,40);
+            blockEntity.setDeltaMovement(dx * 0.025F, dy - blockEntity.getY() + Math.hypot(dx, dz) * 0.02F, dz * 0.025F);
+            blockEntity.setHurtsEntities(2f,30);
             level.addFreshEntity(blockEntity);
             this.setCarriedBlock(null);
         }

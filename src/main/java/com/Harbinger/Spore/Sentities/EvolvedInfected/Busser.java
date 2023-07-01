@@ -20,6 +20,7 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
     public Busser(EntityType<? extends Monster> type, Level level) {
@@ -34,7 +35,8 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
 
     public void positionRider(Entity entity) {
         super.positionRider(entity);
-        entity.setPos(this.getX(), this.getY() - 1.2,this.getZ());
+        Vec3 vec3 = (new Vec3(0.4D, 0.0D, 0.0D)).yRot(-this.getYRot() * ((float)Math.PI / 180F) - ((float)Math.PI / 2F));
+        entity.setPos(this.getX() + vec3.x, this.getY() - 1.2,this.getZ()+ vec3.z);
     }
 
     @Override

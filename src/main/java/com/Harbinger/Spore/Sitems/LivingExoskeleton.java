@@ -1,13 +1,19 @@
 package com.Harbinger.Spore.Sitems;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sitems;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class LivingExoskeleton extends ArmorItem {
@@ -58,5 +64,24 @@ public class LivingExoskeleton extends ArmorItem {
             }
         } , slot,properties);
 
+    }
+
+
+
+    @Override
+    public void onArmorTick(ItemStack stack, Level level, Player player) {
+        this.geteffect(player);
+        super.onArmorTick(stack, level, player);
+    }
+
+    public void geteffect(LivingEntity entity) {
+        if ((entity.getItemBySlot(EquipmentSlot.FEET).getItem() == Sitems.LIVING_BOOTS.get())
+                && (entity.getItemBySlot(EquipmentSlot.LEGS).getItem() == Sitems.LIVING_PANTS.get())
+                && (entity.getItemBySlot(EquipmentSlot.CHEST).getItem() == Sitems.LIVING_CHEST.get())
+                && (entity.getItemBySlot(EquipmentSlot.HEAD).getItem() == Sitems.LIVING_HELMET.get())) {
+            if (!entity.hasEffect(Seffects.SYMBIOSIS.get())){
+                entity.addEffect(new MobEffectInstance(Seffects.SYMBIOSIS.get(), 200, 0, (false), (false)));
+            }
+        }
     }
 }

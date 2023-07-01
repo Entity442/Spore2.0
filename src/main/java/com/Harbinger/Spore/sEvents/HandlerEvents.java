@@ -145,7 +145,7 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Current Health " + mound.getHealth()),false);
                                     player.displayClientMessage(Component.literal("Is Linked ? " + mound.getLinked()),false);
                                     player.displayClientMessage(Component.literal("Age " + mound.getAge()),false);
-                                    player.displayClientMessage(Component.literal("Ticks until growth " + mound.getCounter() + "/" + SConfig.SERVER.mound_age.get()),false);
+                                    player.displayClientMessage(Component.literal("Ticks until growth " + mound.getAgeCounter() + "/" + SConfig.SERVER.mound_age.get()),false);
                                     player.displayClientMessage(Component.literal("Buffs " + mound.getActiveEffects()),false);
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
                                 }

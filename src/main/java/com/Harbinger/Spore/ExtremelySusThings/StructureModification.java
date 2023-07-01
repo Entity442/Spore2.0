@@ -23,13 +23,10 @@ public class StructureModification implements StructureModifier {
     public void modify(Holder<Structure> structure, Phase phase, ModifiableStructureInfo.StructureInfo.Builder builder) {
         if (structure.is(BuiltinStructures.WOODLAND_MANSION)){
             builder.getStructureSettings().getOrAddSpawnOverrides(MobCategory.MONSTER).addSpawn(new MobSpawnSettings.SpawnerData(Sentities.INF_EVOKER.get(),60,2,4));
-            builder.getStructureSettings().getOrAddSpawnOverrides(MobCategory.MONSTER).addSpawn(new MobSpawnSettings.SpawnerData(Sentities.INF_VINDICATOR.get(),80,3,6));
-            builder.getStructureSettings().getOrAddSpawnOverrides(MobCategory.MONSTER).addSpawn(new MobSpawnSettings.SpawnerData(Sentities.MOUND.get(),1,1,2));
-        }
+            builder.getStructureSettings().getOrAddSpawnOverrides(MobCategory.MONSTER).addSpawn(new MobSpawnSettings.SpawnerData(Sentities.INF_VINDICATOR.get(),80,3,6));}
 
         if (structure.is(BuiltinStructures.PILLAGER_OUTPOST)){
             builder.getStructureSettings().getOrAddSpawnOverrides(MobCategory.MONSTER).addSpawn(new MobSpawnSettings.SpawnerData(Sentities.INF_PILLAGER.get(),60,2,4));
-            builder.getStructureSettings().getOrAddSpawnOverrides(MobCategory.MONSTER).addSpawn(new MobSpawnSettings.SpawnerData(Sentities.MOUND.get(),1,1,2));
         }
 
         if (structure.is(BuiltinStructures.OCEAN_RUIN_WARM)){

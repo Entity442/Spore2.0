@@ -28,31 +28,6 @@ public class InfectedChestplate extends InfectedExoskeleton {
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
         return "spore:textures/armor/infected_layer_1.png";
     }
-
-    @Override
-    public void onArmorTick(ItemStack stack, Level level, Player entity) {
-        if (entity.horizontalCollision && Screen.hasShiftDown()) {
-            Vec3 initialVec = entity.getDeltaMovement();
-            Vec3 climbVec = new Vec3(initialVec.x, 0.2D, initialVec.z);
-            entity.setDeltaMovement(climbVec.x * 0.91D,
-                    climbVec.y * 0.98D, climbVec.z * 0.91D);
-        }
-        geteffect(entity);
-        super.onArmorTick(stack, level, entity);
-    }
-
-
-    private void geteffect(Entity entity) {
-        if ((entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.FEET) : ItemStack.EMPTY)
-                .getItem() == Sitems.INF_BOOTS.get()
-                && (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.LEGS) : ItemStack.EMPTY)
-                .getItem() == Sitems.INF_PANTS.get()
-                && (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY)
-                .getItem() == Sitems.INF_HELMET.get()) {
-            if (entity instanceof LivingEntity livingEntity)
-                livingEntity.addEffect(new MobEffectInstance(Seffects.SYMBIOSIS.get(), 60, 0, (false), (false)));
-        }
-    }
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
 

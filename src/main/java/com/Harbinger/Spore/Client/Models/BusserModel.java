@@ -196,7 +196,7 @@ public class BusserModel<T extends Busser> extends EntityModel<T> {
 				this.busser.getChild("Tail").xRot = 0;
 				this.busser.getChild("Tail").getChild("Tail2").xRot = 0;
 				this.busser.getChild("Tail").getChild("Tail2").getChild("Tail3").xRot = 0;
-				this.busser.getChild("Tail").getChild("Tail2").getChild("Tail3").getChild("Tail4").xRot = 0;
+				this.busser.getChild("Tail").getChild("Tail2").getChild("Tail3").getChild("Tail4").xRot = -0.3F + Mth.sin(ageInTicks / 3) / 6;
 			}else {
 				this.busser.getChild("Tail").xRot = -0.3F + Mth.sin(ageInTicks / 3) / 6;
 				this.busser.getChild("Tail").getChild("Tail2").xRot = -0.3F + Mth.sin(ageInTicks / 3) / 6;
