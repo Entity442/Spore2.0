@@ -498,7 +498,7 @@ public class SConfig {
             builder.pop();
 
             builder.push("Biomass Reconstructor");
-            this.reconstructor_hp = builder.comment("Default 20").defineInRange("Sets the base health of the reconstructor", 20, 1, Double.MAX_VALUE);
+            this.reconstructor_hp = builder.comment("Default 30").defineInRange("Sets the base health of the reconstructor", 30, 1, Double.MAX_VALUE);
             this.reconstructor_armor = builder.comment("Default 6").defineInRange("Sets the base armor of the reconstructor", 6, 1, Double.MAX_VALUE);
             this.recontructor_clock = builder.comment("Default 30").defineInRange("Sets the time before it gains one biomass", 30, 1, Integer.MAX_VALUE);
             this.reconstructor_assimilation = builder.comment("Default 10").defineInRange("How much biomass does it get from assimilating infected", 10, 1, Integer.MAX_VALUE);
@@ -879,8 +879,8 @@ public class SConfig {
                     Lists.newArrayList(
                             "The_Harbinger69", "ABucketOfFriedChicken", "LoneGuy", "cheesepuff", "Sire_AwfulThe1st", "Azami",
                             "Deyvid", "Dany_Why", "Technoblade", "Ike", "Hypnotizd", "SaDrOcK:(", "JhonOK22", "hacie", "WhisperFire26",
-                            "Pajera", "CopperKev", "TheBeast22", "Bowser", "Mad_Dog", "Ripley", "Kraken", "Zero", "FireBread", "bartsek009 ",
-                            "xXFuryXx", "Nova69", "Belladonna","Entity","Keymind","Whisper",
+                            "Pajera", "Gistique", "Demonid", "Bowser", "Mad_Dog", "Ripley", "Kraken", "Zero", "Joker_de_Coeur", "bartsek009 ",
+                            "xXFuryXx", "Nova69", "Belladonna","Entity","Keymind","Whisper","Helldwin",
                             "Mademoiselle2016") , o -> o instanceof String);
             builder.comment("Items|chance of giving");
             this.player_h = builder.defineList("Head Slot",

@@ -1,7 +1,8 @@
 package com.Harbinger.Spore.Client.Renderers;
 
 
-import com.Harbinger.Spore.Client.Models.BiomassReformatorModel;
+import com.Harbinger.Spore.Client.Models.BiomassReconstructorModel;
+import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Sentities.Organoids.BiomassReformator;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -12,28 +13,24 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class BiomassReconfiguratorRenderer<Type extends BiomassReformator> extends MobRenderer<Type , BiomassReformatorModel<Type>> {
+public class BiomassReconfiguratorRenderer<Type extends BiomassReformator> extends MobRenderer<Type , BiomassReconstructorModel<Type>> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Spore.MODID,
-            "textures/entity/blank.png");
+            "textures/entity/womb.png");
     public BiomassReconfiguratorRenderer(EntityRendererProvider.Context context) {
-        super(context, new BiomassReformatorModel<>(context.bakeLayer(BiomassReformatorModel.LAYER_LOCATION)), 0.5f);
+        super(context, new BiomassReconstructorModel<>(context.bakeLayer(BiomassReconstructorModel.LAYER_LOCATION)), 0.5f);
     }
 
 
     @Override
     protected void scale(BiomassReformator reformator, PoseStack poseStack, float p_115316_) {
-        float scale;
-        if (reformator.getBiomass() <=25){
-            scale = 0.5f;
-        }else if (reformator.getBiomass() <=50){
-            scale = 1f;
-        }else if (reformator.getBiomass() <=75){
-            scale = 2f;
-        }else{
-            scale = 3f;
+        int age = 1;
+        if (reformator.getBiomass() > (SConfig.SERVER.reconstructor_biomass.get()/4) && reformator.getBiomass() < (SConfig.SERVER.reconstructor_biomass.get()/2)){
+            age = 2;
+        }else if (reformator.getBiomass() > (SConfig.SERVER.reconstructor_biomass.get()/2)){
+            age = 3;
         }
 
-        poseStack.scale((float) scale,(float)scale,(float)scale);
+        poseStack.scale((float) age,(float)age,(float)age);
     }
 
     @Override

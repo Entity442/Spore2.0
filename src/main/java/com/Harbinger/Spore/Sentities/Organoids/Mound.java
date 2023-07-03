@@ -64,22 +64,23 @@ public class Mound extends UtilityEntity {
         Entity entity = this;
         if (entity.isAlive() && entityData.get(AGE) < entityData.get(MAX_AGE)){
             this.getPersistentData().putInt("age", 1 + this.getPersistentData().getInt("age"));
-
             if (this.getPersistentData().getInt("age") >= SConfig.SERVER.mound_age.get()) {
                 this.getPersistentData().putInt("age",0);
                 entityData.set(AGE,entityData.get(AGE) + 1);
-                this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) +10);
+                this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) +5);
             }
         }
         if (entity.isOnGround()){
             entity.makeStuckInBlock(Blocks.AIR.defaultBlockState(), new Vec3(0, 1, 0));
+        }
+        if (entityData.get(TENDRILS) <= 0 && Math.random() < 0.1){
+            this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) +1);
         }
         if (entityData.get(COUNTER) < maxCounter){
             this.setCounter(this.getCounter() + 1);
         }
         if (entity.isAlive() && this.getCounter() >= maxCounter && !level.isClientSide){
             Spread(entity , entity.level);
-            this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,60,1));
             this.setCounter(0);
             if (entityData.get(TENDRILS) > 0 && entityData.get(AGE) >= 3 && checkForTendrils(entity)){
                 this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) -1);
@@ -283,7 +284,7 @@ public class Mound extends UtilityEntity {
         AABB aabb = entity.getBoundingBox().inflate(80);
         for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
             BlockState blockState = level.getBlockState(blockpos);
-            if (blockState.is(Sblocks.REMAINS.get()) && Math.random() < 0.3){
+            if (blockState.is(Sblocks.REMAINS.get()) && Math.random() < 0.4){
                 InfectionTendril tendril = new InfectionTendril(Sentities.TENDRIL.get(),level);
                 tendril.setAgeM(this.getMaxAge() -1);
                 tendril.setSearchArea(blockpos);
@@ -386,6 +387,14 @@ public class Mound extends UtilityEntity {
         }
         for (int i = 0;i <= this.getAge(); i++){
             super.die(source);
+        }
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (this.getHealth() < this.getMaxHealth() && !this.hasEffect(MobEffects.REGENERATION)){
+            this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,200,0));
         }
     }
 }
