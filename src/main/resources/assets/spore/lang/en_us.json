@@ -195,6 +195,9 @@
 
   "sounds.spore.damage": "Infected is being damaged",
   "sounds.spore.growl": "Infected is growling",
+  "sounds.spore.sieger_ambient": "Sieger growling",
+  "sounds.spore.womb_ambient": "Flesh is warping",
+  "sounds.spore.proto_ambient": "The hivemind is whispering",
   "sounds.spore.braiomil_attack": "The Braiomil is attacking",
   "sounds.spore.howler_growl": "The Howler is calling",
   "sounds.spore.fungal_burst": "A Fungus Bursts",

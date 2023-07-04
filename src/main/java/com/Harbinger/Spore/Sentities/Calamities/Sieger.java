@@ -120,7 +120,7 @@ public class Sieger extends Calamity implements RangedAttackMob {
         this.goalSelector.addGoal(7, new SwimToBlockGoal(this , 1.5, 16));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.2));
         this.goalSelector.addGoal(6,new CalamityInfectedCommand(this));
-        this.goalSelector.addGoal(7,new SummonScentInCombat(this));
+        this.goalSelector.addGoal(7,new SummonScentInCombat(this,10));
         this.goalSelector.addGoal(8,new SporeBurstSupport(this){
             @Override
             public void start() {
@@ -153,7 +153,7 @@ public class Sieger extends Calamity implements RangedAttackMob {
     }
 
     protected SoundEvent getAmbientSound() {
-        return Ssounds.INF_GROWL.get();
+        return Ssounds.SIEGER_AMBIENT.get();
     }
 
     protected SoundEvent getHurtSound(DamageSource p_34327_) {

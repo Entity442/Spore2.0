@@ -42,22 +42,23 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
     @Override
     protected void registerGoals() {
 
-        this.goalSelector.addGoal(1, new TransportInfected<>(this, Mob.class, 0.8 ,
+        this.goalSelector.addGoal(2,new BusserFlyAndDrop(this,6));
+        this.goalSelector.addGoal(3, new TransportInfected<>(this, Mob.class, 0.8 ,
                 e -> { return SConfig.SERVER.can_be_carried.get().contains(e.getEncodeId()) || SConfig.SERVER.ranged.get().contains(e.getEncodeId());}));
 
-        this.goalSelector.addGoal(2, new CustomMeleeAttackGoal(this, 1.5, false) {
+        this.goalSelector.addGoal(4, new CustomMeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 return 3.0 + entity.getBbWidth() * entity.getBbWidth();}});
 
-        this.goalSelector.addGoal(3,new LeapGoal(this,0.2F){
+        this.goalSelector.addGoal(5,new LeapGoal(this,0.2F){
             @Override
             public boolean canUse() {
                 return super.canUse() && Busser.this.random.nextInt(0,10) == 5;
             }
         });
-        this.goalSelector.addGoal(3, new AerialChargeGoal(this ));
-        this.goalSelector.addGoal(4 , new FlyingWanderAround(this , 1.0));
+        this.goalSelector.addGoal(6, new AerialChargeGoal(this ));
+        this.goalSelector.addGoal(7 , new FlyingWanderAround(this , 1.0));
         super.registerGoals();
     }
 
@@ -81,18 +82,6 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
 
     }
 
-    @Override
-    public void tick() {
-        super.tick();
-        if (this.isAlive() && this.isVehicle() && this.getTarget() != null){
-            if (this.distanceToSqr(this.getTarget()) < 30D){
-                LivingEntity entity = (LivingEntity) this.getFirstPassenger();
-                if (entity != null && SConfig.SERVER.can_be_carried.get().contains(entity.getEncodeId())){
-                entity.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING ,200,1));
-                entity.stopRiding();}
-            }
-        }
-    }
 
 
 

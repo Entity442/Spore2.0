@@ -72,6 +72,24 @@
     "sounds": [
       "spore:puff"
     ]
+  },
+  "womb_ambient" :{
+    "subtitle": "sounds.spore.womb_ambient",
+    "sounds": [
+      "spore:womb_ambient"
+    ]
+  },
+  "sieger_ambient" :{
+    "subtitle": "sounds.spore.sieger_ambient",
+    "sounds": [
+      "spore:sieger_ambient"
+    ]
+  },
+  "proto_ambient" :{
+    "subtitle": "sounds.spore.proto_ambient",
+    "sounds": [
+      "spore:proto_ambient"
+    ]
   }
 
 }

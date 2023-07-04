@@ -55,6 +55,18 @@ public class Ssounds {
             "braiomil_attack",
             () -> new SoundEvent(new ResourceLocation(Spore.MODID, "braiomil_attack")));
 
+    public static final RegistryObject<SoundEvent> SIEGER_AMBIENT = SOUNDS.register(
+            "sieger_ambient",
+            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "sieger_ambient")));
+
+    public static final RegistryObject<SoundEvent> WOMB_AMBIENT = SOUNDS.register(
+            "womb_ambient",
+            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "womb_ambient")));
+
+    public static final RegistryObject<SoundEvent> PROTO_AMBIENT = SOUNDS.register(
+            "proto_ambient",
+            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "proto_ambient")));
+
     public static final RegistryObject<SoundEvent> FUNGAL_BURST = SOUNDS.register(
             "fungal_burst",
             () -> new SoundEvent(new ResourceLocation(Spore.MODID, "fungal_burst")));
