@@ -26,9 +26,7 @@ public class InfectedPlayerRenderer<Type extends InfectedPlayer> extends MobRend
         super(context, new InfectedPlayerModel<>(context.bakeLayer(InfectedPlayerModel.LAYER_LOCATION)), 0.5f);
         this.addLayer(new HumanoidArmorLayer(this, new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)),
                 new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR))));
-
         this.addLayer(new ItemInHandLayer<>(this, context.getItemInHandRenderer()));
-
         this.addLayer(new Eyes<>(this));
     }
 

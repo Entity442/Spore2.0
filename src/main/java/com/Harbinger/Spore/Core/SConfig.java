@@ -318,7 +318,7 @@ public class SConfig {
                             "minecraft:creeper","minecraft:squid","minecraft:bat") , o -> o instanceof String);
 
             this.whitelist = builder.defineList("Mobs ALWAYS Targeted",
-                    Lists.newArrayList("minecraft:villager","minecraft:wandering_trader","minecraft:iron_golem") , o -> o instanceof String);
+                    Lists.newArrayList("minecraft:villager","minecraft:wandering_trader","minecraft:iron_golem","roamers:roamer","roamers:bandit") , o -> o instanceof String);
 
             this.attack = builder.defineList("Mobs that will target infected",
                     Lists.newArrayList(
@@ -384,6 +384,8 @@ public class SConfig {
                     Lists.newArrayList(
                             "minecraft:zombie|spore:inf_human","minecraft:husk|spore:inf_human","minecraft:drowned|spore:inf_drowned"
                             ,"minecraft:pillager|spore:inf_pillager","minecraft:villager|spore:inf_villager","guardvillagers:guard|spore:inf_villager",
+                            "recruits:recruit|spore:inf_villager","recruits:bowman|spore:inf_villager","recruits:recruit_shieldman|spore:inf_villager",
+                            "recruits:nomad|spore:inf_villager","recruits:horseman|spore:inf_villager",
                             "minecraft:witch|spore:inf_witch","minecraft:wandering_trader|spore:inf_wanderer","minecraft:evoker|spore:inf_evoker",
                             "minecraft:vindicator|spore:inf_vindicator","hunterillager:hunterillager|spore:inf_vindicator","roamers:roamer|spore:inf_player"
                             ,"roamers:bandit|spore:inf_player") , o -> o instanceof String);
@@ -497,7 +499,7 @@ public class SConfig {
             this.inf_pil_range_damage = builder.comment("Default 1.6f").define("Sets Infected Pillager Range Damage",1.6);
             builder.pop();
 
-            builder.push("Biomass Reconstructor");
+            builder.push("Womb");
             this.reconstructor_hp = builder.comment("Default 30").defineInRange("Sets the base health of the reconstructor", 30, 1, Double.MAX_VALUE);
             this.reconstructor_armor = builder.comment("Default 6").defineInRange("Sets the base armor of the reconstructor", 6, 1, Double.MAX_VALUE);
             this.recontructor_clock = builder.comment("Default 30").defineInRange("Sets the time before it gains one biomass", 30, 1, Integer.MAX_VALUE);

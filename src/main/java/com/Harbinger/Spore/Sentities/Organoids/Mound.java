@@ -45,7 +45,7 @@ public class Mound extends UtilityEntity {
     private static final EntityDataAccessor<Integer> MAX_AGE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> STRUCTURE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> LINKED = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.BOOLEAN);
-    private final  int maxCounter = SConfig.SERVER.mound_cooldown.get();
+    public int maxCounter =  SConfig.SERVER.mound_cooldown.get();
     private int attack_counter = 0;
     public Mound(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -61,8 +61,7 @@ public class Mound extends UtilityEntity {
     @Override
     public void tick() {
         super.tick();
-        Entity entity = this;
-        if (entity.isAlive() && entityData.get(AGE) < entityData.get(MAX_AGE)){
+        if (this.isAlive() && entityData.get(AGE) < entityData.get(MAX_AGE)){
             this.getPersistentData().putInt("age", 1 + this.getPersistentData().getInt("age"));
             if (this.getPersistentData().getInt("age") >= SConfig.SERVER.mound_age.get()) {
                 this.getPersistentData().putInt("age",0);
@@ -70,8 +69,8 @@ public class Mound extends UtilityEntity {
                 this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) +5);
             }
         }
-        if (entity.isOnGround()){
-            entity.makeStuckInBlock(Blocks.AIR.defaultBlockState(), new Vec3(0, 1, 0));
+        if (this.isOnGround()){
+            this.makeStuckInBlock(Blocks.AIR.defaultBlockState(), new Vec3(0, 1, 0));
         }
         if (entityData.get(TENDRILS) <= 0 && Math.random() < 0.1){
             this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) +1);
@@ -79,15 +78,15 @@ public class Mound extends UtilityEntity {
         if (entityData.get(COUNTER) < maxCounter){
             this.setCounter(this.getCounter() + 1);
         }
-        if (entity.isAlive() && this.getCounter() >= maxCounter && !level.isClientSide){
-            Spread(entity , entity.level);
+        if (this.isAlive() && this.getCounter() >= maxCounter && !level.isClientSide){
+            Spread(this , this.level);
             this.setCounter(0);
-            if (entityData.get(TENDRILS) > 0 && entityData.get(AGE) >= 3 && checkForTendrils(entity)){
+            if (entityData.get(TENDRILS) > 0 && entityData.get(AGE) >= 3 && checkForTendrils(this)){
                 this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) -1);
-                SpreadKin(entity,entity.level);
+                SpreadKin(this,this.level);
             }
         }
-        if (entity.isAlive() && attack_counter > 0){
+        if (this.isAlive() && attack_counter > 0){
             attack_counter = attack_counter - 1;
         }
         if (this.getCounter() > (maxCounter - 40) && this.getCounter() < maxCounter && this.level instanceof ServerLevel serverLevel){
@@ -136,7 +135,9 @@ public class Mound extends UtilityEntity {
     public int getCounter() {
         return this.entityData.get(COUNTER);
     }
-
+    public int getMaxCounter() {
+        return this.maxCounter;
+    }
     public void setMaxAge(int maxAge){
         entityData.set(MAX_AGE,maxAge);
     }

@@ -18,10 +18,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
@@ -30,6 +27,7 @@ import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -68,8 +66,9 @@ public class Brute extends EvolvedInfected implements Carrier, RangedAttackMob {
 
         super.registerGoals();
     }
-    public void setCarriedBlock(@Nullable BlockState p_32522_) {
-        this.entityData.set(DATA_CARRY_STATE, Optional.ofNullable(p_32522_));
+    public void setCarriedBlock(@Nullable BlockState state) {
+
+        this.entityData.set(DATA_CARRY_STATE, Optional.ofNullable(state));
     }
 
     @Nullable
@@ -103,6 +102,18 @@ public class Brute extends EvolvedInfected implements Carrier, RangedAttackMob {
         this.entityData.define(DATA_CARRY_STATE, Optional.empty());
     }
 
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> dataAccessor) {
+        if (DATA_CARRY_STATE.equals(dataAccessor)){
+            if (getCarriedBlock() != null){
+                this.setItemSlot(EquipmentSlot.MAINHAND ,new ItemStack(getCarriedBlock().getBlock().asItem()));
+            }else{
+                this.setItemSlot(EquipmentSlot.MAINHAND,ItemStack.EMPTY);
+            }
+        }
+        super.onSyncedDataUpdated(dataAccessor);
+    }
+
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, SConfig.SERVER.brute_hp.get() * SConfig.SERVER.global_health.get())
@@ -122,6 +133,7 @@ public class Brute extends EvolvedInfected implements Carrier, RangedAttackMob {
         if (getCarriedBlock() == null && this.random.nextInt(250) == 0){
             this.setCarriedBlock(blocky());
         }
+
     }
     private boolean switchy() {
         if (this.getTarget() != null){
