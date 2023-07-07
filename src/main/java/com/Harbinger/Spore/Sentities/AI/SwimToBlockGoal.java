@@ -18,7 +18,7 @@ public class SwimToBlockGoal extends MoveToBlockGoal {
 
     @Override
     public boolean canUse() {
-        return this.mob.isInWater() && !(this.mob instanceof WaterInfected);
+        return this.mob.isInFluidType() && !(this.mob instanceof WaterInfected);
     }
 
     @Override

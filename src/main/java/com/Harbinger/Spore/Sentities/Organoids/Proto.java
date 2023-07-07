@@ -6,6 +6,7 @@ import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.HurtTargetGoal;
+import com.Harbinger.Spore.Sentities.BaseEntities.Calamity;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.Calamities.Sieger;
@@ -93,6 +94,9 @@ public class Proto extends UtilityEntity {
         super.registerGoals();
     }
 
+    public AABB seachbox(){
+        return this.getBoundingBox().inflate(300);
+    }
     @Override
     public void tick() {
         super.tick();
@@ -102,8 +106,7 @@ public class Proto extends UtilityEntity {
         if (counter <1200){
             counter++;
         }else{
-            AABB searchbox = this.getBoundingBox().inflate(300);
-            List<Entity> entities = this.level.getEntities(this, searchbox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
+            List<Entity> entities = this.level.getEntities(this, seachbox() , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
             entityData.set(HOSTS,0);
             for (Entity en : entities) {
                 if (en instanceof Infected infected){
@@ -141,7 +144,7 @@ public class Proto extends UtilityEntity {
             }
         }
 
-        if (getSignal() && getPlace() != null){
+        if (getSignal() && getPlace() != null && checkForCalamities(this.getPlace())){
             this.SummonConstructor(this.level,this,this.getPlace());
         }
     }
@@ -382,5 +385,20 @@ public class Proto extends UtilityEntity {
                 this.setSignal(false);
             }
         }
+    }
+
+    public boolean checkForCalamities(BlockPos pos){
+        List<Entity> entities = this.level.getEntities(this, seachbox() , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
+        for (Entity en : entities) {
+            if (en instanceof Calamity calamity && calamity.getSearchArea() == BlockPos.ZERO){
+                calamity.setSearchArea(pos);
+                this.setSignal(false);
+                if (level.getServer() != null && !level.isClientSide()){
+                    level.getServer().getPlayerList().broadcastSystemMessage(Component.translatable("calamity_coming_message"), false);
+                }
+                return false;
+            }
+        }
+        return true;
     }
 }

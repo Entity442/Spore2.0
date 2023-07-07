@@ -148,6 +148,7 @@
   "entity.spore.inf_player": "Infected Adventurer",
   "entity.spore.scamper": "Scamper",
   "entity.spore.mound": "Flesh Mound",
+  "entity.spore.proto": "Proto Hivemind",
   "entity.spore.reconstructor": "Womb",
   "entity.spore.sieger": "Sieger",
 
@@ -208,6 +209,7 @@
 
   "hivemind_summon_message": "Endure...",
   "calamity_summon_message": "Prepare...",
+  "calamity_coming_message": "Incoming...",
 
   "death.attack.mycelium.overtake.player": "%1$s has succumbed to the infection",
   "death.attack.mycelium.overtake": "%1$s has succumbed to the infection",
@@ -224,7 +226,7 @@
 
 
   "death.attack.infected_damage1": "%1$s was eaten alive by %2$s",
-  "death.attack.infected_damage2": "%1$s was fungi-fied  by %2$s",
+  "death.attack.infected_damage2": "%1$s was fungi-fied by %2$s",
   "death.attack.infected_damage3": "%1$s forgot %2$s was a bioweapon",
 
   "death.attack.calamity_damage1": "%1$s was eaten by %2$s",

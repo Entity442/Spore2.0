@@ -86,7 +86,7 @@ public class Calamity extends UtilityEntity {
     }
 
     public void travel(Vec3 p_32858_) {
-        if (this.isEffectiveAi() && this.isInWater()) {
+        if (this.isEffectiveAi() && this.isInFluidType()) {
             this.moveRelative(0.1F, p_32858_);
             this.move(MoverType.SELF, this.getDeltaMovement());
             this.setDeltaMovement(this.getDeltaMovement().scale(0.7D));
@@ -212,7 +212,7 @@ public class Calamity extends UtilityEntity {
     }
 
     public AABB getMiningHitbox(){
-        if (this.getSearchArea() != BlockPos.ZERO){
+        if (this.getSearchArea() != BlockPos.ZERO && !this.isAggressive()){
             if (this.getSearchArea().getY() < this.getY()){
                 return this.getBoundingBox().inflate(1.5,0.0,1.5).move(0.0,-1.0,0.0);
             }else if (this.getSearchArea().getY() > this.getY()){

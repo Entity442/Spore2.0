@@ -29,6 +29,7 @@ import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
 import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -101,13 +102,29 @@ public class Sieger extends Calamity implements RangedAttackMob {
     }
 
 
+    boolean calculateHeight(){
+        return this.getTarget() != null && this.getTarget().getY() > this.getY() && Math.abs(Math.abs(this.getTarget().getY()) - Math.abs(this.getY())) > 5;
+    }
+
+    boolean calculateDistance(){
+        return this.getTarget() != null && this.distanceToSqr(this.getTarget()) > 8000.0D;
+    }
+
+    @Override
+    public boolean hasLineOfSight(Entity entity) {
+        if (calculateDistance() || calculateHeight()){
+            return true;
+        }
+        return super.hasLineOfSight(entity);
+    }
+
     @Override
     public void registerGoals() {
 
         this.goalSelector.addGoal(3, new RangedAttackGoal(this,1.2,80,48){
             @Override
             public boolean canUse() {
-                return super.canUse() && Sieger.this.getTarget() != null && Sieger.this.distanceToSqr(Sieger.this.getTarget()) > 1000.0D;
+                return super.canUse() && (calculateHeight() || calculateDistance());
             }
         });
         this.goalSelector.addGoal(4, new LeapAtTargetGoal(this,0.4F));
@@ -120,7 +137,7 @@ public class Sieger extends Calamity implements RangedAttackMob {
         this.goalSelector.addGoal(7, new SwimToBlockGoal(this , 1.5, 16));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.2));
         this.goalSelector.addGoal(6,new CalamityInfectedCommand(this));
-        this.goalSelector.addGoal(7,new SummonScentInCombat(this,10));
+        this.goalSelector.addGoal(7,new SummonScentInCombat(this));
         this.goalSelector.addGoal(8,new SporeBurstSupport(this){
             @Override
             public void start() {
@@ -224,8 +241,9 @@ public class Sieger extends Calamity implements RangedAttackMob {
                     tumor.setMobEffect(randomElement);
                 }
             }
+            tumor.setExplode(Explosion.BlockInteraction.BREAK);
             tumor.moveTo(this.getX(),this.getY()+8.2,this.getZ());
-            tumor.shoot(dx, dy - tumor.getY() + Math.hypot(dx, dz) * 0.2F, dz, 1f * 2, 12.0F);
+            tumor.shoot(dx, dy - tumor.getY() + Math.hypot(dx, dz) * 0.15F, dz, 1f * 2, 12.0F);
             for (int l = 0;l < 3;l++){
                 level.addFreshEntity(tumor);
             }

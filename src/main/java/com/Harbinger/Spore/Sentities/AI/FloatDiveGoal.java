@@ -25,7 +25,7 @@ public class FloatDiveGoal extends Goal {
         }else if (this.mob instanceof FlyingInfected){
             return false;
         }
-        return this.mob.isInWater();
+        return this.mob.isInFluidType();
     }
 
     public boolean requiresUpdateEveryTick() {

@@ -160,6 +160,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> proto_armor;
         public final ForgeConfigSpec.ConfigValue<Double> proto_damage;
         public final ForgeConfigSpec.ConfigValue<Double> proto_dpsr;
+        public final ForgeConfigSpec.ConfigValue<Double> proto_calamity;
 
         public final ForgeConfigSpec.ConfigValue<Double> how_hp;
         public final ForgeConfigSpec.ConfigValue<Double> how_damage;
@@ -480,6 +481,7 @@ public class SConfig {
             this.proto_armor = builder.comment("Default 10").defineInRange("Sets Proto Armor", 10, 1, Double.MAX_VALUE);
             this.proto_damage = builder.comment("Default 10").defineInRange("Sets Proto Melee damage", 10, 1, Double.MAX_VALUE);
             this.proto_dpsr = builder.comment("Default 20").defineInRange("Sets Proto Damage Cap , set to 0 to disable", 20, 1, Double.MAX_VALUE);
+            this.proto_calamity = builder.comment("Default 5").defineInRange("Chance for the death of a linked evolved infected to trigger the hivemind", 5, 0, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Howler");
@@ -600,7 +602,7 @@ public class SConfig {
             this.scamper_hp = builder.comment("Default 35").defineInRange("Sets Scamper Max health", 25, 1, Double.MAX_VALUE);
             this.scamper_damage = builder.comment("Default 10").defineInRange("Sets Scamper Damage", 6, 1, Double.MAX_VALUE);
             this.scamper_armor = builder.comment("Default 2").defineInRange("Sets Scamper Armor", 3, 1, Double.MAX_VALUE);
-            this.scamper_age = builder.comment("Default 6000").defineInRange("Sets Scamper Age", 6000, 1, Integer.MAX_VALUE);
+            this.scamper_age = builder.comment("Default 12000").defineInRange("Sets Scamper Age", 12000, 1, Integer.MAX_VALUE);
             this.scamper_summon = builder.comment("Default true").define("Should a Scamper Summon Mounds on death?",true);
             builder.pop();
 
@@ -629,7 +631,7 @@ public class SConfig {
 
             builder.push("Spawns");
             this.spawn = builder.comment("Default false").define("Should mobs spawn after a few days?",false);
-            this.mob_cap = builder.comment("Default 50").define("MobCap",50);
+            this.mob_cap = builder.comment("Default 30").define("MobCap",30);
             this.dimension_parameters = builder.comment("Default minecraft:is_overworld").defineList("Dictates in what biome the infected spawn",
                     Lists.newArrayList("minecraft:is_overworld") , o -> o instanceof String);
             this.days = builder.comment("Default 3").define("Days before infected start spawning",3);
@@ -901,7 +903,7 @@ public class SConfig {
             builder.pop();
             builder.push("Structure data");
             this.biomass_lump_kills = builder.comment("Default 5").defineInRange("Biomass Lump minimal kills", 5, 0, Integer.MAX_VALUE);
-            this.hive_spawn_kills = builder.comment("Default 25").defineInRange("Reconstructed Mind Block kills", 25, 0, Integer.MAX_VALUE);
+            this.hive_spawn_kills = builder.comment("Default 50").defineInRange("Reconstructed Mind Block kills", 50, 0, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Block infection");
             this.block_infection = builder.defineList("Blocks and their infected counterparts",

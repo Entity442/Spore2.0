@@ -55,7 +55,7 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
             }
         });
 
-        this.goalSelector.addGoal(2, new CustomMeleeAttackGoal(this, 1.5, false) {
+        this.goalSelector.addGoal(3, new CustomMeleeAttackGoal(this, 1.5, false) {
             @Override
             public boolean canUse() {
                 return super.canUse() && (this.mob.getRandom().nextInt(0,10) == 8 || !SConfig.SERVER.use_potions.get());

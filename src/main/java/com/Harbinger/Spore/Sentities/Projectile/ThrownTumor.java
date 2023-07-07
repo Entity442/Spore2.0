@@ -24,6 +24,7 @@ public class ThrownTumor extends ThrowableItemProjectile {
     public MobEffect mobEffect;
     public int duration = 600;
     public int potion_level = 1;
+    public Explosion.BlockInteraction explode = Explosion.BlockInteraction.NONE;
 
     public ThrownTumor(Level level, LivingEntity entity) {
         super(Sentities.THROWN_TUMOR.get(), entity, level);
@@ -51,13 +52,15 @@ public class ThrownTumor extends ThrowableItemProjectile {
     public void setMobEffect(MobEffect effect){
         this.mobEffect = effect;
     }
+    public void setExplode(Explosion.BlockInteraction value){
+        this.explode = value;
+    }
 
     @Override
     protected void onHit(HitResult hitResult) {
         super.onHit(hitResult);
         if (!this.level.isClientSide){
-        Explosion.BlockInteraction explosion$blockinteraction = Explosion.BlockInteraction.NONE;
-        this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)2, explosion$blockinteraction);
+        this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)2, explode);
         if (mobEffect != null){
             AreaEffectCloud cloud = EntityType.AREA_EFFECT_CLOUD.create(level);
             assert cloud != null;

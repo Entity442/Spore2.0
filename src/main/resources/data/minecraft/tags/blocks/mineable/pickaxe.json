@@ -8,6 +8,9 @@
     "spore:container",
     "spore:infested_stone",
     "spore:infested_deepslate",
+    "spore:infested_end_stone",
+    "spore:infested_netherrack",
+
 
     "spore:fungal_shell",
     "spore:mycelium_block",

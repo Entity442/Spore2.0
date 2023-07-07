@@ -73,7 +73,7 @@ public class Infection {
             }
         }
 
-        if (entity instanceof EvolvedInfected evolvedInfected && event.getSource().getEntity() != null && evolvedInfected.getLinked() && Math.random() < 0.01){
+        if (entity instanceof EvolvedInfected evolvedInfected && event.getSource().getEntity() != null && evolvedInfected.getLinked() && Math.random() < (SConfig.SERVER.proto_calamity.get()/100)){
             AABB searchbox = evolvedInfected.getBoundingBox().inflate(300);
             List<Entity> entities = entity.level.getEntities(entity, searchbox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
             for (Entity en : entities) {

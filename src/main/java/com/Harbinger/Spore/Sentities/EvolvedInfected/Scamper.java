@@ -54,11 +54,15 @@ public class Scamper extends EvolvedInfected {
             this.getPersistentData().putInt("age", 1 + this.getPersistentData().getInt("age"));
             if (this.getPersistentData().getInt("age") >= SConfig.SERVER.scamper_age.get()) {
                 if (!level.isClientSide){
+                    if (SConfig.SERVER.scamper_summon.get()){
+                        Summon(4);
+                    }
                     RandomSource randomSource = RandomSource.create();
-                    int chance = randomSource.nextInt(1,4);
+                    int chance = randomSource.nextInt(1,3);
+                    int age = randomSource.nextInt(1,4);
                     for (int i = 0; i < chance; ++i) {
                         if (SConfig.SERVER.scamper_summon.get()){
-                            Summon();
+                            Summon(age);
                         }
                     }
                     if (SConfig.SERVER.scent_spawn.get()){
@@ -71,12 +75,13 @@ public class Scamper extends EvolvedInfected {
         super.tick();
     }
 
-    private void Summon(){
+    private void Summon(int i){
         RandomSource randomSource = RandomSource.create();
         Mound mound = new Mound(Sentities.MOUND.get(),level);
         int vecx = randomSource.nextInt(-2 ,2);
         int vecz = randomSource.nextInt(-2 ,2);
         mound.moveTo(this.getX(),this.getY(),this.getZ());
+        mound.setMaxAge(i);
         mound.addEffect(new MobEffectInstance(MobEffects.REGENERATION ,200,0));
         mound.setDeltaMovement(0.4 * vecx ,0.1,0.4 * vecz);
         level.explode(this,this.getX(),this.getY(), this.getZ(),1f, Explosion.BlockInteraction.NONE);
