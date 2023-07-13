@@ -31,7 +31,7 @@ import java.util.Objects;
 public class Infection {
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event) {
-        if (event != null && event.getEntity() != null) {
+        if (event != null && event.getEntity() != null && !event.getEntity().getLevel().isClientSide) {
             Level world = event.getEntity().level;
             double x = event.getEntity().getX();
             double y = event.getEntity().getY();
