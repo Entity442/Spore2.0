@@ -254,7 +254,7 @@ public class Infected extends Monster{
         Entity entity = this;
         BlockPos blockpos = new BlockPos(i, j, k);
         Biome biome = this.level.getBiome(blockpos).value();
-        return (SConfig.SERVER.weaktocold.get() && biome.getBaseTemperature() <= 0.2) && (!entity.isOnFire());
+        return (SConfig.SERVER.weaktocold.get() && this.random.nextInt(20) == 0 && biome.getBaseTemperature() <= 0.2) && (!entity.isOnFire());
     }
 
     @Override
@@ -320,6 +320,9 @@ public class Infected extends Monster{
         }
         if (source.getDirectEntity() instanceof AcidBall || source.getDirectEntity() instanceof Vomit){
             return  false;
+        }
+        if ((SConfig.SERVER.weaktocold.get() && source == DamageSource.FREEZE) || source == DamageSource.LIGHTNING_BOLT){
+            return super.hurt(source,amount  * 2);
         }
         return super.hurt(source, amount);
     }

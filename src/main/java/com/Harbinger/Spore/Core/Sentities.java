@@ -43,11 +43,11 @@ public class Sentities {
                     .build(new ResourceLocation(Spore.MODID, "inf_human").toString()));
 
     public static final RegistryObject<EntityType<InfectedPlayer>> INF_PLAYER = SPORE_ENTITIES.register("inf_player",
-            () -> EntityType.Builder.of(InfectedPlayer::new, INFECTED).sized(0.6f, 2f)
+            () -> EntityType.Builder.of(InfectedPlayer::new, INFECTED).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "inf_player").toString()));
 
     public static final RegistryObject<EntityType<Knight>> KNIGHT = SPORE_ENTITIES.register("knight",
-            () -> EntityType.Builder.of(Knight::new, INFECTED).sized(0.6f, 2f)
+            () -> EntityType.Builder.of(Knight::new, INFECTED).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "knight").toString()));
 
     public static final RegistryObject<EntityType<Griefer>> GRIEFER = SPORE_ENTITIES.register("griefer",
@@ -55,19 +55,19 @@ public class Sentities {
                     .build(new ResourceLocation(Spore.MODID, "griefer").toString()));
 
     public static final RegistryObject<EntityType<Braionmil>> BRAIOMIL = SPORE_ENTITIES.register("braiomil",
-            () -> EntityType.Builder.of(Braionmil::new, INFECTED).sized(0.6f, 2f)
+            () -> EntityType.Builder.of(Braionmil::new, INFECTED).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "braiomil").toString()));
 
     public static final RegistryObject<EntityType<InfectedVillager>> INF_VILLAGER = SPORE_ENTITIES.register("inf_villager",
-            () -> EntityType.Builder.of(InfectedVillager::new, INFECTED).sized(0.6f, 2f)
+            () -> EntityType.Builder.of(InfectedVillager::new, INFECTED).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "inf_villager").toString()));
 
     public static final RegistryObject<EntityType<InfectedWanderingTrader>> INF_WANDERER = SPORE_ENTITIES.register("inf_wanderer",
-            () -> EntityType.Builder.of(InfectedWanderingTrader::new, INFECTED).sized(0.6f, 2f)
+            () -> EntityType.Builder.of(InfectedWanderingTrader::new, INFECTED).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "inf_wanderer").toString()));
 
     public static final RegistryObject<EntityType<InfectedWitch>> INF_WITCH = SPORE_ENTITIES.register("inf_witch",
-            () -> EntityType.Builder.of(InfectedWitch::new, INFECTED).sized(0.6f, 2f)
+            () -> EntityType.Builder.of(InfectedWitch::new, INFECTED).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "inf_witch").toString()));
 
     public static final RegistryObject<EntityType<Leaper>> LEAPER = SPORE_ENTITIES.register("leaper",
