@@ -205,6 +205,8 @@ public class Sitems {
     public  static final RegistryObject<Item> INF_UP_CHESTPLATE = ITEMS.register("inf_up_chest",
             UpgradedInfectedExoskeleton.InfectedUpChestplate::new);
 
+    public  static final RegistryObject<Item> CORRUPTED_RECORD = ITEMS.register("corrupted_record",
+            CorruptedRecord::new);
     public  static final RegistryObject<Item> BIOMASS = ITEMS.register("biomass",
             Biomass::new);
     public  static final RegistryObject<Item> AMETHYST_DUST = ITEMS.register("amethyst_dust",

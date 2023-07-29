@@ -26,7 +26,6 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
     public Busser(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         this.moveControl = new InfectedArialMovementControl(this , 20,true);
-        this.maxUpStep =1f;
     }
     public boolean causeFallDamage(float p_147105_, float p_147106_, DamageSource p_147107_) {
         return false;
@@ -50,7 +49,6 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 return 5.0 + entity.getBbWidth() * entity.getBbWidth();}});
-        this.goalSelector.addGoal(6, new AerialChargeGoal(this ));
 
         this.goalSelector.addGoal(8 , new FlyingWanderAround(this , 1.0));
         super.registerGoals();
@@ -81,7 +79,7 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
 
     @Override
     protected PathNavigation createNavigation(Level level) {
-        if (this.isOnGround() || this.isVehicle()){
+        if (this.isOnGround()){
             GroundPathNavigation navigation = new GroundPathNavigation(this,level);
             navigation.canPassDoors();
             return navigation;
@@ -91,5 +89,14 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
             return navigation;
         }
     }
-
+    @Override
+    protected void customServerAiStep() {
+        if (!this.isOnGround() && this.getTarget() != null && this.getRandom().nextInt(5)==0){
+            double d0 = this.getTarget().getX() - this.getX();
+            double d1 = this.getTarget().getY() - this.getY();
+            double d2 = this.getTarget().getZ() - this.getZ();
+            this.setDeltaMovement(this.getDeltaMovement().add(new Vec3(d0, d1, d2).normalize().scale(0.06D)));
+        }
+        super.customServerAiStep();
+    }
 }

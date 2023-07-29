@@ -62,7 +62,7 @@ public class UpgradedInfectedExoskeleton extends ArmorItem {
 
             @Override
             public SoundEvent getEquipSound() {
-                return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(""));
+                return SoundEvents.ARMOR_EQUIP_LEATHER;
             }
 
             @Override
@@ -182,7 +182,7 @@ public class UpgradedInfectedExoskeleton extends ArmorItem {
         }
         @Override
         public void onArmorTick(ItemStack stack, Level level, Player entity) {
-            if (entity.horizontalCollision && Screen.hasShiftDown()) {
+            if (entity.horizontalCollision && Screen.hasShiftDown() && level.isClientSide) {
                 Vec3 initialVec = entity.getDeltaMovement();
                 Vec3 climbVec = new Vec3(initialVec.x, 0.2D, initialVec.z);
                 entity.setDeltaMovement(climbVec.x * 0.91D,

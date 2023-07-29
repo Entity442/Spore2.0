@@ -13,67 +13,42 @@ public class Ssounds {
             DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Spore.MODID);
     public static void register(IEventBus eventBus) {SOUNDS.register(eventBus);}
 
-    public static final RegistryObject<SoundEvent> INF_DAMAGE = SOUNDS.register(
-            "inf_damage",
-            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "inf_damage")));
+    private static RegistryObject<SoundEvent> soundRegistry(String id){
+        return SOUNDS.register(id, () -> new SoundEvent(new ResourceLocation(Spore.MODID, id)));
+    }
 
-    public static final RegistryObject<SoundEvent> INF_GROWL = SOUNDS.register(
-            "inf_growl",
-            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "inf_growl")));
+    public static final RegistryObject<SoundEvent> CORRUPTED_RECORD = soundRegistry("corrupted_record");
 
-    public static final RegistryObject<SoundEvent> HOWLER_GROWL = SOUNDS.register(
-            "howler_growl",
-            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "howler_growl")));
+    public static final RegistryObject<SoundEvent> INF_DAMAGE = soundRegistry("inf_damage");
 
+    public static final RegistryObject<SoundEvent> INF_GROWL = soundRegistry("inf_growl");
 
-    public static final RegistryObject<SoundEvent> INF_VILLAGER_DAMAGE = SOUNDS.register(
-            "inf_villager_damage",
-            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "inf_villager_damage")));
+    public static final RegistryObject<SoundEvent> HOWLER_GROWL = soundRegistry("howler_growl");
 
-    public static final RegistryObject<SoundEvent> INF_VILLAGER_GROWL = SOUNDS.register(
-            "inf_villager_growl",
-            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "inf_villager_growl")));
+    public static final RegistryObject<SoundEvent> INF_VILLAGER_DAMAGE = soundRegistry("inf_villager_damage");
 
-    public static final RegistryObject<SoundEvent> INF_VILLAGER_DEATH = SOUNDS.register(
-            "inf_villager_death",
-            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "inf_villager_death")));
+    public static final RegistryObject<SoundEvent> INF_VILLAGER_GROWL = soundRegistry("inf_villager_growl");
 
-    public static final RegistryObject<SoundEvent> INF_EVOKER_DAMAGE = SOUNDS.register(
-            "inf_evoker_damage",
-            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "inf_evoker_damage")));
+    public static final RegistryObject<SoundEvent> INF_VILLAGER_DEATH = soundRegistry("inf_villager_death");
 
-    public static final RegistryObject<SoundEvent> INF_EVOKER_GROWL = SOUNDS.register(
-            "inf_evoker_growl",
-            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "inf_evoker_growl")));
+    public static final RegistryObject<SoundEvent> INF_EVOKER_DAMAGE = soundRegistry("inf_evoker_damage");
 
-    public static final RegistryObject<SoundEvent> INF_EVOKER_DEATH = SOUNDS.register(
-            "inf_evoker_death",
-            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "inf_evoker_death")));
+    public static final RegistryObject<SoundEvent> INF_EVOKER_GROWL = soundRegistry("inf_evoker_growl");
 
+    public static final RegistryObject<SoundEvent> INF_EVOKER_DEATH = soundRegistry("inf_evoker_death");
 
-    public static final RegistryObject<SoundEvent> BRAIOMIL_ATTACK = SOUNDS.register(
-            "braiomil_attack",
-            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "braiomil_attack")));
+    public static final RegistryObject<SoundEvent> BRAIOMIL_ATTACK = soundRegistry("braiomil_attack");
 
-    public static final RegistryObject<SoundEvent> SIEGER_AMBIENT = SOUNDS.register(
-            "sieger_ambient",
-            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "sieger_ambient")));
+    public static final RegistryObject<SoundEvent> SIEGER_AMBIENT = soundRegistry("sieger_ambient");
 
-    public static final RegistryObject<SoundEvent> WOMB_AMBIENT = SOUNDS.register(
-            "womb_ambient",
-            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "womb_ambient")));
+    public static final RegistryObject<SoundEvent> WOMB_AMBIENT = soundRegistry("womb_ambient");
 
-    public static final RegistryObject<SoundEvent> PROTO_AMBIENT = SOUNDS.register(
-            "proto_ambient",
-            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "proto_ambient")));
+    public static final RegistryObject<SoundEvent> PROTO_AMBIENT = soundRegistry("proto_ambient");
 
-    public static final RegistryObject<SoundEvent> FUNGAL_BURST = SOUNDS.register(
-            "fungal_burst",
-            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "fungal_burst")));
+    public static final RegistryObject<SoundEvent> FUNGAL_BURST = soundRegistry("fungal_burst");
 
-    public static final RegistryObject<SoundEvent> PUFF = SOUNDS.register(
-            "puff",
-            () -> new SoundEvent(new ResourceLocation(Spore.MODID, "puff")));
+    public static final RegistryObject<SoundEvent> PUFF = soundRegistry("puff");
+
     private Ssounds() {
     }
 }
