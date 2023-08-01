@@ -3,6 +3,7 @@ package com.Harbinger.Spore.Sentities.BasicInfected;
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
+import com.Harbinger.Spore.Sentities.EvolutionClass;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.Scamper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -195,7 +196,7 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
         super.baseTick();
         if (entityData.get(EVOLUTION) >= (20 * SConfig.SERVER.evolution_age_human.get()) && this.entityData.get(KILLS) >= SConfig.SERVER.min_kills.get()) {
             this.entityData.set(KILLS,entityData.get(KILLS) - SConfig.SERVER.min_kills.get());
-            Evolve(this);
+            EvolutionClass.Evolve(this,SConfig.SERVER.pil_ev.get());
         }else{
             if (!isFreazing() && this.entityData.get(KILLS) >= SConfig.SERVER.min_kills.get()) {
                 this.entityData.set(EVOLUTION,entityData.get(EVOLUTION) + 1);
@@ -204,35 +205,4 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
     }
 
 
-
-    public void Evolve(LivingEntity entity) {
-        if (Math.random() < 0.9) {
-            Random rand = new Random();
-            List<? extends String> ev = SConfig.SERVER.pil_ev.get();
-            for (int i = 0; i < 1; ++i) {
-                int randomIndex = rand.nextInt(ev.size());
-                ResourceLocation randomElement1 = new ResourceLocation(ev.get(randomIndex));
-                EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
-                Entity waveentity = randomElement.create(level);
-                waveentity.setPos(entity.getX(), entity.getY() + 0.5D, entity.getZ());
-                waveentity.setCustomName(entity.getCustomName());
-                if (waveentity instanceof Infected infected){infected.setKills(entityData.get(KILLS));}
-                level.addFreshEntity(waveentity);
-                if (this.level instanceof ServerLevel serverLevel){
-                    double x0 = this.getX() - (random.nextFloat() - 0.1) * 0.1D;
-                    double y0 = this.getY() + (random.nextFloat() - 0.25) * 0.15D * 5;
-                    double z0 = this.getZ() + (random.nextFloat() - 0.1) * 0.1D;
-                    serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x0, y0, z0, 2, 0, 0, 0, 1);
-                }
-                entity.discard();
-            }
-        }else {
-            Scamper scamper = new Scamper(Sentities.SCAMPER.get(), level);
-            scamper.setPos(entity.getX(), entity.getY() + 0.5D, entity.getZ());
-            scamper.setCustomName(entity.getCustomName());
-            scamper.setKills(entityData.get(KILLS));
-            level.addFreshEntity(scamper);
-            entity.discard();
-        }
-    }
 }

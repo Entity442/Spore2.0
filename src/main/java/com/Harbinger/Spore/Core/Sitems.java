@@ -3,6 +3,9 @@ package com.Harbinger.Spore.Core;
 import com.Harbinger.Spore.Client.ClientModEvents;
 import com.Harbinger.Spore.Sitems.*;
 import com.Harbinger.Spore.Spore;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -68,8 +71,9 @@ public class Sitems {
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> TUMOR = ITEMS.register("tumor",
             () -> new Tumor( new Item.Properties().tab(ScreativeTab.SPORE).stacksTo(16)));
-
-
+    public  static final RegistryObject<Item> SAUSAGE = ITEMS.register("sausage",
+            () -> new Item(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder().nutrition(8).saturationMod(0.8F).effect(()-> new MobEffectInstance(Seffects.MYCELIUM.get(),200,0),0.4f)
+                    .effect(()-> new MobEffectInstance(MobEffects.ABSORPTION,300,1),1f).meat().build())));
 
     public  static final RegistryObject<Item> INFECTED_HUMAN_SPAWNEGG = ITEMS.register("infected_human_spawnegg",
             () -> new SporeSpawnEgg(Sentities.INF_HUMAN,-9357608, new Item.Properties().tab(ScreativeTab.SPORE)));

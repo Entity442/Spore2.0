@@ -59,6 +59,7 @@
   "item.spore.sickle_fragment": "Sickle Fragment",
   "item.spore.innards": "Innards",
   "item.spore.r_wing": "Wing",
+  "item.spore.sausage": "Meaty Sausage",
 
   "item.spore.saber": "Infected Saber",
   "item.spore.infected_bow": "Infected Bow",
@@ -204,7 +205,7 @@
   "sounds.spore.howler_growl": "The Howler is calling",
   "sounds.spore.fungal_burst": "A Fungus Bursts",
   "sounds.spore.puff": "Puff",
-  "sounds.spore.corrupted_record": "Playing Corrupted Record",
+  "sounds.spore.record": "Playing Corrupted Record",
 
   "item.line.shift": "A nutrient soup made out of animal matter.",
   "item.line.normal": "Press shift for more info.",
