@@ -40,7 +40,9 @@ public class FollowOthersGoal extends Goal {
 
     @Override
     public boolean canUse() {
-    if (mob.getTarget() != null || (this.mob.getRandom().nextInt(15) == 0 && this.getFreePartner() == null)){
+    if (mob.getTarget() != null){
+        return false;
+    } else if (this.mob.getRandom().nextInt(15) == 0 && this.getFreePartner() == null){
         return false;
     } else{
         if (this.mob.getRandom().nextInt(0,5) == 1){
@@ -58,7 +60,7 @@ public class FollowOthersGoal extends Goal {
 
     public void stop() {
         this.partner = null;
-}
+    }
 
     public void tick() {
       if(this.partner != null){
