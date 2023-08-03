@@ -5,6 +5,7 @@ import com.Harbinger.Spore.Sentities.EvolvedInfected.Busser;
 import com.Harbinger.Spore.Sentities.Variants.BusserVariants;
 import com.Harbinger.Spore.Spore;
 import com.google.common.collect.Maps;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.Util;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -41,6 +42,14 @@ public class BusserRenderer<Type extends Busser> extends MobRenderer<Type , Buss
         public RenderType renderType() {
             return EYES;
         }
+    }
+    @Override
+    protected void scale(Type type, PoseStack stack, float value) {
+        if (type.getVariant() == BusserVariants.ENHANCED){
+            float size = 1.4f;
+            stack.scale(size,size,size);
+        }
+        super.scale(type, stack, value);
     }
     @Override
     public ResourceLocation getTextureLocation(Type entity) {

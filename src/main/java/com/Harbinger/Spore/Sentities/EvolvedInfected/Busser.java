@@ -35,6 +35,7 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
         super(type, level);
         this.moveControl = new InfectedArialMovementControl(this , 20,true);
     }
+    private int flytimeV;
     public boolean causeFallDamage(float p_147105_, float p_147106_, DamageSource p_147107_) {
         return false;
     }
@@ -124,12 +125,17 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
         double speed_charge;
         if (this.getTypeVariant() == 1){
             AttributeInstance armor = this.getAttribute(Attributes.ARMOR);
-            if (armor != null){
+            AttributeInstance health = this.getAttribute(Attributes.MAX_HEALTH);
+            if (armor != null && health != null){
                 armor.setBaseValue(SConfig.SERVER.bus_armor.get() * SConfig.SERVER.global_armor.get() * 2);
+                health.setBaseValue(SConfig.SERVER.brute_hp.get() * SConfig.SERVER.global_health.get() * 2);
             }
             if (this.isVehicle()){
                 this.setDeltaMovement(this.getDeltaMovement().add(0,0.025,0));
-                if (this.getRandom().nextInt(300) == 0){
+                if (this.flytimeV < 200){
+                    this.flytimeV++;
+                }else{
+                    this.flytimeV = 0;
                     this.ejectPassengers();
                 }
             }
