@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "mushroom_fields",
-  "features": "spore:biomass_tower",
-  "step": "surface_structures"
-}

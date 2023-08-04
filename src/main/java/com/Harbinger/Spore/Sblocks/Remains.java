@@ -14,6 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -53,5 +54,15 @@ public class Remains extends Block {
         cloud.moveTo(pos.getX(),pos.getY(),pos.getZ());
         level.addFreshEntity(cloud);
         return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
+    }
+
+    @Override
+    public boolean canSurvive(BlockState blockstate, LevelReader worldIn, BlockPos pos) {
+        BlockPos blockpos = pos.below();
+        BlockState groundState = worldIn.getBlockState(blockpos);
+        return this.mayPlaceOn(groundState, worldIn, blockpos);
+    }
+    protected boolean mayPlaceOn(BlockState blockState, BlockGetter p_51043_, BlockPos p_51044_) {
+        return blockState.canOcclude();
     }
 }
