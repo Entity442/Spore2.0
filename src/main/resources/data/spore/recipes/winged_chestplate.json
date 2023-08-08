@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:smithing_transform",
+  "type": "minecraft:smithing",
   "addition": {
     "item": "spore:r_elytron"
   },
@@ -8,8 +8,5 @@
   },
   "result": {
     "item": "spore:inf_up_chest"
-  },
-  "template": {
-    "item": "spore:armor_plate"
   }
 }
