@@ -107,7 +107,7 @@ public class Sieger extends Calamity implements RangedAttackMob {
     }
 
     boolean calculateDistance(){
-        return this.getTarget() != null && this.distanceToSqr(this.getTarget()) > 8000.0D;
+        return this.getTarget() != null && this.distanceToSqr(this.getTarget()) > 400.0D;
     }
 
     @Override
@@ -121,7 +121,7 @@ public class Sieger extends Calamity implements RangedAttackMob {
     @Override
     public void registerGoals() {
 
-        this.goalSelector.addGoal(3, new RangedAttackGoal(this,1.2,80,48){
+        this.goalSelector.addGoal(3, new RangedAttackGoal(this,1.5,80,48){
             @Override
             public boolean canUse() {
                 return super.canUse() && (calculateHeight() || calculateDistance());
@@ -243,7 +243,7 @@ public class Sieger extends Calamity implements RangedAttackMob {
             }
             tumor.setExplode(Explosion.BlockInteraction.BREAK);
             tumor.moveTo(this.getX(),this.getY()+8.2,this.getZ());
-            tumor.shoot(dx, dy - tumor.getY() + Math.hypot(dx, dz) * 0.15F, dz, 1f * 2, 12.0F);
+            tumor.shoot(dx, dy - tumor.getY() + Math.hypot(dx, dz) * 0.05F, dz, 1f * 2, 12.0F);
             for (int l = 0;l < 3;l++){
                 level.addFreshEntity(tumor);
             }
@@ -275,5 +275,9 @@ public class Sieger extends Calamity implements RangedAttackMob {
     }
 
 
-
+    @Override
+    public boolean doHurtTarget(Entity entity) {
+        this.playSound(Ssounds.SIEGER_BITE.get());
+        return super.doHurtTarget(entity);
+    }
 }
