@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Mound extends UtilityEntity implements Enemy {
-    private static final EntityDataAccessor<Integer> TENDRILS = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> AGE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> COUNTER = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> MAX_AGE = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
@@ -67,25 +66,22 @@ public class Mound extends UtilityEntity implements Enemy {
             if (this.getPersistentData().getInt("age") >= SConfig.SERVER.mound_age.get()) {
                 this.getPersistentData().putInt("age",0);
                 entityData.set(AGE,entityData.get(AGE) + 1);
-                this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) +5);
             }
         }
         if (this.isOnGround()){
             this.makeStuckInBlock(Blocks.AIR.defaultBlockState(), new Vec3(0, 1, 0));
         }
-        if (entityData.get(TENDRILS) <= 0 && Math.random() < 0.1){
-            this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) +1);
-        }
+
         if (entityData.get(COUNTER) < maxCounter){
             this.setCounter(this.getCounter() + 1);
         }
         if (this.isAlive() && this.getCounter() >= maxCounter && !level.isClientSide){
             Spread(this , this.level);
             this.setCounter(0);
-            if (entityData.get(TENDRILS) > 0 && entityData.get(AGE) >= 3){
-                this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) -1);
+            if (this.random.nextInt(10) == 0 && entityData.get(AGE) >= 3 && checkForExtraTendrils(this,this.level)){
                 SpreadKin(this,this.level);
             }
+
         }
         if (this.isAlive() && attack_counter > 0){
             attack_counter = attack_counter - 1;
@@ -107,7 +103,6 @@ public class Mound extends UtilityEntity implements Enemy {
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putInt("tendrils",entityData.get(TENDRILS));
         tag.putInt("age",entityData.get(AGE));
         tag.putInt("counter",entityData.get(COUNTER));
         tag.putInt("max_age",entityData.get(MAX_AGE));
@@ -121,7 +116,6 @@ public class Mound extends UtilityEntity implements Enemy {
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        entityData.set(TENDRILS, tag.getInt("tendrils"));
         entityData.set(AGE, tag.getInt("age"));
         entityData.set(COUNTER, tag.getInt("counter"));
         entityData.set(MAX_AGE, tag.getInt("max_age"));
@@ -272,7 +266,7 @@ public class Mound extends UtilityEntity implements Enemy {
 
 
     private void SpreadKin(Entity entity , Level level) {
-        AABB aabb = entity.getBoundingBox().inflate(80);
+        AABB aabb = entity.getBoundingBox().inflate(SConfig.SERVER.mound_tendril_checker.get());
         for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
             BlockState blockState = level.getBlockState(blockpos);
             if (blockState.is(Sblocks.REMAINS.get()) && Math.random() < 0.4){
@@ -281,7 +275,6 @@ public class Mound extends UtilityEntity implements Enemy {
                 tendril.setSearchArea(blockpos);
                 tendril.setPos(this.getX(),this.getY()+0.5D,this.getZ());
                 level.addFreshEntity(tendril);
-                this.entityData.set(TENDRILS , this.entityData.get(TENDRILS) -1);
                 break;
             }else if (blockState.is(Sblocks.HIVE_SPAWN.get()) && Math.random() < 0.5){
                 InfectionTendril tendril = new InfectionTendril(Sentities.TENDRIL.get(),level);
@@ -298,6 +291,13 @@ public class Mound extends UtilityEntity implements Enemy {
             }
         }
     }
+
+    private boolean checkForExtraTendrils(Entity entity ,Level level){
+        AABB aabb = entity.getBoundingBox().inflate(SConfig.SERVER.mound_tendril_checker.get());
+        List<InfectionTendril> entities = level.getEntitiesOfClass(InfectionTendril.class, aabb);
+        return entities.size() <= 4;
+    }
+
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
@@ -342,7 +342,6 @@ public class Mound extends UtilityEntity implements Enemy {
 
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(TENDRILS, 5);
         this.entityData.define(AGE, 1);
         this.entityData.define(COUNTER, 0);
         this.entityData.define(MAX_AGE, 4);

@@ -113,8 +113,8 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
 
     @Override
     public void tick() {
-        if (isAlive() && potion != null && this.getMainHandItem() != PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), potion)){
-            this.setItemSlot(EquipmentSlot.MAINHAND,PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), potion));
+        if (isAlive() && potion != null && this.getOffhandItem() != PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), potion)){
+            this.setItemSlot(EquipmentSlot.OFFHAND,PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), potion));
         }
         super.tick();
     }

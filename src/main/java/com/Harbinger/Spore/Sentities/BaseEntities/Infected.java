@@ -54,6 +54,7 @@ public class Infected extends Monster{
     public static final EntityDataAccessor<Integer> HUNGER = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Integer> KILLS = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Integer> EVOLUTION = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Integer> EVOLUTION_POINTS = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Boolean> LINKED = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Boolean> PERSISTENT = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.BOOLEAN);
     @Nullable
@@ -201,7 +202,7 @@ public class Infected extends Monster{
         }}
 
         if (SConfig.SERVER.should_starve.get()){
-            if (!(this instanceof EvolvedInfected) && entityData.get(HUNGER) < SConfig.SERVER.hunger.get() && entityData.get(KILLS) <= 0 && SConfig.SERVER.starve.get()) {
+            if (!(this instanceof EvolvedInfected) && entityData.get(HUNGER) < SConfig.SERVER.hunger.get() && entityData.get(EVOLUTION_POINTS) <= 0 && SConfig.SERVER.starve.get()) {
                 int i;
                 if (this.isInPowderSnow || this.isFreazing()) {
                     i = 2;
@@ -260,6 +261,7 @@ public class Infected extends Monster{
     @Override
     public void awardKillScore(Entity entity, int i, DamageSource damageSource) {
         this.entityData.set(KILLS,entityData.get(KILLS) + 1);
+        this.entityData.set(EVOLUTION_POINTS,entityData.get(EVOLUTION_POINTS) + 1);
         setHunger(0);
         super.awardKillScore(entity, i, damageSource);
     }
@@ -272,6 +274,8 @@ public class Infected extends Monster{
     public void setLinked(Boolean count){
         entityData.set(LINKED,count);
     }
+    public void setEvoPoints(Integer count){entityData.set(EVOLUTION_POINTS,count);}
+    public  int getEvoPoints(){return entityData.get(EVOLUTION_POINTS);}
     public boolean getLinked(){return entityData.get(LINKED);}
     public int getEvolutionCoolDown(){
         return this.entityData.get(EVOLUTION);
@@ -285,6 +289,7 @@ public class Infected extends Monster{
         tag.putInt("hunger",entityData.get(HUNGER));
         tag.putInt("kills",entityData.get(KILLS));
         tag.putInt("evolution",entityData.get(EVOLUTION));
+        tag.putInt("evo_points",entityData.get(EVOLUTION_POINTS));
         tag.putBoolean("linked",entityData.get(LINKED));
         tag.putBoolean("persistent",entityData.get(PERSISTENT));
     }
@@ -296,6 +301,7 @@ public class Infected extends Monster{
         entityData.set(HUNGER, tag.getInt("hunger"));
         entityData.set(KILLS, tag.getInt("kills"));
         entityData.set(EVOLUTION,tag.getInt("evolution"));
+        entityData.set(EVOLUTION_POINTS,tag.getInt("evo_points"));
         entityData.set(LINKED, tag.getBoolean("linked"));
         entityData.set(PERSISTENT, tag.getBoolean("persistent"));
     }
@@ -303,6 +309,7 @@ public class Infected extends Monster{
         super.defineSynchedData();
         this.entityData.define(HUNGER, 0);
         this.entityData.define(KILLS, 0);
+        this.entityData.define(EVOLUTION_POINTS, 0);
         this.entityData.define(LINKED,false);
         this.entityData.define(PERSISTENT,false);
         this.entityData.define(EVOLUTION,0);

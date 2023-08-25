@@ -1,6 +1,5 @@
 package com.Harbinger.Spore.Sentities.AI.LocHiv;
 
-import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.InfectedEvoker;
@@ -16,13 +15,13 @@ public class BufferAI extends Goal {
     }
     @Override
     public boolean canUse() {
-        return infected.isAlive() && infected.getKills() > SConfig.SERVER.min_kills.get() && infected.getRandom().nextInt(0,10) == 7;
+        return infected.isAlive() && infected.getKills() > 0 && infected.getRandom().nextInt(0,10) == 7;
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (infected.getHealth() < infected.getMaxHealth() && infected.getKills() > 1){
+        if (infected.getHealth() < infected.getMaxHealth() && infected.getKills() > 0){
             if (!infected.hasEffect(MobEffects.REGENERATION)){
                 infected.addEffect(new MobEffectInstance(MobEffects.REGENERATION,200,0));
                 infected.setKills(infected.getKills() - 1);

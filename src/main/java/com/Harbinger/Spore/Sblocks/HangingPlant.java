@@ -42,7 +42,7 @@ public class HangingPlant extends FlowerBlock {
     public static final BooleanProperty HANGING = BlockStateProperties.HANGING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected static final VoxelShape AABB = Shapes.or(Block.box(4.0D, 0.0D, 4.0D, 12.0D, 7.0D, 12.0D));
-    protected static final VoxelShape HANGING_AABB = Shapes.or(Block.box(4.0D, 11.0D, 4.0D, 12.0D, 16.0D, 12.0D));
+    protected static final VoxelShape HANGING_AABB = Shapes.or(box(4.0D, 4.0D, 4.0D, 12.0D, 10.0D, 12.0D),box(6.0D, 10.0D, 6.0D, 10.0D, 16.0D, 10.0D));
 
     public HangingPlant() {
         super(MobEffects.WITHER, 1, BlockBehaviour.Properties.of(Material.PLANT).strength(0f, 0f).noCollission().noOcclusion().sound(SoundType.CROP).randomTicks());
@@ -139,7 +139,7 @@ public class HangingPlant extends FlowerBlock {
             BlockState block2 = Sblocks.BLOOM_GG.get().defaultBlockState();
         if (state.getBlock().getStateDefinition().getProperty("hanging") instanceof BooleanProperty property) {
             if (state.getValue(property)) {
-                level.setBlock(blockpos, block2.setValue(property, true), 3);
+                level.setBlock(blockpos, block2.setValue(HANGING, true), 3);
             } else {
                 level.setBlock(blockpos, block2, 3);
             }

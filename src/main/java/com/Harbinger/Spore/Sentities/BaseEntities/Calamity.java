@@ -122,6 +122,14 @@ public class Calamity extends UtilityEntity implements Enemy {
     }
 
     @Override
+    public boolean hurt(DamageSource source, float value) {
+        if (source.getEntity() != null && this.getSearchArea() == BlockPos.ZERO) {
+            this.setSearchArea(new BlockPos(source.getEntity().getX(), source.getEntity().getY(), source.getEntity().getZ()));
+        }
+        return super.hurt(source, value);
+    }
+
+    @Override
     public boolean isPushable() {
         return false;
     }
