@@ -30,6 +30,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
@@ -75,7 +76,7 @@ public class BiomassReformator extends UtilityEntity implements Enemy {
             this.makeStuckInBlock(Blocks.AIR.defaultBlockState(), new Vec3(0, 1, 0));
         }
         if (this.entityData.get(BIOMASS) >= SConfig.SERVER.reconstructor_biomass.get()){
-            this.Summon(this);
+            this.Summon(this,false);
         }
         if (this.entityData.get(COUNTER) < (SConfig.SERVER.recontructor_clock.get() * 20)){
             this.entityData.set(COUNTER , this.entityData.get(COUNTER) + 1);
@@ -96,7 +97,10 @@ public class BiomassReformator extends UtilityEntity implements Enemy {
             --eatingTicks;
         }
     }
-
+    @Override
+    public boolean canDrownInFluidType(FluidType type) {
+        return false;
+    }
     public void setBiomass(int biomass){
         entityData.set(BIOMASS,biomass);
     }
@@ -256,7 +260,7 @@ public class BiomassReformator extends UtilityEntity implements Enemy {
         }
     }
 
-    private void Summon(Entity entity){
+    private void Summon(Entity entity, boolean value){
         List<? extends String> ev;
         if (entityData.get(STATE) == 1){
             ev = SConfig.SERVER.reconstructor_water.get();
@@ -275,6 +279,9 @@ public class BiomassReformator extends UtilityEntity implements Enemy {
             waveentity.setPos(entity.getX(), entity.getY(), entity.getZ());
             if (waveentity instanceof Calamity calamity){
                 calamity.setSearchArea(this.getLocation());
+                if (value){
+                    calamity.setSecondsOnFire(3);
+                    calamity.setHealth(calamity.getMaxHealth() / 2);}
             }
             if (this.level instanceof ServerLevel serverLevel){
             double x0 = this.getX() - (random.nextFloat() - 0.1) * 0.1D;
@@ -284,5 +291,13 @@ public class BiomassReformator extends UtilityEntity implements Enemy {
             }
             this.discard();
             level.addFreshEntity(waveentity);
+    }
+
+    @Override
+    public void die(DamageSource p_21014_) {
+        if (this.getBiomass() > (SConfig.SERVER.reconstructor_biomass.get()/2)){
+            Summon(this,true);
+        }
+        super.die(p_21014_);
     }
 }

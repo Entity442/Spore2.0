@@ -46,7 +46,7 @@ public class AcidBall extends AbstractArrow implements ItemSupplier {
     @Override
     public void tick() {
         super.tick();
-        if (this.inGround || this.isInWater())
+        if (this.inGround || this.isInFluidType())
             this.discard();
     }
 

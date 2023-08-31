@@ -31,7 +31,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class Stalker extends EvolvedInfected {
     public static final EntityDataAccessor<Integer> CAMO = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
-    int timerCamo;
+    private int camo;
     public Stalker(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         this.navigation = new WallClimberNavigation(this,level);
@@ -111,33 +111,24 @@ public class Stalker extends EvolvedInfected {
         this.entityData.set(CAMO,i);
     }
 
-    @Override
-    public void tick() {
-        super.tick();
-        if (this.timerCamo < 3600){
-            this.timerCamo = this.timerCamo +1;
-        }else{
-            if (timerCamo <= 3600){
-                if (temperature() > 0.2 && temperature() < 1.2){
-                    setCamo(1);
-                }else if (temperature() <= 0.2){
-                    setCamo(2);
-                }else if ( temperature() >= 1.2){
-                    setCamo(3);
-                }else {
-                    setCamo(0);
-                }
-                timerCamo = 0;
-            }
-        }
-    }
-
-    public float temperature(){
+    public int getBiomeTint(){
         int i = Mth.floor(this.getX());
         int j = Mth.floor(this.getY());
         int k = Mth.floor(this.getZ());
         BlockPos blockpos = new BlockPos(i, j, k);
         Biome biome = this.level.getBiome(blockpos).value();
-        return biome.getBaseTemperature();
+        return biome.getFoliageColor();
     }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.camo <=1200){
+            this.camo++;
+        }else{
+            this.camo = 0;
+            this.setCamo(getBiomeTint());
+        }
+    }
+
 }

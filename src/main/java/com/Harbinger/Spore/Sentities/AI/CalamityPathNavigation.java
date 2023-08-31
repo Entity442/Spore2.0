@@ -72,10 +72,12 @@ public class CalamityPathNavigation extends GroundPathNavigation {
 
     protected static class CalamityNodeEvaluator extends WalkNodeEvaluator{
         protected BlockPathTypes evaluateBlockPathType(BlockGetter getter, boolean value, boolean value1, BlockPos pos, BlockPathTypes pathTypes) {
-            return pathTypes == BlockPathTypes.OPEN ? BlockPathTypes.BLOCKED : super.evaluateBlockPathType(getter, value, value1, pos, pathTypes);
+            if (net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(mob.level, mob)){
+                return pathTypes == BlockPathTypes.OPEN ? BlockPathTypes.BLOCKED : super.evaluateBlockPathType(getter, value, value1, pos, pathTypes);
+            }
+            return BlockPathTypes.OPEN;
         }
     }
-
     @Override
     public boolean isStuck() {
         this.recomputePath();

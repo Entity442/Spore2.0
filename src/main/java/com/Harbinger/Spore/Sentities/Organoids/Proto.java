@@ -241,7 +241,7 @@ public class Proto extends UtilityEntity implements Enemy {
         }
 
         public void Targeting(Entity entity){
-            AABB boundingBox = entity.getBoundingBox().inflate(64);
+            AABB boundingBox = entity.getBoundingBox().inflate(SConfig.SERVER.proto_range.get());
             List<Entity> entities = entity.level.getEntities(entity, boundingBox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
 
             for (Entity entity1 : entities) {
