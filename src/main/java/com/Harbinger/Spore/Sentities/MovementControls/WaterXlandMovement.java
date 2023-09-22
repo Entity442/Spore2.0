@@ -44,7 +44,7 @@ public class WaterXlandMovement extends MoveControl {
             this.mob.setSpeed(f2);
             this.mob.setDeltaMovement(this.mob.getDeltaMovement().add((double)f2 * d0 * 0.005D, (double)f2 * d1 * 0.1D, (double)f2 * d2 * 0.005D));
         } else {
-            if (!this.mob.onGround()) {
+            if (!this.mob.isOnGround()) {
                 this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(0.0D, -landSpeed, 0.0D));
             }
 
