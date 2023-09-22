@@ -188,6 +188,9 @@ public class Sieger extends Calamity implements RangedAttackMob {
     }
 
     protected SoundEvent getAmbientSound() {
+        if (this.getTarget() != null && this.distanceToSqr(this.getTarget()) > 200){
+            return null;
+        }
         return Ssounds.SIEGER_AMBIENT.get();
     }
 
@@ -226,6 +229,11 @@ public class Sieger extends Calamity implements RangedAttackMob {
             calamityMultiparts[i].setId(i + p_218825_.getId());
         }
 
+    }
+
+    @Override
+    public double setInflation() {
+        return 1;
     }
 
     @Override
