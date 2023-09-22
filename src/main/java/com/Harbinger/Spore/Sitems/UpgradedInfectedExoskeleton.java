@@ -1,10 +1,7 @@
 package com.Harbinger.Spore.Sitems;
 
 import com.Harbinger.Spore.Client.Models.WingedChestplate;
-import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Core.ScreativeTab;
-import com.Harbinger.Spore.Core.Seffects;
-import com.Harbinger.Spore.Core.Sitems;
+import com.Harbinger.Spore.Core.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -24,6 +21,7 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -85,7 +83,7 @@ public class UpgradedInfectedExoskeleton extends ArmorItem {
                 return SConfig.SERVER.knockback_resistance.get() /10F;
             }
         } , slot,properties);
-
+        Sitems.BIOLOGICAL_ITEMS.add(this);
     }
 
 
@@ -204,4 +202,8 @@ public class UpgradedInfectedExoskeleton extends ArmorItem {
     }
 
 
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return super.canApplyAtEnchantingTable(stack, enchantment) || Senchantments.SPORE_ENCHANTS.contains(enchantment);
+    }
 }

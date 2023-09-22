@@ -9,8 +9,8 @@ import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.HurtTargetGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.Calamity;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
+import com.Harbinger.Spore.Sentities.BaseEntities.Organoid;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
-import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -37,7 +37,6 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -45,7 +44,7 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Proto extends UtilityEntity implements Enemy {
+public class Proto extends Organoid implements Enemy {
 
     public Proto(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -77,18 +76,7 @@ public class Proto extends UtilityEntity implements Enemy {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(2, new HurtTargetGoal(this , entity -> {return !(SConfig.SERVER.blacklist.get().contains(entity.getEncodeId()) || entity instanceof UtilityEntity || entity instanceof Infected);}, Infected.class).setAlertOthers(Infected.class));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
-                (this, Player.class,  true));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 5, false, true, (en) -> {
-            return SConfig.SERVER.whitelist.get().contains(en.getEncodeId());
-        }));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 5, false, true, (en) -> {
-            return !(en instanceof Animal || en instanceof AbstractFish || en instanceof Infected || en instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(en.getEncodeId())) && SConfig.SERVER.at_mob.get();
-        }));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Animal.class, 5, false, true, (en) -> {
-            return !SConfig.SERVER.blacklist.get().contains(en.getEncodeId()) && SConfig.SERVER.at_an.get();
-        }));
+        this.addTargettingGoals();
         this.goalSelector.addGoal(3,new ProtoScentDefense(this));
         this.goalSelector.addGoal(2,new ProtoTargeting(this));
         this.goalSelector.addGoal(2,new AOEMeleeAttackGoal(this,0,false,2.5,4));
@@ -102,9 +90,6 @@ public class Proto extends UtilityEntity implements Enemy {
     @Override
     public void tick() {
         super.tick();
-        if (this.isOnGround()){
-            this.makeStuckInBlock(Blocks.AIR.defaultBlockState(),new Vec3(0,1,0));
-        }
         if (counter <1200){
             counter++;
         }else{

@@ -4,7 +4,9 @@ import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.BasicInfected.*;
 import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
+import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
 import com.Harbinger.Spore.Sentities.Organoids.BiomassReformator;
+import com.Harbinger.Spore.Sentities.Organoids.Vigil;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownSpear;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownTumor;
@@ -118,6 +120,10 @@ public class Sentities {
             () -> EntityType.Builder.of(InfectedDrowned::new, INFECTED).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "inf_drowned").toString()));
 
+    public static final RegistryObject<EntityType<Vigil>> VIGIL = SPORE_ENTITIES.register("vigil",
+            () -> EntityType.Builder.of(Vigil::new, INFECTED).sized(1f, 3f)
+                    .build(new ResourceLocation(Spore.MODID, "vigil").toString()));
+
     public static final RegistryObject<EntityType<Host>> HOST = SPORE_ENTITIES.register("host",
             () -> EntityType.Builder.of(Host::new, INFECTED).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "host").toString()));
@@ -164,6 +170,9 @@ public class Sentities {
                     .build(new ResourceLocation(Spore.MODID, "tendril").toString()));
 
     public static final RegistryObject<EntityType<Sieger>> SIEGER = SPORE_ENTITIES.register("sieger",
-            () -> EntityType.Builder.of(Sieger::new, INFECTED).sized(1.2f, 3f)
+            () -> EntityType.Builder.of(Sieger::new, INFECTED).sized(2.5f, 3f)
                     .build(new ResourceLocation(Spore.MODID, "sieger").toString()));
+    public static final RegistryObject<EntityType<SiegerTail>> SIEGER_TAIL = SPORE_ENTITIES.register("sieger_tail",
+            () -> EntityType.Builder.of(SiegerTail::new, MobCategory.MISC).sized(2.1f, 1f)
+                    .build(new ResourceLocation(Spore.MODID, "sieger_tail").toString()));
 }

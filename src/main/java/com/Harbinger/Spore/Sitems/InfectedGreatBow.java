@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sitems;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Senchantments;
 import com.Harbinger.Spore.Core.Sitems;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
@@ -30,7 +31,7 @@ import java.util.Objects;
 public class InfectedGreatBow extends BowItem{
     public InfectedGreatBow(Properties properties) {
         super(properties);
-
+        Sitems.BIOLOGICAL_ITEMS.add(this);
     }
     @Override
     public boolean isValidRepairItem(ItemStack itemstack, ItemStack repairitem) {
@@ -118,7 +119,7 @@ public class InfectedGreatBow extends BowItem{
     }
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return super.canApplyAtEnchantingTable(stack, enchantment) || ImmutableSet.of(Enchantments.SHARPNESS, Enchantments.FIRE_ASPECT, Enchantments.MOB_LOOTING).contains(enchantment);
+        return super.canApplyAtEnchantingTable(stack, enchantment) || ImmutableSet.of(Enchantments.SHARPNESS, Enchantments.FIRE_ASPECT, Enchantments.MOB_LOOTING).contains(enchantment) || Senchantments.SPORE_ENCHANTS.contains(enchantment);
     }
 
 }

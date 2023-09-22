@@ -9,6 +9,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -16,12 +17,17 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Sitems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, Spore.MODID);
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
+
+    public  static  final List<Item> BIOLOGICAL_ITEMS = new ArrayList<>();
 
     public  static final RegistryObject<Item> CLAW_FRAGMENT = ITEMS.register("claw_fragment",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
@@ -138,6 +144,9 @@ public class Sitems {
     public  static final RegistryObject<Item> RECONSTRUCTOR_SPAWNEGG = ITEMS.register("reconstructor_spawnegg",
             () -> new SporeSpawnEgg(Sentities.RECONSTRUCTOR,-2353208, new Item.Properties().tab(ScreativeTab.SPORE)));
 
+    public  static final RegistryObject<Item> VIGIL_SPAWNEGG = ITEMS.register("vigil_spawnegg",
+            () -> new SporeSpawnEgg(Sentities.VIGIL,-64160208, new Item.Properties()));
+
     public  static final RegistryObject<Item> PROTO_SPAWNEGG = ITEMS.register("proto_spawnegg",
             () -> new SporeSpawnEgg(Sentities.PROTO,244208, new Item.Properties().tab(ScreativeTab.SPORE)));
 
@@ -211,6 +220,8 @@ public class Sitems {
 
     public  static final RegistryObject<Item> CORRUPTED_RECORD = ITEMS.register("corrupted_record",
             CorruptedRecord::new);
+    public  static final RegistryObject<Item> GAS_MASK = ITEMS.register("gas_mask",
+            GasMaskItem::new);
     public  static final RegistryObject<Item> BIOMASS = ITEMS.register("biomass",
             Biomass::new);
     public  static final RegistryObject<Item> AMETHYST_DUST = ITEMS.register("amethyst_dust",
@@ -242,6 +253,8 @@ public class Sitems {
     public static final RegistryObject<Item> LAB_SLAB = block(Sblocks.LAB_SLAB, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> LAB_STAIR = block(Sblocks.LAB_STAIR, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> IRON_LADDER = block(Sblocks.IRON_LADDER, ScreativeTab.SPORE_T);
+    public static final RegistryObject<Item> VENT_PLATE = block(Sblocks.VENT_PLATE, ScreativeTab.SPORE_T);
+    public static final RegistryObject<Item> VENT_DOOR = block(Sblocks.VENT_DOOR, ScreativeTab.SPORE_T);
 
     public static final RegistryObject<Item> GROWTHS_BIG = block(Sblocks.GROWTHS_BIG, ScreativeTab.SPORE);
     public static final RegistryObject<Item> GROWTHS_SMALL = block(Sblocks.GROWTHS_SMALL, ScreativeTab.SPORE);

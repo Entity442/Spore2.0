@@ -9,7 +9,7 @@
 
   "biomes": "minecraft:mushroom_fields",
 
-  "step": "vegetal_decoration",
+  "step": "surface_structures",
 
   "min_inclusive": { "above_bottom": 32 },
 

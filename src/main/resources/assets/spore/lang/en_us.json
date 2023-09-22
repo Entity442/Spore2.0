@@ -25,6 +25,8 @@
   "block.spore.remains": "Human remains",
   "block.spore.hive_spawn": "Reconstructed Mind",
   "block.spore.acid": "Acid pool",
+  "block.spore.vent_plate": "Vent Plate",
+  "block.spore.vent_door": "Vent Door",
 
   "block.spore.infested_dirt": "Infested Dirt",
   "block.spore.infested_stone": "Infested Stone",
@@ -62,6 +64,7 @@
   "item.spore.r_wing": "Wing",
   "item.spore.sausage": "Meaty Sausage",
 
+
   "item.spore.saber": "Infected Saber",
   "item.spore.infected_bow": "Infected Bow",
   "item.spore.greatsword": "Infected Great Sword",
@@ -78,6 +81,7 @@
   "item.spore.rapier": "Infected Rapier",
 
   "item.spore.amethyst_dust": "Amethyst Dust",
+  "item.spore.gas_mask": "Gas Mask",
   "item.spore.compound": "Compound",
   "item.spore.compound_plate": "Compound Plate",
   "item.spore.corrupted_record": "Corrupted Record",
@@ -120,6 +124,7 @@
   "item.spore.scamper_spawnegg": "Scamper",
   "item.spore.mound_spawnegg": "Mound",
   "item.spore.reconstructor_spawnegg": "Womb",
+  "item.spore.vigil_spawnegg": "Vigil",
   "item.spore.proto_spawnegg": "Proto Hivemind",
   "item.spore.sieger_spawnegg": "Sieger",
 
@@ -151,9 +156,12 @@
   "entity.spore.inf_player": "Infected Adventurer",
   "entity.spore.scamper": "Scamper",
   "entity.spore.mound": "Flesh Mound",
+  "entity.spore.vigil": "Vigil",
   "entity.spore.proto": "Proto Hivemind",
   "entity.spore.reconstructor": "Womb",
   "entity.spore.sieger": "Sieger",
+  "entity.spore.sieger_tail": "Sieger Tail",
+
 
 
   "entity.spore.thrown_tumor": "Tumor",
@@ -162,12 +170,17 @@
   "entity.spore.acid": "Acid",
 
 
+  "enchantment.spore.symbiotic_reconstitution": "Symbiotic Reconstitution",
+  "enchantment.spore.unwavering_nature": "Unwavering Nature",
+
   "effect.spore.mycelium_ef": "Mycelium Infection",
   "effect.spore.stunt": "Stunt",
   "effect.spore.starvation": "Starvation",
   "effect.spore.marker": "Marker",
   "effect.spore.corrosion": "Corrosion",
   "effect.spore.symbiosis": "Symbiosis",
+  "effect.spore.uneasy": "Uneasy",
+
 
   "item.minecraft.splash_potion.effect.mycelium_potion": "Mycelium Infection Splash Potion",
   "item.minecraft.potion.effect.mycelium_potion": "Mycelium Infection Potion",
@@ -200,13 +213,15 @@
   "sounds.spore.damage": "Infected is being damaged",
   "sounds.spore.growl": "Infected is growling",
   "sounds.spore.sieger_ambient": "Sieger growling",
-  "sounds.spore.sieger_bite": "Sieger Bites",
+  "sounds.spore.sieger_bite": "Sieger bites",
   "sounds.spore.womb_ambient": "Flesh is warping",
   "sounds.spore.proto_ambient": "The hivemind is whispering",
   "sounds.spore.braiomil_attack": "The Braiomil is attacking",
   "sounds.spore.howler_growl": "The Howler is calling",
   "sounds.spore.fungal_burst": "A Fungus Bursts",
   "sounds.spore.puff": "Puff",
+  "sounds.spore.limb_slash": "Limb got slashed",
+  "sounds.spore.heart_beat": "Heart beat",
   "sounds.spore.record": "Playing Corrupted Record",
 
   "item.line.shift": "A nutrient soup made out of animal matter.",
@@ -215,6 +230,8 @@
   "hivemind_summon_message": "Endure...",
   "calamity_summon_message": "Prepare...",
   "calamity_coming_message": "Incoming...",
+  "vigil.message": "You are feeling watched...",
+  "uneasy.message": "You can't seem to fall asleep...",
 
   "death.attack.mycelium.overtake.player": "%1$s has succumbed to the infection",
   "death.attack.mycelium.overtake": "%1$s has succumbed to the infection",

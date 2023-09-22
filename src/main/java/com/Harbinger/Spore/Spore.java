@@ -45,6 +45,7 @@ public class Spore
 
         Sblocks.register(modEventBus);
         Sitems.register(modEventBus);
+        Senchantments.register(modEventBus);
         Sentities.register(modEventBus);
         Seffects.register(modEventBus);
         Spotion.register(modEventBus);

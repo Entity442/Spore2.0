@@ -5,6 +5,7 @@ import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.ReturnToWater;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
+import com.Harbinger.Spore.Sentities.MovementControls.WaterXlandMovement;
 import com.Harbinger.Spore.Sentities.WaterInfected;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
@@ -25,9 +26,10 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.fluids.FluidType;
 
 public class InfectedDrowned extends Infected implements WaterInfected {
     protected final WaterBoundPathNavigation waterNavigation;
@@ -35,16 +37,17 @@ public class InfectedDrowned extends Infected implements WaterInfected {
     public InfectedDrowned(EntityType<? extends Infected> type, Level level) {
         super(type, level);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        this.moveControl = new WaterXlandMovement(this,0.5f);
         this.waterNavigation = new WaterBoundPathNavigation(this, level);
         this.groundNavigation = new GroundPathNavigation(this, level);
     }
 
     public void travel(Vec3 p_32858_) {
-        if (this.isEffectiveAi() && this.isInWater()) {
+        if (this.isEffectiveAi() && this.isInFluidType()) {
             this.moveRelative(0.1F, p_32858_);
             this.move(MoverType.SELF, this.getDeltaMovement());
-            this.setDeltaMovement(this.getDeltaMovement().scale(0.75D));
-                this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.85D));
+            this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
 
         } else {
             super.travel(p_32858_);
@@ -67,13 +70,7 @@ public class InfectedDrowned extends Infected implements WaterInfected {
 
     public void updateSwimming() {
         if (!this.level.isClientSide) {
-            if (this.getTarget() != null){
-                if (this.distanceToSqr(this.getTarget()) < 8.0D && !this.getTarget().isEyeInFluidType(ForgeMod.WATER_TYPE.get())){
-                    this.navigation = this.groundNavigation;
-                    this.setDeltaMovement(this.getDeltaMovement().add(0.0D, 0.015D, 0.0D));
-                }
-            }
-            if (this.isEffectiveAi() && isEyeInFluidType(ForgeMod.WATER_TYPE.get())) {
+            if (this.isEffectiveAi() && this.isEyeInFluidType(Fluids.WATER.getFluidType())) {
                 this.navigation = this.waterNavigation;
                 this.setSwimming(true);
             } else {
@@ -92,8 +89,9 @@ public class InfectedDrowned extends Infected implements WaterInfected {
     }
 
 
-    public boolean canBreatheUnderwater() {
-        return true;
+    @Override
+    public boolean canDrownInFluidType(FluidType type) {
+        return false;
     }
 
     @Override

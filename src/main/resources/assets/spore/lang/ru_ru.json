@@ -64,7 +64,7 @@
   "item.spore.saber": "Заражённая сабля",
   "item.spore.infected_bow": "Заражённый лук",
   "item.spore.greatsword": "Заражённый большой меч",
-  "item.spore.armads": "Заражённая большой меч",
+  "item.spore.armads": "Заражённый большой топор",
   "item.spore.maul": "Заражённый молот",
   "item.spore.scythe": "Заражённая коса",
   "item.spore.mace": "Заражённая булава",
@@ -188,8 +188,8 @@
   "item.minecraft.lingering_potion.effect.corrosion_potion_strong": "Оседающее зелье сильной коррозии",
   "item.minecraft.tipped_arrow.effect.corrosion_potion_strong": "Стрела сильной коррозии",
 
-  "itemGroup.spore": "Спора",
-  "itemGroup.spore_t": "Технология спор",
+  "itemGroup.spore": "Spore",
+  "itemGroup.spore_t": "Spore Technologies",
 
 
   "item.armor.shift": "Зажав SHIFT, можно взобраться по стене.",

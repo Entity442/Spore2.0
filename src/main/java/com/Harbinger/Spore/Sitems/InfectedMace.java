@@ -1,9 +1,6 @@
 package com.Harbinger.Spore.Sitems;
 
-import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Core.ScreativeTab;
-import com.Harbinger.Spore.Core.Seffects;
-import com.Harbinger.Spore.Core.Sitems;
+import com.Harbinger.Spore.Core.*;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
@@ -44,8 +41,8 @@ public class InfectedMace extends Item implements Vanishable {
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", SConfig.SERVER.mace_damage.get() - 1, AttributeModifier.Operation.ADDITION));
         builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", -3, AttributeModifier.Operation.ADDITION));
         builder.put(ForgeMod.ATTACK_RANGE.get(), new AttributeModifier(BONUS_REACH_MODIFIER_UUID, "Tool modifier",2f, AttributeModifier.Operation.ADDITION));
-
         this.defaultModifiers = builder.build();
+        Sitems.BIOLOGICAL_ITEMS.add(this);
     }
     @Override
     public boolean isValidRepairItem(ItemStack itemstack, ItemStack repairitem) {
@@ -103,6 +100,6 @@ public class InfectedMace extends Item implements Vanishable {
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return super.canApplyAtEnchantingTable(stack, enchantment) || ImmutableSet.of(Enchantments.SHARPNESS, Enchantments.FIRE_ASPECT, Enchantments.KNOCKBACK , Enchantments.MOB_LOOTING , Enchantments.SMITE).contains(enchantment);
+        return super.canApplyAtEnchantingTable(stack, enchantment) || ImmutableSet.of(Enchantments.SHARPNESS, Enchantments.FIRE_ASPECT, Enchantments.KNOCKBACK , Enchantments.MOB_LOOTING , Enchantments.SMITE).contains(enchantment) || Senchantments.SPORE_ENCHANTS.contains(enchantment);
     }
 }

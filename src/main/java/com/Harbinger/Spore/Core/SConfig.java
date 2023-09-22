@@ -29,6 +29,11 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Boolean> should_starve;
         public final ForgeConfigSpec.ConfigValue<Boolean> higher_thinking;
 
+
+        public final ForgeConfigSpec.ConfigValue<Boolean> faw_target;
+        public final ForgeConfigSpec.ConfigValue<Boolean> skulk_target;
+
+
         public final ForgeConfigSpec.ConfigValue<Integer> days;
         public final ForgeConfigSpec.ConfigValue<Integer> mob_cap;
         public final ForgeConfigSpec.ConfigValue<Boolean> spawn;
@@ -81,6 +86,13 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> reconstructor_terrain;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> reconstructor_air;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> reconstructor_water;
+
+        public final ForgeConfigSpec.ConfigValue<Double> vigil_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> vigil_armor;
+        public final ForgeConfigSpec.ConfigValue<Integer> vigil_wave_size;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> vigil_base_wave;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> vigil_middle_wave;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> vigil_max_wave;
 
         public final ForgeConfigSpec.ConfigValue<Double> inf_evo_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_evo_damage;
@@ -147,9 +159,9 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> mound_hp;
         public final ForgeConfigSpec.ConfigValue<Double> mound_armor;
         public final ForgeConfigSpec.ConfigValue<Integer> mound_cooldown;
+        public final ForgeConfigSpec.ConfigValue<Integer> mound_tendril_checker;
         public final ForgeConfigSpec.ConfigValue<Integer> mound_age;
         public final ForgeConfigSpec.ConfigValue<Integer> mound_tendril_feed;
-        public final ForgeConfigSpec.ConfigValue<Integer> mound_tendril_checker;
         public final ForgeConfigSpec.ConfigValue<Double> mound_range_default;
         public final ForgeConfigSpec.ConfigValue<Double> mound_range_age2;
         public final ForgeConfigSpec.ConfigValue<Double> mound_range_age3;
@@ -163,6 +175,9 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> proto_dpsr;
         public final ForgeConfigSpec.ConfigValue<Double> proto_calamity;
         public final ForgeConfigSpec.ConfigValue<Integer> proto_range;
+        public final ForgeConfigSpec.ConfigValue<Boolean> proto_chunk;
+        public final ForgeConfigSpec.ConfigValue<Boolean> proto_raid;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> proto_sapient_target;
 
         public final ForgeConfigSpec.ConfigValue<Double> how_hp;
         public final ForgeConfigSpec.ConfigValue<Double> how_damage;
@@ -302,6 +317,12 @@ public class SConfig {
 
         public Server(ForgeConfigSpec.Builder builder) {
 
+            builder.push("Compatibilities");
+            this.faw_target = builder.comment("Default false").define("Should the infected attack mobs from FAW?",false);
+            this.skulk_target = builder.comment("Default false").define("Should the infected attack mobs from Sculk Infection?",false);
+            builder.pop();
+
+
             builder.push("Global Variables");
             this.global_damage = builder.define("Global Damage Modifier",1.0);
             this.global_health = builder.define("Global Health Modifier",1.0);
@@ -437,9 +458,27 @@ public class SConfig {
             builder.pop();
 
             builder.push("Phayres");
-            this.bus_hp = builder.comment("Default 30").defineInRange("Sets Phayres Max health", 30, 1, Double.MAX_VALUE);
+            this.bus_hp = builder.comment("Default 50").defineInRange("Sets Phayres Max health", 50, 1, Double.MAX_VALUE);
             this.bus_damage = builder.comment("Default 6").defineInRange("Sets Phayres Damage", 6, 1, Double.MAX_VALUE);
-            this.bus_armor = builder.comment("Default 4").defineInRange("Sets Phayres Armor", 4, 1, Double.MAX_VALUE);
+            this.bus_armor = builder.comment("Default 10").defineInRange("Sets Phayres Armor", 10, 1, Double.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Vigil");
+            this.vigil_hp = builder.comment("Default 60").defineInRange("Sets Vigil Max health", 60, 1, Double.MAX_VALUE);
+            this.vigil_armor = builder.comment("Default 5").defineInRange("Sets Vigil Armor", 5, 1, Double.MAX_VALUE);
+            this.vigil_wave_size = builder.comment("Default 15").defineInRange("Sets the maximum size of the wave", 15, 1, Integer.MAX_VALUE);
+            this.vigil_base_wave = builder.comment("The base wave of infected a vigil can summon").defineList("Vigil min wave",
+                    Lists.newArrayList("spore:inf_human" , "spore:inf_villager","spore:inf_pillager","spore:inf_drowned") , o -> o instanceof String);
+
+            this.vigil_middle_wave = builder.comment("The mixed wave of infected a vigil can summon").defineList("Vigil mix wave",
+                    Lists.newArrayList("spore:inf_human" , "spore:inf_villager","spore:inf_pillager","spore:inf_wanderer"
+                            ,"spore:knight","spore:griefer","spore:leaper","spore:inf_evoker","spore:spitter") , o -> o instanceof String);
+
+            this.vigil_max_wave = builder.comment("The max wave of infected a vigil can summon").defineList("Vigil max wave",
+                    Lists.newArrayList("spore:inf_vindicator" , "spore:busser","spore:inf_witch","spore:brute"
+                            ,"spore:knight","spore:griefer","spore:leaper","spore:inf_evoker","spore:spitter","spore:stalker"
+                            ,"spore:howler","spore:braiomil") , o -> o instanceof String);
+
             builder.pop();
 
             builder.push("Sieger");
@@ -471,8 +510,8 @@ public class SConfig {
             this.mound_armor = builder.comment("Default 2").defineInRange("Sets Mound Armor", 2, 1, Double.MAX_VALUE);
             this.mound_cooldown = builder.comment("Default 600").defineInRange("Sets Mound Infection Cooldown", 600, 1, Integer.MAX_VALUE);
             this.mound_age = builder.comment("Default 12000").defineInRange("Sets Mound Ageing Cooldown", 18000, 1, Integer.MAX_VALUE);
-            this.mound_tendril_feed = builder.comment("Default 2").defineInRange("Sets the amount of biomass a mound can feed a structure block at once", 2, 1, Integer.MAX_VALUE);
             this.mound_tendril_checker = builder.comment("Default 80").defineInRange("Sets the range in which a mound checks for feedable blocks", 80, 1, Integer.MAX_VALUE);
+            this.mound_tendril_feed = builder.comment("Default 2").defineInRange("Sets the amount of biomass a mound can feed a structure block at once", 2, 1, Integer.MAX_VALUE);
             this.mound_range_default = builder.comment("Default 5").defineInRange("Sets Mound default range", 5, 1, Double.MAX_VALUE);
             this.mound_range_age2 = builder.comment("Default 10").defineInRange("Sets Mound range at the age of 2", 10, 1, Double.MAX_VALUE);
             this.mound_range_age3 = builder.comment("Default 15").defineInRange("Sets Mound range at the age of 3", 15, 1, Double.MAX_VALUE);
@@ -486,6 +525,11 @@ public class SConfig {
             this.proto_dpsr = builder.comment("Default 20").defineInRange("Sets Proto Damage Cap , set to 0 to disable", 20, 1, Double.MAX_VALUE);
             this.proto_range = builder.comment("Default 300").defineInRange("Sets the linking range", 300, 1, Integer.MAX_VALUE);
             this.proto_calamity = builder.comment("Default 5").defineInRange("Chance for the death of a linked evolved infected to trigger the hivemind", 5, 0, Double.MAX_VALUE);
+            this.proto_chunk = builder.comment("Default true").define("Should the hivemind generate a chunkloader at its location?",true);
+            this.proto_raid = builder.comment("Default true").define("Should the hivemind send Vigils to raid?",true);
+            this.proto_sapient_target = builder.defineList("Sentient Mobs targeted by the hivemind",
+                    Lists.newArrayList("minecraft:villager","minecraft:pillager","guardvillagers:guard","minecraft:evoker","minecraft:vindicator",
+                            "recruits:recruit","recruits:bowman","recruits:recruit_shieldman", "recruits:nomad","recruits:horseman","roamers:roamer") , o -> o instanceof String);
             builder.pop();
 
             builder.push("Howler");
@@ -677,7 +721,7 @@ public class SConfig {
             this.armads_damage = builder.comment("Default 15").defineInRange("Damage", 15, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Maul");
-            this.maul_durability = builder.comment("Default 1500").define("Durability",1500);
+            this.maul_durability = builder.comment("Default 3000").define("Durability",3000);
             this.maul_damage = builder.comment("Default 7").defineInRange("Damage", 7, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Sickle");
@@ -689,7 +733,7 @@ public class SConfig {
             this.scythe_damage = builder.comment("Default 8").defineInRange("Damage", 8, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Combat Shovel");
-            this.shovel_durability = builder.comment("Default 1400").define("Durability",1400);
+            this.shovel_durability = builder.comment("Default 2800").define("Durability",2800);
             this.shovel_damage = builder.comment("Default 6").defineInRange("Damage", 6, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Rapier");
@@ -797,6 +841,8 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_player_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> sca_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> sieger_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> sieger_tail_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> vigil_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> proto_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> mound_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> organite_loot;
@@ -868,12 +914,20 @@ public class SConfig {
             this.sieger_loot = builder.defineList("Sieger ",
                     Lists.newArrayList("spore:mutated_fiber|100|33|75","spore:armor_fragment|100|15|38","spore:mutated_heart|70|3|7","spore:tumor|100|2|5","spore:cerebrum|70|2|7","spore:spine_fragment|56|4|9") , o -> o instanceof String);
 
+            this.sieger_tail_loot = builder.defineList("Sieger Tail",
+                    Lists.newArrayList("spore:mutated_fiber|100|10|25","spore:armor_fragment|100|3|10","spore:tumor|100|7|22") , o -> o instanceof String);
+
+
             this.proto_loot = builder.defineList("Proto Hivemind ",
                     Lists.newArrayList("spore:mutated_fiber|100|10|20","spore:armor_fragment|80|4|14","spore:mutated_heart|80|1|6","spore:cerebrum|100|2|11","spore:spine_fragment|80|2|8") , o -> o instanceof String);
 
 
             this.mound_loot = builder.defineList("Mound ",
                     Lists.newArrayList("spore:mutated_fiber|70|2|5") , o -> o instanceof String);
+
+            this.vigil_loot = builder.defineList("Vigil",
+                    Lists.newArrayList("spore:mutated_fiber|100|6|15","spore:mutated_heart|30|1|1") , o -> o instanceof String);
+
 
             this.organite_loot = builder.defineList("Organite Block",
                     Lists.newArrayList("spore:mutated_fiber|50|1|4","spore:spine|80|1|3","spore:innards|70|1|5") , o -> o instanceof String);
@@ -914,7 +968,7 @@ public class SConfig {
                     Lists.newArrayList("minecraft:stone|spore:infested_stone","minecraft:grass_block|minecraft:mycelium","minecraft:dirt|spore:infested_dirt","minecraft:coarse_dirt|spore:infested_dirt"
                             ,"minecraft:podzol|spore:infested_dirt","minecraft:rooted_dirt|spore:infested_dirt","minecraft:podzol|spore:infested_dirt","minecraft:deepslate|spore:infested_deepslate"
                             ,"minecraft:sand|spore:infested_sand","minecraft:gravel|spore:infested_gravel","minecraft:netherrack|spore:infested_netherrack","minecraft:end_stone|spore:infested_end_stone"
-                            ,"minecraft:soulsand|spore:infested_soulsand","minecraft:soulsoil|spore:infested_soulsand") , o -> o instanceof String);
+                            ,"minecraft:soulsand|spore:infested_soulsand","minecraft:soulsoil|spore:infested_soulsand","minecraft:sculk|spore:rooted_mycelium") , o -> o instanceof String);
             builder.pop();
         }
     }

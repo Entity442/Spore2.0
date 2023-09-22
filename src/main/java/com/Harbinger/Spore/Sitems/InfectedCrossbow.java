@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sitems;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.ScreativeTab;
+import com.Harbinger.Spore.Core.Senchantments;
 import com.Harbinger.Spore.Core.Sitems;
 import com.google.common.collect.Lists;
 import com.mojang.math.Quaternion;
@@ -26,6 +27,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -41,7 +43,9 @@ public class InfectedCrossbow extends CrossbowItem {
     private boolean midLoadSoundPlayed = false;
     public InfectedCrossbow() {
         super(new Item.Properties().tab(ScreativeTab.SPORE).durability(SConfig.SERVER.crossbow_durability.get()));
+        Sitems.BIOLOGICAL_ITEMS.add(this);
     }
+
 
     @Override
     public boolean isValidRepairItem(ItemStack itemstack, ItemStack repairitem) {
@@ -376,7 +380,9 @@ public class InfectedCrossbow extends CrossbowItem {
     }
 
 
-
-
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return super.canApplyAtEnchantingTable(stack, enchantment) || Senchantments.SPORE_ENCHANTS.contains(enchantment);
+    }
 }
 

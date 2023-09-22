@@ -24,6 +24,9 @@ public class Sblocks {
     public static final RegistryObject<Block> LAB_SLAB = BLOCKS.register("lab_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(Sblocks.LAB_BLOCK.get())));
     public static final RegistryObject<Block> LAB_STAIR = BLOCKS.register("lab_stair", () -> new StairBlock(()-> LAB_BLOCK.get().defaultBlockState(),BlockBehaviour.Properties.copy(Sblocks.LAB_BLOCK.get())));
     public static final RegistryObject<Block> IRON_LADDER = BLOCKS.register("iron_ladder", () -> new IronLadderBlock(BlockBehaviour.Properties.of(Material.METAL).strength(2f, 4f).noOcclusion().sound(SoundType.METAL)));
+    public static final RegistryObject<Block> VENT_PLATE = BLOCKS.register("vent_plate", VentPlateBlock::new);
+    public static final RegistryObject<Block> VENT_DOOR = BLOCKS.register("vent_door",() -> new TrapDoorBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.METAL).strength(2f, 4f).noOcclusion().sound(SoundType.METAL)));
+
 
     public static final RegistryObject<Block> GROWTHS_BIG = BLOCKS.register("growths_big", () -> new GenericFoliageBlock( BlockBehaviour.Properties.of(Material.PLANT).strength(0f, 0f).noCollission().noOcclusion().sound(SoundType.CROP)));
     public static final RegistryObject<Block> GROWTHS_SMALL = BLOCKS.register("growths_small", () -> new GenericFoliageBlock( BlockBehaviour.Properties.of(Material.PLANT).strength(0f, 0f).noCollission().noOcclusion().sound(SoundType.CROP)));
