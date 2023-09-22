@@ -41,7 +41,7 @@ public class Sentities {
     public static final MobCategory INFECTED = MobCategory.create("infected","infected",SConfig.SERVER.mob_cap.get(),false,false,128);
 
     public static final RegistryObject<EntityType<InfectedHuman>> INF_HUMAN = SPORE_ENTITIES.register("inf_human",
-            () -> EntityType.Builder.of((EntityType<InfectedHuman> p_33002_, Level level) -> new InfectedHuman(level), INFECTED).sized(0.6f, 2f)
+            () -> EntityType.Builder.of((EntityType<InfectedHuman> p_33002_, Level level) -> new InfectedHuman(level), INFECTED).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "inf_human").toString()));
 
     public static final RegistryObject<EntityType<InfectedPlayer>> INF_PLAYER = SPORE_ENTITIES.register("inf_player",
