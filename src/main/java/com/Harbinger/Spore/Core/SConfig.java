@@ -530,7 +530,7 @@ public class SConfig {
             this.proto_calamity = builder.comment("Default 5").defineInRange("Chance for the death of a linked evolved infected to trigger the hivemind", 5, 0, Double.MAX_VALUE);
             this.proto_chunk = builder.comment("Default true").define("Should the hivemind generate a chunkloader at its location?",true);
             this.proto_raid = builder.comment("Default true").define("Should the hivemind send Vigils to raid?",true);
-            this.proto_raid_chance = builder.comment("Default 1.0").defineInRange("Sets Proto Armor", 1, 0.1, Double.MAX_VALUE);
+            this.proto_raid_chance = builder.comment("Default 1.0").defineInRange("Sets The chance for a raid to start", 1, 0.1, Double.MAX_VALUE);
             this.proto_sapient_target = builder.defineList("Sentient Mobs targeted by the hivemind",
                     Lists.newArrayList("minecraft:villager","minecraft:pillager","guardvillagers:guard","minecraft:evoker","minecraft:vindicator",
                             "recruits:recruit","recruits:bowman","recruits:recruit_shieldman", "recruits:nomad","recruits:horseman","roamers:roamer") , o -> o instanceof String);
