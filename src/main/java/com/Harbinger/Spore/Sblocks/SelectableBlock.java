@@ -9,10 +9,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class SelectableBlock extends Block {
-    public ItemStack stack;
-    public SelectableBlock(ItemStack stack1,Properties properties) {
+    public SelectableBlock(Properties properties) {
         super(properties);
-        this.stack = stack1;
     }
 
     @Override
@@ -20,7 +18,7 @@ public class SelectableBlock extends Block {
         List<ItemStack> dropsOriginal = super.getDrops(state, builder);
         if (!dropsOriginal.isEmpty())
             return dropsOriginal;
-        return Collections.singletonList(stack);
+        return Collections.singletonList(new ItemStack(this ,1));
     }
 
 }
