@@ -19,9 +19,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
@@ -32,21 +30,15 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class Vigil extends Organoid {
     private static final EntityDataAccessor<Integer> TRIGGER = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> WAVE_SIZE = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> TIMER = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> BORROW = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> EMERGE = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.INT);
-    private final int emerge_tick = 180;
-    private final int borrow_tick = 200;
     private int summon_counter;
     public Vigil(EntityType<? extends UtilityEntity> type, Level level) {
         super(type, level);
@@ -64,41 +56,27 @@ public class Vigil extends Organoid {
         this.entityData.define(WAVE_SIZE, 0);
         this.entityData.define(TIMER, 0);
         this.entityData.define(TRIGGER, 0);
-        this.entityData.define(BORROW, 0);
-        this.entityData.define(EMERGE, 0);
     }
-
+    @Override
     public int getEmerge_tick(){
-        return emerge_tick;
+        return 180;
     }
-    public  int getBorrow_tick(){return borrow_tick;}
 
-    public boolean isEmerging(){
-        return this.entityData.get(EMERGE) > 0;
+    @Override
+    public int getBorrow_tick() {
+        return 200;
     }
-    public void tickEmerging(){
-        int emerging = this.entityData.get(EMERGE);
-        if (emerging > emerge_tick)
-            emerging = -1;
-        this.entityData.set(EMERGE, emerging + 1);
-    }
-    public boolean isBurrowing(){
-        return this.entityData.get(BORROW) > 0;
-    }
-    private void tickBurrowing(){
+
+    @Override
+    public void tickBurrowing(){
         int burrowing = this.entityData.get(BORROW);
-        if (burrowing > borrow_tick) {
+        if (burrowing > this.getBorrow_tick()) {
             this.discard();
             this.TimeToLeave();
             burrowing = -1;
         }
         this.entityData.set(BORROW, burrowing + 1);
     }
-
-    public int getEmerge(){
-        return entityData.get(EMERGE);
-    }
-    public int getBorrow(){return entityData.get(BORROW);}
 
     public int getTrigger(){
         return entityData.get(TRIGGER);
@@ -120,11 +98,6 @@ public class Vigil extends Organoid {
 
     @Override
     public void tick() {
-        if (this.isEmerging()){
-            this.tickEmerging();
-        } else if (this.isBurrowing()){
-            this.tickBurrowing();
-        }
         if (this.getTarget() == null && this.entityData.get(TIMER) < 6000){
             if (this.entityData.get(TIMER) % 300 == 0){
                 this.setTrigger(0);
@@ -190,11 +163,19 @@ public class Vigil extends Organoid {
         }
     }
 
+    boolean checkForScents(){
+        AABB aabb = this.getBoundingBox().inflate(16);
+        List<ScentEntity> entities = this.level.getEntitiesOfClass(ScentEntity.class, aabb);
+        return entities.size() < SConfig.SERVER.scent_cap.get();
+    }
+
     private void SummonScent(Entity entity ,Level level,boolean value){
-        ScentEntity scent = new ScentEntity(Sentities.SCENT.get(),level);
-        scent.moveTo(entity.getX(),entity.getY(),entity.getZ());
-        scent.setOvercharged(value);
-        level.addFreshEntity(scent);
+        if (checkForScents()){
+            ScentEntity scent = new ScentEntity(Sentities.SCENT.get(),level);
+            scent.moveTo(entity.getX(),entity.getY(),entity.getZ());
+            scent.setOvercharged(value);
+            level.addFreshEntity(scent);
+        }
     }
 
     private static class WatchTargetGoat extends Goal{
@@ -345,11 +326,6 @@ public class Vigil extends Organoid {
         }
     }
 
-    @Nullable
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_33282_, DifficultyInstance p_33283_, MobSpawnType p_33284_, @Nullable SpawnGroupData p_33285_, @Nullable CompoundTag p_33286_) {
-        this.tickEmerging();
-        return super.finalizeSpawn(p_33282_, p_33283_, p_33284_, p_33285_, p_33286_);
-    }
 
     @Override
     protected void registerGoals() {

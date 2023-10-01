@@ -406,4 +406,9 @@ public class Mound extends Organoid implements Enemy {
             this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,200,0));
         }
     }
+
+    @Override
+    public int getEmerge_tick() {
+        return 40;
+    }
 }

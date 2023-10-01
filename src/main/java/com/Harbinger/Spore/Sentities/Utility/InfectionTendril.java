@@ -271,6 +271,7 @@ public class InfectionTendril extends UtilityEntity {
                 Mound mound = new Mound(Sentities.MOUND.get(),level);
                 mound.setMaxAge(this.getAgeM());
                 mound.setPos(blockpos.getX() + 0.5,blockpos.getY(),blockpos.getZ() + 0.5);
+                mound.tickEmerging();
                 level.addFreshEntity(mound);
                 level.removeBlock(blockpos,false);
                 this.discard();

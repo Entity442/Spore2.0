@@ -295,4 +295,9 @@ public class BiomassReformator extends Organoid implements Enemy {
         }
         super.die(p_21014_);
     }
+
+    @Override
+    public int getEmerge_tick() {
+        return 40;
+    }
 }

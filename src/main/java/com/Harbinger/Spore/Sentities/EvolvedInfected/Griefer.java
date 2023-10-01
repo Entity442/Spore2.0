@@ -115,9 +115,7 @@ public class Griefer extends EvolvedInfected {
             Explosion.BlockInteraction explosion$blockinteraction = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
             this.dead = true;
             this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)this.explosionRadius, explosion$blockinteraction);
-
-                this.summonScent(this.level, this.getX(), this.getY(), this.getZ());}
-            else {
+            } else {
                 Explosion.BlockInteraction explosion$blockinteraction = Explosion.BlockInteraction.NONE;
                 this.dead = true;
                 this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)this.explosionRadius, explosion$blockinteraction);
@@ -126,8 +124,7 @@ public class Griefer extends EvolvedInfected {
             }
         }
         this.discard();
-        if (SConfig.SERVER.scent_spawn.get()){
-            this.summonScent(this.level, this.getX(), this.getY(), this.getZ());}
+            this.summonScent(this.level, this.getX(), this.getY(), this.getZ());
         if (this.getTypeVariant() == 1){
             explodeToxicTumor();
         }
@@ -152,7 +149,7 @@ public class Griefer extends EvolvedInfected {
     }
 
     private void summonScent(LevelAccessor world, double x, double y, double z) {
-        if (world instanceof ServerLevel _level) {
+        if (world instanceof ServerLevel _level && SConfig.SERVER.scent_spawn.get()) {
                 {
                     ScentEntity entityToSpawn = new ScentEntity(Sentities.SCENT.get(), _level);
                     entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);

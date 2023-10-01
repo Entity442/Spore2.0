@@ -19,6 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -37,9 +38,11 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -78,6 +81,7 @@ public class Proto extends Organoid implements Enemy {
     protected void registerGoals() {
         this.addTargettingGoals();
         this.goalSelector.addGoal(3,new ProtoScentDefense(this));
+        this.goalSelector.addGoal(3,new ProtoDefense(this));
         this.goalSelector.addGoal(2,new ProtoTargeting(this));
         this.goalSelector.addGoal(2,new AOEMeleeAttackGoal(this,0,false,2.5,4));
         this.goalSelector.addGoal(4,new RandomLookAroundGoal(this));
@@ -278,10 +282,40 @@ public class Proto extends Organoid implements Enemy {
         entityData.set(HOSTS,i);
     }
 
+    class ProtoDefense extends Goal{
+        public Proto proto;
+        public ProtoDefense(Proto proto1){
+            this.proto = proto1;
+        }
 
-    @Override
-    public boolean dampensVibrations() {
-        return true;
+        @Override
+        public boolean canUse() {
+            return this.proto.getTarget() != null &&  this.proto.random.nextInt(150) == 0;
+        }
+        @Override
+        public void start() {
+            SummonDefense();
+            super.start();
+        }
+
+
+    }
+    private void SummonDefense() {
+        List<? extends String> summons = SConfig.SERVER.proto_summonable_troops.get();
+        LivingEntity target = this.getTarget();
+        int x = random.nextInt(-10,10);
+        int z = random.nextInt(-10,10);
+        if (target != null && this.level instanceof ServerLevelAccessor world){
+            RandomSource rand = RandomSource.create();
+            int randomIndex = rand.nextInt(summons.size());
+            ResourceLocation randomElement1 = new ResourceLocation(summons.get(randomIndex));
+            EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
+            Mob waveentity = (Mob) randomElement.create(this.level);
+            assert waveentity != null;
+            waveentity.randomTeleport(target.getX() + x,target.getY(),target.getZ() + z,false);
+            waveentity.finalizeSpawn(world, this.level.getCurrentDifficultyAt(new BlockPos((int) this.getX(),(int)  this.getY(),(int)  this.getZ())), MobSpawnType.NATURAL, null, null);
+            this.level.addFreshEntity(waveentity);
+        }
     }
 
     @Override
@@ -377,6 +411,7 @@ public class Proto extends Organoid implements Enemy {
                 }else {
                     creature.setState(0);
                 }
+                creature.tickEmerging();
                 creature.setPos(entity.getX()+a,entity.getY()+c,entity.getZ()+b);
                 level.addFreshEntity(creature);
                 if (level.getServer() != null && !level.isClientSide()){
@@ -400,5 +435,13 @@ public class Proto extends Organoid implements Enemy {
             }
         }
         return true;
+    }
+    @Override
+    public int getEmerge_tick() {
+        return 120;
+    }
+
+    public int getNumberOfParticles(){
+        return 6;
     }
 }

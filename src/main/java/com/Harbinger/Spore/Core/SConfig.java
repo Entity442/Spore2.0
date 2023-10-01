@@ -43,6 +43,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_spawn;
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_summon;
         public final ForgeConfigSpec.ConfigValue<Integer> scent_summon_cooldown;
+        public final ForgeConfigSpec.ConfigValue<Integer> scent_cap;
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_particles;
         public final ForgeConfigSpec.ConfigValue<Integer> scent_life;
         public final ForgeConfigSpec.ConfigValue<Integer> scent_kills;
@@ -179,6 +180,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Boolean> proto_raid;
         public final ForgeConfigSpec.ConfigValue<Double> proto_raid_chance;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> proto_sapient_target;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> proto_summonable_troops;
 
         public final ForgeConfigSpec.ConfigValue<Double> how_hp;
         public final ForgeConfigSpec.ConfigValue<Double> how_damage;
@@ -533,6 +535,8 @@ public class SConfig {
             this.proto_sapient_target = builder.defineList("Sentient Mobs targeted by the hivemind",
                     Lists.newArrayList("minecraft:villager","minecraft:pillager","guardvillagers:guard","minecraft:evoker","minecraft:vindicator",
                             "recruits:recruit","recruits:bowman","recruits:recruit_shieldman", "recruits:nomad","recruits:horseman","roamers:roamer") , o -> o instanceof String);
+            this.proto_summonable_troops = builder.defineList("Mobs that the proto can summon to defend itself",
+                    Lists.newArrayList("spore:mound","spore:vigil") , o -> o instanceof String);
             builder.pop();
 
             builder.push("Howler");
@@ -575,6 +579,7 @@ public class SConfig {
                     Lists.newArrayList("minecraft:regeneration","minecraft:speed","minecraft:health_boost","minecraft:strength","minecraft:resistance" ) , o -> o instanceof String);
             this.scent_kills = builder.comment("Default 4").define("OverCharged Scent bonus kill points",4);
             this.scent_spawn_chance = builder.comment("Default 5").define("The Chance for the scent to spawn from a mob dying 1-100",5);
+            this.scent_cap = builder.comment("Default 5").define("The average amount of scents that can spawn in an area",5);
             this.inf_summon = builder.defineList("Mobs that can be summoned by the Scent",
                     Lists.newArrayList(
                             "spore:inf_human"
