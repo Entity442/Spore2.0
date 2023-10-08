@@ -190,6 +190,8 @@ public class Sitems {
             InfectedKnife::new);
     public  static final RegistryObject<Item> RAPIER = ITEMS.register("rapier",
             InfectedRapier::new);
+    public  static final RegistryObject<Item> VIGIL_EYE = ITEMS.register("vigil_eye",
+            VigilEye::new);
 
     public  static final RegistryObject<Item> INF_HELMET = ITEMS.register("inf_helmet",
             InfectedHelmet::new);
