@@ -6,6 +6,12 @@ import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.Organoids.Mound;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -23,6 +29,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class Scamper extends EvolvedInfected {
+    public static final EntityDataAccessor<Integer> AGE = SynchedEntityData.defineId(Scamper.class, EntityDataSerializers.INT);
     public int deployClock = 0;
     public boolean deploying;
 
@@ -43,6 +50,30 @@ public class Scamper extends EvolvedInfected {
         this.deploying = deploying;
     }
 
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putInt("age",entityData.get(AGE));
+    }
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        entityData.set(AGE, tag.getInt("age"));
+    }
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(AGE, 0);
+    }
+
+    public void setAge(int e){
+        this.entityData.set(AGE,e);
+    }
+    public int getAge(){
+        return this.entityData.get(AGE);
+    }
+
+
     @Override
     public void tick() {
         if (this.isAlive() && deployClock > 0)
@@ -51,15 +82,15 @@ public class Scamper extends EvolvedInfected {
             deploying = false;}
 
         if (this.isAlive()){
-            this.getPersistentData().putInt("age", 1 + this.getPersistentData().getInt("age"));
-            if (this.getPersistentData().getInt("age") >= SConfig.SERVER.scamper_age.get()) {
+            this.setAge(this.getAge()+1);
+            if (this.getAge() >= SConfig.SERVER.scamper_age.get()) {
                 if (!level.isClientSide){
-                    if (SConfig.SERVER.scamper_summon.get()){
-                        Summon(4);
-                    }
                     RandomSource randomSource = RandomSource.create();
                     int chance = randomSource.nextInt(1,3);
                     int age = randomSource.nextInt(1,4);
+                    if (SConfig.SERVER.scamper_summon.get()){
+                        Summon(4);
+                    }
                     for (int i = 0; i < chance; ++i) {
                         if (SConfig.SERVER.scamper_summon.get()){
                             Summon(age);
@@ -68,6 +99,13 @@ public class Scamper extends EvolvedInfected {
                     if (SConfig.SERVER.scent_spawn.get()){
                         SummonScent();
                     }
+                    if (this.level instanceof ServerLevel serverLevel){
+                        double x0 = this.getX() - (random.nextFloat() - 0.1) * 0.1D;
+                        double y0 = this.getY() + (random.nextFloat() - 0.25) * 0.15D * 5;
+                        double z0 = this.getZ() + (random.nextFloat() - 0.1) * 0.1D;
+                        serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x0, y0, z0, 2, 0, 0, 0, 1);
+                        serverLevel.setBlock(new BlockPos((int) this.getX(),(int) this.getY(),(int) this.getZ()) ,Sblocks.REMAINS.get().defaultBlockState(), 2);
+                    }
                     this.discard();
                 }
             }
@@ -75,23 +113,22 @@ public class Scamper extends EvolvedInfected {
         super.tick();
     }
 
-    private void Summon(int i){
-        RandomSource randomSource = RandomSource.create();
-        Mound mound = new Mound(Sentities.MOUND.get(),level);
-        int vecx = randomSource.nextInt(-2 ,2);
-        int vecz = randomSource.nextInt(-2 ,2);
-        mound.moveTo(this.getX(),this.getY(),this.getZ());
-        mound.setMaxAge(i);
-        mound.addEffect(new MobEffectInstance(MobEffects.REGENERATION ,200,0));
-        mound.setDeltaMovement(0.4 * vecx ,0.1,0.4 * vecz);
-        level.explode(this,this.getX(),this.getY(), this.getZ(),1f, Explosion.BlockInteraction.NONE);
-        level.addFreshEntity(mound);
-    }
-    private void SummonScent(){
-        ScentEntity scent = new ScentEntity(Sentities.SCENT.get(),level);
-        scent.moveTo(this.getX(),this.getY() + 0.4F ,this.getZ());
-        level.addFreshEntity(scent);
-    }
+        private void Summon(int i){
+            RandomSource randomSource = RandomSource.create();
+            Mound mound = new Mound(Sentities.MOUND.get(),level);
+            int vecx = randomSource.nextInt(-3 ,3);
+            int vecz = randomSource.nextInt(-3 ,3);
+            mound.moveTo(this.getX() + vecx,this.getY(),this.getZ() + vecz);
+            mound.setMaxAge(i);
+            mound.tickEmerging();
+            mound.addEffect(new MobEffectInstance(MobEffects.REGENERATION ,200,0));
+            level.addFreshEntity(mound);
+        }
+        private void SummonScent(){
+            ScentEntity scent = new ScentEntity(Sentities.SCENT.get(),level);
+            scent.moveTo(this.getX(),this.getY() + 0.4F ,this.getZ());
+            level.addFreshEntity(scent);
+        }
 
     @Override
     protected void registerGoals() {
