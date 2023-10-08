@@ -21,6 +21,9 @@
     "spore:busser",
     "spore:inf_drowned",
     "spore:inf_player",
-    "spore:scamper"
+    "spore:scamper",
+    "spore:vigil",
+    "spore:inf_husk",
+    "spore:volatile"
   ]
 }

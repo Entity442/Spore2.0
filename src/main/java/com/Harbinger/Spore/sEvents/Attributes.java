@@ -23,6 +23,7 @@ public class Attributes {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(Sentities.INF_HUMAN.get(), InfectedHuman.createAttributes().build());
+        event.put(Sentities.INF_HUSK.get(), InfectedHusk.createAttributes().build());
         event.put(Sentities.KNIGHT.get(), Knight.createAttributes().build());
         event.put(Sentities.GRIEFER.get(), Griefer.createAttributes().build());
         event.put(Sentities.BRAIOMIL.get(), Braionmil.createAttributes().build());
@@ -41,6 +42,7 @@ public class Attributes {
         event.put(Sentities.SCENT.get(), ScentEntity.createAttributes().build());
         event.put(Sentities.BRUTE.get(), Brute.createAttributes().build());
         event.put(Sentities.BUSSER.get(), Busser.createAttributes().build());
+        event.put(Sentities.VOLATILE.get(), Volatile.createAttributes().build());
         event.put(Sentities.INF_DROWNED.get(), InfectedDrowned.createAttributes().build());
         event.put(Sentities.HOST.get(), Host.createAttributes().build());
         event.put(Sentities.INF_PLAYER.get(), InfectedPlayer.createAttributes().build());

@@ -46,6 +46,6 @@ public class VentPlateBlock extends MultifaceBlock {
 
     @Override
     public boolean canBeReplaced(BlockState state, BlockPlaceContext context) {
-        return context.getItemInHand().is(Sitems.VENT_PLATE.get());
+        return context.getItemInHand().getItem() == this.asItem();
     }
 }

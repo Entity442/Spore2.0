@@ -43,15 +43,19 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_spawn;
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_summon;
         public final ForgeConfigSpec.ConfigValue<Integer> scent_summon_cooldown;
-        public final ForgeConfigSpec.ConfigValue<Integer> scent_cap;
         public final ForgeConfigSpec.ConfigValue<Boolean> scent_particles;
         public final ForgeConfigSpec.ConfigValue<Integer> scent_life;
+        public final ForgeConfigSpec.ConfigValue<Integer> scent_cap;
         public final ForgeConfigSpec.ConfigValue<Integer> scent_kills;
         public final ForgeConfigSpec.ConfigValue<Integer> scent_spawn_chance;
 
         public final ForgeConfigSpec.ConfigValue<Double> inf_human_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_human_damage;
         public final ForgeConfigSpec.ConfigValue<Double> inf_human_armor;
+
+        public final ForgeConfigSpec.ConfigValue<Double> inf_husk_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_husk_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_husk_armor;
 
         public final ForgeConfigSpec.ConfigValue<Double> inf_vil_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_vil_damage;
@@ -156,6 +160,12 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> sla_hp;
         public final ForgeConfigSpec.ConfigValue<Double> sla_damage;
         public final ForgeConfigSpec.ConfigValue<Double> sla_armor;
+
+        public final ForgeConfigSpec.ConfigValue<Double> vola_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> vola_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> vola_armor;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> vola_debuffs;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> vola_buffs;
 
         public final ForgeConfigSpec.ConfigValue<Double> mound_hp;
         public final ForgeConfigSpec.ConfigValue<Double> mound_armor;
@@ -292,6 +302,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> human_ev;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> villager_ev;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> pil_ev;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> wit_ev;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> undespawn;
         public final ForgeConfigSpec.ConfigValue<Boolean> starve;
 
@@ -371,7 +382,7 @@ public class SConfig {
                     Lists.newArrayList("spore:inf_witch","spore:braiomil","spore:howler","spore:busser") , o -> o instanceof String);
 
             this.can_be_carried = builder.defineList("Disposable",
-                    Lists.newArrayList("spore:inf_human","spore:inf_villager","spore:inf_wanderer","spore:knight","spore:griefer","spore:slasher","spore:inf_vindicator","minecraft:creeper") , o -> o instanceof String);
+                    Lists.newArrayList("spore:inf_human","spore:inf_villager","spore:inf_wanderer","spore:knight","spore:griefer","spore:slasher","spore:volatile","spore:inf_vindicator","minecraft:creeper") , o -> o instanceof String);
 
             this.ranged = builder.defineList("Ranged",
                     Lists.newArrayList("spore:spitter","spore:inf_pillager","spore:braiomil","spore:inf_evoker") , o -> o instanceof String);
@@ -398,6 +409,9 @@ public class SConfig {
                             "spore:howler",
                                      "spore:stalker",
                                      "spore:brute") , o -> o instanceof String);
+            this.wit_ev = builder.defineList("Infected Witch Evolutions",
+                    Lists.newArrayList(
+                            "spore:volatile") , o -> o instanceof String);
 
             this.undespawn = builder.defineList("Mobs that won't despawn after being created from assimilation",
                     Lists.newArrayList("spore:inf_villager", "spore:inf_pillager", "spore:inf_witch") , o -> o instanceof String);
@@ -409,7 +423,7 @@ public class SConfig {
             this.inf_player = builder.comment("Default true").define("Should the player be infected on death?",true);
             this.inf_human_conv = builder.defineList("Mobs and their infected counterparts",
                     Lists.newArrayList(
-                            "minecraft:zombie|spore:inf_human","minecraft:husk|spore:inf_human","minecraft:drowned|spore:inf_drowned"
+                            "minecraft:zombie|spore:inf_human","minecraft:husk|spore:inf_husk","minecraft:drowned|spore:inf_drowned"
                             ,"minecraft:pillager|spore:inf_pillager","minecraft:villager|spore:inf_villager","guardvillagers:guard|spore:inf_villager",
                             "recruits:recruit|spore:inf_villager","recruits:bowman|spore:inf_villager","recruits:recruit_shieldman|spore:inf_villager",
                             "recruits:nomad|spore:inf_villager","recruits:horseman|spore:inf_villager",
@@ -471,7 +485,7 @@ public class SConfig {
             this.vigil_armor = builder.comment("Default 5").defineInRange("Sets Vigil Armor", 5, 1, Double.MAX_VALUE);
             this.vigil_wave_size = builder.comment("Default 15").defineInRange("Sets the maximum size of the wave", 15, 1, Integer.MAX_VALUE);
             this.vigil_base_wave = builder.comment("The base wave of infected a vigil can summon").defineList("Vigil min wave",
-                    Lists.newArrayList("spore:inf_human" , "spore:inf_villager","spore:inf_pillager","spore:inf_drowned") , o -> o instanceof String);
+                    Lists.newArrayList("spore:inf_human" ,"spore:inf_drowned" , "spore:inf_villager","spore:inf_pillager","spore:inf_drowned") , o -> o instanceof String);
 
             this.vigil_middle_wave = builder.comment("The mixed wave of infected a vigil can summon").defineList("Vigil mix wave",
                     Lists.newArrayList("spore:inf_human" , "spore:inf_villager","spore:inf_pillager","spore:inf_wanderer"
@@ -537,6 +551,7 @@ public class SConfig {
                             "recruits:recruit","recruits:bowman","recruits:recruit_shieldman", "recruits:nomad","recruits:horseman","roamers:roamer") , o -> o instanceof String);
             this.proto_summonable_troops = builder.defineList("Mobs that the proto can summon to defend itself",
                     Lists.newArrayList("spore:mound","spore:vigil") , o -> o instanceof String);
+
             builder.pop();
 
             builder.push("Howler");
@@ -575,11 +590,11 @@ public class SConfig {
             this.scent_spawn = builder.comment("Default true").define("Should scent spawn?",true);
             this.scent_particles = builder.comment("Default true").define("Should scent have particles?",true);
             this.scent_life = builder.comment("Default 4000").define("Scent life",4000);
+            this.scent_cap = builder.comment("Default 5").define("The average amount of scents that can spawn in an area",5);
             this.scent_effects_buff = builder.defineList("Overcharged Scent buff effect list",
                     Lists.newArrayList("minecraft:regeneration","minecraft:speed","minecraft:health_boost","minecraft:strength","minecraft:resistance" ) , o -> o instanceof String);
             this.scent_kills = builder.comment("Default 4").define("OverCharged Scent bonus kill points",4);
             this.scent_spawn_chance = builder.comment("Default 5").define("The Chance for the scent to spawn from a mob dying 1-100",5);
-            this.scent_cap = builder.comment("Default 5").define("The average amount of scents that can spawn in an area",5);
             this.inf_summon = builder.defineList("Mobs that can be summoned by the Scent",
                     Lists.newArrayList(
                             "spore:inf_human"
@@ -637,6 +652,11 @@ public class SConfig {
             this.inf_human_damage = builder.comment("Default 6").defineInRange("Sets Infected Human Damage", 6, 1, Double.MAX_VALUE);
             this.inf_human_armor = builder.comment("Default 1").defineInRange("Sets Infected Human Armor", 1, 0, Double.MAX_VALUE);
             builder.pop();
+            builder.push("Infected Husk");
+            this.inf_husk_hp = builder.comment("Default 21").defineInRange("Sets Infected Husk Max health", 21, 1, Double.MAX_VALUE);
+            this.inf_husk_damage = builder.comment("Default 6").defineInRange("Sets Infected Husk Damage", 6, 1, Double.MAX_VALUE);
+            this.inf_husk_armor = builder.comment("Default 3").defineInRange("Sets Infected Husk Armor", 3, 0, Double.MAX_VALUE);
+            builder.pop();
             builder.push("Knight ");
             this.knight_hp = builder.comment("Default 25").defineInRange("Sets Knight Max health", 25, 1, Double.MAX_VALUE);
             this.knight_damage = builder.comment("Default 7").defineInRange("Sets Knight Damage", 7, 1, Double.MAX_VALUE);
@@ -652,6 +672,16 @@ public class SConfig {
             this.sla_hp = builder.comment("Default 35").defineInRange("Sets Slasher Max health", 35, 1, Double.MAX_VALUE);
             this.sla_damage = builder.comment("Default 10").defineInRange("Sets Slasher Damage", 10, 1, Double.MAX_VALUE);
             this.sla_armor = builder.comment("Default 2").defineInRange("Sets Slasher Armor", 2, 1, Double.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Volatile ");
+            this.vola_hp = builder.comment("Default 60").defineInRange("Sets Volatile Max health", 60, 1, Double.MAX_VALUE);
+            this.vola_damage = builder.comment("Default 10").defineInRange("Sets Volatile Damage", 10, 1, Double.MAX_VALUE);
+            this.vola_armor = builder.comment("Default 4").defineInRange("Sets Volatile Armor", 4, 1, Double.MAX_VALUE);
+            this.vola_buffs = builder.defineList("Buffs the Volatile might get when hurt",
+                    Lists.newArrayList("minecraft:regeneration","minecraft:speed","minecraft:resistance","minecraft:fire_resistance") , o -> o instanceof String);
+            this.vola_debuffs = builder.defineList("Buffs the Volatile might give to its target",
+                    Lists.newArrayList("minecraft:poison","minecraft:weakness","minecraft:hunger","spore:marker") , o -> o instanceof String);
             builder.pop();
 
             builder.push("Scamper ");
@@ -693,7 +723,7 @@ public class SConfig {
             this.days = builder.comment("Default 3").define("Days before infected start spawning",3);
             this.spawns = builder.defineList("mob|weight|minimum|maximum",
                     Lists.newArrayList("spore:inf_human|80|2|5","spore:inf_drowned|10|1|2","spore:inf_pillager|40|1|3","spore:inf_villager|70|1|3","spore:inf_player|20|1|2"
-                            ,"spore:inf_wanderer|25|1|2","spore:inf_witch|25|1|2","spore:inf_vindicator|1|1|2","spore:inf_evoker|5|1|2") , o -> o instanceof String);
+                            ,"spore:inf_wanderer|25|1|2","spore:inf_witch|25|1|2") , o -> o instanceof String);
             builder.pop();
 
 
@@ -847,6 +877,8 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_bus_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_drow_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_player_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_husk_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_volatile_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> sca_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> sieger_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> sieger_tail_loot;
@@ -892,6 +924,9 @@ public class SConfig {
                     Lists.newArrayList("spore:mutated_fiber|50|1|3","spore:armor_fragment|80|1|2","spore:claw_fragment|80|2|6") , o -> o instanceof String);
             this.inf_player_loot = builder.defineList("Infected Adventurer",
                     Lists.newArrayList("spore:mutated_fiber|50|2|5","spore:mutated_heart|10|1|1") , o -> o instanceof String);
+            this.inf_husk_loot = builder.defineList("Infected Husk",
+                    Lists.newArrayList("spore:mutated_fiber|50|5|7","spore:mutated_heart|10|1|1") , o -> o instanceof String);
+
 
             this.inf_braio_loot = builder.defineList("Braiomil ",
                     Lists.newArrayList("spore:mutated_fiber|80|1|3","spore:armor_fragment|50|1|2","spore:mutated_heart|10|1|1","spore:alveolic_sack|40|1|3") , o -> o instanceof String);
@@ -916,6 +951,10 @@ public class SConfig {
             this.inf_brute_loot = builder.defineList("Brute ",
                     Lists.newArrayList("spore:mutated_fiber|50|2|5","spore:innards|50|1|1","spore:armor_fragment|80|5|12","spore:mutated_heart|10|1|1","spore:cerebrum|20|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
 
+            this.inf_volatile_loot = builder.defineList("Volatile ",
+                    Lists.newArrayList("spore:mutated_fiber|70|1|5","spore:armor_fragment|80|2|6","spore:mutated_heart|10|1|1","spore:claw_fragment|80|6|9","spore:innards|50|1|1","spore:tumor|100|2|4") , o -> o instanceof String);
+
+
             this.sca_loot = builder.defineList("Scamper ",
                     Lists.newArrayList("spore:mutated_fiber|50|1|4","spore:armor_fragment|80|1|3","spore:mutated_heart|10|1|1","spore:tumor|100|1|1") , o -> o instanceof String);
 
@@ -934,7 +973,7 @@ public class SConfig {
                     Lists.newArrayList("spore:mutated_fiber|70|2|5") , o -> o instanceof String);
 
             this.vigil_loot = builder.defineList("Vigil",
-                    Lists.newArrayList("spore:mutated_fiber|100|6|15","spore:mutated_heart|30|1|1") , o -> o instanceof String);
+                    Lists.newArrayList("spore:mutated_fiber|100|6|15","spore:vigil_eye|100|1|1","spore:mutated_heart|30|1|1") , o -> o instanceof String);
 
 
             this.organite_loot = builder.defineList("Organite Block",

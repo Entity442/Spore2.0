@@ -83,6 +83,8 @@ public class Sitems {
 
     public  static final RegistryObject<Item> INFECTED_HUMAN_SPAWNEGG = ITEMS.register("infected_human_spawnegg",
             () -> new SporeSpawnEgg(Sentities.INF_HUMAN,-9357608, new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> INFECTED_HUSK_SPAWNEGG = ITEMS.register("inf_husk_spawnegg",
+            () -> new SporeSpawnEgg(Sentities.INF_HUSK,-875608, new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> INF_VILLAGER_SPAWNEGG = ITEMS.register("inf_villager_spawnegg",
             () -> new SporeSpawnEgg(Sentities.INF_VILLAGER,-6639718, new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> INF_WITCH_SPAWNEGG = ITEMS.register("inf_witch_spawnegg",
@@ -128,6 +130,8 @@ public class Sitems {
     public  static final RegistryObject<Item> BRUTE_SPAWNEGG = ITEMS.register("brute_spawnegg",
             () -> new SporeSpawnEgg(Sentities.BRUTE,-1235818, new Item.Properties().tab(ScreativeTab.SPORE)));
 
+    public  static final RegistryObject<Item> VOLATILE_SPAWNEGG = ITEMS.register("volatile_spawnegg",
+            () -> new SporeSpawnEgg(Sentities.VOLATILE,-976435818, new Item.Properties().tab(ScreativeTab.SPORE)));
 
     public  static final RegistryObject<Item> SCENT_SPAWNEGG = ITEMS.register("scent_spawnegg",
             () -> new SporeSpawnEgg(Sentities.SCENT,-1, new Item.Properties().tab(ScreativeTab.SPORE)));
@@ -254,7 +258,12 @@ public class Sitems {
     public static final RegistryObject<Item> LAB_STAIR = block(Sblocks.LAB_STAIR, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> IRON_LADDER = block(Sblocks.IRON_LADDER, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> VENT_PLATE = block(Sblocks.VENT_PLATE, ScreativeTab.SPORE_T);
+    public static final RegistryObject<Item> RUSTED_VENT_PLATE = block(Sblocks.RUSTED_VENT_PLATE, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> VENT_DOOR = block(Sblocks.VENT_DOOR, ScreativeTab.SPORE_T);
+
+    public static final RegistryObject<Item> REINFORCED_DOOR = block(Sblocks.REINFORCED_DOOR, ScreativeTab.SPORE_T);
+    public static final RegistryObject<Item> FROZEN_REINFORCED_DOOR = block(Sblocks.FROZEN_REINFORCED_DOOR, ScreativeTab.SPORE_T);
+    public static final RegistryObject<Item> RUSTED_REINFORCED_DOOR = block(Sblocks.RUSTED_REINFORCED_DOOR, ScreativeTab.SPORE_T);
 
     public static final RegistryObject<Item> GROWTHS_BIG = block(Sblocks.GROWTHS_BIG, ScreativeTab.SPORE);
     public static final RegistryObject<Item> GROWTHS_SMALL = block(Sblocks.GROWTHS_SMALL, ScreativeTab.SPORE);
