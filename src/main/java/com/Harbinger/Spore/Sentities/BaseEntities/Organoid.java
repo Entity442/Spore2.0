@@ -16,6 +16,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.AbstractFish;
@@ -27,6 +29,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fluids.FluidType;
 
 import javax.annotation.Nullable;
 
@@ -70,6 +73,11 @@ public class Organoid extends UtilityEntity implements Enemy {
         return true;
     }
 
+
+    @Override
+    public boolean canDrownInFluidType(FluidType type) {
+        return false;
+    }
 
     @Override
     public boolean hurt(DamageSource source, float p_21017_) {
@@ -143,6 +151,14 @@ public class Organoid extends UtilityEntity implements Enemy {
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        if (this.getHealth() < this.getMaxHealth() && !this.hasEffect(MobEffects.REGENERATION)){
+            this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,600,1));
         }
     }
 

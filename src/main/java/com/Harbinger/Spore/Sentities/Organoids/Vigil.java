@@ -33,13 +33,16 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-public class Vigil extends Organoid {
+public class Vigil extends Organoid{
     private static final EntityDataAccessor<Integer> TRIGGER = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> WAVE_SIZE = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> TIMER = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.INT);
     private int summon_counter;
+    @Nullable
+    private Proto proto;
     public Vigil(EntityType<? extends UtilityEntity> type, Level level) {
         super(type, level);
         setPersistenceRequired();
@@ -177,6 +180,9 @@ public class Vigil extends Organoid {
             level.addFreshEntity(scent);
         }
     }
+    public void setProto(@Nullable Proto proto) {
+        this.proto = proto;
+    }
 
     private static class WatchTargetGoat extends Goal{
         private final Vigil vigil;
@@ -202,6 +208,16 @@ public class Vigil extends Organoid {
                     player.displayClientMessage(Component.translatable("vigil.message"),true);
                 }
             }
+        }
+        @Override
+        public void start() {
+            super.start();
+            if (this.vigil.getTarget() != null && this.vigil.proto != null){
+                if (this.vigil.proto.getTarget() == null){
+                    this.vigil.proto.setTarget(this.vigil.getTarget());
+                }
+            }
+
         }
     }
 

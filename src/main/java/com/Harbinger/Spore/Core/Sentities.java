@@ -1,20 +1,17 @@
 package com.Harbinger.Spore.Core;
 
-import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.BasicInfected.*;
 import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
 import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
-import com.Harbinger.Spore.Sentities.Organoids.BiomassReformator;
-import com.Harbinger.Spore.Sentities.Organoids.Vigil;
+import com.Harbinger.Spore.Sentities.Host;
+import com.Harbinger.Spore.Sentities.Organoids.*;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownSpear;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownTumor;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
 import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
 import com.Harbinger.Spore.Sentities.Utility.InfectionTendril;
-import com.Harbinger.Spore.Sentities.Organoids.Mound;
-import com.Harbinger.Spore.Sentities.Organoids.Proto;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.resources.ResourceLocation;
@@ -26,6 +23,9 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Sentities {
     public static DeferredRegister<EntityType<?>> SPORE_ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES,
@@ -40,6 +40,8 @@ public class Sentities {
 
     public static final MobCategory INFECTED = MobCategory.create("infected","infected",SConfig.SERVER.mob_cap.get(),false,false,128);
 
+    public  static  final List<Entity> INFECTED_ENTITIES = new ArrayList<>();
+
     public static final RegistryObject<EntityType<InfectedHuman>> INF_HUMAN = SPORE_ENTITIES.register("inf_human",
             () -> EntityType.Builder.of((EntityType<InfectedHuman> p_33002_, Level level) -> new InfectedHuman(level), INFECTED).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "inf_human").toString()));
@@ -53,7 +55,7 @@ public class Sentities {
                     .build(new ResourceLocation(Spore.MODID, "inf_player").toString()));
 
     public static final RegistryObject<EntityType<Knight>> KNIGHT = SPORE_ENTITIES.register("knight",
-            () -> EntityType.Builder.of(Knight::new, INFECTED).sized(0.6f, 1.9f)
+            () -> EntityType.Builder.of(Knight::new, INFECTED).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "knight").toString()));
 
     public static final RegistryObject<EntityType<Griefer>> GRIEFER = SPORE_ENTITIES.register("griefer",
@@ -61,7 +63,7 @@ public class Sentities {
                     .build(new ResourceLocation(Spore.MODID, "griefer").toString()));
 
     public static final RegistryObject<EntityType<Braionmil>> BRAIOMIL = SPORE_ENTITIES.register("braiomil",
-            () -> EntityType.Builder.of(Braionmil::new, INFECTED).sized(0.6f, 1.9f)
+            () -> EntityType.Builder.of(Braionmil::new, INFECTED).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "braiomil").toString()));
 
     public static final RegistryObject<EntityType<InfectedVillager>> INF_VILLAGER = SPORE_ENTITIES.register("inf_villager",
@@ -131,6 +133,10 @@ public class Sentities {
     public static final RegistryObject<EntityType<Vigil>> VIGIL = SPORE_ENTITIES.register("vigil",
             () -> EntityType.Builder.of(Vigil::new, INFECTED).sized(1f, 3f)
                     .build(new ResourceLocation(Spore.MODID, "vigil").toString()));
+
+    public static final RegistryObject<EntityType<Umarmer>> UMARMED = SPORE_ENTITIES.register("umarmed",
+            () -> EntityType.Builder.of(Umarmer::new, INFECTED).sized(1f, 3f)
+                    .build(new ResourceLocation(Spore.MODID, "umarmed").toString()));
 
     public static final RegistryObject<EntityType<Host>> HOST = SPORE_ENTITIES.register("host",
             () -> EntityType.Builder.of(Host::new, INFECTED).sized(0.6f, 2f)

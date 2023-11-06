@@ -12,11 +12,8 @@ import com.Harbinger.Spore.Sentities.BasicInfected.*;
 import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
 import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
-import com.Harbinger.Spore.Sentities.Organoids.BiomassReformator;
-import com.Harbinger.Spore.Sentities.Organoids.Vigil;
+import com.Harbinger.Spore.Sentities.Organoids.*;
 import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
-import com.Harbinger.Spore.Sentities.Organoids.Mound;
-import com.Harbinger.Spore.Sentities.Organoids.Proto;
 import com.Harbinger.Spore.Sitems.InfectedCombatShovel;
 import com.Harbinger.Spore.Sitems.InfectedMaul;
 import com.Harbinger.Spore.Spore;
@@ -205,6 +202,16 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Time until it leaves " + vigil.getTimer()+"/6000"),false);
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
                                 }
+                            }else if(entity1 instanceof Umarmer umarmer) {
+                                if (entity instanceof Player player && !player.level.isClientSide){
+                                    player.displayClientMessage(Component.literal("Entity "+ umarmer.getEncodeId() + " " + umarmer.getCustomName()),false);
+                                    player.displayClientMessage(Component.literal("Current Health " + umarmer.getHealth()),false);
+                                    player.displayClientMessage(Component.literal("Buffs " + umarmer.getActiveEffects()),false);
+                                    player.displayClientMessage(Component.literal("Shielded? " + umarmer.isShielding()),false);
+                                    player.displayClientMessage(Component.literal("Pins? " + umarmer.isPinned()),false);
+                                    player.displayClientMessage(Component.literal("Time until it leaves " + umarmer.getTimer()+"/2400"),false);
+                                    player.displayClientMessage(Component.literal("-------------------------"),false);
+                                }
                             }
                         }
                     }
@@ -274,6 +281,8 @@ public class HandlerEvents {
                 lootList = SConfig.DATAGEN.inf_husk_loot.get();
             }else if (event.getEntity() instanceof Volatile){
                 lootList = SConfig.DATAGEN.inf_volatile_loot.get();
+            }else if (event.getEntity() instanceof Umarmer){
+                lootList = SConfig.DATAGEN.umarmer_loot.get();
             }
             else{
                 lootList = null;

@@ -6,11 +6,9 @@ import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.ExtremelySusThings.ChunkLoaderHelper;
 import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
-import com.Harbinger.Spore.Sentities.AI.HurtTargetGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.Calamity;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Organoid;
-import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -32,10 +30,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.AbstractFish;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -47,7 +41,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Proto extends Organoid implements Enemy {
+public class Proto extends Organoid {
 
     public Proto(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -123,6 +117,7 @@ public class Proto extends Organoid implements Enemy {
                         Vigil vigil = new Vigil(Sentities.VIGIL.get(),this.level);
                         vigil.randomTeleport(en.getX() + x,en.getY(),en.getZ() + z,false);
                         vigil.tickEmerging();
+                        vigil.setProto(this);
                         level.addFreshEntity(vigil);
                         break;
                     }
@@ -213,8 +208,6 @@ public class Proto extends Organoid implements Enemy {
             this.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,400,0));
         }else if (this.getHealth() < (this.getMaxHealth()/2) && !(hasEffect(MobEffects.WEAKNESS) || hasEffect(MobEffects.DAMAGE_RESISTANCE))){
             this.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,100,0));
-        }else if (this.getHealth() < this.getMaxHealth() && !this.hasEffect(MobEffects.REGENERATION)){
-            this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,100,0));
         }
     }
 
@@ -312,6 +305,12 @@ public class Proto extends Organoid implements Enemy {
             EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
             Mob waveentity = (Mob) randomElement.create(this.level);
             assert waveentity != null;
+            if (waveentity instanceof Vigil vigil){
+                vigil.setProto(this);
+            }
+            if (waveentity instanceof Mound mound){
+                mound.setMaxAge(1);
+            }
             waveentity.randomTeleport(target.getX() + x,target.getY(),target.getZ() + z,false);
             waveentity.finalizeSpawn(world, this.level.getCurrentDifficultyAt(new BlockPos((int) this.getX(),(int)  this.getY(),(int)  this.getZ())), MobSpawnType.NATURAL, null, null);
             this.level.addFreshEntity(waveentity);

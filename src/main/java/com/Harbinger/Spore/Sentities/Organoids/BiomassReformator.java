@@ -234,9 +234,6 @@ public class BiomassReformator extends Organoid implements Enemy {
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
-        if (this.getHealth() < this.getMaxHealth() && !this.hasEffect(MobEffects.REGENERATION)){
-            this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,200,0));
-        }
         if (getBiomass() > 1){
             int age = 1;
             if (this.getBiomass() > (SConfig.SERVER.reconstructor_biomass.get()/4) && this.getBiomass() < (SConfig.SERVER.reconstructor_biomass.get()/2)){

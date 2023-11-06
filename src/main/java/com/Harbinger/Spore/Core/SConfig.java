@@ -99,6 +99,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> vigil_middle_wave;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> vigil_max_wave;
 
+        public final ForgeConfigSpec.ConfigValue<Double> umarmed_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> umarmed_armor;
+        public final ForgeConfigSpec.ConfigValue<Double> umarmed_damage;
+
         public final ForgeConfigSpec.ConfigValue<Double> inf_evo_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_evo_damage;
         public final ForgeConfigSpec.ConfigValue<Double> inf_evo_armor;
@@ -480,6 +484,12 @@ public class SConfig {
             this.bus_armor = builder.comment("Default 10").defineInRange("Sets Phayres Armor", 10, 1, Double.MAX_VALUE);
             builder.pop();
 
+            builder.push("Umarmed");
+            this.umarmed_hp = builder.comment("Default 70").defineInRange("Sets Umarmed Max health", 70, 1, Double.MAX_VALUE);
+            this.umarmed_damage = builder.comment("Default 8").defineInRange("Sets Umarmed Damage", 8, 1, Double.MAX_VALUE);
+            this.umarmed_armor = builder.comment("Default 6").defineInRange("Sets Umarmed Armor", 6, 1, Double.MAX_VALUE);
+            builder.pop();
+
             builder.push("Vigil");
             this.vigil_hp = builder.comment("Default 60").defineInRange("Sets Vigil Max health", 60, 1, Double.MAX_VALUE);
             this.vigil_armor = builder.comment("Default 5").defineInRange("Sets Vigil Armor", 5, 1, Double.MAX_VALUE);
@@ -550,7 +560,7 @@ public class SConfig {
                     Lists.newArrayList("minecraft:villager","minecraft:pillager","guardvillagers:guard","minecraft:evoker","minecraft:vindicator",
                             "recruits:recruit","recruits:bowman","recruits:recruit_shieldman", "recruits:nomad","recruits:horseman","roamers:roamer") , o -> o instanceof String);
             this.proto_summonable_troops = builder.defineList("Mobs that the proto can summon to defend itself",
-                    Lists.newArrayList("spore:mound","spore:vigil") , o -> o instanceof String);
+                    Lists.newArrayList("spore:mound","spore:vigil","spore:umarmed") , o -> o instanceof String);
 
             builder.pop();
 
@@ -883,6 +893,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> sieger_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> sieger_tail_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> vigil_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> umarmer_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> proto_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> mound_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> organite_loot;
@@ -972,8 +983,11 @@ public class SConfig {
             this.mound_loot = builder.defineList("Mound ",
                     Lists.newArrayList("spore:mutated_fiber|70|2|5") , o -> o instanceof String);
 
-            this.vigil_loot = builder.defineList("Vigil",
+            this.vigil_loot = builder.defineList("Vigil ",
                     Lists.newArrayList("spore:mutated_fiber|100|6|15","spore:vigil_eye|100|1|1","spore:mutated_heart|30|1|1") , o -> o instanceof String);
+
+            this.umarmer_loot = builder.defineList("Umarmer ",
+                    Lists.newArrayList("spore:mutated_fiber|100|6|15","spore:armor_fragment|80|1|8","spore:mutated_heart|30|1|1") , o -> o instanceof String);
 
 
             this.organite_loot = builder.defineList("Organite Block",
@@ -1003,7 +1017,7 @@ public class SConfig {
             this.player_hm = builder.defineList("MainHand Slot",
                     Lists.newArrayList("minecraft:stone_sword|50" , "minecraft:stone_axe|20","minecraft:bow|25", "minecraft:pickaxe|20" , "minecraft:iron_sword|30") , o -> o instanceof String);
             this.player_ho = builder.defineList("OffHand Slot",
-                    Lists.newArrayList("minecraft:torch|50","minecraft:shield|30","minecraft:bow|45") , o -> o instanceof String);
+                    Lists.newArrayList("minecraft:torch|50","minecraft:shield|30","minecraft:flint_and_steel|30","minecraft:bow|45") , o -> o instanceof String);
 
             builder.pop();
             builder.push("Structure data");

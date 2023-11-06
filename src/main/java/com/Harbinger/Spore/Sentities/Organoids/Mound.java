@@ -399,13 +399,6 @@ public class Mound extends Organoid implements Enemy {
         }
     }
 
-    @Override
-    public void aiStep() {
-        super.aiStep();
-        if (this.getHealth() < this.getMaxHealth() && !this.hasEffect(MobEffects.REGENERATION)){
-            this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,200,0));
-        }
-    }
 
     @Override
     public int getEmerge_tick() {
