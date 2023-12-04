@@ -240,11 +240,18 @@ public class Griefer extends EvolvedInfected {
         this.playSound(this.getStepSound(), 0.15F, 1.0F);
     }
 
+    private boolean checkForNucMod(){
+        return ModList.get().isLoaded("alexscaves") || ModList.get().isLoaded("bigreactors");
+    }
+
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_146746_, DifficultyInstance p_146747_,
                                         MobSpawnType p_146748_, @Nullable SpawnGroupData p_146749_,
                                         @Nullable CompoundTag p_146750_) {
         GrieferVariants variant = Math.random() < 0.2 ? GrieferVariants.TOXIC : GrieferVariants.DEFAULT;
+        if (checkForNucMod()){
+            variant = Math.random() < 0.3 ? GrieferVariants.RADIOACTIVE : GrieferVariants.DEFAULT;
+        }
         setVariant(variant);
         return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_);
     }
