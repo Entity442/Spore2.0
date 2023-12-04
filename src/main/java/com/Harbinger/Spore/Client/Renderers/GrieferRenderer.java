@@ -25,8 +25,9 @@ public class GrieferRenderer  <Type extends Griefer> extends MobRenderer<Type , 
                         new ResourceLocation(Spore.MODID, "textures/entity/griefer.png"));
                 p_114874_.put(GrieferVariants.TOXIC,
                         new ResourceLocation(Spore.MODID, "textures/entity/griefer_toxic.png"));
+                p_114874_.put(GrieferVariants.RADIOACTIVE,
+                        new ResourceLocation(Spore.MODID, "textures/entity/griefer_radioactive.png"));
             });
-
 
     public GrieferRenderer(EntityRendererProvider.Context context) {
         super(context, new GrieferModel<>(context.bakeLayer(GrieferModel.LAYER_LOCATION)), 0.5f);
@@ -34,7 +35,7 @@ public class GrieferRenderer  <Type extends Griefer> extends MobRenderer<Type , 
     }
 
     private static class Eyes<Type extends Griefer,M extends GrieferModel<Type>> extends EyesLayer<Type,M> {
-        private static final RenderType EYES = RenderType.eyes(new ResourceLocation(Spore.MODID,"textures/entity/eyes/griefer.png"));
+        private final RenderType EYES = RenderType.eyes(new ResourceLocation(Spore.MODID, "textures/entity/eyes/griefer.png"));
         public Eyes(RenderLayerParent layer) {
             super(layer);
         }
@@ -42,6 +43,7 @@ public class GrieferRenderer  <Type extends Griefer> extends MobRenderer<Type , 
             return EYES;
         }
     }
+
     @Override
     public ResourceLocation getTextureLocation(Type entity) {
         return TEXTURE.get(entity.getVariant());
@@ -51,4 +53,5 @@ public class GrieferRenderer  <Type extends Griefer> extends MobRenderer<Type , 
     protected boolean isShaking(Type type) {
         return type.isFreazing() || type.grieferExplosion();
     }
+
 }
