@@ -257,7 +257,12 @@ public class Sitems {
     private static RegistryObject<Item> block(RegistryObject<Block> block, CreativeModeTab tab) {
         return ITEMS.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
     }
+    private static RegistryObject<Item> Exceptions(RegistryObject<Block> block) {
+        return ITEMS.register(block.getId().getPath(), () -> new BlockItem(block.get(),new Item.Properties().tab(ScreativeTab.SPORE_T).stacksTo(1)));
+    }
+
     public static final RegistryObject<Item> CONTAINER = block(Sblocks.CONTAINER, ScreativeTab.SPORE_T);
+    public static final RegistryObject<Item> CDU = Exceptions(Sblocks.CDU);
     public static final RegistryObject<Item> LAB_BLOCK = block(Sblocks.LAB_BLOCK, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> LAB_SLAB = block(Sblocks.LAB_SLAB, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> LAB_STAIR = block(Sblocks.LAB_STAIR, ScreativeTab.SPORE_T);

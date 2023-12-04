@@ -8,7 +8,6 @@ import net.minecraft.world.level.Level;
 public class EvolvedInfected extends Infected {
     public EvolvedInfected(EntityType<? extends Monster> type, Level level) {
         super(type, level);
-        setPersistenceRequired();
     }
     @Override
     protected boolean canRide(Entity entity) {
@@ -16,5 +15,10 @@ public class EvolvedInfected extends Infected {
             return super.canRide(entity);
         }
         return false;
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double p_21542_) {
+        return this.getLinked();
     }
 }

@@ -16,12 +16,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -37,6 +39,8 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -46,7 +50,6 @@ public class Griefer extends EvolvedInfected {
     private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData.defineId(Griefer.class, EntityDataSerializers.INT);
     private int swell;
     private final int maxSwell = 30;
-    private final int explosionRadius = SConfig.SERVER.explosion.get();
 
 
     public Griefer(EntityType<? extends Monster> type, Level level) {
@@ -62,7 +65,6 @@ public class Griefer extends EvolvedInfected {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putShort("Fuse", (short)this.maxSwell);
-        tag.putByte("ExplosionRadius", (byte)this.explosionRadius);
         tag.putInt("Variant", this.getTypeVariant());
     }
 
@@ -90,6 +92,26 @@ public class Griefer extends EvolvedInfected {
                 this.swell = this.maxSwell;
                 this.explodeGriefer();
             }
+
+            if (this.getVariant() == GrieferVariants.RADIOACTIVE){
+                if (this.tickCount % 30 == 0){
+                    AABB boundingBox = this.getBoundingBox().inflate(6);
+                    List<Entity> entities = this.level.getEntities(this, boundingBox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
+                    for (Entity entity1 : entities) {
+                        if(entity1 instanceof LivingEntity livingEntity) {
+                            if (!(livingEntity instanceof Infected || livingEntity instanceof UtilityEntity)){
+                                if (ModList.get().isLoaded("alexscaves")){
+                                    MobEffect effect = ForgeRegistries.MOB_EFFECTS.getValue(new ResourceLocation("alexscaves:irradiated"));
+                                    if (effect != null)
+                                        livingEntity.addEffect(new MobEffectInstance(effect,200,0));
+                                }else{
+                                    livingEntity.hurt(new EntityDamageSource("radiation_damage",this),4);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
         super.tick();
     }
@@ -111,14 +133,15 @@ public class Griefer extends EvolvedInfected {
 
     private void explodeGriefer() {
         if (!this.level.isClientSide) {
+            int explosionRadius = this.getTypeVariant() == 2 ? 2 * SConfig.SERVER.explosion.get() : SConfig.SERVER.explosion.get();
             if (SConfig.SERVER.explosion_on.get()){
             Explosion.BlockInteraction explosion$blockinteraction = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
             this.dead = true;
-            this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)this.explosionRadius, explosion$blockinteraction);
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)explosionRadius, explosion$blockinteraction);
             } else {
                 Explosion.BlockInteraction explosion$blockinteraction = Explosion.BlockInteraction.NONE;
                 this.dead = true;
-                this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)this.explosionRadius, explosion$blockinteraction);
+                this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)explosionRadius, explosion$blockinteraction);
                 this.discard();
 
             }

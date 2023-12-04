@@ -28,6 +28,7 @@
   "block.spore.vent_plate": "Vent Plate",
   "block.spore.rusted_vent_plate": "Rusted Vent Door",
   "block.spore.vent_door": "Vent Door",
+  "block.spore.cdu": "CDU",
   "block.spore.reinforced_door": "Reinforced Door",
   "block.spore.rusted_reinforced_door": "Rusted Reinforced Door",
   "block.spore.frozen_reinforced_door": "Frozen Reinforced Door",
@@ -264,6 +265,8 @@
   "death.attack.leaper_damage": "%1$s got jumped by %2$s",
   "death.attack.slasher_damage": "%2$s was happy to remove %1$s limbs",
   "death.attack.slasher_piercing_damage": "%1$s was impaled by %2$s",
+  "death.attack.radiation_damage": "%1$s got irradiated",
+
 
 
 
@@ -283,6 +286,6 @@
   "block.spore.lab_slab": "Laboratory Slab",
   "block.spore.lab_stair": "Laboratory Stairs",
   "container.line.normal": "Press shift for more info.",
-  "container.line.shift": "The Biohazard Storage Unit is the perfect new addition to storing your organic materials."
-
+  "container.line.shift": "The Biohazard Storage Unit is the perfect new addition to storing your organic materials.",
+  "cdu.line": "Cryogenic dispensing unit"
 }

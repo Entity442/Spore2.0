@@ -323,9 +323,6 @@ public class Infected extends Monster{
         if (source.getDirectEntity() instanceof AcidBall || source.getDirectEntity() instanceof Vomit){
             return  false;
         }
-        if ((SConfig.SERVER.weaktocold.get() && source == DamageSource.FREEZE) || source == DamageSource.LIGHTNING_BOLT){
-            return super.hurt(source,amount  * 2);
-        }
         if (source.getEntity() != null){
             this.setSearchPos(new BlockPos(source.getEntity().getX(),source.getEntity().getY(),source.getEntity().getZ()));
         }
