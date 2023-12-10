@@ -20,6 +20,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -233,6 +234,10 @@ public class Calamity extends UtilityEntity implements Enemy {
     @Override
     public void tick() {
         super.tick();
+        if (this.getHealth() < this.getMaxHealth() && !this.hasEffect(MobEffects.REGENERATION) && this.getKills() > 0){
+            this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,600,0));
+            this.setKills(this.getKills()-1);
+        }
         if (this.getRandom().nextInt(300) == 0 && this.getSearchArea() != BlockPos.ZERO){
             relocateExitPoint();
         }

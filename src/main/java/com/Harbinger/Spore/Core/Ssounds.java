@@ -16,7 +16,6 @@ public class Ssounds {
     private static RegistryObject<SoundEvent> soundRegistry(String id){
         return SOUNDS.register(id, () -> new SoundEvent(new ResourceLocation(Spore.MODID, id)));
     }
-
     public static final RegistryObject<SoundEvent> CORRUPTED_RECORD = soundRegistry("corrupted_record");
 
     public static final RegistryObject<SoundEvent> INF_DAMAGE = soundRegistry("inf_damage");
@@ -42,6 +41,12 @@ public class Ssounds {
     public static final RegistryObject<SoundEvent> SIEGER_AMBIENT = soundRegistry("sieger_ambient");
 
     public static final RegistryObject<SoundEvent> SIEGER_BITE = soundRegistry("sieger_bite");
+
+    public static final RegistryObject<SoundEvent> GAZEN_AMBIENT = soundRegistry("gazen_ambient");
+
+    public static final RegistryObject<SoundEvent> SONAR = soundRegistry("sonar");
+
+    public static final RegistryObject<SoundEvent> SIGNAL = soundRegistry("signal");
 
     public static final RegistryObject<SoundEvent> WOMB_AMBIENT = soundRegistry("womb_ambient");
 

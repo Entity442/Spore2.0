@@ -9,8 +9,10 @@ import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.BasicInfected.*;
+import com.Harbinger.Spore.Sentities.Calamities.Gazenbrecher;
 import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
+import com.Harbinger.Spore.Sentities.FallenMultipart.Licker;
 import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
 import com.Harbinger.Spore.Sentities.Organoids.*;
 import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
@@ -156,6 +158,9 @@ public class HandlerEvents {
                                     if (calamity instanceof Sieger sieger){
                                         player.displayClientMessage(Component.literal("Tail health "+ sieger.getTailHp()+"/"+sieger.getMaxTailHp()),false);
                                     }
+                                    if (calamity instanceof Gazenbrecher sieger){
+                                        player.displayClientMessage(Component.literal("Tongue health "+ sieger.getTongueHp()+"/"+sieger.getMaxTongueHp()),false);
+                                    }
                                     player.displayClientMessage(Component.literal("Position to be Searched " + calamity.getSearchArea()),false);
                                     player.displayClientMessage(Component.literal("Buffs " + calamity.getActiveEffects()),false);
                                     player.displayClientMessage(Component.literal("Target ? " + calamity.getTarget()),false);
@@ -283,6 +288,10 @@ public class HandlerEvents {
                 lootList = SConfig.DATAGEN.inf_volatile_loot.get();
             }else if (event.getEntity() instanceof Umarmer){
                 lootList = SConfig.DATAGEN.umarmer_loot.get();
+            }else if (event.getEntity() instanceof Gazenbrecher){
+                lootList = SConfig.DATAGEN.gazen_loot.get();
+            }else if (event.getEntity() instanceof Licker){
+                lootList = SConfig.DATAGEN.gazen_tongue_loot.get();
             }
             else{
                 lootList = null;

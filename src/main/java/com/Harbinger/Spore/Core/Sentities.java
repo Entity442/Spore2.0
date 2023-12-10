@@ -1,15 +1,14 @@
 package com.Harbinger.Spore.Core;
 
 import com.Harbinger.Spore.Sentities.BasicInfected.*;
+import com.Harbinger.Spore.Sentities.Calamities.Gazenbrecher;
 import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
+import com.Harbinger.Spore.Sentities.FallenMultipart.Licker;
 import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
 import com.Harbinger.Spore.Sentities.Host;
 import com.Harbinger.Spore.Sentities.Organoids.*;
-import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
-import com.Harbinger.Spore.Sentities.Projectile.ThrownSpear;
-import com.Harbinger.Spore.Sentities.Projectile.ThrownTumor;
-import com.Harbinger.Spore.Sentities.Projectile.Vomit;
+import com.Harbinger.Spore.Sentities.Projectile.*;
 import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
 import com.Harbinger.Spore.Sentities.Utility.InfectionTendril;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
@@ -160,6 +159,10 @@ public class Sentities {
                     .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
 
 
+    public static final RegistryObject<EntityType<BileProjectile>> BILE = register("bile",
+            EntityType.Builder.of((EntityType<BileProjectile> p_33002_, Level level) -> new BileProjectile(level), MobCategory.MISC)
+                    .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.4f, 0.4f));
+
     public static final RegistryObject<EntityType<ScentEntity>> SCENT = SPORE_ENTITIES.register("scent",
             () -> EntityType.Builder.of(ScentEntity::new, MobCategory.MISC).sized(0.2f,0.2f)
                     .build(new ResourceLocation(Spore.MODID, "scent").toString()));
@@ -188,5 +191,13 @@ public class Sentities {
                     .build(new ResourceLocation(Spore.MODID, "sieger").toString()));
     public static final RegistryObject<EntityType<SiegerTail>> SIEGER_TAIL = SPORE_ENTITIES.register("sieger_tail",
             () -> EntityType.Builder.of(SiegerTail::new, MobCategory.MISC).sized(2.1f, 1f)
+                    .build(new ResourceLocation(Spore.MODID, "sieger_tail").toString()));
+
+    public static final RegistryObject<EntityType<Gazenbrecher>> GAZENBREACHER = SPORE_ENTITIES.register("gazenbreacher",
+            () -> EntityType.Builder.of(Gazenbrecher::new, INFECTED).sized(3.5f, 3f)
+                    .build(new ResourceLocation(Spore.MODID, "gazenbreacher").toString()));
+
+    public static final RegistryObject<EntityType<Licker>> LICKER = SPORE_ENTITIES.register("licker",
+            () -> EntityType.Builder.of(Licker::new, MobCategory.MISC).sized(1.4f, 1f)
                     .build(new ResourceLocation(Spore.MODID, "sieger_tail").toString()));
 }

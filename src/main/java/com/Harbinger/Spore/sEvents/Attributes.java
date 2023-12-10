@@ -3,8 +3,10 @@ package com.Harbinger.Spore.sEvents;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.BasicInfected.*;
+import com.Harbinger.Spore.Sentities.Calamities.Gazenbrecher;
 import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
+import com.Harbinger.Spore.Sentities.FallenMultipart.Licker;
 import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
 import com.Harbinger.Spore.Sentities.Organoids.*;
 import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
@@ -28,6 +30,7 @@ public class Attributes {
         event.put(Sentities.INF_WITCH.get(), InfectedWitch.createAttributes().build());
         event.put(Sentities.LEAPER.get(), Leaper.createAttributes().build());
         event.put(Sentities.SLASHER.get(), Slasher.createAttributes().build());
+        event.put(Sentities.VOLATILE.get(), Volatile.createAttributes().build());
         event.put(Sentities.SPITTER.get(), Spitter.createAttributes().build());
         event.put(Sentities.INF_PILLAGER.get(), InfectedPillager.createAttributes().build());
         event.put(Sentities.INF_VINDICATOR.get(), InfectedVendicator.createAttributes().build());
@@ -39,7 +42,6 @@ public class Attributes {
         event.put(Sentities.SCENT.get(), ScentEntity.createAttributes().build());
         event.put(Sentities.BRUTE.get(), Brute.createAttributes().build());
         event.put(Sentities.BUSSER.get(), Busser.createAttributes().build());
-        event.put(Sentities.VOLATILE.get(), Volatile.createAttributes().build());
         event.put(Sentities.INF_DROWNED.get(), InfectedDrowned.createAttributes().build());
         event.put(Sentities.HOST.get(), Host.createAttributes().build());
         event.put(Sentities.INF_PLAYER.get(), InfectedPlayer.createAttributes().build());
@@ -51,7 +53,9 @@ public class Attributes {
         event.put(Sentities.UMARMED.get(), Umarmer.createAttributes().build());
         event.put(Sentities.TENDRIL.get(), InfectionTendril.createAttributes().build());
         event.put(Sentities.SIEGER.get(), Sieger.createAttributes().build());
+        event.put(Sentities.GAZENBREACHER.get(), Gazenbrecher.createAttributes().build());
         event.put(Sentities.SIEGER_TAIL.get(), SiegerTail.createAttributes().build());
+        event.put(Sentities.LICKER.get(), Licker.createAttributes().build());
     }
 }
 

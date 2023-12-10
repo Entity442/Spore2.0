@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.Sentities.MovementControls;
 
+import com.Harbinger.Spore.Sentities.WaterInfected;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -30,6 +31,16 @@ public class CalamityMovementControl extends MoveControl {
                 float f2 = (float)(-(Mth.atan2(d1, d4) * (double)(180F / (float)Math.PI)));
                 this.mob.setXRot(this.rotlerp(this.mob.getXRot(), f2, (float)this.maxTurn));
                 this.mob.setYya(d1 > 0.0D ? f1 : -f1);
+            }
+        }
+        if (this.mob instanceof WaterInfected && this.mob.isInFluidType()){
+            if (mob.getRandom().nextInt(10)==0 && this.mob.horizontalCollision){
+                this.mob.getJumpControl().jump();
+            }
+            if (this.wantedY > this.mob.getY()){
+                this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(0,0.01,0));
+            }else{
+                this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(0,-0.01,0));
             }
         }
     }
