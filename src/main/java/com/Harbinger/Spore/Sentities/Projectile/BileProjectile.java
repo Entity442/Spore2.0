@@ -1,8 +1,11 @@
 package com.Harbinger.Spore.Sentities.Projectile;
 
+import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Sitems;
+import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
+import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.damagesource.DamageSource;
@@ -55,16 +58,22 @@ public class BileProjectile extends Projectile implements ItemSupplier {
 
     @Override
     protected boolean canHitEntity(Entity entity) {
-        return entity != getOwner() || entity instanceof PartEntity;
+        return entity != getOwner() || !(entity instanceof PartEntity);
     }
 
     @Override
     protected void onHitEntity(EntityHitResult entityHitResult) {
         if (!this.level.isClientSide()) {
-            entityHitResult.getEntity().hurt(DamageSource.thrown(this,this.getOwner()),this.getDamage());
-            if (entityHitResult.getEntity() instanceof LivingEntity livingEntity){
+            Entity entity = entityHitResult.getEntity();
+            if (!(entity instanceof PartEntity || entity instanceof Infected || entity instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(entity.getEncodeId()))){
+                entity.hurt(DamageSource.indirectMobAttack(this,(LivingEntity) this.getOwner()),this.getDamage());
+            }
+            if (entity instanceof LivingEntity livingEntity){
                 livingEntity.addEffect(new MobEffectInstance(Seffects.STUNT.get(),80,1));
                 livingEntity.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(),60,2));
+            }
+            if (entity instanceof Boat boat){
+                boat.setDamage(50);
             }
         }else{
             super.onHitEntity(entityHitResult);
