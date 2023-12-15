@@ -268,7 +268,13 @@ public class Sitems {
     public static final RegistryObject<Item> CONTAINER = block(Sblocks.CONTAINER, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> CDU = Exceptions(Sblocks.CDU);
     public static final RegistryObject<Item> LAB_BLOCK = block(Sblocks.LAB_BLOCK, ScreativeTab.SPORE_T);
+    public static final RegistryObject<Item> LAB_BLOCK1 = block(Sblocks.LAB_BLOCK1, ScreativeTab.SPORE_T);
+    public static final RegistryObject<Item> LAB_BLOCK2 = block(Sblocks.LAB_BLOCK2, ScreativeTab.SPORE_T);
+    public static final RegistryObject<Item> LAB_BLOCK3 = block(Sblocks.LAB_BLOCK3, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> LAB_SLAB = block(Sblocks.LAB_SLAB, ScreativeTab.SPORE_T);
+    public static final RegistryObject<Item> LAB_SLAB1 = block(Sblocks.LAB_SLAB1, ScreativeTab.SPORE_T);
+    public static final RegistryObject<Item> LAB_SLAB2 = block(Sblocks.LAB_SLAB2, ScreativeTab.SPORE_T);
+    public static final RegistryObject<Item> LAB_SLAB3 = block(Sblocks.LAB_SLAB3, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> LAB_STAIR = block(Sblocks.LAB_STAIR, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> IRON_LADDER = block(Sblocks.IRON_LADDER, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> VENT_PLATE = block(Sblocks.VENT_PLATE, ScreativeTab.SPORE_T);
