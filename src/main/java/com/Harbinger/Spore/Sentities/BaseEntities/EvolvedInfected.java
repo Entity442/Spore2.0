@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.Sentities.BaseEntities;
 
+import com.Harbinger.Spore.Sentities.EvolvedInfected.Scamper;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Monster;
@@ -19,6 +20,6 @@ public class EvolvedInfected extends Infected {
 
     @Override
     public boolean removeWhenFarAway(double p_21542_) {
-        return this.getLinked();
+        return this.getLinked() && !(this instanceof Scamper);
     }
 }
