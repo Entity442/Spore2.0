@@ -102,7 +102,7 @@ public class Sitems {
     public  static final RegistryObject<Item> INF_PLAYER_SPAWNEGG = ITEMS.register("inf_player_spawnegg",
             () -> new SporeSpawnEgg(Sentities.INF_PLAYER,-86751002, new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> INF_HAZMAT_SPAWNEGG = ITEMS.register("inf_hazmat_spawnegg",
-            () -> new SporeSpawnEgg(Sentities.INF_PLAYER,-6345002, new Item.Properties().tab(ScreativeTab.SPORE)));
+            () -> new SporeSpawnEgg(Sentities.INF_HAZMAT,-6345002, new Item.Properties().tab(ScreativeTab.SPORE)));
 
 
 
