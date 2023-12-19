@@ -1,5 +1,7 @@
 package com.Harbinger.Spore.Sentities.BaseEntities;
 
+import com.Harbinger.Spore.Core.SConfig;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -13,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 
 public class UtilityEntity extends PathfinderMob {
     protected UtilityEntity(EntityType<? extends PathfinderMob> type, Level level) {
@@ -65,5 +68,12 @@ public class UtilityEntity extends PathfinderMob {
     }
     public DamageSource getCustomDamage(LivingEntity entity){
         return DamageSource.mobAttack(entity);
+    }
+
+
+    protected boolean Cold(){
+        BlockPos pos = new BlockPos(this.getBlockX(),this.getBlockY(),this.getBlockZ());
+        Biome biome = level.getBiome(pos).value();
+        return SConfig.SERVER.weaktocold.get() && biome.getBaseTemperature() <= 0.2;
     }
 }
