@@ -18,7 +18,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -385,7 +384,7 @@ public class Mound extends Organoid implements Enemy {
     @Override
     public void die(DamageSource source) {
         if(this.getLinked() && source.getEntity() != null && this.getAge() > 3){
-            if (this.isInPowderSnow && this.Cold()){
+            if (this.isInPowderSnow || this.Cold() || this.getLastDamageSource() == DamageSource.FREEZE){
                 return;
             } else
             {
