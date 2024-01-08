@@ -15,6 +15,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Container;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
@@ -43,7 +44,6 @@ public class InfectionTendril extends UtilityEntity {
         this.moveControl = new InfectedWallMovementControl(this);
         this.navigation = new WallClimberNavigation(this,level);
     }
-    private int counter;
 
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
@@ -266,7 +266,7 @@ public class InfectionTendril extends UtilityEntity {
                 }
             }
             if (above.isAir() && blockstate.isSolidRender(level ,blockpos) && Math.random() < 0.1){level.setBlock(blockpos.above(),Sblocks.MYCELIUM_VEINS.get().defaultBlockState(),3);}
-
+            BlockEntity blockEntity = this.level.getBlockEntity(blockpos);
             if (blockstate.is(Sblocks.REMAINS.get())){
                 Mound mound = new Mound(Sentities.MOUND.get(),level);
                 mound.setMaxAge(this.getAgeM());
@@ -275,8 +275,16 @@ public class InfectionTendril extends UtilityEntity {
                 level.addFreshEntity(mound);
                 level.removeBlock(blockpos,false);
                 this.discard();
+            }else if (blockEntity instanceof Container container && isChestWithFood(container)){
+                this.eatTheFood(container);
+                Mound mound = new Mound(Sentities.MOUND.get(),level);
+                mound.setMaxAge(1);
+                mound.tickEmerging();
+                mound.setPos(blockpos.getX() + 0.5,blockpos.getY()+1,blockpos.getZ() + 0.5);
+                level.addFreshEntity(mound);
+                level.removeBlock(blockpos.above(),false);
+                this.discard();
             }else if (blockstate.is(Sblocks.HIVE_SPAWN.get()) || blockstate.is(Sblocks.BIOMASS_LUMP.get()) ){
-                BlockEntity blockEntity = level.getBlockEntity(blockpos);
                 if (blockEntity instanceof HiveSpawnBlockEntity || blockEntity instanceof BiomassLumpEntity){
                     blockEntity.getPersistentData().putInt("kills",blockEntity.getPersistentData().getInt("kills") + SConfig.SERVER.mound_tendril_feed.get());
                     this.discard();
@@ -286,5 +294,18 @@ public class InfectionTendril extends UtilityEntity {
     }
     public boolean addEffect(MobEffectInstance p_182397_, @Nullable Entity p_182398_) {
         return false;
+    }
+
+    private boolean isChestWithFood(Container container){
+        return container.hasAnyMatching((ItemStack::isEdible));
+    }
+
+    private void eatTheFood(Container container){
+        for(int i = 0;i<container.getContainerSize();i++){
+            ItemStack stack = container.getItem(i);
+            if (stack.isEdible()){
+                stack.setCount(0);
+            }
+        }
     }
 }
