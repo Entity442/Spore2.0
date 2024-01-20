@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sentities.BaseEntities;
 
 import com.Harbinger.Spore.Core.*;
+import com.Harbinger.Spore.Sentities.AI.CalamitiesAI.CalamityVigilCall;
 import com.Harbinger.Spore.Sentities.AI.CalamityPathNavigation;
 import com.Harbinger.Spore.Sentities.AI.FloatDiveGoal;
 import com.Harbinger.Spore.Sentities.AI.HurtTargetGoal;
@@ -176,20 +177,9 @@ public class Calamity extends UtilityEntity implements Enemy {
     @Override
     public void registerGoals() {
         this.goalSelector.addGoal(1, new GoToLocation(this, 1.1));
-        this.goalSelector.addGoal(2, new HurtTargetGoal(this ,entity -> {return !(SConfig.SERVER.blacklist.get().contains(entity.getEncodeId()) || entity instanceof UtilityEntity || entity instanceof Infected);}, Infected.class).setAlertOthers(Infected.class));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
-                (this, Player.class,  true));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 5, false, true, (en) -> {
-            return SConfig.SERVER.whitelist.get().contains(en.getEncodeId()) || (en.hasEffect(Seffects.MARKER.get()) && !(en instanceof Infected || en instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(en.getEncodeId())));
-        }));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 5, false, true, (en) -> {
-            return !(en instanceof Animal || en instanceof AbstractFish || en instanceof Infected || en instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(en.getEncodeId())) && SConfig.SERVER.at_mob.get();
-        }));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Animal.class, 5, false, true, (en) -> {
-            return !SConfig.SERVER.blacklist.get().contains(en.getEncodeId()) && SConfig.SERVER.at_an.get();
-        }));
-
+        addTargettingGoals();
         this.goalSelector.addGoal(6, new FloatDiveGoal(this));
+        this.goalSelector.addGoal(7,new CalamityVigilCall(this));
 
 
     }
