@@ -58,6 +58,7 @@
   "block.spore.infested_laboratory_block1": "Infested Laboratory Block",
   "block.spore.infested_laboratory_block2": "Infested Laboratory Block",
   "block.spore.infested_laboratory_block3": "Infested Laboratory Block",
+  "block.spore.overgrown_spawner": "Infested Spawner",
 
 
 
@@ -198,8 +199,6 @@
   "entity.spore.gazenbreacher": "GazenBreacher",
   "entity.spore.sieger_tail": "Sieger Tail",
   "entity.spore.licker": "Licker",
-
-
 
 
   "entity.spore.thrown_tumor": "Tumor",

@@ -286,7 +286,7 @@ public class Mound extends Organoid implements Enemy {
         AABB aabb = entity.getBoundingBox().inflate(SConfig.SERVER.mound_tendril_checker.get());
         for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
             BlockState blockState = level.getBlockState(blockpos);
-            if (isStucture(blockpos) || isChestWithFood(blockpos) || blockState.is(Sblocks.BIOMASS_LUMP.get())){
+            if (isStucture(blockpos) || isChestWithFood(blockpos) || blockState.is(Sblocks.REMAINS.get()) || blockState.is(Blocks.SPAWNER)){
                 InfectionTendril tendril = new InfectionTendril(Sentities.TENDRIL.get(),level);
                 tendril.setAgeM(this.getMaxAge() -1);
                 tendril.setSearchArea(blockpos);

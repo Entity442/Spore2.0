@@ -3,6 +3,7 @@ package com.Harbinger.Spore.Client;
 import com.Harbinger.Spore.Client.Models.*;
 import com.Harbinger.Spore.Client.Renderers.*;
 import com.Harbinger.Spore.Core.SMenu;
+import com.Harbinger.Spore.Core.SblockEntities;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.Particles.AcidParticle;
@@ -124,7 +125,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.SCENT.get(), ScentEntityRenderer::new);
         event.registerEntityRenderer(Sentities.TENDRIL.get(), TendrilRenderer::new);
 
-
+        event.registerBlockEntityRenderer(SblockEntities.OVERGROWN_SPAWNER.get(),model -> new OvergrownSpawnerRenderer());
     }
 
     @SubscribeEvent

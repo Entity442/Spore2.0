@@ -55,6 +55,7 @@
   "block.spore.infested_laboratory_block1": "Заражённый Лабораторный блок",
   "block.spore.infested_laboratory_block2": "Заражённый Лабораторный блок",
   "block.spore.infested_laboratory_block3": "Заражённый Лабораторный блок",
+  "block.spore.overgrown_spawner": "Заражённый создатель",
 
 
   "item.spore.claw": "Коготь",
@@ -184,8 +185,8 @@
   "entity.spore.reconstructor": "Чрево",
   "entity.spore.sieger": "Зигер",
   "entity.spore.sieger_tail": "Зигер Хвост",
-  "entity.spore.gazenbreacher": "Разрушитель приливов",
   "entity.spore.licker": "Ликер",
+  "entity.spore.gazenbreacher": "Разрушитель приливов",
 
 
   "entity.spore.thrown_tumor": "Опухоль",
