@@ -29,6 +29,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -37,7 +38,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -46,6 +49,7 @@ import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
@@ -422,6 +426,18 @@ public class HandlerEvents {
             }
         }
     }
+    @SubscribeEvent
+    public static void ExplosiveBite(LivingEntityUseItemEvent.Finish event){
+        if (event != null && Math.random() < 0.2){
+            ItemStack item = event.getItem();
+            if (item.getItem() == Sitems.ROASTED_TUMOR.get()){
+                LivingEntity entity = event.getEntity();
+                entity.level.explode(null,entity.getX(),entity.getY(),entity.getZ(),0.5f, Explosion.BlockInteraction.NONE);
+            }
+        }
+    }
+
+
     @SubscribeEvent
     public static void LoadCalamity(EntityEvent.EnteringSection event){
         if (event.getEntity() instanceof Calamity calamity && calamity.level instanceof ServerLevel level){

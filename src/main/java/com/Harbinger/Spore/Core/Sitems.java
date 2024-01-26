@@ -78,8 +78,21 @@ public class Sitems {
     public  static final RegistryObject<Item> TUMOR = ITEMS.register("tumor",
             () -> new Tumor( new Item.Properties().tab(ScreativeTab.SPORE).stacksTo(16)));
     public  static final RegistryObject<Item> SAUSAGE = ITEMS.register("sausage",
-            () -> new Item(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder().nutrition(8).saturationMod(0.8F).effect(()-> new MobEffectInstance(Seffects.MYCELIUM.get(),200,0),0.4f)
+            () -> new Item(new Item.Properties().stacksTo(16).tab(ScreativeTab.SPORE).food(new FoodProperties.Builder().nutrition(8).saturationMod(0.8F).effect(()-> new MobEffectInstance(Seffects.MYCELIUM.get(),200,0),0.4f)
                     .effect(()-> new MobEffectInstance(MobEffects.ABSORPTION,300,1),1f).meat().build())));
+    public  static final RegistryObject<Item> FIBER_STEW = ITEMS.register("fiber_stew",
+            () -> new Item(new Item.Properties().stacksTo(8).tab(ScreativeTab.SPORE).food(new FoodProperties.Builder().nutrition(6).saturationMod(1.5F).effect(()-> new MobEffectInstance(Seffects.MYCELIUM.get(),200,0),0.4f)
+                    .effect(()-> new MobEffectInstance(MobEffects.REGENERATION,300,0),1f).meat().build())));
+    public  static final RegistryObject<Item> HEART_KEBAB = ITEMS.register("heart_kebab",
+            () -> new Item(new Item.Properties().stacksTo(16).tab(ScreativeTab.SPORE).food(new FoodProperties.Builder().nutrition(2).saturationMod(0.4F).effect(()-> new MobEffectInstance(Seffects.MYCELIUM.get(),200,0),0.4f)
+                    .effect(()-> new MobEffectInstance(MobEffects.HUNGER,100,0),1f).meat().build())));
+    public  static final RegistryObject<Item> ROASTED_HEART_KEBAB = ITEMS.register("roasted_heart_kebab",
+            () -> new Item(new Item.Properties().stacksTo(16).tab(ScreativeTab.SPORE).food(new FoodProperties.Builder().nutrition(8).saturationMod(1.2F).effect(()-> new MobEffectInstance(Seffects.MYCELIUM.get(),200,0),0.4f)
+                    .effect(()-> new MobEffectInstance(MobEffects.HEALTH_BOOST,300,1),1f).meat().build())));
+    public  static final RegistryObject<Item> ROASTED_TUMOR = ITEMS.register("roasted_tumor",
+            () -> new Item(new Item.Properties().stacksTo(16).tab(ScreativeTab.SPORE).food(new FoodProperties.Builder().nutrition(10).saturationMod(1.8F).effect(()-> new MobEffectInstance(Seffects.MYCELIUM.get(),200,0),0.4f)
+                    .effect(()-> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,300,1),1f).meat().build())));
+
 
     public  static final RegistryObject<Item> INFECTED_HUMAN_SPAWNEGG = ITEMS.register("infected_human_spawnegg",
             () -> new SporeSpawnEgg(Sentities.INF_HUMAN,-9357608, new Item.Properties().tab(ScreativeTab.SPORE)));
