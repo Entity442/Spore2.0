@@ -16,7 +16,6 @@ import com.Harbinger.Spore.sEvents.SItemProperties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -155,5 +154,6 @@ public class ClientModEvents {
         Minecraft.getInstance().particleEngine.register(Sparticles.BLOOD_PARTICLE.get(),
                 BloodParticle.Provider::new);
     }
+
 
 }
