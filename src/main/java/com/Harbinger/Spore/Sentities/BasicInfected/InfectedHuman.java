@@ -5,6 +5,7 @@ import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
+import com.Harbinger.Spore.Sentities.EvolvingInfected;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
@@ -26,7 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
-public class InfectedHuman extends Infected {
+public class InfectedHuman extends Infected implements EvolvingInfected {
 
     public InfectedHuman(Level level) {
         super(Sentities.INF_HUMAN.get(), level);
@@ -65,15 +66,7 @@ public class InfectedHuman extends Infected {
     @Override
     public void baseTick() {
         super.baseTick();
-
-        if (this.entityData.get(EVOLUTION) >= (20 * SConfig.SERVER.evolution_age_human.get()) && this.entityData.get(EVOLUTION_POINTS) >= SConfig.SERVER.min_kills.get()) {
-            this.entityData.set(EVOLUTION_POINTS,entityData.get(EVOLUTION_POINTS) - SConfig.SERVER.min_kills.get());
-            EvolutionClass.Evolve(this,SConfig.SERVER.human_ev.get());
-        }else{
-            if (!isFreazing() && this.entityData.get(EVOLUTION_POINTS) >= SConfig.SERVER.min_kills.get()) {
-                this.entityData.set(EVOLUTION,entityData.get(EVOLUTION) + 1);
-            }
-        }
+        tickEvolution(this,SConfig.SERVER.human_ev.get());
     }
 
 

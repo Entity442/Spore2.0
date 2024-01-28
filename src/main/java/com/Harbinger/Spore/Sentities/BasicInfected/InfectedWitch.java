@@ -7,6 +7,7 @@ import com.Harbinger.Spore.Sentities.AI.BuffAlliesGoal;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.RangedBuff;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
+import com.Harbinger.Spore.Sentities.EvolvingInfected;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -36,7 +37,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.List;
 import java.util.Random;
 
-public class InfectedWitch extends Infected implements RangedAttackMob , RangedBuff {
+public class InfectedWitch extends Infected implements RangedAttackMob , RangedBuff , EvolvingInfected {
 
     private Potion potion = null;
 
@@ -117,6 +118,7 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
             this.setItemSlot(EquipmentSlot.OFFHAND,PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), potion));
         }
         super.tick();
+        tickEvolution(this,SConfig.SERVER.wit_ev.get());
     }
 
     public static AttributeSupplier.Builder createAttributes() {
