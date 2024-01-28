@@ -192,21 +192,25 @@ public class Infected extends Monster{
         this.goalSelector.addGoal(9,new FollowOthersGoal(this, 1.2, ScentEntity.class ));
         this.goalSelector.addGoal(10,new FollowOthersGoal(this, 0.7 ,Infected.class));
     }
+
+    public boolean canStarve(){
+        return SConfig.SERVER.starve.get() && entityData.get(EVOLUTION_POINTS) <= 0;
+    }
+
+
     public void aiStep() {
         super.aiStep();
-
         if (SConfig.SERVER.weaktocold.get()){
-            if (!this.level.isClientSide && this.getRandom().nextInt(10) == 0 && (this.isInPowderSnow || this.isFreazing())) {
+            if (!this.level.isClientSide && this.tickCount % 20 == 0 && (this.isInPowderSnow || this.isFreazing())) {
                 this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1, false, false), Infected.this);
                 this.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 0, false, false), Infected.this);
             }}
 
-        if (SConfig.SERVER.should_starve.get() && !(this instanceof EvolvedInfected)){
-            if (SConfig.SERVER.starve.get() && entityData.get(HUNGER) < SConfig.SERVER.hunger.get() && entityData.get(EVOLUTION_POINTS) <= 0) {
+        if (canStarve() && this.tickCount % 20 == 0){
+            if (entityData.get(HUNGER) < SConfig.SERVER.hunger.get()) {
                 int i = this.isInPowderSnow || this.isFreazing() ? 2:1;
                 entityData.set(HUNGER, entityData.get(HUNGER) + i);
-            } else if (entityData.get(HUNGER) >= SConfig.SERVER.hunger.get() &&
-                    !this.hasEffect(Seffects.STARVATION.get()) && this.random.nextInt(20) == 0) {
+            } else if (entityData.get(HUNGER) >= SConfig.SERVER.hunger.get()) {
                 this.addEffect(new MobEffectInstance(Seffects.STARVATION.get(), 100, 0));
             }
         }
