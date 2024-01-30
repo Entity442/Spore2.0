@@ -34,7 +34,7 @@ public class TransportInfected<T extends LivingEntity> extends Goal {
     }
     @Nullable
     private T getFreePartner() {
-        List<T> list = this.level.getNearbyEntities(this.partnerClass, partneerT, this.mob, this.mob.getBoundingBox().inflate(this.mob.getAttributeBaseValue(Attributes.FOLLOW_RANGE)));
+        List<T> list = this.level.getNearbyEntities(this.partnerClass, partneerT, this.mob, this.mob.getBoundingBox().inflate(32));
         double d0 = Double.MAX_VALUE;
         T inf = null;
 
