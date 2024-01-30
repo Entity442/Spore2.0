@@ -61,6 +61,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(UmarmerModel.LAYER_LOCATION, UmarmerModel::createBodyLayer);
         event.registerLayerDefinition(InfectedHazmatModel.LAYER_LOCATION, InfectedHazmatModel::createBodyLayer);
         event.registerLayerDefinition(ElytrumModel.LAYER_LOCATION, ElytrumModel::createBodyLayer);
+        event.registerLayerDefinition(InfectedHazmatWithTank.LAYER_LOCATION, InfectedHazmatWithTank::createBodyLayer);
         event.registerLayerDefinition(WingedChestplate.LAYER_LOCATION, WingedChestplate::createBodyLayer);
         event.registerLayerDefinition(MoundModel.LAYER_LOCATION, MoundModel::createBodyLayer);
         event.registerLayerDefinition(VolatileModel.LAYER_LOCATION, VolatileModel::createBodyLayer);
@@ -73,6 +74,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(SiegerTailModel.LAYER_LOCATION, SiegerTailModel::createBodyLayer);
         event.registerLayerDefinition(LickerModel.LAYER_LOCATION, LickerModel::createBodyLayer);
         event.registerLayerDefinition(SantaModel.LAYER_LOCATION, SantaModel::createBodyLayer);
+        event.registerLayerDefinition(OvergrownSpawnerModel.LAYER_LOCATION, OvergrownSpawnerModel::createBodyLayer);
     }
 
 
@@ -124,7 +126,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.SCENT.get(), ScentEntityRenderer::new);
         event.registerEntityRenderer(Sentities.TENDRIL.get(), TendrilRenderer::new);
 
-        event.registerBlockEntityRenderer(SblockEntities.OVERGROWN_SPAWNER.get(),model -> new OvergrownSpawnerRenderer());
+        event.registerBlockEntityRenderer(SblockEntities.OVERGROWN_SPAWNER.get(), model -> new OvergrownSpawnerRenderer());
     }
 
     @SubscribeEvent
@@ -154,6 +156,5 @@ public class ClientModEvents {
         Minecraft.getInstance().particleEngine.register(Sparticles.BLOOD_PARTICLE.get(),
                 BloodParticle.Provider::new);
     }
-
 
 }

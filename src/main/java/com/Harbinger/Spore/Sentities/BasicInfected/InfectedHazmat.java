@@ -4,25 +4,32 @@ import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
+import com.Harbinger.Spore.Sentities.Variants.HazmatVariant;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class InfectedHazmat extends Infected {
+    private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData.defineId(InfectedHazmat.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> BLOW_TIME = SynchedEntityData.defineId(InfectedHazmat.class, EntityDataSerializers.INT);
     public InfectedHazmat(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }
@@ -72,6 +79,86 @@ public class InfectedHazmat extends Infected {
                 .add(Attributes.FOLLOW_RANGE, 16)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.3);
 
+    }
+
+    public void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_ID_TYPE_VARIANT, 0);
+        this.entityData.define(BLOW_TIME, 0);
+    }
+
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putInt("Variant", this.getTypeVariant());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.entityData.set(DATA_ID_TYPE_VARIANT, tag.getInt("Variant"));
+    }
+
+    @Nullable
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_21434_, DifficultyInstance p_21435_, MobSpawnType p_21436_, @Nullable SpawnGroupData p_21437_, @Nullable CompoundTag p_21438_) {
+        HazmatVariant variant = Math.random() < 0.4 ? HazmatVariant.TANK : HazmatVariant.DEFAULT;
+        setVariant(variant);
+        return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, p_21438_);
+    }
+
+    public void setBlowTime(int i){
+        this.entityData.set(BLOW_TIME,i);
+    }
+    public int getBlowTime(){
+        return this.entityData.get(BLOW_TIME);
+    }
+
+    private void tickExplosion(){
+        this.setBlowTime(this.getBlowTime()+1);
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (this.getVariant() == HazmatVariant.TANK && Math.random() < 0.5){
+            this.tickExplosion();
+        }
+        return super.hurt(source, amount);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.getVariant() == HazmatVariant.TANK){
+            if(this.getBlowTime() == 1){
+                this.playSound(SoundEvents.TNT_PRIMED);
+            }
+            if (this.getBlowTime() > 0){
+                tickExplosion();
+            }
+            if (this.getBlowTime() >= 60){
+                explodeTank();
+            }
+        }
+
+    }
+
+    private void explodeTank(){
+        if (!this.level.isClientSide){
+            this.level.explode(this,this.getX(),this.getY(),this.getZ(),2.5f, Explosion.BlockInteraction.BREAK);
+            this.discard();
+        }
+    }
+
+    public HazmatVariant getVariant() {
+        return HazmatVariant.byId(this.getTypeVariant() & 255);
+    }
+
+    private int getTypeVariant() {
+        return this.entityData.get(DATA_ID_TYPE_VARIANT);
+    }
+
+    private void setVariant(HazmatVariant variant) {
+        this.entityData.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }
 
     @Override

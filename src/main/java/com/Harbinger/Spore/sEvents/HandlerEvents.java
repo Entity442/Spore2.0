@@ -101,28 +101,7 @@ public class HandlerEvents {
                         }
                     }
                 }
-
-            if (SConfig.SERVER.basic.get().contains(event.getEntity().getEncodeId())) {
-                mob.goalSelector.addGoal(8, new FollowOthersGoal(mob, 0.8, PathfinderMob.class, entity -> {
-                    return SConfig.SERVER.evolved.get().contains(event.getEntity().getEncodeId());
-                }));
             }
-            if (SConfig.SERVER.ranged.get().contains(event.getEntity().getEncodeId())) {
-                mob.goalSelector.addGoal(6, new FollowOthersGoal(mob, 0.8, PathfinderMob.class, entity -> {
-                    return entity instanceof Carrier;
-                }));
-            }
-            if (SConfig.SERVER.can_be_carried.get().contains(event.getEntity().getEncodeId())) {
-                mob.goalSelector.addGoal(7, new FollowOthersGoal(mob, 0.8, PathfinderMob.class, entity -> {
-                    return entity instanceof Carrier;
-                }));
-            }
-            if (SConfig.SERVER.support.get().contains(event.getEntity().getEncodeId())) {
-                mob.goalSelector.addGoal(6, new FollowOthersGoal(mob, 0.8, PathfinderMob.class, entity -> {
-                    return
-                            SConfig.SERVER.evolved.get().contains(event.getEntity().getEncodeId());
-                }));
-            }}
         }
     }
 

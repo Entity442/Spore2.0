@@ -45,8 +45,6 @@ public class Howler extends EvolvedInfected {
         this.goalSelector.addGoal(2, new HowlerAttackGoal( this,1.5));
         this.goalSelector.addGoal(4, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(7, new FollowOthersGoal(this , 1 , EvolvedInfected.class));
-
 
         super.registerGoals();
     }
