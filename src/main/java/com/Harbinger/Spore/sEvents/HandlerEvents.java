@@ -153,6 +153,7 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Seconds until starvation: " + infected.getHunger() + "/" + SConfig.SERVER.hunger.get()),false);
                                     player.displayClientMessage(Component.literal("Is Linked ? " + infected.getLinked()),false);
                                     player.displayClientMessage(Component.literal("Target ? " + infected.getTarget()),false);
+                                    player.displayClientMessage(Component.literal("Partner ? " + infected.getFollowPartner()),false);
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
 
                                 }
