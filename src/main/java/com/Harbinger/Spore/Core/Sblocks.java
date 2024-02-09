@@ -78,6 +78,7 @@ public class Sblocks {
     public static final RegistryObject<Block> BIOMASS_LUMP = BLOCKS.register("biomass_lump", BiomassLump::new);
     public static final RegistryObject<Block> HIVE_SPAWN = BLOCKS.register("hive_spawn", HiveSpawn::new);
     public static final RegistryObject<Block> OVERGROWN_SPAWNER = BLOCKS.register("overgrown_spawner", OvergrownSpawner::new);
+    public static final RegistryObject<Block> BRAIN_REMNANTS = BLOCKS.register("brain_remnants", BrainRemnants::new);
 
 
     public static final RegistryObject<Block> ORGANITE = BLOCKS.register("organite", OrganiteBlock::new);

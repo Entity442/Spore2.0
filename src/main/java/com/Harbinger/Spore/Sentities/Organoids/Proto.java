@@ -41,9 +41,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class Proto extends Organoid {
-
+    private static final EntityDataAccessor<Integer> HOSTS = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Optional<UUID>> TARGET = SynchedEntityData.defineId(Proto.class, EntityDataSerializers.OPTIONAL_UUID);
     public Proto(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         setPersistenceRequired();
@@ -154,6 +157,14 @@ public class Proto extends Organoid {
         return this.signal;
     }
 
+    @Nullable
+    public void addTargets(@Nullable UUID uuid) {
+        this.entityData.set(TARGET, Optional.ofNullable(uuid));
+    }
+    @Nullable
+    public UUID readTargets() {
+        return this.entityData.get(TARGET).orElse((UUID)null);
+    }
 
     static class ProtoScentDefense extends Goal{
         public Proto proto;
@@ -250,24 +261,31 @@ public class Proto extends Organoid {
     protected int calculateFallDamage(float p_149389_, float p_149390_) {
         return super.calculateFallDamage(p_149389_, p_149390_) - 60;
     }
-    private static final EntityDataAccessor<Integer> HOSTS = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
+
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("hosts",entityData.get(HOSTS));
+        if (this.readTargets() != null) {
+            tag.putUUID("victim", this.readTargets());
+        }
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         entityData.set(HOSTS, tag.getInt("hosts"));
+        if (tag.hasUUID("victim")){
+            this.addTargets(tag.getUUID("victim"));
+        }
     }
 
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         entityData.define(HOSTS,0);
+        this.entityData.define(TARGET, Optional.empty());
     }
     public int getHosts(){
         return entityData.get(HOSTS);
