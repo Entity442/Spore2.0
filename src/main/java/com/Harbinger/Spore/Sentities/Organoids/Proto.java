@@ -5,6 +5,7 @@ import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.ExtremelySusThings.ChunkLoaderHelper;
+import com.Harbinger.Spore.SBlockEntities.BrainRemnantBlockEntity;
 import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.Calamity;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
@@ -34,6 +35,7 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -383,7 +385,14 @@ public class Proto extends Organoid {
                         level.setBlock(blockpos.above(), Sblocks.ROOTED_BIOMASS.get().defaultBlockState(), 2);
                     }
                     if (Math.random() < 0.15) {
-                        level.setBlock(blockpos.above(), Sblocks.FUNGAL_SHELL.get().defaultBlockState(), 2);
+                        level.setBlock(blockpos, Sblocks.BRAIN_REMNANTS.get().defaultBlockState(), 2);
+                        BlockEntity blockEntity = level.getBlockEntity(blockpos);
+                        if (blockEntity instanceof BrainRemnantBlockEntity block){
+                            if (source.getDirectEntity() instanceof LivingEntity living){
+                                block.setUUID(living.getUUID());
+                            }
+                            block.setSource(source);
+                        }
                     }
                 }
 
