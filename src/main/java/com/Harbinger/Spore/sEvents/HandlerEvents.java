@@ -199,6 +199,7 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Current Target " + proto.getTarget()),false);
                                     player.displayClientMessage(Component.literal("Buffs " + proto.getActiveEffects()),false);
                                     player.displayClientMessage(Component.literal("Mobs under control " + proto.getHosts()),false);
+                                    player.displayClientMessage(Component.literal("Specific target " + proto.readTargets()),false);
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
                                 }
                             }
