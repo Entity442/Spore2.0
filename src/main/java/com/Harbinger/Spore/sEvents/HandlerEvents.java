@@ -3,6 +3,9 @@ package com.Harbinger.Spore.sEvents;
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.ExtremelySusThings.ChunkLoaderHelper;
 import com.Harbinger.Spore.ExtremelySusThings.CoolDamageSources;
+import com.Harbinger.Spore.SBlockEntities.BrainRemnantBlockEntity;
+import com.Harbinger.Spore.SBlockEntities.CDUBlockEntity;
+import com.Harbinger.Spore.SBlockEntities.LivingStructureBlocks;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.Calamity;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
@@ -26,6 +29,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -41,6 +45,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -232,7 +237,30 @@ public class HandlerEvents {
                     }
                     return 0;
                 }));
+        event.getDispatcher().register(Commands.literal(Spore.MODID+":check_block_entity")
+                .executes(arguments -> {
+                    ServerLevel world = arguments.getSource().getLevel();
+                    Entity entity = arguments.getSource().getEntity();
+                    if (entity == null)
+                        entity = FakePlayerFactory.getMinecraft(world);
+                    if (entity != null) {
+                        AABB aabb = entity.getBoundingBox().inflate(5);
+                        for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
+                            BlockEntity blockEntity = entity.level.getBlockEntity(blockpos);
+                            if (entity instanceof Player player && !player.level.isClientSide) {
+                                if (blockEntity instanceof LivingStructureBlocks structureBlocks){
+                                    player.displayClientMessage(Component.literal("Structure block with " + structureBlocks.getKills() + " kills"), false);
+                                }else if (blockEntity instanceof BrainRemnantBlockEntity block){
+                                    player.displayClientMessage(Component.literal("Brain with source " + block.getSource() +", time"+ block.getTime()+ " and UUID "+block.getUUID()), false);
+                                }else if (blockEntity instanceof CDUBlockEntity block){
+                                    player.displayClientMessage(Component.literal("Fuel " + block.fuel), false);
+                                }
+                            }
 
+                        }
+                    }
+                    return 0;
+                }));
 
     }
     @SubscribeEvent
