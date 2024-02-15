@@ -16,6 +16,7 @@ import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownTumor;
+import com.Harbinger.Spore.Sentities.TrueCalamity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -46,7 +47,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
-public class Sieger extends Calamity implements RangedAttackMob {
+public class Sieger extends Calamity implements RangedAttackMob, TrueCalamity {
     public static final EntityDataAccessor<Float> TAIL_HP = SynchedEntityData.defineId(Sieger.class, EntityDataSerializers.FLOAT);
     private final CalamityMultipart[] subEntities;
     public final CalamityMultipart lowerbody;

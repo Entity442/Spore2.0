@@ -15,6 +15,7 @@ import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.FallenMultipart.Licker;
 import com.Harbinger.Spore.Sentities.Projectile.BileProjectile;
+import com.Harbinger.Spore.Sentities.TrueCalamity;
 import com.Harbinger.Spore.Sentities.WaterInfected;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -43,7 +44,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
-public class Gazenbrecher extends Calamity implements WaterInfected , RangedAttackMob {
+public class Gazenbrecher extends Calamity implements WaterInfected , RangedAttackMob, TrueCalamity {
     public static final EntityDataAccessor<Float> TONGUE = SynchedEntityData.defineId(Gazenbrecher.class, EntityDataSerializers.FLOAT);
     private int radar;
     private final CalamityMultipart[] subEntities;
