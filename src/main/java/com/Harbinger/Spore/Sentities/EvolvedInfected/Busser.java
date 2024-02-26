@@ -19,7 +19,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -102,20 +101,6 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
             }
         });
         super.registerGoals();
-    }
-
-    @Override
-    public boolean hurt(DamageSource source, float amount) {
-        double damage;
-        if (this.getTypeVariant() == 1){
-            damage = 0.1;
-        }else {
-            damage = 0.3;
-        }
-        if (Math.random() < damage && this.isVehicle()){
-            this.ejectPassengers();
-        }
-        return super.hurt(source, amount);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

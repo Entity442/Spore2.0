@@ -146,7 +146,7 @@ public class Gazenbrecher extends Calamity implements WaterInfected , RangedAtta
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, SConfig.SERVER.gazen_hp.get() * SConfig.SERVER.global_health.get())
-                .add(Attributes.MOVEMENT_SPEED, 0.15)
+                .add(Attributes.MOVEMENT_SPEED, 0.2)
                 .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.gazen_damage.get() * SConfig.SERVER.global_damage.get())
                 .add(Attributes.ARMOR, SConfig.SERVER.gazen_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.FOLLOW_RANGE, 64)
@@ -222,7 +222,7 @@ public class Gazenbrecher extends Calamity implements WaterInfected , RangedAtta
     }
 
 
-    private void chemAttack() {
+    public void chemAttack() {
         AABB boundingBox = this.getBoundingBox().inflate(16);
         List<Entity> entities = this.level.getEntities(this, boundingBox);
         for (Entity entity : entities) {
@@ -269,13 +269,7 @@ public class Gazenbrecher extends Calamity implements WaterInfected , RangedAtta
         this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1.2));
         this.goalSelector.addGoal(6,new CalamityInfectedCommand(this));
         this.goalSelector.addGoal(7,new SummonScentInCombat(this));
-        this.goalSelector.addGoal(8,new SporeBurstSupport(this){
-            @Override
-            public void start() {
-                super.start();
-                chemAttack();
-            }
-        });
+        this.goalSelector.addGoal(8,new SporeBurstSupport(this));
         super.registerGoals();
     }
 

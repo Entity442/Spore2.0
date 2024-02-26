@@ -155,13 +155,7 @@ public class Sieger extends Calamity implements RangedAttackMob, TrueCalamity {
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.2));
         this.goalSelector.addGoal(6,new CalamityInfectedCommand(this));
         this.goalSelector.addGoal(7,new SummonScentInCombat(this));
-        this.goalSelector.addGoal(8,new SporeBurstSupport(this){
-            @Override
-            public void start() {
-                super.start();
-                chemAttack();
-            }
-        });
+        this.goalSelector.addGoal(8,new SporeBurstSupport(this));
         super.registerGoals();
     }
 
@@ -266,7 +260,7 @@ public class Sieger extends Calamity implements RangedAttackMob, TrueCalamity {
         }
     }
 
-    private void chemAttack() {
+    public void chemAttack() {
         AABB boundingBox = this.getBoundingBox().inflate(16);
         List<Entity> entities = this.level.getEntities(this, boundingBox);
         for (Entity entity : entities) {
