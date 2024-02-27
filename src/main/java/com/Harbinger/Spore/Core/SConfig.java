@@ -171,6 +171,15 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> gazen_buffs;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> gazen_debuffs;
 
+        public final ForgeConfigSpec.ConfigValue<Double> hinden_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> hinden_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> hinden_armor;
+        public final ForgeConfigSpec.ConfigValue<Double> hinden_dpsr;
+        public final ForgeConfigSpec.ConfigValue<Integer> hinden_block_damage;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> hinden_buffs;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> hinden_debuffs;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> hinden_explosive_effects;
+
         public final ForgeConfigSpec.ConfigValue<Double> leap_hp;
         public final ForgeConfigSpec.ConfigValue<Double> leap_damage;
         public final ForgeConfigSpec.ConfigValue<Double> leap_armor;
@@ -372,7 +381,7 @@ public class SConfig {
 
             this.blacklist = builder.defineList("Mobs Not Targeted",
                     Lists.newArrayList(
-                            "minecraft:creeper","minecraft:squid","minecraft:bat","minecraft:armor_stand") , o -> o instanceof String);
+                            "minecraft:creeper","minecraft:squid","minecraft:bat","minecraft:armor_stand","creeperoverhaul:") , o -> o instanceof String);
 
             this.whitelist = builder.defineList("Mobs ALWAYS Targeted",
                     Lists.newArrayList("minecraft:villager","minecraft:wandering_trader","minecraft:iron_golem") , o -> o instanceof String);
@@ -541,6 +550,23 @@ public class SConfig {
 
             builder.pop();
 
+            builder.push("HindenBurg");
+            this.hinden_hp = builder.comment("Default 400").defineInRange("Sets HindenBurg Max health", 400, 1, Double.MAX_VALUE);
+            this.hinden_damage = builder.comment("Default 400").defineInRange("Sets HindenBurg Danage", 15, 1, Double.MAX_VALUE);
+            this.hinden_armor = builder.comment("Default 5").defineInRange("Sets HindenBurg Armor", 5, 1, Double.MAX_VALUE);
+            this.hinden_dpsr = builder.comment("Default 40").defineInRange("Sets HindenBurg Damage Cap , set to 0 to disable", 40, 1, Double.MAX_VALUE);
+            this.hinden_block_damage = builder.comment("Default 4").defineInRange("Sets Sieger maximum hardness for a block to be broken", 4, 1, Integer.MAX_VALUE);
+
+            this.hinden_buffs = builder.comment("Default values: minecraft:jump_boost|600|0 ,minecraft:slow_falling|600|0 ,minecraft:resistance|600|1").defineList("Sieger buffs",
+                    Lists.newArrayList("minecraft:jump_boost|600|0" , "minecraft:slow_falling|600|0","minecraft:resistance|600|1") , o -> o instanceof String);
+
+            this.hinden_debuffs = builder.comment("Default values: minecraft:nausea|600|1 ,spore:mycelium|600|1 ,minecraft:slowness|600|1").defineList("Sieger debuffs",
+                    Lists.newArrayList("minecraft:nausea|600|1" , "spore:mycelium_ef|600|1","minecraft:slowness|600|1") , o -> o instanceof String);
+
+            this.hinden_explosive_effects = builder.comment("Default values: minecraft:wither ,spore:mycelium ,minecraft:weakness,minecraft:poison,spore:corrosion,minecraft:blindness").defineList("Sieger explosion ranged effects",
+                    Lists.newArrayList("minecraft:wither" , "spore:mycelium_ef","minecraft:weakness","minecraft:poison","spore:corrosion","minecraft:blindness") , o -> o instanceof String);
+            builder.pop();
+
             builder.push("GazenBreacher");
             this.gazen_hp = builder.comment("Default 350").defineInRange("Sets GazenBreacher Max health", 350, 1, Double.MAX_VALUE);
             this.gazen_damage = builder.comment("Default 20").defineInRange("Sets GazenBreacher Damage", 20, 1, Double.MAX_VALUE);
@@ -621,7 +647,7 @@ public class SConfig {
             this.reconstructor_terrain = builder.defineList("Mobs that are summoned for ground support",
                     Lists.newArrayList("spore:sieger" ) , o -> o instanceof String);
             this.reconstructor_air = builder.defineList("Mobs that are summoned for air support",
-                    Lists.newArrayList("spore:sieger" ) , o -> o instanceof String);
+                    Lists.newArrayList("spore:hindenburg" ) , o -> o instanceof String);
             this.reconstructor_water = builder.defineList("Mobs that are summoned for water support",
                     Lists.newArrayList("spore:gazenbreacher" ) , o -> o instanceof String);
             builder.pop();
