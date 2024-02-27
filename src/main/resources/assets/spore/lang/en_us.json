@@ -164,6 +164,7 @@
   "item.spore.proto_spawnegg": "Proto Hivemind",
   "item.spore.sieger_spawnegg": "Sieger",
   "item.spore.gazen_spawnegg": "Gazenbreacher",
+  "item.spore.hinden_spawnegg": "Hindenburg",
 
 
   "item.spore.scent_spawnegg": "Scent",
@@ -258,6 +259,8 @@
   "sounds.spore.sieger_ambient": "Sieger growling",
   "sounds.spore.sieger_bite": "Bite",
   "sounds.spore.gazen_ambient": "Gazenbreacher growling",
+  "sounds.spore.hinden_ambient": "Hindenburg growling",
+  "sounds.spore.hinden_nuke": "Hindenburg releasing tumor",
   "sounds.spore.sonar": "Sonar",
   "sounds.spore.signal": "Signal",
   "sounds.spore.womb_ambient": "Flesh is warping",
