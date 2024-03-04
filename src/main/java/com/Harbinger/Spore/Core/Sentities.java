@@ -141,11 +141,6 @@ public class Sentities {
             () -> EntityType.Builder.of(Umarmer::new, INFECTED).sized(1f, 3f)
                     .build(new ResourceLocation(Spore.MODID, "umarmed").toString()));
 
-    public static final RegistryObject<EntityType<Host>> HOST = SPORE_ENTITIES.register("host",
-            () -> EntityType.Builder.of(Host::new, INFECTED).sized(0.6f, 2f)
-                    .build(new ResourceLocation(Spore.MODID, "host").toString()));
-
-
     public static final RegistryObject<EntityType<AcidBall>> ACID_BALL = register("acid_ball",
             EntityType.Builder.<AcidBall>of(AcidBall::new, MobCategory.MISC).setCustomClientFactory(AcidBall::new)
                     .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
