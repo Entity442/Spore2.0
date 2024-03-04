@@ -152,6 +152,10 @@ public class Calamity extends UtilityEntity implements Enemy {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
+    protected void tickPart(CalamityMultipart part, double e, double i, double o) {
+        part.setPos(this.getX() + e, this.getY() + i, this.getZ() + o);
+    }
+
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);

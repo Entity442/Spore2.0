@@ -108,9 +108,6 @@ public class Sieger extends Calamity implements RangedAttackMob, TrueCalamity {
         super.aiStep();
     }
 
-    private void tickPart(CalamityMultipart part, double e, double i, double o) {
-        part.setPos(this.getX() + e, this.getY() + i, this.getZ() + o);
-    }
     public CalamityMultipart[] getSubEntities() {
         return this.subEntities;
     }

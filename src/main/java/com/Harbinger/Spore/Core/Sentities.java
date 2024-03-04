@@ -2,16 +2,17 @@ package com.Harbinger.Spore.Core;
 
 import com.Harbinger.Spore.Sentities.BasicInfected.*;
 import com.Harbinger.Spore.Sentities.Calamities.Gazenbrecher;
+import com.Harbinger.Spore.Sentities.Calamities.Hinderburg;
 import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
 import com.Harbinger.Spore.Sentities.FallenMultipart.Licker;
 import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
-import com.Harbinger.Spore.Sentities.Host;
 import com.Harbinger.Spore.Sentities.Organoids.*;
 import com.Harbinger.Spore.Sentities.Projectile.*;
 import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
 import com.Harbinger.Spore.Sentities.Utility.InfectionTendril;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
+import com.Harbinger.Spore.Sentities.Utility.TumoroidNuke;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -185,6 +186,11 @@ public class Sentities {
             () -> EntityType.Builder.of(InfectionTendril::new, MobCategory.MISC).sized(0.8f, 0.1f)
                     .build(new ResourceLocation(Spore.MODID, "tendril").toString()));
 
+    public static final RegistryObject<EntityType<TumoroidNuke>> TUMOROID_NUKE = SPORE_ENTITIES.register("tumoroid_nuke",
+            () -> EntityType.Builder.of((EntityType.EntityFactory<TumoroidNuke>) TumoroidNuke::new, MobCategory.MISC).sized(3f, 3f)
+                    .build(new ResourceLocation(Spore.MODID, "tumoroid_nuke").toString()));
+
+
     public static final RegistryObject<EntityType<Sieger>> SIEGER = SPORE_ENTITIES.register("sieger",
             () -> EntityType.Builder.of(Sieger::new, INFECTED).sized(2.5f, 3f)
                     .build(new ResourceLocation(Spore.MODID, "sieger").toString()));
@@ -199,4 +205,8 @@ public class Sentities {
     public static final RegistryObject<EntityType<Licker>> LICKER = SPORE_ENTITIES.register("licker",
             () -> EntityType.Builder.of(Licker::new, MobCategory.MISC).sized(1.4f, 1f)
                     .build(new ResourceLocation(Spore.MODID, "licker").toString()));
+
+    public static final RegistryObject<EntityType<Hinderburg>> HINDENBURG = SPORE_ENTITIES.register("hindenburg",
+            () -> EntityType.Builder.of(Hinderburg::new, INFECTED).sized(5f, 5f)
+                    .build(new ResourceLocation(Spore.MODID, "hindenburg").toString()));
 }

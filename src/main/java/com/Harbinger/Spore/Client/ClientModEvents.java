@@ -75,6 +75,8 @@ public class ClientModEvents {
         event.registerLayerDefinition(SantaModel.LAYER_LOCATION, SantaModel::createBodyLayer);
         event.registerLayerDefinition(OvergrownSpawnerModel.LAYER_LOCATION, OvergrownSpawnerModel::createBodyLayer);
         event.registerLayerDefinition(brainMatterModel.LAYER_LOCATION, brainMatterModel::createBodyLayer);
+        event.registerLayerDefinition(TumoralNukeModel.LAYER_LOCATION, TumoralNukeModel::createBodyLayer);
+        event.registerLayerDefinition(HindieModel.LAYER_LOCATION, HindieModel::createBodyLayer);
     }
 
 
@@ -114,8 +116,10 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.UMARMED.get(), UmarmedRenderer::new);
         event.registerEntityRenderer(Sentities.SIEGER.get(), SiegerRenderer::new);
         event.registerEntityRenderer(Sentities.GAZENBREACHER.get(), GazenRenderer::new);
+        event.registerEntityRenderer(Sentities.HINDENBURG.get(), HindieRenderer::new);
         event.registerEntityRenderer(Sentities.SIEGER_TAIL.get(), SiegerTailRenderer::new);
         event.registerEntityRenderer(Sentities.LICKER.get(), LickerRenderer::new);
+        event.registerEntityRenderer(Sentities.TUMOROID_NUKE.get(), TumoroidNukeRenderer::new);
 
 
         event.registerEntityRenderer(Sentities.ACID_BALL.get(), ThrownItemRenderer::new);
