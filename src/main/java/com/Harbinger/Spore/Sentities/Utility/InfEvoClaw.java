@@ -30,6 +30,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.List;
+
 public class InfEvoClaw extends UtilityEntity implements Enemy{
     public InfEvoClaw(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -76,6 +78,10 @@ public class InfEvoClaw extends UtilityEntity implements Enemy{
         return Ssounds.INF_DAMAGE.get();
     }
 
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.inf_claw_loot.get();
+    }
 
     public boolean doHurtTarget(Entity p_32257_) {
         if (super.doHurtTarget(p_32257_)) {
