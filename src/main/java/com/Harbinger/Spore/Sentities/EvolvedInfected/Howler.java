@@ -50,6 +50,10 @@ public class Howler extends EvolvedInfected {
     }
 
     @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.inf_howler_loot.get();
+    }
+    @Override
     public void tick() {
         if (isAlive() && scream){
             this.playSound(Ssounds.HOWLER_GROWL.get());

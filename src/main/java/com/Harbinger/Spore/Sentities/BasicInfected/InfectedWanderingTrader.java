@@ -22,6 +22,8 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 
+import java.util.List;
+
 public class InfectedWanderingTrader extends Infected implements EvolvingInfected {
     public InfectedWanderingTrader(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -54,6 +56,10 @@ public class InfectedWanderingTrader extends Infected implements EvolvingInfecte
         super.registerGoals();
     }
 
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.inf_wan_loot.get();
+    }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()

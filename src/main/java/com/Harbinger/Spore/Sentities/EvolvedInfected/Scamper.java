@@ -28,6 +28,8 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.List;
+
 public class Scamper extends EvolvedInfected {
     public static final EntityDataAccessor<Integer> AGE = SynchedEntityData.defineId(Scamper.class, EntityDataSerializers.INT);
     public int deployClock = 0;
@@ -50,7 +52,10 @@ public class Scamper extends EvolvedInfected {
         this.deploying = deploying;
     }
 
-
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.sca_loot.get();
+    }
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);

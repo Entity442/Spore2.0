@@ -31,6 +31,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class InfectedPillager extends Infected implements CrossbowAttackMob , InventoryCarrier , EvolvingInfected {
     private static final EntityDataAccessor<Boolean> IS_CHARGING_CROSSBOW = SynchedEntityData.defineId(InfectedPillager.class, EntityDataSerializers.BOOLEAN);
@@ -72,7 +73,10 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
         }
         return super.startRiding(entity);
     }
-
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.inf_pillager_loot.get();
+    }
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(1, new RangedCrossbowAttackGoal<>(this, 1.0D, 8.0F));

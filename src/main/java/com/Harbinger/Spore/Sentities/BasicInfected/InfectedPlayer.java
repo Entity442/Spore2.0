@@ -82,6 +82,11 @@ public class InfectedPlayer extends Infected implements RangedAttackMob {
     }
 
     @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.inf_player_loot.get();
+    }
+
+    @Override
     public DamageSource getCustomDamage(LivingEntity entity) {
         return super.getCustomDamage(entity);
     }

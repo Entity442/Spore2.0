@@ -67,6 +67,11 @@ public class Hinderburg extends Calamity implements FlyingInfected , TrueCalamit
     }
 
     @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.hindie_loot.get();
+    }
+
+    @Override
     public boolean causeFallDamage(float p_147187_, float p_147188_, DamageSource p_147189_) {
         return false;
     }

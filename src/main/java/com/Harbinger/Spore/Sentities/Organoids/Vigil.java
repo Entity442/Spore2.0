@@ -81,6 +81,11 @@ public class Vigil extends Organoid{
         this.entityData.set(BORROW, burrowing + 1);
     }
 
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.vigil_loot.get();
+    }
+
     public int getTrigger(){
         return entityData.get(TRIGGER);
     }

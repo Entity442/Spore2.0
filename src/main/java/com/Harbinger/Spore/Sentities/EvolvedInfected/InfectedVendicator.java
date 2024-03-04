@@ -31,13 +31,17 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class InfectedVendicator extends EvolvedInfected {
     public InfectedVendicator(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }
 
-
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.inf_vin_loot.get();
+    }
 
     @Override
     protected void registerGoals() {

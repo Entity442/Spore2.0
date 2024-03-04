@@ -31,6 +31,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class Spitter extends EvolvedInfected implements RangedAttackMob {
     private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData.defineId(Spitter.class, EntityDataSerializers.INT);
@@ -62,6 +63,11 @@ public class Spitter extends EvolvedInfected implements RangedAttackMob {
 
 
         super.registerGoals();
+    }
+
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.inf_spitter_loot.get();
     }
 
     private boolean switchy() {

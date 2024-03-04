@@ -24,6 +24,8 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.List;
+
 public class InfectedVillager extends Infected implements EvolvingInfected {
     public InfectedVillager(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -57,6 +59,10 @@ public class InfectedVillager extends Infected implements EvolvingInfected {
         super.registerGoals();
     }
 
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.inf_villager_loot.get();
+    }
 
     protected void customServerAiStep() {
         if (!this.isNoAi() && GoalUtils.hasGroundPathNavigation(this) && SConfig.SERVER.higher_thinking.get()) {

@@ -26,6 +26,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class InfectedHuman extends Infected implements EvolvingInfected {
 
@@ -50,7 +51,10 @@ public class InfectedHuman extends Infected implements EvolvingInfected {
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
          super.registerGoals();
     }
-
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.inf_human_loot.get();
+    }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()

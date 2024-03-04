@@ -29,6 +29,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.List;
+
 public class Stalker extends EvolvedInfected {
     public static final EntityDataAccessor<Integer> CAMO = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
     private int camo;
@@ -56,6 +58,10 @@ public class Stalker extends EvolvedInfected {
         super.registerGoals();
     }
 
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.inf_stalker_loot.get();
+    }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()

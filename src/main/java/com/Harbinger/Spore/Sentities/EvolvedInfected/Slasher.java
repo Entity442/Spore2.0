@@ -29,6 +29,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class Slasher extends EvolvedInfected {
     private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData.defineId(Slasher.class, EntityDataSerializers.INT);
@@ -45,6 +46,10 @@ public class Slasher extends EvolvedInfected {
                 .add(Attributes.FOLLOW_RANGE, 20)
                 .add(Attributes.ATTACK_KNOCKBACK, 0);
 
+    }
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.inf_slasher_loot.get();
     }
     @Override
     public DamageSource getCustomDamage(LivingEntity entity) {

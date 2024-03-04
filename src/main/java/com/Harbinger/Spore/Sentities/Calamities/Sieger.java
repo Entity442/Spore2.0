@@ -70,6 +70,10 @@ public class Sieger extends Calamity implements RangedAttackMob, TrueCalamity {
             this.subEntities[i].setId(p_20235_ + i + 1);
     }
 
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.sieger_loot.get();
+    }
 
     @Override
     public void tick() {

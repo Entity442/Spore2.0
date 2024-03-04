@@ -163,6 +163,11 @@ public class Gazenbrecher extends Calamity implements WaterInfected , RangedAtta
 
 
     @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.gazen_loot.get();
+    }
+
+    @Override
     public void aiStep() {
         float f14 = this.getYRot() * ((float)Math.PI / 180F);
         float f2 = Mth.sin(f14);

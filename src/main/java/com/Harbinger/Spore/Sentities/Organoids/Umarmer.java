@@ -22,6 +22,8 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.List;
+
 public class Umarmer extends Organoid {
     private static final EntityDataAccessor<Integer> TIMER = SynchedEntityData.defineId(Umarmer.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(Umarmer.class, EntityDataSerializers.BOOLEAN);
@@ -59,7 +61,10 @@ public class Umarmer extends Organoid {
         return 6;
     }
 
-
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.umarmer_loot.get();
+    }
     @Override
     public int getEmerge_tick(){
         return 80;

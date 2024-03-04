@@ -65,7 +65,10 @@ public class Proto extends Organoid {
         return false;
     }
 
-
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.proto_loot.get();
+    }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()

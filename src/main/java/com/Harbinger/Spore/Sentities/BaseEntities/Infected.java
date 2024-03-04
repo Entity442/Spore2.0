@@ -49,6 +49,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -165,6 +166,9 @@ public class Infected extends Monster{
             }
         }
 
+    }
+    public List<? extends String> getDropList(){
+        return null;
     }
     public DamageSource getCustomDamage(LivingEntity entity) {
         if (Math.random() < 0.5){

@@ -24,6 +24,8 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public class InfectedHusk extends Infected implements EvolvingInfected {
     public InfectedHusk(Level level) {
         super(Sentities.INF_HUSK.get(), level);
@@ -69,7 +71,10 @@ public class InfectedHusk extends Infected implements EvolvingInfected {
         super.baseTick();
         tickEvolution(this,SConfig.SERVER.human_ev.get());
     }
-
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.inf_husk_loot.get();
+    }
 
     @Nullable
     @Override

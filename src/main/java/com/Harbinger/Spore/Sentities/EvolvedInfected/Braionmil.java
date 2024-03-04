@@ -52,7 +52,10 @@ public class Braionmil extends EvolvedInfected {
 
         data.putShort("Fuse", (short)this.maxSwell);
     }
-
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.inf_braio_loot.get();
+    }
 
     public void tick() {
 

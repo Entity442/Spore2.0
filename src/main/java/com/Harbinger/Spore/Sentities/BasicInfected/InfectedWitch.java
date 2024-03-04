@@ -132,6 +132,11 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
     }
 
     @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.inf_witch_loot.get();
+    }
+
+    @Override
     public DamageSource getCustomDamage(LivingEntity entity) {
         if (Math.random() < 0.3){
             return new EntityDamageSource("infected_witch_damage",entity);
