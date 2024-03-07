@@ -106,18 +106,14 @@ public class Proto extends Organoid {
                 if (en instanceof Infected infected){
                     if (!infected.getLinked()){
                         infected.setLinked(true);
-                        setHosts(getHosts() + 1);
-                    }else{
-                        setHosts(getHosts()+1);
                     }
+                    setHosts(getHosts() + 1);
                 }
                 if (en instanceof Mound mound){
                     if (!mound.getLinked()){
                         mound.setLinked(true);
-                        setHosts(getHosts()+1);
-                    }else{
-                        setHosts(getHosts()+1);
                     }
+                    setHosts(getHosts()+1);
                 }
                 if (SConfig.SERVER.proto_raid.get()){
                     if (Math.random() < (SConfig.SERVER.proto_raid_chance.get()/100f) && (en instanceof Player || SConfig.SERVER.proto_sapient_target.get().contains(en.getEncodeId()))){
@@ -334,6 +330,7 @@ public class Proto extends Organoid {
             }
             if (waveentity instanceof Mound mound){
                 mound.setMaxAge(1);
+                mound.setLinked(true);
             }
             waveentity.randomTeleport(target.getX() + x,target.getY(),target.getZ() + z,false);
             waveentity.finalizeSpawn(world, this.level.getCurrentDifficultyAt(new BlockPos((int) this.getX(),(int)  this.getY(),(int)  this.getZ())), MobSpawnType.NATURAL, null, null);
