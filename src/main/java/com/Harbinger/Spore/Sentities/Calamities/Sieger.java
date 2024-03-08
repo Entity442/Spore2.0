@@ -231,11 +231,8 @@ public class Sieger extends Calamity implements RangedAttackMob, TrueCalamity {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
-        if(amount > SConfig.SERVER.sieger_dpsr.get() && SConfig.SERVER.sieger_dpsr.get() > 0){
-            return super.hurt(source, (float) (SConfig.SERVER.sieger_dpsr.get() * 1F));
-        }
-        return super.hurt(source, amount);
+    public double getDamageCap() {
+        return SConfig.SERVER.sieger_dpsr.get();
     }
 
     @Override

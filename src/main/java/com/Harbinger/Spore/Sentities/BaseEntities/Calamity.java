@@ -121,6 +121,17 @@ public class Calamity extends UtilityEntity implements Enemy {
         return new EntityDamageSource("calamity_damage3",entity);
     }
 
+    public double getDamageCap(){
+        return 0;
+    }
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if(amount > getDamageCap() && getDamageCap() > 0){
+            return super.hurt(source, (float) getDamageCap());
+        }
+        return super.hurt(source, amount);
+    }
+
     @Override
     public boolean isPushable() {
         return false;

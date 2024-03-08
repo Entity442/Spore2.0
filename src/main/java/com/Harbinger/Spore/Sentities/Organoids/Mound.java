@@ -53,7 +53,6 @@ public class Mound extends Organoid implements Enemy {
     private int attack_counter = 0;
     public Mound(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
-        setPersistenceRequired();
     }
     protected int calculateFallDamage(float p_149389_, float p_149390_) {
         return super.calculateFallDamage(p_149389_, p_149390_) - 30;
