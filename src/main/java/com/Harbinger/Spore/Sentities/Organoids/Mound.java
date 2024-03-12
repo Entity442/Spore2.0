@@ -141,6 +141,9 @@ public class Mound extends Organoid implements Enemy {
     public int getMaxCounter() {
         return this.maxCounter;
     }
+    public void setAge(int maxAge){
+        entityData.set(AGE,maxAge);
+    }
     public void setMaxAge(int maxAge){
         entityData.set(MAX_AGE,maxAge);
     }
