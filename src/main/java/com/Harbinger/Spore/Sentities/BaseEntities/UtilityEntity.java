@@ -93,8 +93,6 @@ public class UtilityEntity extends PathfinderMob {
     public Predicate<LivingEntity> TARGET_SELECTOR = (entity) -> {
         if (entity instanceof Infected || entity instanceof UtilityEntity || entity instanceof AbstractFish || entity instanceof Animal){
             return false;
-        }else if (SConfig.SERVER.whitelist.get().contains(entity.getEncodeId()) || entity.hasEffect(Seffects.MARKER.get())){
-            return true;
         }else if (!SConfig.SERVER.blacklist.get().isEmpty()){
             for(String string : SConfig.SERVER.blacklist.get()){
                 if (string.endsWith(":") && entity.getEncodeId() != null){
@@ -108,13 +106,13 @@ public class UtilityEntity extends PathfinderMob {
             return !SConfig.SERVER.blacklist.get().contains(entity.getEncodeId());
 
         }
-        return SConfig.SERVER.at_mob.get();
+        return true;
     };
 
     protected void addTargettingGoals(){
         this.goalSelector.addGoal(2, new HurtTargetGoal(this ,livingEntity -> {return TARGET_SELECTOR.test(livingEntity);}, Infected.class).setAlertOthers(Infected.class));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
-                (this, Player.class,  true){
+                (this, LivingEntity.class,  true,livingEntity -> {return livingEntity instanceof Player ||SConfig.SERVER.whitelist.get().contains(livingEntity.getEncodeId());}){
             @Override
             protected AABB getTargetSearchArea(double value) {
                 return this.mob.getBoundingBox().inflate(value, value, value);
