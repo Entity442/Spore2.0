@@ -32,6 +32,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -41,6 +42,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Explosion;
@@ -65,10 +67,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Mod.EventBusSubscriber(modid = Spore.MODID)
 public class HandlerEvents {
@@ -426,11 +425,21 @@ public class HandlerEvents {
     }
     @SubscribeEvent
     public static void ExplosiveBite(LivingEntityUseItemEvent.Finish event){
-        if (event != null && Math.random() < 0.2){
-            ItemStack item = event.getItem();
-            if (item.getItem() == Sitems.ROASTED_TUMOR.get()){
+        if (event != null){
+            Item item = event.getItem().getItem();
+            if (item== Sitems.ROASTED_TUMOR.get() && Math.random() < 0.2){
                 LivingEntity entity = event.getEntity();
                 entity.level.explode(null,entity.getX(),entity.getY(),entity.getZ(),0.5f, Explosion.BlockInteraction.NONE);
+            }
+            if (item == Sitems.MILKY_SACK.get()){
+                LivingEntity entity = event.getEntity();
+                List<MobEffectInstance> effectsToRemove = new ArrayList<>();
+                entity.getActiveEffects().forEach(mobEffectInstance -> {
+                    if (!mobEffectInstance.getEffect().isBeneficial()) {
+                        effectsToRemove.add(mobEffectInstance);
+                    }
+                });
+                effectsToRemove.forEach(mobEffectInstance -> entity.removeEffect(mobEffectInstance.getEffect()));
             }
         }
     }
