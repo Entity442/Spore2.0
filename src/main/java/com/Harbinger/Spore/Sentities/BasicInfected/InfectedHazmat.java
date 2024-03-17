@@ -5,6 +5,7 @@ import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.Variants.HazmatVariant;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -101,7 +102,7 @@ public class InfectedHazmat extends Infected {
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_21434_, DifficultyInstance p_21435_, MobSpawnType p_21436_, @Nullable SpawnGroupData p_21437_, @Nullable CompoundTag p_21438_) {
-        HazmatVariant variant = Math.random() < 0.4 ? HazmatVariant.TANK : HazmatVariant.DEFAULT;
+        HazmatVariant variant = Util.getRandom(HazmatVariant.values(), this.random);
         setVariant(variant);
         return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, p_21438_);
     }
@@ -163,7 +164,7 @@ public class InfectedHazmat extends Infected {
 
     @Override
     public boolean addEffect(MobEffectInstance effectInstance, @Nullable Entity entity) {
-        if (effectInstance.getEffect().isBeneficial()){
+        if (effectInstance.getEffect().isBeneficial() || this.getTypeVariant() != 2){
             return super.addEffect(effectInstance, entity);
         }
         return false;

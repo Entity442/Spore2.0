@@ -5,7 +5,8 @@ import java.util.Comparator;
 
 public enum HazmatVariant {
     DEFAULT(0),
-    TANK(1);
+    TANK(1),
+    COAT(2);
 
 
     private static final HazmatVariant[] BY_ID = Arrays.stream(values()).sorted(Comparator.
