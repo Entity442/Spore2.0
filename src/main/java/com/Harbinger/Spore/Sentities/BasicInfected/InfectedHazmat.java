@@ -164,7 +164,7 @@ public class InfectedHazmat extends Infected {
 
     @Override
     public boolean addEffect(MobEffectInstance effectInstance, @Nullable Entity entity) {
-        if (effectInstance.getEffect().isBeneficial() || this.getTypeVariant() != 2){
+        if (effectInstance.getEffect().isBeneficial() || this.getTypeVariant() == 2){
             return super.addEffect(effectInstance, entity);
         }
         return false;
