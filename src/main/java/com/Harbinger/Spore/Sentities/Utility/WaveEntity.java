@@ -46,7 +46,9 @@ public class WaveEntity extends UtilityEntity {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new AOEMeleeAttackGoal(this, 1.1,false,2,1));
+        this.goalSelector.addGoal(1, new AOEMeleeAttackGoal(this, 1.1,false,2,1,livingEntity -> {
+            return TARGET_SELECTOR.test(livingEntity);
+        }));
         super.registerGoals();
     }
 
@@ -78,7 +80,6 @@ public class WaveEntity extends UtilityEntity {
 
     @Override
     public boolean doHurtTarget(Entity entity) {
-        entity.setDeltaMovement(entity.getDeltaMovement().add(0,0.1,0));
         this.discard();
         return super.doHurtTarget(entity);
     }
