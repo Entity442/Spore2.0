@@ -1,9 +1,7 @@
 package com.Harbinger.Spore.Sentities.Organoids;
 
-import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Core.Sblocks;
-import com.Harbinger.Spore.Core.Sentities;
-import com.Harbinger.Spore.Core.Ssounds;
+import com.Harbinger.Spore.Core.*;
+import com.Harbinger.Spore.Effect.Marker;
 import com.Harbinger.Spore.ExtremelySusThings.ChunkLoaderHelper;
 import com.Harbinger.Spore.SBlockEntities.BrainRemnantBlockEntity;
 import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
@@ -497,6 +495,7 @@ public class Proto extends Organoid implements CasingGenerator {
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_21434_, DifficultyInstance p_21435_, MobSpawnType p_21436_, @org.jetbrains.annotations.Nullable SpawnGroupData p_21437_, @org.jetbrains.annotations.Nullable CompoundTag p_21438_) {
         this.tickEmerging();
         this.loadChunks();
+        this.entityData.set(NODE,this.getOnPos());
         return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, p_21438_);
     }
 
@@ -505,5 +504,14 @@ public class Proto extends Organoid implements CasingGenerator {
             BlockPos pos = new BlockPos(this.getBlockX(),this.getBlockY(),this.getBlockZ());
             ChunkLoaderHelper.forceLoadChunksInRadius(serverLevel, pos, this.level.getChunk(pos).getPos().x, this.level.getChunk(pos).getPos().z, 3);
         }
+    }
+
+
+    @Override
+    public boolean hasLineOfSight(Entity entity) {
+        if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(Seffects.MARKER.get())){
+            return true;
+        }
+        return super.hasLineOfSight(entity);
     }
 }
