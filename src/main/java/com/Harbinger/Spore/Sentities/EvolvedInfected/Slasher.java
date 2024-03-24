@@ -65,7 +65,7 @@ public class Slasher extends EvolvedInfected {
 
 
 
-        this.goalSelector.addGoal(2, new AOEMeleeAttackGoal(this ,1.2,true, 1.2 ,3));
+        this.goalSelector.addGoal(2, new AOEMeleeAttackGoal(this ,1.2,true, 1.2 ,3,livingEntity -> {return TARGET_SELECTOR.test(livingEntity);}));
         this.goalSelector.addGoal(1, new PullGoal(this, 32, 16){
             @Override
             public boolean canUse() {
