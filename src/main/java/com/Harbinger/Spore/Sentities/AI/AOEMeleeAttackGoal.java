@@ -164,7 +164,7 @@ public class AOEMeleeAttackGoal extends Goal {
             AABB hitbox = entity.getBoundingBox().inflate(box);
             List<LivingEntity> targets = entity.level.getEntitiesOfClass(LivingEntity.class , hitbox,victims);
             for (LivingEntity en : targets) {
-                en.doHurtTarget(en);
+                mob.doHurtTarget(en);
             }
         }
 
