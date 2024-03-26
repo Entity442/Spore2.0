@@ -54,7 +54,7 @@ public interface CasingGenerator {
                         level.setBlock(blockpos,possibleBlock.get(randomSource.nextInt(possibleBlock.size())),3);
                     }
                 }
-                if (Math.random() < 0.02 && blockstate.isSolidRender(level,blockpos)){
+                if (Math.random() < 0.05 && blockstate.isSolidRender(level,blockpos)){
                     for (String str : SConfig.DATAGEN.block_infection.get()){
                         String[] string = str.split("\\|" );
                         ItemStack stack = new ItemStack(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(string[0])));
