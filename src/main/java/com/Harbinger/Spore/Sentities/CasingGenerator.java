@@ -49,7 +49,7 @@ public interface CasingGenerator {
         for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
             if (!boxInner.contains(blockpos.getX()-1,blockpos.getY(),blockpos.getZ()-1)){
                 BlockState blockstate = level.getBlockState(blockpos);
-                if (Math.random() < 0.02 && !blockstate.isSolidRender(level,blockpos) && compare(level,blockpos)){
+                if (Math.random() < 0.05 && !blockstate.isSolidRender(level,blockpos) && compare(level,blockpos)){
                     if (!level.isClientSide){
                         level.setBlock(blockpos,possibleBlock.get(randomSource.nextInt(possibleBlock.size())),3);
                     }
