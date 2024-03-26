@@ -53,6 +53,7 @@ public class Attributes {
         event.put(Sentities.PROTO.get(), Proto.createAttributes().build());
         event.put(Sentities.VIGIL.get(), Vigil.createAttributes().build());
         event.put(Sentities.UMARMED.get(), Umarmer.createAttributes().build());
+        event.put(Sentities.USURPER.get(), Usurper.createAttributes().build());
         event.put(Sentities.TENDRIL.get(), InfectionTendril.createAttributes().build());
         event.put(Sentities.SIEGER.get(), Sieger.createAttributes().build());
         event.put(Sentities.GAZENBREACHER.get(), Gazenbrecher.createAttributes().build());
