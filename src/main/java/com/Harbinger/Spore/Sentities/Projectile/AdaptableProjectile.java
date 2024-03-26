@@ -115,7 +115,8 @@ public class AdaptableProjectile extends Projectile {
         if (!this.level.isClientSide()) {
             Entity entity = entityHitResult.getEntity();
             if (!(entity instanceof PartEntity || entity instanceof Infected || entity instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(entity.getEncodeId()))){
-                entity.hurt(DamageSource.GENERIC,this.entityData.get(DAMAGE));
+                DamageSource damageSource = this.getOwner() != null ? DamageSource.mobAttack((LivingEntity) this.getOwner()) : DamageSource.GENERIC;
+                entity.hurt(damageSource,this.entityData.get(DAMAGE));
             }
             if (entity instanceof LivingEntity livingEntity){
                 int type = entityData.get(TYPE);
