@@ -46,8 +46,8 @@ public class BrainRemnantBlockEntity extends BlockEntity {
         if (getSource() != null){
             tag.putString("source", getSource());
         }
-        if (getUUID() != null){
-            tag.putUUID("attacker", getUUID());
+        if (attacker != null){
+            tag.putUUID("attacker", attacker);
         }
 
     }
