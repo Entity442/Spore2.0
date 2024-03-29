@@ -209,9 +209,7 @@ public class Infected extends Monster{
                 (this, Animal.class,  true, livingEntity -> {return SConfig.SERVER.at_an.get();}));
     }
 
-    @Override
-    protected void registerGoals() {
-        addTargettingGoals();
+    protected void addRegularGoals(){
         this.goalSelector.addGoal(4, new SearchAreaGoal(this, 1.2));
         this.goalSelector.addGoal(3,new LocalTargettingGoal(this));
         this.goalSelector.addGoal(5 , new InfectedPanicGoal(this , 1.5));
@@ -224,6 +222,12 @@ public class Infected extends Monster{
         this.goalSelector.addGoal(10,new FollowOthersGoal(this,Calamity.class,entity ->{
             return this instanceof EvolvingInfected;
         }));
+    }
+
+    @Override
+    protected void registerGoals() {
+        addTargettingGoals();
+        addRegularGoals();
     }
 
     public boolean canStarve(){
@@ -253,7 +257,7 @@ public class Infected extends Monster{
             AABB aabb = this.getBoundingBox().inflate(0.2D);
             for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
                 BlockState blockstate = this.level.getBlockState(blockpos);
-                if ((blockstate.getMaterial() == Material.GLASS || blockstate.getMaterial() == Material.LEAVES) && blockstate.getDestroySpeed(level ,blockpos) >= 0 && blockstate.getDestroySpeed(level ,blockpos) < 2) {
+                if (blockBreakingParameters(blockstate,blockpos)) {
                     flag = this.level.destroyBlock(blockpos, true, this) || flag;
                 }
                 if (!flag && this.onGround) {
@@ -268,6 +272,10 @@ public class Infected extends Monster{
         if (this.horizontalCollision && this.isInWater()){
             this.jumpInFluid(ForgeMod.WATER_TYPE.get());
         }
+    }
+
+    public boolean blockBreakingParameters(BlockState blockstate,BlockPos blockpos){
+        return (blockstate.getMaterial() == Material.GLASS || blockstate.getMaterial() == Material.LEAVES) && blockstate.getDestroySpeed(level ,blockpos) >= 0 && blockstate.getDestroySpeed(level ,blockpos) < 2;
     }
 
 
