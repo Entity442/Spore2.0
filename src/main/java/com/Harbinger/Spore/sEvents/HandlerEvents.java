@@ -20,6 +20,7 @@ import com.Harbinger.Spore.Sentities.FallenMultipart.Licker;
 import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
 import com.Harbinger.Spore.Sentities.Organoids.*;
 import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
+import com.Harbinger.Spore.Sentities.Variants.SlasherVariants;
 import com.Harbinger.Spore.Sitems.InfectedCombatShovel;
 import com.Harbinger.Spore.Sitems.InfectedMaul;
 import com.Harbinger.Spore.Spore;
@@ -37,6 +38,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -56,6 +59,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
@@ -486,7 +490,26 @@ public class HandlerEvents {
             player.displayClientMessage(Component.translatable("uneasy.message"),true);
             event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
         }
+    }
 
+    @SubscribeEvent
+    public static void DefenseBypass(LivingDamageEvent event) {
+        if (event.getSource().getEntity() instanceof Calamity calamity) {
+            float original_damage = event.getAmount();
+            AttributeInstance attack = calamity.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE);
+            double recalculated_damage = attack != null ? (attack.getValue()/10)*2 : original_damage;
+            if (original_damage < recalculated_damage){
+                event.setAmount((float) recalculated_damage);
+            }
+        }
+        if (event.getSource().getEntity() instanceof Slasher slasher && slasher.getVariant() == SlasherVariants.PIERCER) {
+            float original_damage = event.getAmount();
+            AttributeInstance attack = slasher.getAttribute(Attributes.ATTACK_DAMAGE);
+            double recalculated_damage = attack != null ? attack.getValue()/2 : original_damage;
+            if (original_damage < recalculated_damage){
+                event.setAmount((float) recalculated_damage);
+            }
+        }
     }
 
 }
