@@ -258,7 +258,7 @@ public class Infected extends Monster{
             for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
                 BlockState blockstate = this.level.getBlockState(blockpos);
                 if (blockBreakingParameters(blockstate,blockpos)) {
-                    flag = this.level.destroyBlock(blockpos, true, this) || flag;
+                    flag = interactBlock(blockpos,this.level) || flag;
                 }
                 if (!flag && this.onGround) {
                     this.jumpFromGround();
@@ -272,6 +272,9 @@ public class Infected extends Monster{
         if (this.horizontalCollision && this.isInWater()){
             this.jumpInFluid(ForgeMod.WATER_TYPE.get());
         }
+    }
+    public boolean interactBlock(BlockPos blockPos , Level level){
+       return level.destroyBlock(blockPos, true, this);
     }
 
     public boolean blockBreakingParameters(BlockState blockstate,BlockPos blockpos){
