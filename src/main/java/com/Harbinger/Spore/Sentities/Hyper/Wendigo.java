@@ -36,7 +36,8 @@ import java.util.UUID;
 
 public class Wendigo extends Hyper {
     private static final UUID SPEED_MODIFIER_ATTACKING_UUID = UUID.fromString("020E0DFB-87AE-4653-9556-831010E291A0");
-    private static final AttributeModifier SPEED_MODIFIER_ATTACKING = new AttributeModifier(SPEED_MODIFIER_ATTACKING_UUID, "Crawling speed slowdown", -0.15F, AttributeModifier.Operation.ADDITION);
+    private static final AttributeModifier SPEED_MODIFIER_CRAWLING = new AttributeModifier(SPEED_MODIFIER_ATTACKING_UUID, "Crawling speed slowdown", -0.15F, AttributeModifier.Operation.ADDITION);
+    private static final AttributeModifier SPEED_MODIFIER_SPRINTING = new AttributeModifier(SPEED_MODIFIER_ATTACKING_UUID, "Sprinting speed", 0.15F, AttributeModifier.Operation.ADDITION);
     public static final EntityDataAccessor<Boolean> IS_STALKING = SynchedEntityData.defineId(Wendigo.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Integer> STALKING_TIMEOUT = SynchedEntityData.defineId(Wendigo.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Integer> CAMO = SynchedEntityData.defineId(Wendigo.class, EntityDataSerializers.INT);
@@ -136,13 +137,13 @@ public class Wendigo extends Hyper {
         AttributeInstance attributeinstance = this.getAttribute(Attributes.MOVEMENT_SPEED);
         if (attributeinstance != null){
             if (livingEntity != null && canStartStalking(livingEntity)){
-                if (!attributeinstance.hasModifier(SPEED_MODIFIER_ATTACKING)) {
-                    attributeinstance.addTransientModifier(SPEED_MODIFIER_ATTACKING);
+                if (!attributeinstance.hasModifier(SPEED_MODIFIER_CRAWLING)) {
+                    attributeinstance.addTransientModifier(SPEED_MODIFIER_CRAWLING);
                 }
             }else{
-                attributeinstance.removeModifier(SPEED_MODIFIER_ATTACKING);
+                attributeinstance.removeModifier(SPEED_MODIFIER_CRAWLING);
             }
-            this.setIsStalking(attributeinstance.hasModifier(SPEED_MODIFIER_ATTACKING));
+            this.setIsStalking(attributeinstance.hasModifier(SPEED_MODIFIER_CRAWLING));
         }
     }
 
@@ -226,6 +227,20 @@ public class Wendigo extends Hyper {
             this.refreshDimensions();
         }
         super.onSyncedDataUpdated(dataAccessor);
+    }
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        AttributeInstance attributeinstance = this.getAttribute(Attributes.MOVEMENT_SPEED);
+        if (attributeinstance != null ){
+            if (this.getIsSprinting() > 0 && !this.isStalking()){
+                if (!attributeinstance.hasModifier(SPEED_MODIFIER_SPRINTING)) {
+                    attributeinstance.addTransientModifier(SPEED_MODIFIER_SPRINTING);
+                }
+            }else{
+                attributeinstance.removeModifier(SPEED_MODIFIER_SPRINTING);
+            }
+        }
     }
     public int getBiomeTint(){
         int i = Mth.floor(this.getX());
