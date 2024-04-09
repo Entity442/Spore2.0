@@ -47,6 +47,7 @@ public class Wendigo extends Hyper {
         super(type, level);
         this.moveControl = new InfectedWallMovementControl(this);
         this.navigation = new WallClimberNavigation(this,level);
+        this.maxUpStep = 1F;
     }
 
 
