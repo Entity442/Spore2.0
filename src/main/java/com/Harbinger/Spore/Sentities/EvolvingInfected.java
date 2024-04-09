@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sentities;
+import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.Scamper;
 import net.minecraft.core.BlockPos;
@@ -32,6 +33,20 @@ public interface EvolvingInfected {
                 }
             }
         }
+    }
+    default void tickHyperEvolution(EvolvedInfected infected){
+        if (infected.tickCount % 20 == 0){
+            if (infected.getEvoPoints() >= SConfig.SERVER.min_kills_hyper.get()){
+                if (infected.getEvolutionCoolDown() >= SConfig.SERVER.evolution_age_human.get()){
+                    this.HyperEvolve();
+                }else{
+                    infected.setEvolution(infected.getEvolutionCoolDown()+1);
+                }
+            }
+        }
+    }
+
+    default void HyperEvolve(){
     }
     default void Evolve(Infected livingEntity, List<? extends String> value){
         if (livingEntity != null && value != null && livingEntity.level instanceof ServerLevel world){

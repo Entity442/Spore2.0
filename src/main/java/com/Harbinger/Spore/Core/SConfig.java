@@ -81,6 +81,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> inf_vin_damage;
         public final ForgeConfigSpec.ConfigValue<Double> inf_vin_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> wendigo_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> wendigo_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> wendigo_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> bus_hp;
         public final ForgeConfigSpec.ConfigValue<Double> bus_damage;
         public final ForgeConfigSpec.ConfigValue<Double> bus_armor;
@@ -240,6 +244,7 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<Integer> evolution_age_human;
         public final ForgeConfigSpec.ConfigValue<Integer> min_kills;
+        public final ForgeConfigSpec.ConfigValue<Integer> min_kills_hyper;
 
         public final ForgeConfigSpec.ConfigValue<Integer> spear_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> spear_damage;
@@ -452,6 +457,7 @@ public class SConfig {
             this.starve = builder.comment("Default true").define("Should mobs with no kills starve?",true);
             this.evolution_age_human = builder.comment("Default 300").define("Evolution Timer in seconds",300);
             this.min_kills = builder.comment("Default 1").define("Minimum amount of kills to start the evolution",1);
+            this.min_kills_hyper = builder.comment("Default 5").define("Minimum amount of kills to start the hyper evolution",5);
             builder.pop();
             builder.push("Infections");
             this.inf_player = builder.comment("Default true").define("Should the player be infected on death?",true);
@@ -500,6 +506,12 @@ public class SConfig {
             this.inf_vin_hp = builder.comment("Default 28").defineInRange("Sets Infected Vindicator Max health", 28, 1, Double.MAX_VALUE);
             this.inf_vin_damage = builder.comment("Default 7").defineInRange("Sets Infected Vindicator Damage", 7, 1, Double.MAX_VALUE);
             this.inf_vin_armor = builder.comment("Default 4").defineInRange("Sets Infected Vindicator Armor", 4, 1, Double.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Wendigo");
+            this.wendigo_hp = builder.comment("Default 75").defineInRange("Sets Wendigo Max health", 75, 1, Double.MAX_VALUE);
+            this.wendigo_damage = builder.comment("Default 15").defineInRange("Sets Wendigo Damage", 15, 1, Double.MAX_VALUE);
+            this.wendigo_armor = builder.comment("Default 8").defineInRange("Sets Wendigo Armor", 8, 1, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Infected Drowned");
@@ -800,7 +812,7 @@ public class SConfig {
 
             builder.push("Spawns");
             this.spawn = builder.comment("Default false").define("Should mobs spawn after a few days?",false);
-            this.daytime_spawn = builder.comment("Default false").define("Should mobs spawn during the day?",false);
+            this.daytime_spawn = builder.comment("Default false").define("Should mobs be also able to spawn in daytime?",false);
             this.mob_cap = builder.comment("Default 40").define("MobCap",40);
             this.dimension_parameters = builder.comment("Default minecraft:is_overworld").defineList("Dictates in what biome the infected spawn",
                     Lists.newArrayList("minecraft:is_overworld") , o -> o instanceof String);
@@ -976,6 +988,8 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> umarmer_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> proto_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> mound_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> usurper_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> wendigo_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> organite_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> innards_loot;
 
@@ -1081,6 +1095,13 @@ public class SConfig {
 
             this.umarmer_loot = builder.defineList("Umarmer ",
                     Lists.newArrayList("spore:mutated_fiber|100|6|15","spore:armor_fragment|80|1|8","spore:mutated_heart|30|1|1") , o -> o instanceof String);
+
+            this.usurper_loot = builder.defineList("Usurper ",
+                    Lists.newArrayList("spore:mutated_fiber|100|6|7","spore:armor_fragment|80|1|4","spore:mutated_heart|30|1|1","spore:corrosive_sack|70|1|3") , o -> o instanceof String);
+
+
+            this.wendigo_loot = builder.defineList("Wendigo ",
+                    Lists.newArrayList("spore:mutated_fiber|70|5|9","spore:armor_fragment|80|7|12","spore:mutated_heart|50|1|1","spore:claw_fragment|80|5|15","spore:cerebrum|20|1|1","spore:spine_fragment|15|1|3","spore:altered_spleen|70|1|2") , o -> o instanceof String);
 
 
             this.organite_loot = builder.defineList("Organite Block",

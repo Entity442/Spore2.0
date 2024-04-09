@@ -252,7 +252,7 @@ public class Infected extends Monster{
             }
         }
 
-        if (this.horizontalCollision && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) && this.isAggressive()) {
+        if ((this.horizontalCollision || this.additionalBreakingTriggers()) && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) {
             boolean flag = false;
             AABB aabb = this.getBoundingBox().inflate(0.2D);
             for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
@@ -281,6 +281,9 @@ public class Infected extends Monster{
         return (blockstate.getMaterial() == Material.GLASS || blockstate.getMaterial() == Material.LEAVES) && blockstate.getDestroySpeed(level ,blockpos) >= 0 && blockstate.getDestroySpeed(level ,blockpos) < 2;
     }
 
+    public boolean additionalBreakingTriggers() {
+        return false;
+    }
 
     public boolean isStarving(){
         return entityData.get(HUNGER) >= SConfig.SERVER.hunger.get() || this.hasEffect(Seffects.STARVATION.get());

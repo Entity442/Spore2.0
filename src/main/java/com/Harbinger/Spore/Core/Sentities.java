@@ -7,6 +7,7 @@ import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
 import com.Harbinger.Spore.Sentities.FallenMultipart.Licker;
 import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
+import com.Harbinger.Spore.Sentities.Hyper.Wendigo;
 import com.Harbinger.Spore.Sentities.Organoids.*;
 import com.Harbinger.Spore.Sentities.Projectile.*;
 import com.Harbinger.Spore.Sentities.Utility.*;
@@ -142,6 +143,10 @@ public class Sentities {
     public static final RegistryObject<EntityType<Usurper>> USURPER = SPORE_ENTITIES.register("usurper",
             () -> EntityType.Builder.of(Usurper::new, INFECTED).sized(1f, 2.2f)
                     .build(new ResourceLocation(Spore.MODID, "usurper").toString()));
+
+    public static final RegistryObject<EntityType<Wendigo>> WENDIGO = SPORE_ENTITIES.register("wendigo",
+            () -> EntityType.Builder.of(Wendigo::new, INFECTED).sized(1f, 3.3f)
+                    .build(new ResourceLocation(Spore.MODID, "wendigo").toString()));
 
     public static final RegistryObject<EntityType<AcidBall>> ACID_BALL = register("acid_ball",
             EntityType.Builder.<AcidBall>of(AcidBall::new, MobCategory.MISC).setCustomClientFactory(AcidBall::new)

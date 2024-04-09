@@ -1,6 +1,8 @@
 package com.Harbinger.Spore.Sentities.BaseEntities;
 
 import com.Harbinger.Spore.Core.Sblocks;
+import com.Harbinger.Spore.Sentities.AI.FloatDiveGoal;
+import com.Harbinger.Spore.Sentities.AI.LocHiv.BufferAI;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.LocalTargettingGoal;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.SearchAreaGoal;
 import net.minecraft.core.BlockPos;
@@ -8,9 +10,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
@@ -19,6 +21,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -38,9 +41,15 @@ public class Hyper extends Infected{
     @Override
     protected void addRegularGoals() {
         this.goalSelector.addGoal(3,new LocalTargettingGoal(this));
+        this.goalSelector.addGoal(4,new GoBackToTheNest(this));
         this.goalSelector.addGoal(4, new SearchAreaGoal(this, 1.2));
+        this.goalSelector.addGoal(5,new BufferAI(this));
+        this.goalSelector.addGoal(6,new FloatDiveGoal(this));
+    }
 
-        this.goalSelector.addGoal(6,new GoBackToTheNest(this));
+    @Override
+    public boolean removeWhenFarAway(double p_21542_) {
+        return false;
     }
 
     @Override
@@ -90,48 +99,81 @@ public class Hyper extends Infected{
     public BlockPos getNestLocation(){
         return entityData.get(NEST);
     }
+    public void setNestLocation(BlockPos pos){entityData.set(NEST,pos);}
 
     @Override
-    public void tick() {
-        super.tick();
-        if (this.tickCount % 40  == 0 && this.getHealth() < this.getMaxHealth() && this.getKills() > 0){
-            if (!this.hasEffect(MobEffects.REGENERATION)){
-                this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,600,0));
-                this.setKills(this.getKills() -1);
-            }
-        }
+    public boolean additionalBreakingTriggers() {
+        return this.getLastDamageSource() == DamageSource.IN_WALL;
     }
 
-    static class GoBackToTheNest extends Goal{
+    static class GoBackToTheNest extends Goal {
         protected Hyper hyper;
+        public  int tryTicks;
         public GoBackToTheNest(Hyper hyper){
             this.hyper = hyper;
             this.setFlags(EnumSet.of(Flag.MOVE));
         }
+        @Override
+        public boolean canContinueToUse() {
+            return hyper.getTarget() == null;
+        }
 
         @Override
         public boolean canUse() {
-            if (hyper.tickCount % 40 == 0){
-                return hyper.getEvoPoints() > 5 && hyper.getNestLocation() != BlockPos.ZERO;
-            }
-            return false;
+            return hyper.tickCount % 5 == 0 && hyper.getEvoPoints() > 1 && hyper.getNestLocation() != BlockPos.ZERO;
         }
 
         protected void moveMobToBlock(BlockPos pos) {
             this.hyper.getNavigation().moveTo(pos.getX() + 0.5D, pos.getY() + 1, pos.getZ() + 0.5D, 1.4);
         }
+        protected void tryToLayCorpsesAround(){
+            AABB aabb = this.hyper.getBoundingBox().inflate(10);
+            for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
+                Level level = hyper.level;
+                boolean isGround = level.getBlockState(blockpos).isCollisionShapeFullBlock(level,blockpos);
+                boolean isAir = level.getBlockState(blockpos.above()).isAir();
+                if (Math.random() < 0.01){
+                    if (isGround && isAir && !level.isClientSide){
+                        level.setBlock(blockpos.above(),Sblocks.REMAINS.get().defaultBlockState(), 3);
+                        this.hyper.setEvoPoints(this.hyper.getEvoPoints()-1);
+                        break;
+                    }
+                }
+            }
+        }
+
+        public boolean shouldRecalculatePath() {
+            return this.tryTicks % 10 == 0;
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+            ++this.tryTicks;
+            if (this.hyper.getNestLocation() != BlockPos.ZERO && shouldRecalculatePath()){
+                this.moveMobToBlock(this.hyper.getNestLocation());
+            }
+        }
 
         @Override
         public void start() {
             moveMobToBlock(this.hyper.getNestLocation());
+            BlockPos pos = this.hyper.getNestLocation();
+            if (this.hyper.distanceToSqr(pos.getX(),pos.getY(),pos.getZ()) < 40d){
+                tryToLayCorpsesAround();
+            }
             super.start();
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
         }
     }
     @org.jetbrains.annotations.Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_21434_, DifficultyInstance p_21435_, MobSpawnType p_21436_, @org.jetbrains.annotations.Nullable SpawnGroupData p_21437_, @org.jetbrains.annotations.Nullable CompoundTag p_21438_) {
-        this.entityData.set(NEST,this.getBlockPosBelowThatAffectsMyMovement());
+        setNestLocation(this.getOnPos());
         return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, p_21438_);
     }
-
 }

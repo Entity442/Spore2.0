@@ -7,9 +7,7 @@ import com.Harbinger.Spore.SBlockEntities.BrainRemnantBlockEntity;
 import com.Harbinger.Spore.SBlockEntities.CDUBlockEntity;
 import com.Harbinger.Spore.SBlockEntities.LivingStructureBlocks;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
-import com.Harbinger.Spore.Sentities.BaseEntities.Calamity;
-import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
-import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
+import com.Harbinger.Spore.Sentities.BaseEntities.*;
 import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.BasicInfected.*;
 import com.Harbinger.Spore.Sentities.Calamities.Gazenbrecher;
@@ -152,6 +150,9 @@ public class HandlerEvents {
                         for (Entity entity1 : entities) {
                             if(entity1 instanceof Infected infected) {
                                 infected.setEvolution(SConfig.SERVER.evolution_age_human.get());
+                                if (infected instanceof EvolvedInfected evolvedInfected){
+                                    evolvedInfected.setEvoPoints(SConfig.SERVER.min_kills_hyper.get());
+                                }else
                                 infected.setEvoPoints(SConfig.SERVER.min_kills.get());
                             }else if (entity1 instanceof Mound mound){
                                 mound.setAge(mound.getAge()+1);
@@ -205,6 +206,9 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Partner ? " + infected.getFollowPartner()),false);
                                     if (infected instanceof Scamper scamper){
                                         player.displayClientMessage(Component.literal("Time before its overtaken ? " + scamper.getAge()+"/"+SConfig.SERVER.scamper_age.get()),false);
+                                    }
+                                    if (infected instanceof Hyper scamper){
+                                        player.displayClientMessage(Component.literal("Nest location ? " + scamper.getNestLocation()),false);
                                     }
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
 

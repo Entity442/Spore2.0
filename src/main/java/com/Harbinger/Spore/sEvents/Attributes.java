@@ -9,6 +9,7 @@ import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
 import com.Harbinger.Spore.Sentities.FallenMultipart.Licker;
 import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
+import com.Harbinger.Spore.Sentities.Hyper.Wendigo;
 import com.Harbinger.Spore.Sentities.Organoids.*;
 import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
 import com.Harbinger.Spore.Sentities.Utility.InfectionTendril;
@@ -55,6 +56,7 @@ public class Attributes {
         event.put(Sentities.UMARMED.get(), Umarmer.createAttributes().build());
         event.put(Sentities.USURPER.get(), Usurper.createAttributes().build());
         event.put(Sentities.TENDRIL.get(), InfectionTendril.createAttributes().build());
+        event.put(Sentities.WENDIGO.get(), Wendigo.createAttributes().build());
         event.put(Sentities.SIEGER.get(), Sieger.createAttributes().build());
         event.put(Sentities.GAZENBREACHER.get(), Gazenbrecher.createAttributes().build());
         event.put(Sentities.SIEGER_TAIL.get(), SiegerTail.createAttributes().build());

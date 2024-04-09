@@ -80,6 +80,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(brainMatterModel.LAYER_LOCATION, brainMatterModel::createBodyLayer);
         event.registerLayerDefinition(TumoralNukeModel.LAYER_LOCATION, TumoralNukeModel::createBodyLayer);
         event.registerLayerDefinition(HindieModel.LAYER_LOCATION, HindieModel::createBodyLayer);
+        event.registerLayerDefinition(WendigoModel.LAYER_LOCATION, WendigoModel::createBodyLayer);
     }
 
 
@@ -118,6 +119,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.VIGIL.get(), VigilRenderer::new);
         event.registerEntityRenderer(Sentities.UMARMED.get(), UmarmedRenderer::new);
         event.registerEntityRenderer(Sentities.USURPER.get(), UsurperRenderer::new);
+        event.registerEntityRenderer(Sentities.WENDIGO.get(), WendigoRenderer::new);
         event.registerEntityRenderer(Sentities.SIEGER.get(), SiegerRenderer::new);
         event.registerEntityRenderer(Sentities.GAZENBREACHER.get(), GazenRenderer::new);
         event.registerEntityRenderer(Sentities.HINDENBURG.get(), HindieRenderer::new);
