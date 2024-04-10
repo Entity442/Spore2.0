@@ -42,6 +42,8 @@ public class Ssounds {
 
     public static final RegistryObject<SoundEvent> WENDIGO_AMBIENT = soundRegistry("wendigo_ambient");
 
+    public static final RegistryObject<SoundEvent> WENDIGO_SCREECH = soundRegistry("wendigo_screech");
+
     public static final RegistryObject<SoundEvent> SIEGER_BITE = soundRegistry("sieger_bite");
 
     public static final RegistryObject<SoundEvent> GAZEN_AMBIENT = soundRegistry("gazen_ambient");

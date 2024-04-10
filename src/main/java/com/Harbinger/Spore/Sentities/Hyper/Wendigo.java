@@ -224,6 +224,7 @@ public class Wendigo extends Hyper {
         if (IS_STALKING.equals(dataAccessor)){
             if (this.getTarget() != null && this.getIsSprinting()<=0){
                 this.setIsSprinting(10);
+                this.playSound(Ssounds.WENDIGO_SCREECH.get());
             }
             this.setCamo(this.isStalking() ? getBiomeTint() : 0);
             this.refreshDimensions();
