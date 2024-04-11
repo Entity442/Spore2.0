@@ -52,6 +52,10 @@ public class Hyper extends Infected{
         return false;
     }
 
+    protected int calculateFallDamage(float p_149389_, float p_149390_) {
+        return super.calculateFallDamage(p_149389_, p_149390_) - 5;
+    }
+
     @Override
     public boolean blockBreakingParameters(BlockState blockstate, BlockPos blockpos) {
         float value = blockstate.getDestroySpeed(this.level,blockpos);
