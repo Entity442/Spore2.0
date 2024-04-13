@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "spore:rotten_log",
+    "spore:rotten_planks",
+    "spore:rotten_stair",
     "spore:biomass_block",
     "spore:sicken_biomass_block",
     "spore:calcified_biomass_block",
