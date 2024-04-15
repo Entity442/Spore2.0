@@ -193,6 +193,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> leap_damage;
         public final ForgeConfigSpec.ConfigValue<Double> leap_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> plagued_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> plagued_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> plagued_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> sla_hp;
         public final ForgeConfigSpec.ConfigValue<Double> sla_damage;
         public final ForgeConfigSpec.ConfigValue<Double> sla_armor;
@@ -713,6 +717,12 @@ public class SConfig {
             this.stalker_armor = builder.comment("Default 3").defineInRange("Sets Stalker Armor", 3, 0, Double.MAX_VALUE);
             builder.pop();
 
+            builder.push("Plagued");
+            this.plagued_hp = builder.comment("Default 30").defineInRange("Sets Plagued Max health", 30, 1, Double.MAX_VALUE);
+            this.plagued_damage = builder.comment("Default 5").defineInRange("Sets Plagued Damage", 5, 1, Double.MAX_VALUE);
+            this.plagued_armor = builder.comment("Default 5").defineInRange("Sets Plagued Armor", 5, 0, Double.MAX_VALUE);
+            builder.pop();
+
             builder.push("Infected Wandering Trader");
             this.inf_van_hp = builder.comment("Default 20").defineInRange("Sets Infected Wandering Trader Max health", 20, 1, Double.MAX_VALUE);
             this.inf_van_damage = builder.comment("Default 6").defineInRange("Sets Infected Wandering Trader Damage", 6, 1, Double.MAX_VALUE);
@@ -821,7 +831,7 @@ public class SConfig {
                     Lists.newArrayList("spore:inf_human|80|2|5","spore:inf_drowned|10|1|2","spore:inf_pillager|40|1|3","spore:inf_villager|70|1|3","spore:inf_player|20|1|2"
                             ,"spore:inf_wanderer|25|1|2","spore:inf_witch|25|1|2") , o -> o instanceof String);
             this.structure_spawns = builder.defineList("Mobs that spawn in laboratory type structures",
-                    Lists.newArrayList("spore:inf_hazmat|70|2|5","spore:inf_player|20|1|2") , o -> o instanceof String);
+                    Lists.newArrayList("spore:inf_hazmat|70|2|5","spore:inf_player|20|1|2","spore:plagued|10|1|2") , o -> o instanceof String);
 
             builder.pop();
 
@@ -992,6 +1002,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> wendigo_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> organite_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> innards_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> plagued_loot;
 
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> name;
@@ -1035,6 +1046,9 @@ public class SConfig {
                     Lists.newArrayList("spore:mutated_fiber|50|2|5","spore:mutated_heart|10|1|1") , o -> o instanceof String);
             this.inf_husk_loot = builder.defineList("Infected Husk",
                     Lists.newArrayList("spore:mutated_fiber|50|5|7","spore:mutated_heart|10|1|1") , o -> o instanceof String);
+
+            this.plagued_loot = builder.defineList("Plagued",
+                    Lists.newArrayList("spore:mutated_fiber|50|5|7","spore:mutated_heart|10|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
 
 
             this.inf_braio_loot = builder.defineList("Braiomil ",
@@ -1136,7 +1150,7 @@ public class SConfig {
             builder.pop();
             builder.push("Structure data");
             this.biomass_lump_kills = builder.comment("Default 5").defineInRange("Biomass Lump minimal kills", 5, 0, Integer.MAX_VALUE);
-            this.hive_spawn_kills = builder.comment("Default 50").defineInRange("Reconstructed Mind Block kills", 50, 0, Integer.MAX_VALUE);
+            this.hive_spawn_kills = builder.comment("Default 25").defineInRange("Reconstructed Mind Block kills", 25, 0, Integer.MAX_VALUE);
             this.spawner_range = builder.comment("Default 20").defineInRange("The range of the overgrown spawner", 32, 0, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Block infection");
