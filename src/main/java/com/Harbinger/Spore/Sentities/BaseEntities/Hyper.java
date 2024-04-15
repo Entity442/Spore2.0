@@ -13,9 +13,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
@@ -54,6 +52,21 @@ public class Hyper extends Infected{
 
     protected int calculateFallDamage(float p_149389_, float p_149390_) {
         return super.calculateFallDamage(p_149389_, p_149390_) - 5;
+    }
+    @Override
+    protected boolean canRide(Entity entity) {
+        if (entity instanceof Infected || entity instanceof UtilityEntity){
+            return super.canRide(entity);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean hasLineOfSight(Entity entity) {
+        if (entity instanceof LivingEntity livingEntity && this.distanceToSqr(livingEntity) < 100){
+            return true;
+        }
+        return super.hasLineOfSight(entity);
     }
 
     @Override
