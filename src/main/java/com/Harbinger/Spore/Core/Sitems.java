@@ -8,6 +8,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -229,6 +230,13 @@ public class Sitems {
             InfectedRapier::new);
     public  static final RegistryObject<Item> VIGIL_EYE = ITEMS.register("vigil_eye",
             VigilEye::new);
+    public  static final RegistryObject<Item> SYMBIOTIC_REAGENT = ITEMS.register("symbiotic_reagent",
+            () -> new BiologicalReagent(new Item.Properties().tab(ScreativeTab.SPORE)){
+                @Override
+                public Enchantment getAppliedEnchantment() {
+                    return Senchantments.SYMBIOTIC_RECONSTITUTION.get();
+                }
+            });
 
     public  static final RegistryObject<Item> INF_HELMET = ITEMS.register("inf_helmet",
             InfectedHelmet::new);
