@@ -61,9 +61,4 @@ public class PlatedExoskeleton extends ArmorItem {
         } , slot,properties);
         Sitems.BIOLOGICAL_ITEMS.add(this);
     }
-
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return super.canApplyAtEnchantingTable(stack, enchantment) || Senchantments.SPORE_ENCHANTS.contains(enchantment);
-    }
 }
