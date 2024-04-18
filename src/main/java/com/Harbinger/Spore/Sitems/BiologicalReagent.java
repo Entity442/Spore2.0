@@ -13,7 +13,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
@@ -69,11 +68,8 @@ public class BiologicalReagent extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag) {
-        list.add(Component.literal("Carries the properties of "));
+        list.add(Component.translatable("item.reagent.line1"));
         list.add(Component.translatable(getAppliedEnchantment().getDescriptionId()));
-        list.add(Component.literal("however it may also bestow").withStyle(ChatFormatting.DARK_RED));
-        for (Enchantment enchantment : curses()){
-            list.add(Component.translatable(enchantment.getDescriptionId()).withStyle(ChatFormatting.DARK_RED));
-        }
+        list.add(Component.translatable("item.reagent.line2").withStyle(ChatFormatting.BLACK));
     }
 }

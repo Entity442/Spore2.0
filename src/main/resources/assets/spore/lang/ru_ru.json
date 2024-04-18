@@ -98,6 +98,8 @@
   "item.spore.milky_sack": "Молочные мешки",
   "item.spore.brain_noodles": "Мозговая лапша",
 
+  "item.spore.symbiotic_reagent": "Симбиотический реагент",
+
   "item.spore.saber": "Заражённая сабля",
   "item.spore.infected_bow": "Заражённый лук",
   "item.spore.greatsword": "Заражённый большой меч",
@@ -251,6 +253,8 @@
   "itemGroup.spore": "Spore",
   "itemGroup.spore_t": "Spore Technologies",
 
+  "item.reagent.line1": "Носит свойства ",
+  "item.reagent.line2": "это также может вызывать побочные эффекты",
 
   "item.armor.shift": "Зажав SHIFT, можно взобраться по стене.",
   "item.armor.normal": "Зажми SHIFT для информации.",

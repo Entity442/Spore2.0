@@ -2,8 +2,6 @@
   "replace": false,
   "values": [
     "spore:rotten_log",
-    "spore:rotten_planks",
-    "spore:rotten_stair",
     "spore:biomass_block",
     "spore:sicken_biomass_block",
     "spore:calcified_biomass_block",
@@ -11,6 +9,9 @@
     "spore:rooted_biomass",
     "spore:rooted_mycelium",
     "spore:fungal_shell",
+    "spore:rotten_planks",
+    "spore:rotten_stair",
+    "spore:membrane_block",
     "spore:mycelium_block",
     "spore:mycelium_slab"
   ]
