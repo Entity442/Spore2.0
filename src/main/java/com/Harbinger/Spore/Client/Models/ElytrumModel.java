@@ -3,32 +3,41 @@ package com.Harbinger.Spore.Client.Models;// Made with Blockbench 4.6.4
 // Paste this class into your mod and generate all required imports
 
 
+import com.Harbinger.Spore.Client.Special.BaseArmorModel;
 import com.Harbinger.Spore.Spore;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.AgeableListModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ElytrumModel<T extends LivingEntity> extends AgeableListModel<T> {
+public class ElytrumModel<T extends LivingEntity> extends BaseArmorModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Spore.MODID, "elytrummodel"), "main");
 	public final ModelPart body;
 	public final ModelPart left_arm;
 	public final ModelPart right_arm;
+	public final ModelPart leftWing;
+	public final ModelPart rightWing;
 
-	public ElytrumModel(ModelPart root) {
+	public ElytrumModel() {
+		ModelPart root = createBodyLayer().bakeRoot();
 		this.body = root.getChild("body");
 		this.left_arm = root.getChild("left_arm");
 		this.right_arm = root.getChild("right_arm");
+		this.leftWing = body.getChild("left_wing");
+		this.rightWing = body.getChild("right_wing");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -50,6 +59,46 @@ public class ElytrumModel<T extends LivingEntity> extends AgeableListModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		float f = 0.2617994F;
+		float f1 = -0.2617994F;
+		float f2 = 0.0F;
+		float f3 = 0.0F;
+		if (entity.isFallFlying()) {
+			float f4 = 1.0F;
+			Vec3 vec3 = entity.getDeltaMovement();
+			if (vec3.y < 0.0D) {
+				Vec3 vec31 = vec3.normalize();
+				f4 = 1.0F - (float)Math.pow(-vec31.y, 1.5D);
+			}
+
+			f = f4 * 0.34906584F + (1.0F - f4) * f;
+			f1 = f4 * (-(float)Math.PI / 2F) + (1.0F - f4) * f1;
+		} else if (entity.isCrouching()) {
+			f = 0.6981317F;
+			f1 = (-(float)Math.PI / 4F);
+			f2 = 3.0F;
+			f3 = 0.08726646F;
+		}
+
+		this.leftWing.y = f2;
+		if (entity instanceof AbstractClientPlayer abstractclientplayer) {
+			abstractclientplayer.elytraRotX += (f - abstractclientplayer.elytraRotX) * 0.1F;
+			abstractclientplayer.elytraRotY += (f3 - abstractclientplayer.elytraRotY) * 0.1F;
+			abstractclientplayer.elytraRotZ += (f1 - abstractclientplayer.elytraRotZ) * 0.1F;
+			this.leftWing.xRot = abstractclientplayer.elytraRotX;
+			this.leftWing.yRot = abstractclientplayer.elytraRotY;
+			this.leftWing.zRot = abstractclientplayer.elytraRotZ;
+		} else {
+			this.leftWing.xRot = f;
+			this.leftWing.zRot = f1;
+			this.leftWing.yRot = f3;
+		}
+
+		this.rightWing.yRot = -this.leftWing.yRot;
+		this.rightWing.y = this.leftWing.y;
+		this.rightWing.xRot = this.leftWing.xRot;
+		this.rightWing.zRot = -this.leftWing.zRot;
+		this.animateCrouch(entity,body);
 	}
 
 	@Override
@@ -57,15 +106,5 @@ public class ElytrumModel<T extends LivingEntity> extends AgeableListModel<T> {
 		body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		left_arm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		right_arm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-	}
-
-	@Override
-	protected Iterable<ModelPart> headParts() {
-		return ImmutableList.of();
-	}
-
-	@Override
-	protected Iterable<ModelPart> bodyParts() {
-		return ImmutableList.of(this.body);
 	}
 }
