@@ -23,13 +23,11 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -184,11 +182,11 @@ public class UpgradedInfectedExoskeleton extends ArmorItem {
                 @OnlyIn(Dist.CLIENT)
                 public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
                     HumanoidModel armorModel = new HumanoidModel<>(new ModelPart(Collections.emptyList(), Map.of("body",
-                            new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+                            new WingedChestplate<>(Minecraft.getInstance().getEntityModels().bakeLayer(WingedChestplate.LAYER_LOCATION),true).body,
                             "left_arm",
-                            new WingedChestplate<>(Minecraft.getInstance().getEntityModels().bakeLayer(WingedChestplate.LAYER_LOCATION),false).left_arm,
+                            new WingedChestplate<>(Minecraft.getInstance().getEntityModels().bakeLayer(WingedChestplate.LAYER_LOCATION),true).left_arm,
                             "right_arm",
-                            new WingedChestplate<>(Minecraft.getInstance().getEntityModels().bakeLayer(WingedChestplate.LAYER_LOCATION),false).right_arm,
+                            new WingedChestplate<>(Minecraft.getInstance().getEntityModels().bakeLayer(WingedChestplate.LAYER_LOCATION),true).right_arm,
                             "head", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat",
                             new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg",
                             new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg",
