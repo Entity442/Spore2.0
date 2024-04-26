@@ -209,10 +209,6 @@ public class UpgradedInfectedExoskeleton extends ArmorItem {
             return new ResourceLocation(Spore.MODID,"textures/armor/infected_wing.png");
         }
 
-        @Override
-        public boolean isFoil() {
-            return false;
-        }
     }
 
 }
