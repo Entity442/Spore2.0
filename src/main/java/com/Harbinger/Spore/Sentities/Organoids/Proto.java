@@ -1,7 +1,6 @@
 package com.Harbinger.Spore.Sentities.Organoids;
 
 import com.Harbinger.Spore.Core.*;
-import com.Harbinger.Spore.Effect.Marker;
 import com.Harbinger.Spore.ExtremelySusThings.ChunkLoaderHelper;
 import com.Harbinger.Spore.SBlockEntities.BrainRemnantBlockEntity;
 import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
@@ -55,7 +54,6 @@ public class Proto extends Organoid implements CasingGenerator {
     }
 
     int counter;
-    int breakCounter;
     @Nullable
     public boolean signal;
     public BlockPos position;
@@ -107,9 +105,7 @@ public class Proto extends Organoid implements CasingGenerator {
                 this.generateChasing(entityData.get(NODE),this,32);
             }
         }
-        if (counter <1200){
-            counter++;
-        }else{
+        if (this.counter % 1200 == 0){
             List<Entity> entities = this.level.getEntities(this, seachbox() , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
             entityData.set(HOSTS,0);
             for (Entity en : entities) {
@@ -137,12 +133,9 @@ public class Proto extends Organoid implements CasingGenerator {
                         break;
                     }
                 }
-                counter = 0;
             }
         }
-        if (breakCounter < 40){
-            breakCounter++;
-        }else{
+        if (this.counter % 40 == 0){
             if (this.getLastDamageSource() == DamageSource.IN_WALL && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)){
                 AABB aabb = this.getBoundingBox().inflate(0.2,0,0.2);
                 boolean flag = false;
@@ -150,17 +143,32 @@ public class Proto extends Organoid implements CasingGenerator {
                     BlockState blockstate = this.level.getBlockState(blockpos);
                     if (blockstate.getDestroySpeed(level ,blockpos) < 10 && blockstate.getDestroySpeed(level ,blockpos) > 0) {
                         flag =  this.level.destroyBlock(blockpos, true, this) || flag;
-                        breakCounter = 0;
                     }
                 }
             }
         }
-
         if (getSignal() && getPlace() != null && checkForCalamities(this.getPlace())){
             this.SummonConstructor(this.level,this,this.getPlace());
         }
+        if (this.counter % 3000 == 0){
+            this.giveMadness(this);
+        }
     }
 
+    protected void giveMadness(Proto proto){
+        AABB aabb = proto.getBoundingBox().inflate(128);
+        List<Entity> entities = this.level.getEntities(this, aabb , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
+        for (Entity entity : entities){
+            if (entity instanceof LivingEntity living && (SConfig.SERVER.proto_sapient_target.get().contains(living.getEncodeId()) || living instanceof Player)){
+                MobEffectInstance instance = living.getEffect(Seffects.MADNESS.get());
+                if (instance != null){
+                    living.addEffect(new MobEffectInstance(Seffects.MADNESS.get(),6000,instance.getAmplifier()+1));
+                }else{
+                    living.addEffect(new MobEffectInstance(Seffects.MADNESS.get(),6000,0));
+                }
+            }
+        }
+    }
     public void setSignal(boolean value){
         this.signal = value;
     }
