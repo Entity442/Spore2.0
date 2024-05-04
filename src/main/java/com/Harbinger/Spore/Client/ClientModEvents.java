@@ -137,6 +137,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.LICKER.get(), LickerRenderer::new);
         event.registerEntityRenderer(Sentities.TUMOROID_NUKE.get(), TumoroidNukeRenderer::new);
         event.registerEntityRenderer(Sentities.WAVE.get(), WaveRenderer::new);
+        event.registerEntityRenderer(Sentities.ILLUSION.get(), IllusionRenderer::new);
 
 
         event.registerEntityRenderer(Sentities.ACID_BALL.get(), ThrownItemRenderer::new);

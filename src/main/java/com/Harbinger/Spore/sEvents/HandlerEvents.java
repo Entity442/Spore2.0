@@ -17,6 +17,7 @@ import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
 import com.Harbinger.Spore.Sentities.FallenMultipart.Licker;
 import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
 import com.Harbinger.Spore.Sentities.Organoids.*;
+import com.Harbinger.Spore.Sentities.Utility.Illusion;
 import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
 import com.Harbinger.Spore.Sentities.Variants.SlasherVariants;
 import com.Harbinger.Spore.Sitems.InfectedCombatShovel;
@@ -57,10 +58,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.level.BlockEvent;
@@ -498,7 +496,8 @@ public class HandlerEvents {
 
     @SubscribeEvent
     public static void DefenseBypass(LivingDamageEvent event) {
-        if (event.getSource().getEntity() instanceof Calamity calamity) {
+        Entity living = event.getSource().getEntity();
+        if (living instanceof Calamity calamity) {
             float original_damage = event.getAmount();
             AttributeInstance attack = calamity.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE);
             double recalculated_damage = attack != null ? (attack.getValue()/10)*2 : original_damage;
@@ -506,12 +505,38 @@ public class HandlerEvents {
                 event.setAmount((float) recalculated_damage);
             }
         }
-        if (event.getSource().getEntity() instanceof Slasher slasher && slasher.getVariant() == SlasherVariants.PIERCER) {
+        if (living instanceof Slasher slasher && slasher.getVariant() == SlasherVariants.PIERCER) {
             float original_damage = event.getAmount();
             AttributeInstance attack = slasher.getAttribute(Attributes.ATTACK_DAMAGE);
             double recalculated_damage = attack != null ? attack.getValue()/2 : original_damage;
             if (original_damage < recalculated_damage){
                 event.setAmount((float) recalculated_damage);
+            }
+        }
+        if (living instanceof Illusion illusion && !illusion.getSeeAble()){
+            event.setAmount((float) (SConfig.SERVER.halucinations_damage.get()*1f));
+        }
+        if (living instanceof Infected || living instanceof UtilityEntity && !(living instanceof Illusion)){
+            LivingEntity livingEntity = event.getEntity();
+            MobEffectInstance mobEffectInstance = livingEntity.getEffect(Seffects.MADNESS.get());
+            if (mobEffectInstance != null){
+                int level = mobEffectInstance.getAmplifier();
+                int duration = mobEffectInstance.getDuration() +1200;
+                boolean jumpLevel = duration < 12000;
+                livingEntity.addEffect(new MobEffectInstance(Seffects.MADNESS.get(),jumpLevel ? duration: duration-12000,jumpLevel ? level : level+1));
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void TickEvents(LivingEvent.LivingTickEvent event){
+        if (event.getEntity() instanceof Player player){
+            MobEffectInstance effectInstance = player.getEffect(Seffects.MADNESS.get());
+            if (effectInstance != null && effectInstance.getDuration() == 1){
+                int level = effectInstance.getAmplifier();
+                if (level > 0){
+                    effectInstance.update(new MobEffectInstance(Seffects.MADNESS.get(),12000,level-1));
+                }
             }
         }
     }
