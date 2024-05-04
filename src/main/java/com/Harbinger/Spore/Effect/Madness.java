@@ -26,7 +26,7 @@ public class Madness extends MobEffect {
     }
 
     public void applyEffectTick(LivingEntity entity, int intense) {
-        if (Math.random() < (SConfig.SERVER.chance_hallucination_spawn.get() * 0.01) && intense > 1 && entity.level() instanceof ServerLevel serverLevel){
+        if (Math.random() < (SConfig.SERVER.chance_hallucination_spawn.get() * 0.01) && intense > 1 && entity.level instanceof ServerLevel serverLevel){
             SummonIllusion(entity,serverLevel);
         }
         if (Math.random() < 0.1){

@@ -5,7 +5,7 @@ import com.Harbinger.Spore.Sentities.Utility.Illusion;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -57,7 +57,7 @@ public class IllusionRenderer extends EntityRenderer<Illusion> {
     public void renderIllusions(Illusion illusion,float value2,PoseStack stack,MultiBufferSource source,int light){
         ResourceLocation location = new ResourceLocation(illusion.getBody());
         EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(location);
-        LivingEntity entity = (LivingEntity) entityType.create(illusion.level());
+        LivingEntity entity = (LivingEntity) entityType.create(illusion.level);
         float f = Mth.rotLerp(value2, illusion.yBodyRotO, illusion.yBodyRot);
         float f1 = Mth.rotLerp(value2, illusion.yHeadRotO, illusion.yHeadRot);
         float f2 = f1 - f;
@@ -66,8 +66,8 @@ public class IllusionRenderer extends EntityRenderer<Illusion> {
         float f8 = 0.0F;
         float f5 = 0.0F;
         if (illusion.isAlive()) {
-            f8 = illusion.walkAnimation.speed(value2);
-            f5 = illusion.walkAnimation.position(value2);
+            f8 = Mth.lerp(value2, illusion.animationSpeedOld, illusion.animationSpeed);
+            f5 = illusion.animationPosition - illusion.animationSpeed * (1.0F - value2);
             if (illusion.isBaby()) {
                 f5 *= 3.0F;
             }
@@ -78,8 +78,8 @@ public class IllusionRenderer extends EntityRenderer<Illusion> {
         }
         if (entity != null){
             stack.pushPose();
-            stack.mulPose(Axis.YP.rotationDegrees(-illusion.yBodyRot));
-            stack.mulPose(Axis.XP.rotationDegrees(180));
+            stack.mulPose(Vector3f.YP.rotationDegrees(-illusion.yBodyRot));
+            stack.mulPose(Vector3f.XP.rotationDegrees(180));
             stack.translate(0,-1.5,0);
             if (entityRenderer.getRenderer(entity) instanceof MobRenderer mobRenderer){
                 EntityModel model = mobRenderer.getModel();
