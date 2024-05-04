@@ -52,8 +52,6 @@ public class Proto extends Organoid implements CasingGenerator {
         super(type, level);
         setPersistenceRequired();
     }
-
-    int counter;
     @Nullable
     public boolean signal;
     public BlockPos position;
@@ -105,7 +103,7 @@ public class Proto extends Organoid implements CasingGenerator {
                 this.generateChasing(entityData.get(NODE),this,32);
             }
         }
-        if (this.counter % 1200 == 0){
+        if (this.tickCount % 1200 == 0){
             List<Entity> entities = this.level.getEntities(this, seachbox() , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
             entityData.set(HOSTS,0);
             for (Entity en : entities) {
@@ -135,7 +133,7 @@ public class Proto extends Organoid implements CasingGenerator {
                 }
             }
         }
-        if (this.counter % 40 == 0){
+        if (this.tickCount % 40 == 0){
             if (this.getLastDamageSource() == DamageSource.IN_WALL && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)){
                 AABB aabb = this.getBoundingBox().inflate(0.2,0,0.2);
                 boolean flag = false;
@@ -150,7 +148,7 @@ public class Proto extends Organoid implements CasingGenerator {
         if (getSignal() && getPlace() != null && checkForCalamities(this.getPlace())){
             this.SummonConstructor(this.level,this,this.getPlace());
         }
-        if (this.counter % 3000 == 0){
+        if (this.tickCount % 3000 == 0){
             this.giveMadness(this);
         }
     }
@@ -160,12 +158,7 @@ public class Proto extends Organoid implements CasingGenerator {
         List<Entity> entities = this.level.getEntities(this, aabb , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
         for (Entity entity : entities){
             if (entity instanceof LivingEntity living && (SConfig.SERVER.proto_sapient_target.get().contains(living.getEncodeId()) || living instanceof Player)){
-                MobEffectInstance instance = living.getEffect(Seffects.MADNESS.get());
-                if (instance != null){
-                    living.addEffect(new MobEffectInstance(Seffects.MADNESS.get(),6000,instance.getAmplifier()+1));
-                }else{
-                    living.addEffect(new MobEffectInstance(Seffects.MADNESS.get(),6000,0));
-                }
+                living.addEffect(new MobEffectInstance(Seffects.MADNESS.get(),6000,0));
             }
         }
     }
