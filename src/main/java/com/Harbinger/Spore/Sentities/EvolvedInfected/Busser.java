@@ -4,11 +4,14 @@ import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.*;
+import com.Harbinger.Spore.Sentities.AI.CalamitiesAI.ScatterShotRangedGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.Carrier;
 import com.Harbinger.Spore.Sentities.FlyingInfected;
 import com.Harbinger.Spore.Sentities.MovementControls.InfectedArialMovementControl;
+import com.Harbinger.Spore.Sentities.Projectile.StingerProjectile;
 import com.Harbinger.Spore.Sentities.Variants.BusserVariants;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -28,6 +31,7 @@ import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -38,7 +42,7 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
+public class Busser extends EvolvedInfected implements Carrier, FlyingInfected, RangedAttackMob {
     private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData.defineId(Busser.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> DATA_SWELL_DIR = SynchedEntityData.defineId(Busser.class, EntityDataSerializers.INT);
     public Busser(EntityType<? extends Monster> type, Level level) {
@@ -64,19 +68,29 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
     }
     @Override
     protected void registerGoals() {
-
         this.goalSelector.addGoal(3, new BusserSwellGoal(this));
         this.goalSelector.addGoal(3, new PhayerGrabAndDropTargets(this));
+        this.goalSelector.addGoal(3,new ScatterShotRangedGoal(this,1.2,40,20,1,3){
+            @Override
+            public boolean canUse() {
+                return super.canUse() && Busser.this.getTypeVariant() == 3;
+            }
+        });
         this.goalSelector.addGoal(3, new PullGoal(this, 32, 16) {
             @Override
             public boolean canUse() {
-                return super.canUse() && !(Busser.this.isOnGround() || Busser.this.isVehicle() || Busser.this.getTypeVariant() == 2);
+                return super.canUse() && Busser.this.getTypeVariant() == 0  && !(Busser.this.isOnGround() || Busser.this.isVehicle());
             }
         });
         this.goalSelector.addGoal(4, new CustomMeleeAttackGoal(this, 1.5, false) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 return 5.0 + entity.getBbWidth() * entity.getBbWidth();
+            }
+
+            @Override
+            public boolean canUse() {
+                return super.canUse() && !(Busser.this.getTypeVariant() == 3);
             }
         });
         this.goalSelector.addGoal(5, new BusserFlyAndDrop(this, 6){
@@ -92,19 +106,7 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
                 return Busser.this.getTypeVariant() == 0 && super.canUse();
             }
         });
-
-        this.goalSelector.addGoal(7 , new FlyingWanderAround(this , 1.0){
-            @Override
-            public boolean canUse() {
-                return super.canUse() && !Busser.this.isOnGround();
-            }
-        });
-        this.goalSelector.addGoal(7,new RandomStrollGoal(this ,1.0){
-            @Override
-            public boolean canUse() {
-                return super.canUse() && Busser.this.isOnGround();
-            }
-        });
+        this.goalSelector.addGoal(7,new RandomStrollGoal(this ,1.0));
         super.registerGoals();
     }
 
@@ -119,7 +121,16 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
                 .add(Attributes.FLYING_SPEED, 0.4);
 
     }
-
+    @Override
+    public void travel(Vec3 vec) {
+        if (this.isEffectiveAi() && !this.isOnGround()) {
+            this.moveRelative(0.1F, vec);
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.85D));
+        } else {
+            super.travel(vec);
+        }
+    }
 
     @Override
     public void tick() {
@@ -198,12 +209,7 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
                 }
             }
         }
-        if (!this.onGround && this.getTarget() != null && this.getRandom().nextInt(5)==0){
-            double d0 = this.getTarget().getX() - this.getX();
-            double d1 = this.getTarget().getY() - this.getY();
-            double d2 = this.getTarget().getZ() - this.getZ();
-            this.setDeltaMovement(this.getDeltaMovement().add(new Vec3(d0, d1, d2).normalize().scale(0.06D)));
-        }
+        if (!this.getMoveControl().hasWanted() && this.getTarget() == null){this.setDeltaMovement(this.getDeltaMovement().add(0,-0.005,0));}
         super.customServerAiStep();
     }
 
@@ -236,9 +242,7 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_146746_, DifficultyInstance p_146747_,
                                         MobSpawnType p_146748_, @Nullable SpawnGroupData p_146749_,
                                         @Nullable CompoundTag p_146750_) {
-        BusserVariants variant = Math.random() < 0.3 ?
-                Math.random() < 0.5 ?
-                        BusserVariants.ENHANCED : BusserVariants.BOMBER : BusserVariants.DEFAULT;
+        BusserVariants variant = Util.getRandom(BusserVariants.values(), this.random);
         setVariant(variant);
         return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_);
     }
@@ -274,5 +278,18 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected {
 
     protected void playStepSound(BlockPos p_34316_, BlockState p_34317_) {
         this.playSound(this.getStepSound(), 0.15F, 1.0F);
+    }
+
+    @Override
+    public void performRangedAttack(LivingEntity entity, float p_33318_) {
+        StingerProjectile stinger = new StingerProjectile(this.level, this, (float) (SConfig.SERVER.bus_damage.get() *1f));
+        stinger.moveTo(this.getX(),this.getY(),this.getZ());
+        double dx = entity.getX() - this.getX();
+        double dy = entity.getY() + entity.getEyeHeight() - 2;
+        double dz = entity.getZ() - this.getZ();
+        stinger.shoot(dx, dy - stinger.getY() + Math.hypot(dx, dz) * 0.2F, dz, 1f * 2, 12.0F);
+        this.level.addFreshEntity(stinger);
+        this.level.addFreshEntity(stinger);
+        this.setDeltaMovement(this.getDeltaMovement().add(0,0.3,0));
     }
 }

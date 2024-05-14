@@ -11,8 +11,6 @@ import com.Harbinger.Spore.Particles.AcidParticle;
 import com.Harbinger.Spore.Particles.BloodParticle;
 import com.Harbinger.Spore.Particles.SporeParticle;
 import com.Harbinger.Spore.Screens.ContainerScreen;
-import com.Harbinger.Spore.Sentities.BasicInfected.InfectedPlayer;
-import com.Harbinger.Spore.Sitems.Elytron;
 import com.Harbinger.Spore.Spore;
 import com.Harbinger.Spore.sEvents.SItemProperties;
 import net.minecraft.client.Minecraft;
@@ -21,15 +19,12 @@ import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-
-import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = Spore.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEvents {
@@ -58,38 +53,41 @@ public class ClientModEvents {
         event.registerLayerDefinition(StalkerModel.LAYER_LOCATION, StalkerModel::createBodyLayer);
         event.registerLayerDefinition(BruteModel.LAYER_LOCATION, BruteModel::createBodyLayer);
         event.registerLayerDefinition(BusserModel.LAYER_LOCATION, BusserModel::createBodyLayer);
+        event.registerLayerDefinition(UsurperModel.LAYER_LOCATION, UsurperModel::createBodyLayer);
         event.registerLayerDefinition(ExplodingBusserModel.LAYER_LOCATION, ExplodingBusserModel::createBodyLayer);
         event.registerLayerDefinition(InfectedDrownModel.LAYER_LOCATION, InfectedDrownModel::createBodyLayer);
         event.registerLayerDefinition(InfectedPlayerModel.LAYER_LOCATION, InfectedPlayerModel::createBodyLayer);
         event.registerLayerDefinition(ScamperModel.LAYER_LOCATION, ScamperModel::createBodyLayer);
         event.registerLayerDefinition(UmarmerModel.LAYER_LOCATION, UmarmerModel::createBodyLayer);
-        event.registerLayerDefinition(BraionmilBabe.LAYER_LOCATION, BraionmilBabe::createBodyLayer);
         event.registerLayerDefinition(InfectedHazmatModel.LAYER_LOCATION, InfectedHazmatModel::createBodyLayer);
         event.registerLayerDefinition(ElytrumModel.LAYER_LOCATION, ElytrumModel::createBodyLayer);
         event.registerLayerDefinition(InfectedHazmatWithTank.LAYER_LOCATION, InfectedHazmatWithTank::createBodyLayer);
         event.registerLayerDefinition(WingedChestplate.LAYER_LOCATION, WingedChestplate::createBodyLayer);
-        event.registerLayerDefinition(LivingChestplateModel.LAYER_LOCATION, LivingChestplateModel::createBodyLayer);
         event.registerLayerDefinition(CoreModel.LAYER_LOCATION, CoreModel::createBodyLayer);
         event.registerLayerDefinition(MoundModel.LAYER_LOCATION, MoundModel::createBodyLayer);
+        event.registerLayerDefinition(BraionmilBabe.LAYER_LOCATION, BraionmilBabe::createBodyLayer);
+        event.registerLayerDefinition(InfectedHazmatCoat.LAYER_LOCATION, InfectedHazmatCoat::createBodyLayer);
         event.registerLayerDefinition(VolatileModel.LAYER_LOCATION, VolatileModel::createBodyLayer);
         event.registerLayerDefinition(BiomassReconstructorModel.LAYER_LOCATION, BiomassReconstructorModel::createBodyLayer);
         event.registerLayerDefinition(VigilModel.LAYER_LOCATION, VigilModel::createBodyLayer);
-        event.registerLayerDefinition(PlaguedModel.LAYER_LOCATION, PlaguedModel::createBodyLayer);
-        event.registerLayerDefinition(InfectedHazmatCoat.LAYER_LOCATION, InfectedHazmatCoat::createBodyLayer);
         event.registerLayerDefinition(GasMaskModel.LAYER_LOCATION, GasMaskModel::createBodyLayer);
+        event.registerLayerDefinition(LivingChestplateModel.LAYER_LOCATION, LivingChestplateModel::createBodyLayer);
         event.registerLayerDefinition(ProtoHivemindModel.LAYER_LOCATION, ProtoHivemindModel::createBodyLayer);
-        event.registerLayerDefinition(UsurperModel.LAYER_LOCATION, UsurperModel::createBodyLayer);
-        event.registerLayerDefinition(BulletModel.LAYER_LOCATION, BulletModel::createBodyLayer);
         event.registerLayerDefinition(SiegerModel.LAYER_LOCATION, SiegerModel::createBodyLayer);
         event.registerLayerDefinition(GazenbrecherModel.LAYER_LOCATION, GazenbrecherModel::createBodyLayer);
         event.registerLayerDefinition(SiegerTailModel.LAYER_LOCATION, SiegerTailModel::createBodyLayer);
         event.registerLayerDefinition(LickerModel.LAYER_LOCATION, LickerModel::createBodyLayer);
+        event.registerLayerDefinition(HindieModel.LAYER_LOCATION, HindieModel::createBodyLayer);
         event.registerLayerDefinition(SantaModel.LAYER_LOCATION, SantaModel::createBodyLayer);
+        event.registerLayerDefinition(TumoralNukeModel.LAYER_LOCATION, TumoralNukeModel::createBodyLayer);
+        event.registerLayerDefinition(WendigoModel.LAYER_LOCATION, WendigoModel::createBodyLayer);
+        event.registerLayerDefinition(BulletModel.LAYER_LOCATION, BulletModel::createBodyLayer);
+        event.registerLayerDefinition(PlaguedModel.LAYER_LOCATION, PlaguedModel::createBodyLayer);
+        event.registerLayerDefinition(RangedBusserModel.LAYER_LOCATION, RangedBusserModel::createBodyLayer);
+        event.registerLayerDefinition(StingerModel.LAYER_LOCATION, StingerModel::createBodyLayer);
+
         event.registerLayerDefinition(OvergrownSpawnerModel.LAYER_LOCATION, OvergrownSpawnerModel::createBodyLayer);
         event.registerLayerDefinition(brainMatterModel.LAYER_LOCATION, brainMatterModel::createBodyLayer);
-        event.registerLayerDefinition(TumoralNukeModel.LAYER_LOCATION, TumoralNukeModel::createBodyLayer);
-        event.registerLayerDefinition(HindieModel.LAYER_LOCATION, HindieModel::createBodyLayer);
-        event.registerLayerDefinition(WendigoModel.LAYER_LOCATION, WendigoModel::createBodyLayer);
     }
 
 
@@ -120,33 +118,33 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.VOLATILE.get(), VolatileRenderer::new);
         event.registerEntityRenderer(Sentities.INF_DROWNED.get(), InfectedDrownRenderer::new);
         event.registerEntityRenderer(Sentities.INF_HAZMAT.get(), InfectedHazmatRenderer::new);
-        event.registerEntityRenderer(Sentities.PLAGUED.get(), PlaguedRenderer::new);
         event.registerEntityRenderer(Sentities.INF_PLAYER.get(), InfectedPlayerRenderer::new);
         event.registerEntityRenderer(Sentities.SCAMPER.get(), ScamperHumanRenderer::new);
         event.registerEntityRenderer(Sentities.MOUND.get(), MoundRenderer::new);
         event.registerEntityRenderer(Sentities.RECONSTRUCTOR.get(), BiomassReconfiguratorRenderer::new);
         event.registerEntityRenderer(Sentities.PROTO.get(), ProtoRenderer::new);
         event.registerEntityRenderer(Sentities.VIGIL.get(), VigilRenderer::new);
-        event.registerEntityRenderer(Sentities.UMARMED.get(), UmarmedRenderer::new);
         event.registerEntityRenderer(Sentities.USURPER.get(), UsurperRenderer::new);
-        event.registerEntityRenderer(Sentities.WENDIGO.get(), WendigoRenderer::new);
+        event.registerEntityRenderer(Sentities.UMARMED.get(), UmarmedRenderer::new);
         event.registerEntityRenderer(Sentities.SIEGER.get(), SiegerRenderer::new);
         event.registerEntityRenderer(Sentities.GAZENBREACHER.get(), GazenRenderer::new);
         event.registerEntityRenderer(Sentities.HINDENBURG.get(), HindieRenderer::new);
         event.registerEntityRenderer(Sentities.SIEGER_TAIL.get(), SiegerTailRenderer::new);
         event.registerEntityRenderer(Sentities.LICKER.get(), LickerRenderer::new);
         event.registerEntityRenderer(Sentities.TUMOROID_NUKE.get(), TumoroidNukeRenderer::new);
+        event.registerEntityRenderer(Sentities.WENDIGO.get(), WendigoRenderer::new);
+        event.registerEntityRenderer(Sentities.PLAGUED.get(), PlaguedRenderer::new);
         event.registerEntityRenderer(Sentities.WAVE.get(), WaveRenderer::new);
         event.registerEntityRenderer(Sentities.ILLUSION.get(), IllusionRenderer::new);
 
-
         event.registerEntityRenderer(Sentities.ACID_BALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(Sentities.SPIT.get(), BulletRender::new);
         event.registerEntityRenderer(Sentities.BILE.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.ACID.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.THROWN_TUMOR.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.SCENT.get(), ScentEntityRenderer::new);
         event.registerEntityRenderer(Sentities.TENDRIL.get(), TendrilRenderer::new);
-        event.registerEntityRenderer(Sentities.SPIT.get(), BulletRender::new);
+        event.registerEntityRenderer(Sentities.STINGER.get(), StingerRenderer::new);
 
         event.registerBlockEntityRenderer(SblockEntities.OVERGROWN_SPAWNER.get(), new OvergrownSpawnerRenderer());
         event.registerBlockEntityRenderer(SblockEntities.BRAIN_REMNANTS.get(), new BrainRemnantsRenderer());
