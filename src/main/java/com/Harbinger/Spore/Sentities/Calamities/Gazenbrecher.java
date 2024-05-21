@@ -162,11 +162,6 @@ public class Gazenbrecher extends Calamity implements WaterInfected , RangedAtta
     }
 
 
-    @Override
-    public int getDestroySpeed() {
-        return SConfig.SERVER.gazen_block_damage.get();
-    }
-
 
     @Override
     public List<? extends String> getDropList() {

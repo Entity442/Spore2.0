@@ -250,10 +250,6 @@ public class Hinderburg extends Calamity implements FlyingInfected , TrueCalamit
 
     }
 
-    @Override
-    public int getDestroySpeed() {
-        return SConfig.SERVER.hinden_block_damage.get();
-    }
 
 
     @Override

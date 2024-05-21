@@ -152,6 +152,9 @@ public class Sentities {
     public static final RegistryObject<EntityType<Wendigo>> WENDIGO = SPORE_ENTITIES.register("wendigo",
             () -> EntityType.Builder.of(Wendigo::new, INFECTED).sized(1f, 3.3f)
                     .build(new ResourceLocation(Spore.MODID, "wendigo").toString()));
+    public static final RegistryObject<EntityType<Brauerei>> BRAUREI = SPORE_ENTITIES.register("braurei",
+            () -> EntityType.Builder.of(Brauerei::new, INFECTED).sized(3f, 3f)
+                    .build(new ResourceLocation(Spore.MODID, "braurei").toString()));
 
     public static final RegistryObject<EntityType<Illusion>> ILLUSION = SPORE_ENTITIES.register("illusion",
             () -> EntityType.Builder.of(Illusion::new, MobCategory.MISC).sized(1f, 2f)
