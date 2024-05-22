@@ -12,6 +12,12 @@
     "spore:slash2"
   ]
 },
+  "braurei_ambient" :{
+    "subtitle": "sounds.spore.braurei_ambient",
+    "sounds": [
+      "spore:braurei_ambient"
+    ]
+  },
   "inf_growl" :{
     "subtitle": "sounds.spore.growl",
     "sounds": [
