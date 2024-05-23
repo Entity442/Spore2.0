@@ -20,7 +20,7 @@ import java.util.UUID;
 public class BrainRemnantBlockEntity extends BlockEntity {
     public int ticks;
     private int time;
-    private UUID attacker;
+    private UUID attacker = null;
     private String source = null;
     public BrainRemnantBlockEntity(BlockPos pos, BlockState state) {
         super(SblockEntities.BRAIN_REMNANTS.get(), pos, state);
@@ -35,8 +35,12 @@ public class BrainRemnantBlockEntity extends BlockEntity {
     public void load(CompoundTag tag) {
         super.load(tag);
         this.setTime(tag.getInt("time"));
-        this.setSource(tag.getString("source"));
-        this.setUUID(tag.getUUID("attacker"));
+        if (tag.contains("source")){
+            this.setSource(tag.getString("source"));
+        }
+        if (tag.contains("attacker")){
+            this.setUUID(tag.getUUID("attacker"));
+        }
     }
 
     @Override
