@@ -148,6 +148,13 @@ public class Brauerei extends Organoid implements RangedAttackMob {
         }
         return contents;
     }
+    @Override
+    public boolean hurt(DamageSource source, float value) {
+        if (this.isEmerging()){
+            return false;
+        }
+        return super.hurt(source, value);
+    }
 
     @Override
     public List<? extends String> getDropList() {
