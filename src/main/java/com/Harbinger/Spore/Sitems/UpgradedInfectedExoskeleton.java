@@ -104,7 +104,7 @@ public class UpgradedInfectedExoskeleton extends ArmorItem {
         }
     }
 
-    public static  class InfectedUpChestplate extends UpgradedInfectedExoskeleton implements CustomModelArmor{
+    public static  class InfectedUpChestplate extends UpgradedInfectedExoskeleton{
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
             return "spore:textures/armor/infected_wing.png";
@@ -197,16 +197,6 @@ public class UpgradedInfectedExoskeleton extends ArmorItem {
                     return armorModel;
                 }
             });
-        }
-
-        @Override
-        public EntityModel<LivingEntity> getModel() {
-            return new WingedChestplate<>();
-        }
-
-        @Override
-        public ResourceLocation getCustomArmorTexture() {
-            return new ResourceLocation(Spore.MODID,"textures/armor/infected_wing.png");
         }
 
     }

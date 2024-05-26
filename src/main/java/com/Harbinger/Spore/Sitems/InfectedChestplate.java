@@ -2,15 +2,12 @@ package com.Harbinger.Spore.Sitems;
 
 import com.Harbinger.Spore.Client.Models.LivingChestplateModel;
 import com.Harbinger.Spore.Core.ScreativeTab;
-import com.Harbinger.Spore.Spore;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class InfectedChestplate extends InfectedExoskeleton implements CustomModelArmor{
+public class InfectedChestplate extends InfectedExoskeleton{
     public InfectedChestplate() {
         super(EquipmentSlot.CHEST, new Item.Properties().tab(ScreativeTab.SPORE));
     }
@@ -82,16 +79,6 @@ public class InfectedChestplate extends InfectedExoskeleton implements CustomMod
             player.setDeltaMovement(climbVec.x * 0.91D,
                     climbVec.y * 0.98D, climbVec.z * 0.91D);
         }
-    }
-
-    @Override
-    public EntityModel<LivingEntity> getModel() {
-        return new LivingChestplateModel<>();
-    }
-
-    @Override
-    public ResourceLocation getCustomArmorTexture() {
-        return new ResourceLocation(Spore.MODID,"textures/armor/infected_wing.png");
     }
 
 }

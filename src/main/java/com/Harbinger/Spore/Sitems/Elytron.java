@@ -1,17 +1,13 @@
 package com.Harbinger.Spore.Sitems;
 
-import com.Harbinger.Spore.Client.Models.ElytrumModel;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.ScreativeTab;
 import com.Harbinger.Spore.Core.Sitems;
-import com.Harbinger.Spore.Spore;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
@@ -74,7 +70,7 @@ public class Elytron extends ArmorItem {
     }
 
 
-    public static  class InfectedElytron extends Elytron implements CustomModelArmor{
+    public static  class InfectedElytron extends Elytron{
         @Override
         public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
             return "spore:textures/armor/empty.png";
@@ -125,16 +121,6 @@ public class Elytron extends ArmorItem {
             return SoundEvents.ARMOR_EQUIP_ELYTRA;
         }
 
-
-        @Override
-        public EntityModel<LivingEntity> getModel() {
-            return new ElytrumModel<>();
-        }
-
-        @Override
-        public ResourceLocation getCustomArmorTexture() {
-            return new ResourceLocation(Spore.MODID,"textures/armor/elytron.png");
-        }
 
     }
 }
