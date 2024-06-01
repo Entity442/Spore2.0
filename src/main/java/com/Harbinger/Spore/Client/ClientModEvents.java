@@ -86,6 +86,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(RangedBusserModel.LAYER_LOCATION, RangedBusserModel::createBodyLayer);
         event.registerLayerDefinition(StingerModel.LAYER_LOCATION, StingerModel::createBodyLayer);
         event.registerLayerDefinition(BraureiModel.LAYER_LOCATION, BraureiModel::createBodyLayer);
+        event.registerLayerDefinition(ProtoRedesign.LAYER_LOCATION, ProtoRedesign::createBodyLayer);
 
         event.registerLayerDefinition(OvergrownSpawnerModel.LAYER_LOCATION, OvergrownSpawnerModel::createBodyLayer);
         event.registerLayerDefinition(brainMatterModel.LAYER_LOCATION, brainMatterModel::createBodyLayer);
