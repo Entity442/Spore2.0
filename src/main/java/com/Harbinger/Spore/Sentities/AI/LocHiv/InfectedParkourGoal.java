@@ -49,7 +49,7 @@ public class InfectedParkourGoal extends Goal {
     public boolean canUse() {
         if (this.mob.isOnGround() && mob.getLinked()) {
             Path path = this.mob.getNavigation().getPath();
-            return this.mob.getNavigation().isInProgress() && path != null && !path.canReach() && (this.mob.level.getGameTime() - tryAgainTime > 100L);
+            return this.mob.getNavigation().isInProgress() && path != null && !path.canReach() && (this.mob.level.getGameTime() - tryAgainTime > 20L);
         } else {
             return false;
         }
@@ -186,7 +186,6 @@ public class InfectedParkourGoal extends Goal {
         double d2 = Math.sqrt(d1);
         double d3 = vec32.y;
         double d4 = Math.sin((double) (2.0F * f));
-        double d5 = 0.08D;
         double d6 = Math.pow(Math.cos((double) f), 2.0D);
         double d7 = Math.sin((double) f);
         double d8 = Math.cos((double) f);
