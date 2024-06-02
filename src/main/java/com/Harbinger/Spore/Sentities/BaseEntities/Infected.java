@@ -5,10 +5,7 @@ import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.Sentities.AI.*;
-import com.Harbinger.Spore.Sentities.AI.LocHiv.BufferAI;
-import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
-import com.Harbinger.Spore.Sentities.AI.LocHiv.LocalTargettingGoal;
-import com.Harbinger.Spore.Sentities.AI.LocHiv.SearchAreaGoal;
+import com.Harbinger.Spore.Sentities.AI.LocHiv.*;
 import com.Harbinger.Spore.Sentities.EvolvingInfected;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
@@ -200,6 +197,7 @@ public class Infected extends Monster{
     };
 
     protected void addTargettingGoals(){
+        this.goalSelector.addGoal(0,new InfectedParkourGoal(this));
         this.goalSelector.addGoal(2, new HurtTargetGoal(this ,livingEntity -> {return TARGET_SELECTOR.test(livingEntity);}, Infected.class).setAlertOthers(Infected.class));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
                 (this, LivingEntity.class,  true,livingEntity -> {return livingEntity instanceof Player || SConfig.SERVER.whitelist.get().contains(livingEntity.getEncodeId());}));
