@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.function.BiPredicate;
 
 public class InfectedParkourGoal extends Goal {
-    private static final List<Integer> ALLOWED_ANGLES = Lists.newArrayList(65, 70, 75, 80);
+    private static final List<Integer> ALLOWED_ANGLES = Lists.newArrayList(65, 70, 75, 80,85);
     protected final float maxJumpVelocity;
     private final Infected mob;
     private final BiPredicate<Mob, BlockPos> acceptableLandingSpot = InfectedParkourGoal::defaultAcceptableLandingSpot;
