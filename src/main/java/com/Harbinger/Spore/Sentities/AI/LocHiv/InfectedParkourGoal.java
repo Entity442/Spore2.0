@@ -20,7 +20,6 @@ import java.util.Optional;
 import java.util.function.BiPredicate;
 
 public class InfectedParkourGoal extends Goal {
-    private static final List<Integer> ALLOWED_ANGLES = Lists.newArrayList(65, 70, 75, 80,85);
     protected final float maxJumpVelocity;
     private final Infected mob;
     private final BiPredicate<Mob, BlockPos> acceptableLandingSpot = InfectedParkourGoal::defaultAcceptableLandingSpot;
@@ -135,7 +134,7 @@ public class InfectedParkourGoal extends Goal {
             BlockPos jumpPos = pEntity.blockPosition().closerThan(pos, 3.0D) ? pos : block;
             if (this.isAcceptableLandingPosition(pEntity, jumpPos)) {
                 Vec3 vec3 = Vec3.atCenterOf(jumpPos);
-                Vec3 vec31 = this.calculateOptimalJumpVector(pEntity, vec3);
+                Vec3 vec31 = this.calculateJumpVector(pEntity, vec3);
                 if (vec31 != null) {
                     this.lookAt(vec3, 30.0F, 30.0F);
                     this.mob.setYBodyRot(this.mob.yHeadRot);
@@ -159,23 +158,9 @@ public class InfectedParkourGoal extends Goal {
         return (i != pPos.getX() || j != pPos.getZ()) && this.acceptableLandingSpot.test(pEntity, pPos);
     }
 
-    @Nullable
-    protected Vec3 calculateOptimalJumpVector(Mob pMob, Vec3 pTarget) {
-        List<Integer> list = Lists.newArrayList(ALLOWED_ANGLES);
-        Collections.shuffle(list);
-
-        for (int i : list) {
-            Vec3 vec3 = this.calculateJumpVectorForAngle(pMob, pTarget);
-            if (vec3 != null) {
-                return vec3;
-            }
-        }
-
-        return null;
-    }
 
     @Nullable
-    private Vec3 calculateJumpVectorForAngle(Mob pMob, Vec3 pTarget) {
+    private Vec3 calculateJumpVector(Mob pMob, Vec3 pTarget) {
         Vec3 vec3 = this.mob.getDeltaMovement();
         Vec3 vec31 = new Vec3(pTarget.x() - pMob.getX(), maxJumpVelocity, pTarget.z() - pMob.getZ());
         if (vec31.lengthSqr() > 1.0E-7D) {
