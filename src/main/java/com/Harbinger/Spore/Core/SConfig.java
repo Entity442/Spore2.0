@@ -239,6 +239,11 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> how_damage;
         public final ForgeConfigSpec.ConfigValue<Double> how_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> verwa_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> verwa_armor;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> verwa_effect;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> verwa_summons;
+
         public final ForgeConfigSpec.ConfigValue<Double> player_hp;
         public final ForgeConfigSpec.ConfigValue<Double> player_damage;
         public final ForgeConfigSpec.ConfigValue<Double> player_armor;
@@ -383,8 +388,8 @@ public class SConfig {
         public Server(ForgeConfigSpec.Builder builder) {
 
             builder.push("Compatibilities");
-            this.faw_target = builder.comment("Default false").define("Should the infected attack mobs from FAW?",false);
-            this.skulk_target = builder.comment("Default false").define("Should the infected attack mobs from Sculk Infection?",false);
+            this.faw_target = builder.comment("Default false").define("Should there be a compatibility with FAW?",false);
+            this.skulk_target = builder.comment("Default false").define("Should there be a compatibility with Sculk Infection?",false);
             builder.pop();
 
             builder.push("Griefing Parameters");
@@ -556,6 +561,15 @@ public class SConfig {
             this.umarmed_armor = builder.comment("Default 6").defineInRange("Sets Umarmer Armor", 6, 1, Double.MAX_VALUE);
             builder.pop();
 
+            builder.push("Verwahrung");
+            this.verwa_hp = builder.comment("Default 20").defineInRange("Sets Verwahrung Max health", 20, 1, Double.MAX_VALUE);
+            this.verwa_armor = builder.comment("Default 2").defineInRange("Sets Verwahrung Armor", 2, 1, Double.MAX_VALUE);
+            this.verwa_effect = builder.defineList("Verwahrung buffs",
+                    Lists.newArrayList("minecraft:speed" , "minecraft:strength","minecraft:resistance","minecraft:regeneration") , o -> o instanceof String);
+            this.verwa_summons = builder.defineList("Verwahrung summons",
+                    Lists.newArrayList("spore:knight" , "spore:griefer","spore:braiomil","spore:leaper","spore:slasher","spore:inf_evoker","spore:busser","spore:volatile") , o -> o instanceof String);
+            builder.pop();
+
             builder.push("Braurei");
             this.braurei_hp = builder.comment("Default 80").defineInRange("Sets Braurei Max health", 80, 1, Double.MAX_VALUE);
             this.braurei_armor = builder.comment("Default 6").defineInRange("Sets Braurei Armor", 6, 1, Double.MAX_VALUE);
@@ -668,7 +682,7 @@ public class SConfig {
                     Lists.newArrayList("minecraft:villager","minecraft:pillager","guardvillagers:guard","minecraft:evoker","minecraft:vindicator",
                             "recruits:recruit","recruits:bowman","recruits:recruit_shieldman", "recruits:nomad","recruits:horseman","roamers:roamer") , o -> o instanceof String);
             this.proto_summonable_troops = builder.defineList("Mobs that the proto can summon to defend itself",
-                    Lists.newArrayList("spore:mound","spore:vigil","spore:umarmed","spore:usurper","spore:braurei") , o -> o instanceof String);
+                    Lists.newArrayList("spore:mound","spore:vigil","spore:umarmed","spore:usurper","spore:braurei","spore:verva") , o -> o instanceof String);
 
             builder.pop();
 

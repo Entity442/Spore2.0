@@ -182,6 +182,9 @@ public class Sitems {
     public  static final RegistryObject<Item> BRAUREI_SPAWNEGG = ITEMS.register("braurei_spawnegg",
             () -> new SporeSpawnEgg(Sentities.BRAUREI,-745723, new Item.Properties().tab(ScreativeTab.SPORE)));
 
+    public  static final RegistryObject<Item> VERVA_SPAWNEGG = ITEMS.register("verva_spawnegg",
+            () -> new SporeSpawnEgg(Sentities.VERVA,-412323, new Item.Properties().tab(ScreativeTab.SPORE)));
+
     public  static final RegistryObject<Item> VIGIL_SPAWNEGG = ITEMS.register("vigil_spawnegg",
             () -> new SporeSpawnEgg(Sentities.VIGIL,-64160208, new Item.Properties().tab(ScreativeTab.SPORE)));
 

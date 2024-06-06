@@ -39,6 +39,7 @@ public class Attributes {
         event.put(Sentities.INF_EVOKER.get(), InfectedEvoker.createAttributes().build());
         event.put(Sentities.HOWLER.get(), Howler.createAttributes().build());
         event.put(Sentities.INF_WANDERER.get(), InfectedWanderingTrader.createAttributes().build());
+        event.put(Sentities.PLAGUED.get(), Plagued.createAttributes().build());
         event.put(Sentities.STALKER.get(), Stalker.createAttributes().build());
         event.put(Sentities.SCENT.get(), ScentEntity.createAttributes().build());
         event.put(Sentities.BRUTE.get(), Brute.createAttributes().build());
@@ -47,24 +48,24 @@ public class Attributes {
         event.put(Sentities.INF_PLAYER.get(), InfectedPlayer.createAttributes().build());
         event.put(Sentities.INF_HAZMAT.get(), InfectedHazmat.createAttributes().build());
         event.put(Sentities.SCAMPER.get(), Scamper.createAttributes().build());
-        event.put(Sentities.PLAGUED.get(), Plagued.createAttributes().build());
         event.put(Sentities.MOUND.get(), Mound.createAttributes().build());
         event.put(Sentities.RECONSTRUCTOR.get(), BiomassReformator.createAttributes().build());
         event.put(Sentities.PROTO.get(), Proto.createAttributes().build());
         event.put(Sentities.VIGIL.get(), Vigil.createAttributes().build());
         event.put(Sentities.UMARMED.get(), Umarmer.createAttributes().build());
-        event.put(Sentities.USURPER.get(), Usurper.createAttributes().build());
         event.put(Sentities.TENDRIL.get(), InfectionTendril.createAttributes().build());
-        event.put(Sentities.WENDIGO.get(), Wendigo.createAttributes().build());
         event.put(Sentities.SIEGER.get(), Sieger.createAttributes().build());
         event.put(Sentities.GAZENBREACHER.get(), Gazenbrecher.createAttributes().build());
         event.put(Sentities.SIEGER_TAIL.get(), SiegerTail.createAttributes().build());
         event.put(Sentities.LICKER.get(), Licker.createAttributes().build());
         event.put(Sentities.HINDENBURG.get(), Hinderburg.createAttributes().build());
         event.put(Sentities.TUMOROID_NUKE.get(), Hinderburg.createAttributes().build());
-        event.put(Sentities.WAVE.get(), WaveEntity.createAttributes().build());
-        event.put(Sentities.ILLUSION.get(), Illusion.createAttributes().build());
         event.put(Sentities.BRAUREI.get(), Brauerei.createAttributes().build());
+        event.put(Sentities.VERVA.get(), Verwa.createAttributes().build());
+        event.put(Sentities.ILLUSION.get(), Illusion.createAttributes().build());
+        event.put(Sentities.WAVE.get(), WaveEntity.createAttributes().build());
+        event.put(Sentities.USURPER.get(), Usurper.createAttributes().build());
+        event.put(Sentities.WENDIGO.get(), Wendigo.createAttributes().build());
     }
 }
 

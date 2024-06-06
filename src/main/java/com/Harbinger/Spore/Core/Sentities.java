@@ -199,9 +199,14 @@ public class Sentities {
     public static final RegistryObject<EntityType<Mound>> MOUND = SPORE_ENTITIES.register("mound",
             () -> EntityType.Builder.of(Mound::new, INFECTED).sized(0.3f, 0.3f)
                     .build(new ResourceLocation(Spore.MODID, "mound").toString()));
+
     public static final RegistryObject<EntityType<BiomassReformator>> RECONSTRUCTOR = SPORE_ENTITIES.register("reconstructor",
             () -> EntityType.Builder.of(BiomassReformator::new, INFECTED).sized(1f, 1f)
                     .build(new ResourceLocation(Spore.MODID, "reconstructor").toString()));
+
+    public static final RegistryObject<EntityType<Verwa>> VERVA = SPORE_ENTITIES.register("verva",
+            () -> EntityType.Builder.of(Verwa::new, INFECTED).sized(1f, 2f)
+                    .build(new ResourceLocation(Spore.MODID, "verva").toString()));
 
     public static final RegistryObject<EntityType<Proto>> PROTO = SPORE_ENTITIES.register("proto",
             () -> EntityType.Builder.of(Proto::new, INFECTED).sized(1f, 3.5f)
