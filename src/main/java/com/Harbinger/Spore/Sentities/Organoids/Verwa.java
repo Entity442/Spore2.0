@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sentities.Organoids;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sentities;
+import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Organoid;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.Knight;
@@ -10,6 +11,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
@@ -143,6 +145,17 @@ public class Verwa extends Organoid {
                 .add(Attributes.FOLLOW_RANGE, 8)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1);
 
+    }
+    protected SoundEvent getAmbientSound() {
+        return Ssounds.WOMB_AMBIENT.get();
+    }
+
+    protected SoundEvent getHurtSound(DamageSource p_34327_) {
+        return Ssounds.INF_DAMAGE.get();
+    }
+
+    protected SoundEvent getDeathSound() {
+        return Ssounds.INF_DAMAGE.get();
     }
 
     @Nullable

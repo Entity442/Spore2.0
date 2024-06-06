@@ -70,7 +70,10 @@ public class InfectionTendril extends UtilityEntity {
         this.entityData.define(SEARCH_AREA,BlockPos.ZERO);
     }
 
-
+    @Override
+    public boolean removeWhenFarAway(double p_21542_) {
+        return false;
+    }
 
     public void setSearchArea(BlockPos blockPos) {
         this.entityData.set(SEARCH_AREA, blockPos);
