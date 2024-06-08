@@ -1,12 +1,14 @@
 package com.Harbinger.Spore.Sentities.BaseEntities;
 
 import com.Harbinger.Spore.Sentities.EvolvedInfected.Scamper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class EvolvedInfected extends Infected {
     public EvolvedInfected(EntityType<? extends Monster> type, Level level) {
@@ -28,6 +30,11 @@ public class EvolvedInfected extends Infected {
             return super.hurt(source, (float) getDamageCap());
         }
         return super.hurt(source, amount);
+    }
+
+    @Override
+    public boolean blockBreakingParameters(BlockState blockstate, BlockPos blockpos) {
+        return super.blockBreakingParameters(blockstate, blockpos) || biomass().contains(blockstate);
     }
 
     @Override

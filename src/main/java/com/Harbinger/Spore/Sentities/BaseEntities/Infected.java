@@ -46,6 +46,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -271,7 +272,21 @@ public class Infected extends Monster{
             this.jumpInFluid(ForgeMod.WATER_TYPE.get());
         }
     }
+    protected List<BlockState> biomass(){
+        List<BlockState> states = new ArrayList<>();
+        states.add(Sblocks.BIOMASS_BLOCK.get().defaultBlockState());
+        states.add(Sblocks.SICKEN_BIOMASS_BLOCK.get().defaultBlockState());
+        states.add(Sblocks.CALCIFIED_BIOMASS_BLOCK.get().defaultBlockState());
+        states.add(Sblocks.MEMBRANE_BLOCK.get().defaultBlockState());
+        states.add(Sblocks.ROOTED_BIOMASS.get().defaultBlockState());
+        states.add(Sblocks.ROOTED_MYCELIUM.get().defaultBlockState());
+        return states;
+    }
     public boolean interactBlock(BlockPos blockPos , Level level){
+        BlockState state = level.getBlockState(blockPos);
+        if (biomass().contains(state)){
+            return level.setBlock(blockPos, Sblocks.MEMBRANE_BLOCK.get().defaultBlockState(), 3);
+        }
        return level.destroyBlock(blockPos, true, this);
     }
 
