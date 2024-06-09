@@ -3,6 +3,7 @@ package com.Harbinger.Spore.sEvents;
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.ExtremelySusThings.ChunkLoaderHelper;
 import com.Harbinger.Spore.ExtremelySusThings.CoolDamageSources;
+import com.Harbinger.Spore.ExtremelySusThings.SporeSavedData;
 import com.Harbinger.Spore.SBlockEntities.BrainRemnantBlockEntity;
 import com.Harbinger.Spore.SBlockEntities.CDUBlockEntity;
 import com.Harbinger.Spore.SBlockEntities.LivingStructureBlocks;
@@ -75,6 +76,9 @@ public class HandlerEvents {
     @SubscribeEvent
     public static void onLivingSpawned(EntityJoinLevelEvent event) {
         if (event != null && event.getEntity() != null) {
+            if (event.getEntity() instanceof Proto && event.getLevel() instanceof ServerLevel serverLevel){
+                SporeSavedData.addHivemind(serverLevel);
+            }
             if (event.getEntity() instanceof PathfinderMob mob){
                 for (String string : SConfig.SERVER.attack.get()){
                     if (string.endsWith(":")){
@@ -400,7 +404,12 @@ public class HandlerEvents {
             }
         }
     }
-
+    @SubscribeEvent
+    public static void DiscardProto(EntityLeaveLevelEvent event){
+        if (event.getEntity() instanceof Proto && event.getLevel() instanceof ServerLevel level){
+            SporeSavedData.removeHivemind(level);
+        }
+    }
 
     @SubscribeEvent
     public static void Effects(TickEvent.PlayerTickEvent event){
