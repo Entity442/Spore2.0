@@ -64,6 +64,7 @@ import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -202,7 +203,7 @@ public class HandlerEvents {
             event.getDispatcher().register(Commands.literal(Spore.MODID+":add_day")
                     .executes(arguments -> {
                         ServerLevel world = arguments.getSource().getLevel();
-                        SporeSavedData.addHivemind(world);
+                        SporeSavedData.addDay(world);
                         return 0;
                     }));
         }
@@ -555,6 +556,10 @@ public class HandlerEvents {
             player.displayClientMessage(Component.translatable("uneasy.message"),true);
             event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
         }
+    }
+    @SubscribeEvent
+    public static void NoSleep(ServerStartedEvent event){
+        SporeSavedData.StartupData(event.getServer().overworld());
     }
 
     @SubscribeEvent

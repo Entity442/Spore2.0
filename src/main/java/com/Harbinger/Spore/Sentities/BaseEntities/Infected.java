@@ -402,8 +402,8 @@ public class Infected extends Monster{
                 if (data != null){
                     int e = data.getMinutesBeforeSpawning();
                     int i = 1200 * SConfig.SERVER.days.get();
-                    if (e < i){
-                        return false;
+                    if (e >= i){
+                        return isDarkEnoughToSpawn(levelAccessor, pos, source) && checkMobSpawnRules(p_219014_, levelAccessor, p_219016_, pos, source);
                     }
                 }
             }else if (SConfig.SERVER.daytime_spawn.get()){

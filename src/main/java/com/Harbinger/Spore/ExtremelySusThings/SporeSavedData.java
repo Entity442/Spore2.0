@@ -8,8 +8,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class SporeSavedData extends SavedData {
     public static final String NAME = Spore.MODID +"_world_data";
-    private int amountOfHiveminds = 0;
-    private int minutesBeforeSpawning = 0;
+    private int amountOfHiveminds;
+    private int minutesBeforeSpawning;
 
     public SporeSavedData() {
         super();
@@ -45,6 +45,10 @@ public class SporeSavedData extends SavedData {
         return minutesBeforeSpawning;
     }
 
+    public static void StartupData(ServerLevel level){
+        SporeSavedData data = level.getDataStorage().computeIfAbsent(SporeSavedData::load,SporeSavedData::new,NAME);
+        data.setDirty();
+    }
 
     public static SporeSavedData getDataLocation(ServerLevel level){
         return level.getDataStorage().get(SporeSavedData::load,NAME);
