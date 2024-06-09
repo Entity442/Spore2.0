@@ -171,7 +171,10 @@ public class HandlerEvents {
                     if (entity instanceof Player player){
                         SporeSavedData data = SporeSavedData.getDataLocation(world);
                         int numberofprotos = data.getAmountOfHiveminds();
+                        int time = data.getAmountOfHiveminds();
                         player.displayClientMessage(Component.literal("There are "+numberofprotos + " proto hiveminds in this dimension"),false);
+                        if (SConfig.SERVER.spawn.get())
+                        player.displayClientMessage(Component.literal("Time before spawns"+time + "/"+1200*SConfig.SERVER.days.get()),false);
                     }
                     return 0;
                 }));
@@ -475,6 +478,15 @@ public class HandlerEvents {
                     }
                 });
                 effectsToRemove.forEach(mobEffectInstance -> entity.removeEffect(mobEffectInstance.getEffect()));
+            }
+        }
+    }
+    @SubscribeEvent
+    public static void ServerCount(ServerLevel event){
+        if (SConfig.SERVER.spawn.get()){
+            SporeSavedData data = SporeSavedData.getDataLocation(event);
+            if (event.getDayTime() % 20 == 0 && data != null  && data.getMinutesBeforeSpawning()<(1200 * SConfig.SERVER.days.get())){
+                SporeSavedData.addTime(event);
             }
         }
     }
