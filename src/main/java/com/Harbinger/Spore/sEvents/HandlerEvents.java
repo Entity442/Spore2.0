@@ -171,10 +171,10 @@ public class HandlerEvents {
                     if (entity instanceof Player player){
                         SporeSavedData data = SporeSavedData.getDataLocation(world);
                         int numberofprotos = data.getAmountOfHiveminds();
-                        int time = data.getAmountOfHiveminds();
+                        int time = data.getMinutesBeforeSpawning();
                         player.displayClientMessage(Component.literal("There are "+numberofprotos + " proto hiveminds in this dimension"),false);
                         if (SConfig.SERVER.spawn.get())
-                        player.displayClientMessage(Component.literal("Time before spawns"+time + "/"+1200*SConfig.SERVER.days.get()),false);
+                        player.displayClientMessage(Component.literal("Time before spawns "+time + "/"+1200*SConfig.SERVER.days.get()),false);
                     }
                     return 0;
                 }));
@@ -198,6 +198,14 @@ public class HandlerEvents {
                     }
                     return 0;
                 }));
+        if (SConfig.SERVER.spawn.get()){
+            event.getDispatcher().register(Commands.literal(Spore.MODID+":add_day")
+                    .executes(arguments -> {
+                        ServerLevel world = arguments.getSource().getLevel();
+                        SporeSavedData.addHivemind(world);
+                        return 0;
+                    }));
+        }
         event.getDispatcher().register(Commands.literal(Spore.MODID+":check_entity")
                 .executes(arguments -> {
                     ServerLevel world = arguments.getSource().getLevel();
@@ -482,11 +490,12 @@ public class HandlerEvents {
         }
     }
     @SubscribeEvent
-    public static void ServerCount(ServerLevel event){
+    public static void ServerCount(TickEvent.ServerTickEvent event){
         if (SConfig.SERVER.spawn.get()){
-            SporeSavedData data = SporeSavedData.getDataLocation(event);
-            if (event.getDayTime() % 20 == 0 && data != null  && data.getMinutesBeforeSpawning()<(1200 * SConfig.SERVER.days.get())){
-                SporeSavedData.addTime(event);
+            ServerLevel level  = event.getServer().overworld();
+            SporeSavedData data = SporeSavedData.getDataLocation(level);
+            if (level.getDayTime() % 20 == 0 && data != null  && data.getMinutesBeforeSpawning()<(1200 * SConfig.SERVER.days.get())){
+                SporeSavedData.addTime(level);
             }
         }
     }
