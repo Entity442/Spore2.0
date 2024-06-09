@@ -164,6 +164,17 @@ public class HandlerEvents {
                     }
                     return 0;
                 }));
+        event.getDispatcher().register(Commands.literal(Spore.MODID+":get_data")
+                .executes(arguments -> {
+                    ServerLevel world = arguments.getSource().getLevel();
+                    Entity entity = arguments.getSource().getEntity();
+                    if (entity instanceof Player player){
+                        SporeSavedData data = SporeSavedData.getDataLocation(world);
+                        int numberofprotos = data.getAmountOfHiveminds();
+                        player.displayClientMessage(Component.literal("There are "+numberofprotos + " proto hiveminds in this dimension"),false);
+                    }
+                    return 0;
+                }));
         event.getDispatcher().register(Commands.literal(Spore.MODID+":feed")
                 .executes(arguments -> {
                     ServerLevel world = arguments.getSource().getLevel();
