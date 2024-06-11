@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "minecraft:mushroom_fields",
-  "features": "spore:hive_foliage",
-  "step": "vegetal_decoration"
-}
