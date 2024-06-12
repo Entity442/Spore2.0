@@ -12,17 +12,23 @@
     "spore:slash2"
   ]
 },
+  "inf_growl" :{
+    "subtitle": "sounds.spore.growl",
+    "sounds": [
+      "spore:growl",
+      "spore:growl2"
+    ]
+  },
   "braurei_ambient" :{
     "subtitle": "sounds.spore.braurei_ambient",
     "sounds": [
       "spore:braurei_ambient"
     ]
   },
-  "inf_growl" :{
-    "subtitle": "sounds.spore.growl",
+  "inquisitor_ambient" :{
+    "subtitle": "sounds.spore.inquisitor_ambient",
     "sounds": [
-      "spore:growl",
-      "spore:growl2"
+      "spore:inquisitor_ambient"
     ]
   },
   "madness" :{

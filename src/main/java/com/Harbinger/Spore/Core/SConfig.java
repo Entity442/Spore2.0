@@ -86,6 +86,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> wendigo_damage;
         public final ForgeConfigSpec.ConfigValue<Double> wendigo_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> inquisitor_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> inquisitor_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> inquisitor_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> bus_hp;
         public final ForgeConfigSpec.ConfigValue<Double> bus_damage;
         public final ForgeConfigSpec.ConfigValue<Double> bus_ranged_damage;
@@ -542,6 +546,12 @@ public class SConfig {
             this.wendigo_hp = builder.comment("Default 75").defineInRange("Sets Wendigo Max health", 75, 1, Double.MAX_VALUE);
             this.wendigo_damage = builder.comment("Default 15").defineInRange("Sets Wendigo Damage", 15, 1, Double.MAX_VALUE);
             this.wendigo_armor = builder.comment("Default 8").defineInRange("Sets Wendigo Armor", 8, 1, Double.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Inquisitor");
+            this.inquisitor_hp = builder.comment("Default 60").defineInRange("Sets Inquisitor Max health", 60, 1, Double.MAX_VALUE);
+            this.inquisitor_damage = builder.comment("Default 20").defineInRange("Sets Inquisitor Damage", 20, 1, Double.MAX_VALUE);
+            this.inquisitor_armor = builder.comment("Default 7").defineInRange("Sets Inquisitor Armor", 7, 1, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Infected Drowned");
@@ -1043,6 +1053,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> innards_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> plagued_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> braurei_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inquisitor_loot;
 
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> name;
@@ -1156,6 +1167,10 @@ public class SConfig {
 
             this.wendigo_loot = builder.defineList("Wendigo ",
                     Lists.newArrayList("spore:mutated_fiber|70|5|9","spore:armor_fragment|80|7|12","spore:mutated_heart|50|1|1","spore:claw_fragment|80|5|15","spore:cerebrum|20|1|1","spore:spine_fragment|15|1|3","spore:altered_spleen|70|1|2") , o -> o instanceof String);
+
+            this.inquisitor_loot = builder.defineList("Inquisitor ",
+                    Lists.newArrayList("spore:mutated_fiber|70|5|9","spore:armor_fragment|80|12|22","spore:mutated_heart|50|1|1","spore:claw_fragment|80|5|15") , o -> o instanceof String);
+
 
             this.braurei_loot = builder.defineList("Braurei ",
                     Lists.newArrayList("spore:mutated_fiber|100|12|23","spore:mutated_heart|50|1|3","spore:cerebrum|50|1|4","spore:spine_fragment|15|1|3","spore:altered_spleen|70|1|2") , o -> o instanceof String);

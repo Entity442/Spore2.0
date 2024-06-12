@@ -70,6 +70,8 @@ public class Ssounds {
 
     public static final RegistryObject<SoundEvent> BRAUREI_AMBIENT = soundRegistry("braurei_ambient");
 
+    public static final RegistryObject<SoundEvent> INQUISITOR_AMBIENT = soundRegistry("inquisitor_ambient");
+
     public static final RegistryObject<SoundEvent> SPIT = soundRegistry("spit");
 
     public static final RegistryObject<SoundEvent> LIMB_SLASH = soundRegistry("limb_slash");

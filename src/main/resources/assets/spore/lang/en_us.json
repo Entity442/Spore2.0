@@ -174,6 +174,7 @@
   "item.spore.umarmed_spawnegg": "Umarmer",
   "item.spore.proto_spawnegg": "Proto Hivemind",
   "item.spore.wendigo_spawnegg": "Wendigo",
+  "item.spore.inquisitor_spawnegg": "Inquisitor",
   "item.spore.sieger_spawnegg": "Sieger",
   "item.spore.gazen_spawnegg": "Gazenbreacher",
   "item.spore.hinden_spawnegg": "Hindenburg",
@@ -220,6 +221,7 @@
   "entity.spore.proto": "Proto Hivemind",
   "entity.spore.reconstructor": "Womb",
   "entity.spore.wendigo": "Wendigo",
+  "entity.spore.inquisitor": "Inquisitor",
   "entity.spore.sieger": "Sieger",
   "entity.spore.gazenbreacher": "GazenBreacher",
   "entity.spore.sieger_tail": "Sieger Tail",
@@ -308,6 +310,7 @@
   "sounds.spore.record": "Playing Corrupted Record",
   "sounds.spore.spore_area_ambient": "Strange Silence",
   "sounds.spore.braurei_ambient": "Braurei Cooking",
+  "sounds.spore.inquisitor_ambient": "Inquisitor Grunting",
 
 
   "item.line.shift": "A nutrient soup made out of animal matter.",

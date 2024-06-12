@@ -8,6 +8,7 @@ import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
 import com.Harbinger.Spore.Sentities.Experiments.Plagued;
 import com.Harbinger.Spore.Sentities.FallenMultipart.Licker;
 import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
+import com.Harbinger.Spore.Sentities.Hyper.Inquisitor;
 import com.Harbinger.Spore.Sentities.Hyper.Wendigo;
 import com.Harbinger.Spore.Sentities.Organoids.*;
 import com.Harbinger.Spore.Sentities.Projectile.*;
@@ -152,6 +153,11 @@ public class Sentities {
     public static final RegistryObject<EntityType<Wendigo>> WENDIGO = SPORE_ENTITIES.register("wendigo",
             () -> EntityType.Builder.of(Wendigo::new, INFECTED).sized(1f, 3.3f)
                     .build(new ResourceLocation(Spore.MODID, "wendigo").toString()));
+
+    public static final RegistryObject<EntityType<Inquisitor>> INQUISITOR = SPORE_ENTITIES.register("inquisitor",
+            () -> EntityType.Builder.of(Inquisitor::new, INFECTED).sized(1f, 2.8f)
+                    .build(new ResourceLocation(Spore.MODID, "inquisitor").toString()));
+
     public static final RegistryObject<EntityType<Brauerei>> BRAUREI = SPORE_ENTITIES.register("braurei",
             () -> EntityType.Builder.of(Brauerei::new, INFECTED).sized(3f, 3f)
                     .build(new ResourceLocation(Spore.MODID, "braurei").toString()));

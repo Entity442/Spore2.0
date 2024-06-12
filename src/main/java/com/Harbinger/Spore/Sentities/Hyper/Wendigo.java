@@ -46,7 +46,6 @@ public class Wendigo extends Hyper {
     public Wendigo(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         this.moveControl = new InfectedWallMovementControl(this);
-        this.navigation = new WallClimberNavigation(this,level);
         this.maxUpStep = 1F;
     }
 
