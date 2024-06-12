@@ -99,7 +99,7 @@ public class Knight extends EvolvedInfected implements EvolvingInfected {
     }
     @Override
     public void HyperEvolve() {
-        Inquisitor inquisitor = new Inquisitor(Sentities.WENDIGO.get(),this.level);
+        Inquisitor inquisitor = new Inquisitor(Sentities.INQUISITOR.get(),this.level);
         Collection<MobEffectInstance> collection = this.getActiveEffects();
         for(MobEffectInstance mobeffectinstance : collection) {
             inquisitor.addEffect(new MobEffectInstance(mobeffectinstance));
