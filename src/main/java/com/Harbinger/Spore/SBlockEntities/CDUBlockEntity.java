@@ -2,6 +2,7 @@ package com.Harbinger.Spore.SBlockEntities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.SblockEntities;
+import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -25,6 +26,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -64,6 +66,16 @@ public class CDUBlockEntity extends BlockEntity{
         return this.fuel;
     }
 
+    public List<BlockState> stateList(){
+        List<BlockState> states = new ArrayList<>();
+        states.add(Sblocks.BIOMASS_BLOCK.get().defaultBlockState());
+        states.add(Sblocks.SICKEN_BIOMASS_BLOCK.get().defaultBlockState());
+        states.add(Sblocks.CALCIFIED_BIOMASS_BLOCK.get().defaultBlockState());
+        states.add(Sblocks.MEMBRANE_BLOCK.get().defaultBlockState());
+        states.add(Sblocks.ROOTED_BIOMASS.get().defaultBlockState());
+        states.add(Sblocks.ROOTED_MYCELIUM.get().defaultBlockState());
+        return states;
+    }
 
     public static <E extends BlockEntity> void serverTick(Level level, BlockPos blockPos, BlockState blockState, CDUBlockEntity e) {
         if (e.getFuel() > 0 && !level.isClientSide){
@@ -89,6 +101,11 @@ public class CDUBlockEntity extends BlockEntity{
                                     level.setBlock(blockpos,blockItem.getBlock().defaultBlockState(),3);
                                 }
                             }
+                        }
+                    }
+                    if (Math.random() < 0.1){
+                        if (e.stateList().contains(state)){
+                            level.setBlock(blockpos,Sblocks.FREEZE_BURNED_BIOMASS.get().defaultBlockState(),3);
                         }
                     }
                     if (Math.random() < 0.001){

@@ -93,6 +93,7 @@ public class Sblocks {
     public static final RegistryObject<Block> FUNGAL_SHELL = BLOCKS.register("fungal_shell", () -> new Block(BlockBehaviour.Properties.of(Material.MOSS).strength(20f,6f).sound(SoundType.BONE_BLOCK)));
     public static final RegistryObject<Block> MYCELIUM_BLOCK = BLOCKS.register("mycelium_block", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.MOSS).strength(4f,3f).sound(SoundType.BONE_BLOCK)));
     public static final RegistryObject<Block> MYCELIUM_SLAB = BLOCKS.register("mycelium_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(Sblocks.MYCELIUM_BLOCK.get())));
+    public static final RegistryObject<Block> FREEZE_BURNED_BIOMASS = BLOCKS.register("freeze_burned_biomass", FrozenBiomass::new);
 
 
     public static final RegistryObject<Block> REMAINS = BLOCKS.register("remains", Remains::new);
