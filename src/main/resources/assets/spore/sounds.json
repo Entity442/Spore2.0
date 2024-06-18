@@ -31,6 +31,18 @@
       "spore:inquisitor_ambient"
     ]
   },
+  "delusioner_ambient" :{
+    "subtitle": "sounds.spore.delusioner_ambient",
+    "sounds": [
+      "spore:delusioner_ambient"
+    ]
+  },
+  "delusioner_casting" :{
+    "subtitle": "sounds.spore.delusioner_casting",
+    "sounds": [
+      "spore:delusioner_casting"
+    ]
+  },
   "madness" :{
     "subtitle": "sounds.spore.proto_ambient",
     "sounds": [

@@ -319,6 +319,15 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Time until it leaves " + brauerei.getTimer()+"/300"),false);
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
                                 }
+                            }else if(entity1 instanceof Delusionare delusionare) {
+                                if (entity instanceof Player player && !player.level.isClientSide){
+                                    player.displayClientMessage(Component.literal("Entity "+ delusionare.getEncodeId() + " " + delusionare.getCustomName()),false);
+                                    player.displayClientMessage(Component.literal("Current Health " + delusionare.getHealth()),false);
+                                    player.displayClientMessage(Component.literal("Buffs " + delusionare.getActiveEffects()),false);
+                                    player.displayClientMessage(Component.literal("Target ? " + delusionare.getTarget()),false);
+                                    player.displayClientMessage(Component.literal("Magic state " + delusionare.getSpellById() + " casting "+delusionare.isCasting()),false);
+                                    player.displayClientMessage(Component.literal("-------------------------"),false);
+                                }
                             }
                         }
                     }

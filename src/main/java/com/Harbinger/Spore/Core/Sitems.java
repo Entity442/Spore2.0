@@ -188,6 +188,9 @@ public class Sitems {
     public  static final RegistryObject<Item> VIGIL_SPAWNEGG = ITEMS.register("vigil_spawnegg",
             () -> new SporeSpawnEgg(Sentities.VIGIL,-64160208, new Item.Properties().tab(ScreativeTab.SPORE)));
 
+    public  static final RegistryObject<Item> DELUSIONER_SPAWNEGG = ITEMS.register("delusioner_spawnegg",
+            () -> new SporeSpawnEgg(Sentities.DELUSIONARE,-93652400, new Item.Properties().tab(ScreativeTab.SPORE)));
+
     public  static final RegistryObject<Item> PROTO_SPAWNEGG = ITEMS.register("proto_spawnegg",
             () -> new SporeSpawnEgg(Sentities.PROTO,244208, new Item.Properties().tab(ScreativeTab.SPORE)));
 

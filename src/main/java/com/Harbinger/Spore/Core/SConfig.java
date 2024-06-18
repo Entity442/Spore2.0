@@ -226,6 +226,8 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> mound_range_age4;
         public final ForgeConfigSpec.ConfigValue<Boolean> mound_foliage;
 
+        public final ForgeConfigSpec.ConfigValue<Double> delusioner_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> delusioner_armor;
 
         public final ForgeConfigSpec.ConfigValue<Double> proto_hp;
         public final ForgeConfigSpec.ConfigValue<Double> proto_armor;
@@ -665,6 +667,11 @@ public class SConfig {
             this.brute_armor = builder.comment("Default 15").defineInRange("Sets Brute Armor", 15, 1, Double.MAX_VALUE);
             builder.pop();
 
+            builder.push("Delusioner");
+            this.delusioner_hp = builder.comment("Default 20").defineInRange("Sets Delusioner Max health", 20, 1, Double.MAX_VALUE);
+            this.delusioner_armor = builder.comment("Default 2").defineInRange("Sets Delusioner Armor", 2, 1, Double.MAX_VALUE);
+            builder.pop();
+
             builder.push("Mound");
             this.mound_hp = builder.comment("Default 20").defineInRange("Sets Mound Max health", 20, 1, Double.MAX_VALUE);
             this.mound_armor = builder.comment("Default 2").defineInRange("Sets Mound Armor", 2, 1, Double.MAX_VALUE);
@@ -694,7 +701,7 @@ public class SConfig {
                     Lists.newArrayList("minecraft:villager","minecraft:pillager","guardvillagers:guard","minecraft:evoker","minecraft:vindicator",
                             "recruits:recruit","recruits:bowman","recruits:recruit_shieldman", "recruits:nomad","recruits:horseman","roamers:roamer") , o -> o instanceof String);
             this.proto_summonable_troops = builder.defineList("Mobs that the proto can summon to defend itself",
-                    Lists.newArrayList("spore:mound","spore:vigil","spore:umarmed","spore:usurper","spore:braurei","spore:verva") , o -> o instanceof String);
+                    Lists.newArrayList("spore:mound","spore:vigil","spore:umarmed","spore:usurper","spore:braurei","spore:verva","spore:delusioner") , o -> o instanceof String);
 
             builder.pop();
 

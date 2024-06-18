@@ -42,15 +42,13 @@ public class Ssounds {
 
     public static final RegistryObject<SoundEvent> SIEGER_AMBIENT = soundRegistry("sieger_ambient");
 
-    public static final RegistryObject<SoundEvent> WENDIGO_AMBIENT = soundRegistry("wendigo_ambient");
-
-    public static final RegistryObject<SoundEvent> WENDIGO_SCREECH = soundRegistry("wendigo_screech");
-
     public static final RegistryObject<SoundEvent> SIEGER_BITE = soundRegistry("sieger_bite");
 
     public static final RegistryObject<SoundEvent> GAZEN_AMBIENT = soundRegistry("gazen_ambient");
 
     public static final RegistryObject<SoundEvent> HINDEN_AMBIENT = soundRegistry("hinden_ambient");
+
+    public static final RegistryObject<SoundEvent> BRAUREI_AMBIENT = soundRegistry("braurei_ambient");
 
     public static final RegistryObject<SoundEvent> HINDEN_NUKE = soundRegistry("hinden_nuke");
 
@@ -58,21 +56,27 @@ public class Ssounds {
 
     public static final RegistryObject<SoundEvent> SIGNAL = soundRegistry("signal");
 
-    public static final RegistryObject<SoundEvent> WOMB_AMBIENT = soundRegistry("womb_ambient");
-
     public static final RegistryObject<SoundEvent> UMARMER_AMBIENT = soundRegistry("umarmer_ambient");
 
     public static final RegistryObject<SoundEvent> VIGIL_AMBIENT = soundRegistry("vigil_ambient");
 
+    public static final RegistryObject<SoundEvent> WENDIGO_AMBIENT = soundRegistry("wendigo_ambient");
+
+    public static final RegistryObject<SoundEvent> WENDIGO_SCREECH = soundRegistry("wendigo_screech");
+
+    public static final RegistryObject<SoundEvent> WOMB_AMBIENT = soundRegistry("womb_ambient");
+
     public static final RegistryObject<SoundEvent> USURPER_AMBIENT = soundRegistry("usurper_ambient");
-
-    public static final RegistryObject<SoundEvent> MADNESS = soundRegistry("madness");
-
-    public static final RegistryObject<SoundEvent> BRAUREI_AMBIENT = soundRegistry("braurei_ambient");
 
     public static final RegistryObject<SoundEvent> INQUISITOR_AMBIENT = soundRegistry("inquisitor_ambient");
 
+    public static final RegistryObject<SoundEvent> DELUSIONER_AMBIENT = soundRegistry("delusioner_ambient");
+
+    public static final RegistryObject<SoundEvent> DELUSIONER_CASTING = soundRegistry("delusioner_casting");
+
     public static final RegistryObject<SoundEvent> SPIT = soundRegistry("spit");
+
+    public static final RegistryObject<SoundEvent> MADNESS = soundRegistry("madness");
 
     public static final RegistryObject<SoundEvent> LIMB_SLASH = soundRegistry("limb_slash");
 
