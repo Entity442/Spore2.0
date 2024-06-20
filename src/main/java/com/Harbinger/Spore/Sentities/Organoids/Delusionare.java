@@ -259,4 +259,11 @@ public class Delusionare extends Organoid {
             }
         }
     }
+    @Override
+    public boolean hurt(DamageSource source, float p_21017_) {
+        if (this.isEmerging()){
+            return false;
+        }
+        return super.hurt(source, p_21017_);
+    }
 }
