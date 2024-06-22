@@ -266,7 +266,8 @@ public class Calamity extends UtilityEntity implements Enemy {
     public void tick() {
         super.tick();
         if (this.getHealth() < this.getMaxHealth() && !this.hasEffect(MobEffects.REGENERATION) && this.getKills() > 0){
-            this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,600,0));
+            int level = this.getHealth() < this.getMaxHealth()/2 ? 1 : 0;
+            this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,600,level));
             this.setKills(this.getKills()-1);
         }
         if (this.getRandom().nextInt(300) == 0 && this.getSearchArea() != BlockPos.ZERO){
