@@ -128,7 +128,7 @@ public class Brot extends Hyper {
                 this.setSwellDir(-1);
                 this.chemAttack(this);
             }
-            if (this.tickCount % 10 == 0){
+            if (this.tickCount % 20 == 0){
                 LivingEntity target = this.getTarget();
                 if (target != null && this.distanceToSqr(target) < 120.0){
                     this.setSwellDir(1);
