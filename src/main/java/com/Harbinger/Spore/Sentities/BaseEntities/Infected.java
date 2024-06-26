@@ -7,6 +7,7 @@ import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.ExtremelySusThings.SporeSavedData;
 import com.Harbinger.Spore.Sentities.AI.*;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.*;
+import com.Harbinger.Spore.Sentities.EvolvedInfected.Scamper;
 import com.Harbinger.Spore.Sentities.EvolvingInfected;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
@@ -107,7 +108,6 @@ public class Infected extends Monster{
     public LivingEntity getFollowPartner(){
         return this.partner;
     }
-
 
     @Override
     public void setTarget(@org.jetbrains.annotations.Nullable LivingEntity entity) {
@@ -306,6 +306,9 @@ public class Infected extends Monster{
 
     @Override
     public boolean removeWhenFarAway(double p_21542_) {
+        if (this.getEvoPoints() < SConfig.SERVER.min_kills.get()){
+            return true;
+        }
         return !this.entityData.get(PERSISTENT);
     }
 
