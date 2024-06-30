@@ -88,11 +88,13 @@ public class HandlerEvents {
                         if (Objects.equals(mod[0], iterations[0])){
                             mob.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(mob, Infected.class, false));
                             mob.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(mob, Calamity.class, false));
+                            mob.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(mob, Organoid.class, false));
                         }
                     }else{
                         if (SConfig.SERVER.attack.get().contains(mob.getEncodeId())){
                             mob.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(mob, Infected.class, false));
                             mob.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(mob, Calamity.class, false));
+                            mob.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(mob, Organoid.class, false));
                         }
                     }
                 }
@@ -140,7 +142,7 @@ public class HandlerEvents {
                      }
                  }
              }
-            return 0;
+            return 1;
         }));
         event.getDispatcher().register(Commands.literal(Spore.MODID+":evolve")
                 .executes(arguments -> {
@@ -163,7 +165,7 @@ public class HandlerEvents {
                             }
                         }
                     }
-                    return 0;
+                    return 1;
                 }));
         event.getDispatcher().register(Commands.literal(Spore.MODID+":get_data")
                 .executes(arguments -> {
@@ -177,7 +179,7 @@ public class HandlerEvents {
                         if (SConfig.SERVER.spawn.get())
                         player.displayClientMessage(Component.literal("Time before spawns "+time + "/"+1200*SConfig.SERVER.days.get()),false);
                     }
-                    return 0;
+                    return 1;
                 }));
         event.getDispatcher().register(Commands.literal(Spore.MODID+":feed")
                 .executes(arguments -> {
@@ -197,14 +199,14 @@ public class HandlerEvents {
                             }
                         }
                     }
-                    return 0;
+                    return 1;
                 }));
         if (SConfig.SERVER.spawn.get()){
             event.getDispatcher().register(Commands.literal(Spore.MODID+":add_day")
                     .executes(arguments -> {
                         ServerLevel world = arguments.getSource().getLevel();
                         SporeSavedData.addDay(world);
-                        return 0;
+                        return 1;
                     }));
         }
         event.getDispatcher().register(Commands.literal(Spore.MODID+":check_entity")
@@ -331,7 +333,7 @@ public class HandlerEvents {
                             }
                         }
                     }
-                    return 0;
+                    return 1;
                 }));
         event.getDispatcher().register(Commands.literal(Spore.MODID+":check_block_entity")
                 .executes(arguments -> {
@@ -355,7 +357,7 @@ public class HandlerEvents {
 
                         }
                     }
-                    return 0;
+                    return 1;
                 }));
 
     }
