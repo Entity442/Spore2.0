@@ -3,6 +3,7 @@ package com.Harbinger.Spore.Sentities.EvolvedInfected;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
+import com.Harbinger.Spore.Sentities.ArmedInfected;
 import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -29,11 +30,11 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
-public class InfectedVendicator extends EvolvedInfected {
+public class InfectedVendicator extends EvolvedInfected implements ArmedInfected {
     public InfectedVendicator(EntityType<? extends Monster> type, Level level) {
         super(type, level);
     }
@@ -77,43 +78,22 @@ public class InfectedVendicator extends EvolvedInfected {
 
         super.customServerAiStep();
     }
-    @Nullable
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_34088_, DifficultyInstance p_34089_, MobSpawnType p_34090_, @Nullable SpawnGroupData p_34091_, @Nullable CompoundTag p_34092_) {
-        SpawnGroupData spawngroupdata = super.finalizeSpawn(p_34088_, p_34089_, p_34090_, p_34091_, p_34092_);
-        ((GroundPathNavigation)this.getNavigation()).setCanOpenDoors(true);
-        RandomSource randomsource = p_34088_.getRandom();
-        this.populateDefaultEquipmentSlots(randomsource, p_34089_);
-        return spawngroupdata;
-    }
 
+    @Override
+    public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance p_21435_, MobSpawnType p_21436_, @Nullable SpawnGroupData p_21437_, @Nullable CompoundTag p_21438_) {
+        populateDefaultEquipmentSlots();
+        return super.finalizeSpawn(serverLevelAccessor, p_21435_, p_21436_, p_21437_, p_21438_);
+    }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes().add(Attributes.MOVEMENT_SPEED, 0.35F)
                 .add(Attributes.FOLLOW_RANGE, 28.0D).add(Attributes.MAX_HEALTH, SConfig.SERVER.inf_vin_hp.get() * SConfig.SERVER.global_health.get())
                 .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.inf_vin_damage.get() *SConfig.SERVER.global_damage.get()).add(Attributes.ARMOR,SConfig.SERVER.inf_vin_armor.get() * SConfig.SERVER.global_health.get());
     }
-    protected void populateDefaultEquipmentSlots(RandomSource p_219149_, DifficultyInstance p_219150_) {
+    protected void populateDefaultEquipmentSlots() {
             this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_AXE));
     }
 
-
-    @Override
-    public void aiStep() {
-        super.aiStep();
-        if (this.horizontalCollision && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) {
-            boolean flag = false;
-            AABB aabb = this.getBoundingBox().inflate(0.2);
-            for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
-                BlockState blockstate = this.level.getBlockState(blockpos);
-                if (blockstate.getMaterial() == Material.WOOD && this.isAggressive() && blockstate.getDestroySpeed(level ,blockpos) < 2) {
-                    flag = this.level.destroyBlock(blockpos, true, this) || flag;
-                }
-            }
-            if (!flag && this.onGround) {
-                this.jumpFromGround();
-            }
-        }
-    }
 
     protected SoundEvent getAmbientSound() {
         return Ssounds.INF_GROWL.get();

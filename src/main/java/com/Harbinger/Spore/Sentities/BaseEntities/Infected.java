@@ -7,6 +7,7 @@ import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.ExtremelySusThings.SporeSavedData;
 import com.Harbinger.Spore.Sentities.AI.*;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.*;
+import com.Harbinger.Spore.Sentities.ArmedInfected;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.Scamper;
 import com.Harbinger.Spore.Sentities.EvolvingInfected;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
@@ -472,11 +473,18 @@ public class Infected extends Monster{
                     this.setEvolution(SConfig.SERVER.evolution_age_human.get());
                 }
             }
+            enchantEquipment(this);
         }
     }
     public void spawnWithPoints(){
         if (!SConfig.SERVER.at_mob.get() && Math.random() < 0.1 && this instanceof EvolvingInfected){
             this.setEvoPoints(SConfig.SERVER.min_kills.get());
+        }
+    }
+
+    public void enchantEquipment(LivingEntity living){
+        if (living instanceof ArmedInfected armedInfected){
+            armedInfected.enchantItems(living);
         }
     }
 }
