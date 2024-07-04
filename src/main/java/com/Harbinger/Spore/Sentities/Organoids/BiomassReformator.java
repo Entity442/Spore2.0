@@ -17,6 +17,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -281,6 +282,7 @@ public class BiomassReformator extends Organoid implements Enemy {
             double y0 = this.getY() + (random.nextFloat() - 0.25) * 0.15D * 5;
             double z0 = this.getZ() + (random.nextFloat() - 0.1) * 0.1D;
             serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x0, y0, z0, 2, 0, 0, 0, 1);
+            waveentity.finalizeSpawn(serverLevel, level.getCurrentDifficultyAt(this.blockPosition()),MobSpawnType.MOB_SUMMONED,null,null);
             }
             this.discard();
             level.addFreshEntity(waveentity);
