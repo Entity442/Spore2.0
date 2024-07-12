@@ -323,6 +323,7 @@ public class Sitems {
 
     public static final RegistryObject<Item> CONTAINER = block(Sblocks.CONTAINER, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> CDU = Exceptions(Sblocks.CDU);
+    public static final RegistryObject<Item> ZOAHOLIC = Exceptions(Sblocks.ZOAHOLIC);
     public static final RegistryObject<Item> LAB_BLOCK = block(Sblocks.LAB_BLOCK, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> LAB_BLOCK1 = block(Sblocks.LAB_BLOCK1, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> LAB_BLOCK2 = block(Sblocks.LAB_BLOCK2, ScreativeTab.SPORE_T);
