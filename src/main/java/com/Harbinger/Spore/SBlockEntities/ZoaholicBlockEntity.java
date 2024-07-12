@@ -141,7 +141,7 @@ public class ZoaholicBlockEntity extends BlockEntity{
                     e.writeDocument(level,pos);
                 }
             }
-            if (e.getBiomass() % 20 == 0){
+            if (e.getBiomass() % 60 == 0){
                 e.spreadMadness(level,pos);
             }
         }
@@ -169,7 +169,7 @@ public class ZoaholicBlockEntity extends BlockEntity{
             int x = livingEntity.getBlockX() + randomSource.nextInt(-50,50);
             int z = livingEntity.getBlockZ() + randomSource.nextInt(-50,50);
             String component = Component.translatable("zoaholic.line_3").getString();
-            stack.setHoverName(Component.literal(component+" Z:"+x + " Z:"+z));
+            stack.setHoverName(Component.literal(component+" X:"+x + " Z:"+z));
         }else{
             stack.setHoverName(Component.translatable("zoaholic.line_4"));
         }
