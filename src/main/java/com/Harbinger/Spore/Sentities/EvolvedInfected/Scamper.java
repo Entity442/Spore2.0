@@ -125,6 +125,7 @@ public class Scamper extends EvolvedInfected {
             mound.moveTo(this.getX() + vecx,this.getY(),this.getZ() + vecz);
             mound.setMaxAge(i);
             mound.tickEmerging();
+            mound.setLinked(this.getLinked());
             mound.addEffect(new MobEffectInstance(MobEffects.REGENERATION ,200,0));
             level.addFreshEntity(mound);
         }
