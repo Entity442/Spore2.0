@@ -85,7 +85,6 @@ public class ZoaholicBlock extends BaseEntityBlock {
                 stack.shrink(1);
             }else{
                 if (zoaholicBlock.isActive() && zoaholicBlock.getProcessing() <= 0){
-                    level.playLocalSound(pos.getX(),pos.getY(),pos.getZ(), Ssounds.PRINTING.get(), SoundSource.BLOCKS,1f,1f,true);
                     zoaholicBlock.setProcessing(200);
                 }else
                 if (zoaholicBlock.HasHeart()&& zoaholicBlock.hasEnoughInnards()&& zoaholicBlock.HasBrain()){
