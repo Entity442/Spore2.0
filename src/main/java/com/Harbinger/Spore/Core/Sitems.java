@@ -296,6 +296,10 @@ public class Sitems {
             GasMaskItem::new);
     public  static final RegistryObject<Item> BIOMASS = ITEMS.register("biomass",
             Biomass::new);
+    public  static final RegistryObject<Item> CIRCUIT_BOARD = ITEMS.register("circuit_board",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE_T)));
+    public  static final RegistryObject<Item> ICE_CANISTER = ITEMS.register("ice_canister",
+            () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE_T)));
     public  static final RegistryObject<Item> AMETHYST_DUST = ITEMS.register("amethyst_dust",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE_T)));
     public  static final RegistryObject<Item> COMPOUND = ITEMS.register("compound",
