@@ -171,6 +171,10 @@ public class Sentities {
             () -> EntityType.Builder.of(Delusionare::new, INFECTED).sized(1f, 3f)
                     .build(new ResourceLocation(Spore.MODID, "delusioner").toString()));
 
+    public static final RegistryObject<EntityType<GastGeber>> GASTGABER = SPORE_ENTITIES.register("gastgaber",
+            () -> EntityType.Builder.of(GastGeber::new, MobCategory.MISC).sized(1.1f, 2f)
+                    .build(new ResourceLocation(Spore.MODID, "gastgaber").toString()));
+
     public static final RegistryObject<EntityType<Illusion>> ILLUSION = SPORE_ENTITIES.register("illusion",
             () -> EntityType.Builder.of(Illusion::new, MobCategory.MISC).sized(1f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "illusion").toString()));
