@@ -63,10 +63,6 @@ public class GastGeber extends EvolvedInfected implements FoliageSpread {
         float value = blockstate.getDestroySpeed(this.level,blockpos);
         return this.tickCount % 20 == 0 && value > 0 && value <= SConfig.SERVER.experiment_bd.get();
     }
-    public int getBreaking(){
-        return SConfig.SERVER.experiment_bd.get();
-    }
-
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, SConfig.SERVER.gastgeber_hp.get() * SConfig.SERVER.global_health.get())
