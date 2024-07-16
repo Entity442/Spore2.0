@@ -112,7 +112,7 @@ public interface FoliageSpread {
                                 }
 
 
-                                if (above.isAir() && blockstate.isSolidRender(level ,blockpos) && Math.random() < 0.01){level.setBlock(blockpos.above(),block1,3);}
+                                if ((above.isAir() || level.getBlockState(blockpos).is(BlockTags.REPLACEABLE_PLANTS)) && blockstate.isSolidRender(level ,blockpos) && Math.random() < 0.01){level.setBlock(blockpos.above(),block1,3);}
                                 if (below.isAir() && blockstate.isSolidRender(level ,blockpos) && Math.random() < 0.01){
                                     if (block2.getBlock().getStateDefinition().getProperty("hanging") instanceof BooleanProperty property){
                                         level.setBlock(blockpos.below(),block2.setValue(property, true),3);
