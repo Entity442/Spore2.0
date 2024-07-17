@@ -498,7 +498,7 @@ public class SConfig {
                     Lists.newArrayList("spore:inf_villager", "spore:inf_pillager", "spore:inf_witch") , o -> o instanceof String);
             this.evolution_age_human = builder.comment("Default 300").define("Evolution Timer in seconds",300);
             this.min_kills = builder.comment("Default 1").define("Minimum amount of kills to start the evolution",1);
-            this.min_kills_hyper = builder.comment("Default 5").define("Minimum amount of kills to start the hyper evolution",5);
+            this.min_kills_hyper = builder.comment("Default 7").define("Minimum amount of kills to start the hyper evolution",7);
             builder.pop();
             builder.push("Infections");
             this.inf_player = builder.comment("Default true").define("Should the player be infected on death?",true);
