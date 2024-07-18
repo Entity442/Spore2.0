@@ -27,12 +27,14 @@ import com.Harbinger.Spore.Sitems.InfectedMaul;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.core.SectionPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -547,10 +549,28 @@ public class HandlerEvents {
     @SubscribeEvent
     public static void ProtectFromEffect(MobEffectEvent.Applicable event)
     {
-        if (event.getEntity() != null && event.getEntity().getItemBySlot(EquipmentSlot.HEAD).getItem() == Sitems.GAS_MASK.get()){
+        if (event.getEntity() != null){
+            List<Item> masks =  new ArrayList<>();
+            for (String string : SConfig.SERVER.gas_masks.get()){
+                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(string));
+                if (item != null){
+                    masks.add(item);
+                }
+            }
             event.getEffectInstance();
-            if (event.getEffectInstance().getEffect() == Seffects.MYCELIUM.get()){
+            if (event.getEffectInstance().getEffect() == Seffects.MYCELIUM.get() && masks.contains(event.getEntity().getItemBySlot(EquipmentSlot.HEAD).getItem())){
                 event.setResult(Event.Result.DENY);
+            }
+            if (SConfig.SERVER.faw_target.get() && event.getEntity().getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY,
+                    new ResourceLocation("fromanotherworld:things")))){
+                if (event.getEffectInstance().getEffect() == Seffects.MARKER.get()){
+                    event.setResult(Event.Result.DENY);
+                }
+            }else if (SConfig.SERVER.skulk_target.get() && event.getEntity().getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY,
+                    new ResourceLocation("sculkhorde:sculk_entity")))){
+                if (event.getEffectInstance().getEffect() == Seffects.MARKER.get()){
+                    event.setResult(Event.Result.DENY);
+                }
             }
         }
     }

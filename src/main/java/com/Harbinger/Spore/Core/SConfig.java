@@ -402,6 +402,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Integer> calamity_bd;
         public final ForgeConfigSpec.ConfigValue<Integer> hyper_bd;
         public final ForgeConfigSpec.ConfigValue<Integer> experiment_bd;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> gas_masks;
 
         public Server(ForgeConfigSpec.Builder builder) {
 
@@ -921,6 +922,10 @@ public class SConfig {
 
 
             builder.push("Weapons and Tools OwO");
+            builder.push("Gas Masks");
+            this.gas_masks = builder.defineList("Gas masks",
+                    Lists.newArrayList("spore:gas_mask") , o -> o instanceof String);
+            builder.pop();
             builder.push("Spear");
             this.spear_durability = builder.comment("Default 800").define("Durability",800);
             this.spear_damage = builder.comment("Default 11").defineInRange("Melee Damage", 11, 1, Integer.MAX_VALUE);
@@ -1220,7 +1225,7 @@ public class SConfig {
 
 
             this.organite_loot = builder.defineList("Organite Block",
-                    Lists.newArrayList("spore:mutated_fiber|50|1|4","spore:spine|80|1|3","spore:innards|70|1|5", "spore:altered_spleen|70|1|2", "spore:mutated_heart|85|1|3", "spore|alveolic_sack|25|1|1", "spore:corrosive_sack|5|1|1") , o -> o instanceof String);
+                    Lists.newArrayList("spore:mutated_fiber|50|1|4","spore:spine|80|1|3","spore:innards|70|1|5", "spore:altered_spleen|70|1|2", "spore:mutated_heart|85|1|3","spore:alveolic_sack|80|2|4") , o -> o instanceof String);
 
             this.innards_loot = builder.defineList("Innards",
                     Lists.newArrayList("minecraft:bone|50|1|2", "minecraft:rotten_flesh|40|1|1", "minecraft:golden_apple|5|1|1", "spore:tumor|50|1|5", "spore:mutated_fiber|65|1|5") , o -> o instanceof String);
