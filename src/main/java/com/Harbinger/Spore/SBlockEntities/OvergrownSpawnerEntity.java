@@ -18,8 +18,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class OvergrownSpawnerEntity extends BlockEntity {
-    public int ticks;
+public class OvergrownSpawnerEntity extends BlockEntity implements AnimatedEntity{
+    private int ticks;
     private int time;
     public  final int maxTime = 1200;
     public OvergrownSpawnerEntity(BlockPos pos, BlockState state) {
@@ -108,4 +108,8 @@ public class OvergrownSpawnerEntity extends BlockEntity {
     }
 
 
+    @Override
+    public int getTicks() {
+        return ticks;
+    }
 }
