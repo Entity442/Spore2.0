@@ -6,19 +6,18 @@ import com.Harbinger.Spore.SBlockEntities.IncubatorBlockEntity;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
@@ -65,8 +64,8 @@ public class IncubatorRenderer extends BaseBlockEntityRenderer<IncubatorBlockEnt
         stack.pushPose();
         stack.translate(0.5+vibrationValue, 0.5f+Mth.cos(value/8)/10,0.5+vibrationValue);
         stack.scale(0.5f,0.5f,0.5f);
-        stack.mulPose(Axis.YP.rotationDegrees(value));
-        itemRenderer.renderStatic(itemStack,ItemDisplayContext.FIXED,getLight(level,pos), OverlayTexture.NO_OVERLAY,stack,source,level,1);
+        stack.mulPose(Vector3f.YP.rotationDegrees(value));
+        itemRenderer.renderStatic(itemStack, ItemTransforms.TransformType.FIXED,getLight(level,pos), OverlayTexture.NO_OVERLAY,stack,source,1);
         stack.popPose();
     }
     private int getLight(Level level, BlockPos pos){
