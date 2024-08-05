@@ -482,8 +482,8 @@ public class Infected extends Monster{
                     }
                     this.setEvolution(SConfig.SERVER.evolution_age_human.get());
                 }
+                enchantEquipment(this);
             }
-            enchantEquipment(this);
         }
     }
     public void spawnWithPoints(){
