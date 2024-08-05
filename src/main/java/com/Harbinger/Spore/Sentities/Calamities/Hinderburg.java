@@ -1,7 +1,6 @@
 package com.Harbinger.Spore.Sentities.Calamities;
 
 import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Core.Sitems;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.AerialRangedGoal;
@@ -29,7 +28,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -181,28 +179,18 @@ public class Hinderburg extends Calamity implements FlyingInfected , TrueCalamit
     }
 
     @Override
-    public void chemAttack() {
-        AABB boundingBox = this.getBoundingBox().inflate(32);
-        List<Entity> entities = this.level.getEntities(this, boundingBox);
-        for (Entity entity : entities) {
-            if (entity instanceof LivingEntity livingEntity && !(entity instanceof Infected || entity instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(entity.getEncodeId()) || livingEntity.getItemBySlot(EquipmentSlot.HEAD).getItem() == Sitems.GAS_MASK.get())) {
-                for (String str : SConfig.SERVER.hinden_debuffs.get()){
-                    String[] string = str.split("\\|" );
-                    MobEffect effect = ForgeRegistries.MOB_EFFECTS.getValue(new ResourceLocation(string[0]));
-                    if (effect != null && !livingEntity.hasEffect(effect)){
-                        livingEntity.addEffect(new MobEffectInstance(effect , Integer.parseUnsignedInt(string[1]), Integer.parseUnsignedInt(string[2])));
-                    }
-                }
-            }else if (entity instanceof LivingEntity livingEntity && (entity instanceof Infected || entity instanceof UtilityEntity || SConfig.SERVER.blacklist.get().contains(entity.getEncodeId()))){
-                for (String str : SConfig.SERVER.hinden_buffs.get()){
-                    String[] string = str.split("\\|" );
-                    MobEffect effect = ForgeRegistries.MOB_EFFECTS.getValue(new ResourceLocation(string[0]));
-                    if (effect != null && !livingEntity.hasEffect(effect)){
-                        livingEntity.addEffect(new MobEffectInstance(effect , Integer.parseUnsignedInt(string[1]), Integer.parseUnsignedInt(string[2])));
-                    }
-                }
-            }
-        }
+    public int chemicalRange() {
+        return 32;
+    }
+
+    @Override
+    public List<? extends String> buffs() {
+        return SConfig.SERVER.hinden_buffs.get();
+    }
+
+    @Override
+    public List<? extends String> debuffs() {
+        return SConfig.SERVER.hinden_debuffs.get();
     }
 
     @Override
