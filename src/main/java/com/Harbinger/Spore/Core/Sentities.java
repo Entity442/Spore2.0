@@ -3,9 +3,11 @@ package com.Harbinger.Spore.Core;
 import com.Harbinger.Spore.Sentities.BasicInfected.*;
 import com.Harbinger.Spore.Sentities.Calamities.Gazenbrecher;
 import com.Harbinger.Spore.Sentities.Calamities.Hinderburg;
+import com.Harbinger.Spore.Sentities.Calamities.Howitzer;
 import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
 import com.Harbinger.Spore.Sentities.Experiments.Plagued;
+import com.Harbinger.Spore.Sentities.FallenMultipart.HowitzerArm;
 import com.Harbinger.Spore.Sentities.FallenMultipart.Licker;
 import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
 import com.Harbinger.Spore.Sentities.Hyper.Brot;
@@ -204,6 +206,10 @@ public class Sentities {
             EntityType.Builder.of((EntityType<AdaptableProjectile> p_33002_, Level level) -> new AdaptableProjectile(level), MobCategory.MISC)
                     .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.4f, 0.4f));
 
+    public static final RegistryObject<EntityType<FleshBomb>> FLESH_BOMB = register("flesh_bomb",
+            EntityType.Builder.<FleshBomb>of(FleshBomb::new, MobCategory.MISC).setCustomClientFactory(FleshBomb::new)
+                    .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
+
     public static final RegistryObject<EntityType<StingerProjectile>> STINGER = register("stinger",
             EntityType.Builder.of((EntityType<StingerProjectile> p_33002_, Level level) -> new StingerProjectile(level), MobCategory.MISC)
                     .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.4f, 0.4f));
@@ -250,6 +256,9 @@ public class Sentities {
     public static final RegistryObject<EntityType<SiegerTail>> SIEGER_TAIL = SPORE_ENTITIES.register("sieger_tail",
             () -> EntityType.Builder.of(SiegerTail::new, MobCategory.MISC).sized(2.1f, 1f)
                     .build(new ResourceLocation(Spore.MODID, "sieger_tail").toString()));
+    public static final RegistryObject<EntityType<HowitzerArm>> HOWIT_ARM = SPORE_ENTITIES.register("howit_arm",
+            () -> EntityType.Builder.of(HowitzerArm::new, MobCategory.MISC).sized(2.1f, 1f)
+                    .build(new ResourceLocation(Spore.MODID, "howit_arm").toString()));
 
     public static final RegistryObject<EntityType<Gazenbrecher>> GAZENBREACHER = SPORE_ENTITIES.register("gazenbreacher",
             () -> EntityType.Builder.of(Gazenbrecher::new, INFECTED).sized(3.5f, 3f)
@@ -262,4 +271,8 @@ public class Sentities {
     public static final RegistryObject<EntityType<Hinderburg>> HINDENBURG = SPORE_ENTITIES.register("hindenburg",
             () -> EntityType.Builder.of(Hinderburg::new, INFECTED).sized(5f, 5f)
                     .build(new ResourceLocation(Spore.MODID, "hindenburg").toString()));
+
+    public static final RegistryObject<EntityType<Howitzer>> HOWITZER = SPORE_ENTITIES.register("howitzer",
+            () -> EntityType.Builder.of(Howitzer::new, INFECTED).sized(5f, 5f)
+                    .build(new ResourceLocation(Spore.MODID, "howitzer").toString()));
 }

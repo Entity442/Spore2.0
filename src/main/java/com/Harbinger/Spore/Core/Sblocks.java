@@ -6,6 +6,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -99,4 +101,5 @@ public class Sblocks {
 
 
     public static final RegistryObject<Block> REMAINS = BLOCKS.register("remains", Remains::new);
+    public static final RegistryObject<LiquidBlock> BILE = BLOCKS.register("bile", () -> new BileLiquidBlock(Sfluids.Bile_FLUID_SOURCE,BlockBehaviour.Properties.of(Material.WATER).noCollission().strength(100.0F).lightLevel(state -> 1).emissiveRendering((state, world, pos) -> false).noLootTable().color(MaterialColor.COLOR_ORANGE)));
 }

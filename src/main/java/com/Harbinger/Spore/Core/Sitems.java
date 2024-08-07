@@ -6,6 +6,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -215,6 +216,9 @@ public class Sitems {
     public  static final RegistryObject<Item> HINDEN_SPAWNEGG = ITEMS.register("hinden_spawnegg",
             () -> new SporeSpawnEgg(Sentities.HINDENBURG,346320865, SpawnEggType.CALAMITY));
 
+    public  static final RegistryObject<Item> HOWITZER_SPAWNEGG = ITEMS.register("howitzer_spawnegg",
+            () -> new SporeSpawnEgg(Sentities.HOWITZER,18414394,SpawnEggType.CALAMITY));
+
     public  static final RegistryObject<Item> ACID = ITEMS.register("acid",
             () -> new Item( new Item.Properties()));
     public  static final RegistryObject<Item> BILE = ITEMS.register("bile",
@@ -306,7 +310,8 @@ public class Sitems {
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE_T)));
     public  static final RegistryObject<Item> COMPOUND_PLATE = ITEMS.register("compound_plate",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE_T)));
-
+    public  static final RegistryObject<Item> BUCKET_OF_BILE = ITEMS.register("bucket_of_bile",
+            () -> new BucketItem( Sfluids.Bile_FLUID_SOURCE,new Item.Properties().tab(ScreativeTab.SPORE_T)));
 
 
 

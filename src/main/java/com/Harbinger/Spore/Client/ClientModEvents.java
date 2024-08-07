@@ -3,10 +3,7 @@ package com.Harbinger.Spore.Client;
 import com.Harbinger.Spore.Client.Layers.CustomArmorLayer;
 import com.Harbinger.Spore.Client.Models.*;
 import com.Harbinger.Spore.Client.Renderers.*;
-import com.Harbinger.Spore.Core.SMenu;
-import com.Harbinger.Spore.Core.SblockEntities;
-import com.Harbinger.Spore.Core.Sentities;
-import com.Harbinger.Spore.Core.Sparticles;
+import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Particles.AcidParticle;
 import com.Harbinger.Spore.Particles.BloodParticle;
 import com.Harbinger.Spore.Particles.SporeParticle;
@@ -15,6 +12,8 @@ import com.Harbinger.Spore.Spore;
 import com.Harbinger.Spore.sEvents.SItemProperties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -71,15 +70,19 @@ public class ClientModEvents {
         event.registerLayerDefinition(BiomassReconstructorModel.LAYER_LOCATION, BiomassReconstructorModel::createBodyLayer);
         event.registerLayerDefinition(VigilModel.LAYER_LOCATION, VigilModel::createBodyLayer);
         event.registerLayerDefinition(GasMaskModel.LAYER_LOCATION, GasMaskModel::createBodyLayer);
+        event.registerLayerDefinition(BileRound.LAYER_LOCATION, BileRound::createBodyLayer);
         event.registerLayerDefinition(LivingChestplateModel.LAYER_LOCATION, LivingChestplateModel::createBodyLayer);
         event.registerLayerDefinition(ProtoHivemindModel.LAYER_LOCATION, ProtoHivemindModel::createBodyLayer);
         event.registerLayerDefinition(SiegerModel.LAYER_LOCATION, SiegerModel::createBodyLayer);
         event.registerLayerDefinition(GazenbrecherModel.LAYER_LOCATION, GazenbrecherModel::createBodyLayer);
+        event.registerLayerDefinition(HowitzerModel.LAYER_LOCATION, HowitzerModel::createBodyLayer);
         event.registerLayerDefinition(SiegerTailModel.LAYER_LOCATION, SiegerTailModel::createBodyLayer);
         event.registerLayerDefinition(LickerModel.LAYER_LOCATION, LickerModel::createBodyLayer);
         event.registerLayerDefinition(HindieModel.LAYER_LOCATION, HindieModel::createBodyLayer);
         event.registerLayerDefinition(SantaModel.LAYER_LOCATION, SantaModel::createBodyLayer);
         event.registerLayerDefinition(TumoralNukeModel.LAYER_LOCATION, TumoralNukeModel::createBodyLayer);
+        event.registerLayerDefinition(RightArmModel.LAYER_LOCATION, RightArmModel::createBodyLayer);
+        event.registerLayerDefinition(LeftArmModel.LAYER_LOCATION, LeftArmModel::createBodyLayer);
         event.registerLayerDefinition(WendigoModel.LAYER_LOCATION, WendigoModel::createBodyLayer);
         event.registerLayerDefinition(InquisitorModel.LAYER_LOCATION, InquisitorModel::createBodyLayer);
         event.registerLayerDefinition(BrotkatzeModel.LAYER_LOCATION, BrotkatzeModel::createBodyLayer);
@@ -97,6 +100,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(brainMatterModel.LAYER_LOCATION, brainMatterModel::createBodyLayer);
         event.registerLayerDefinition(ZoaholicModel.LAYER_LOCATION, ZoaholicModel::createBodyLayer);
         event.registerLayerDefinition(IncubatorModel.LAYER_LOCATION, IncubatorModel::createBodyLayer);
+
     }
 
 
@@ -140,6 +144,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.HINDENBURG.get(), HindieRenderer::new);
         event.registerEntityRenderer(Sentities.SIEGER_TAIL.get(), SiegerTailRenderer::new);
         event.registerEntityRenderer(Sentities.LICKER.get(), LickerRenderer::new);
+        event.registerEntityRenderer(Sentities.HOWIT_ARM.get(), HowdiArmRenderer::new);
         event.registerEntityRenderer(Sentities.TUMOROID_NUKE.get(), TumoroidNukeRenderer::new);
         event.registerEntityRenderer(Sentities.VERVA.get(), VervaRenderer::new);
         event.registerEntityRenderer(Sentities.WENDIGO.get(), WendigoRenderer::new);
@@ -149,12 +154,14 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.WAVE.get(), WaveRenderer::new);
         event.registerEntityRenderer(Sentities.ILLUSION.get(), IllusionRenderer::new);
         event.registerEntityRenderer(Sentities.GASTGABER.get(), GastGaverRenderer::new);
+        event.registerEntityRenderer(Sentities.HOWITZER.get(), HowitzerRenderer::new);
 
         event.registerEntityRenderer(Sentities.ACID_BALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.SPIT.get(), BulletRender::new);
         event.registerEntityRenderer(Sentities.BILE.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.ACID.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.THROWN_TUMOR.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(Sentities.FLESH_BOMB.get(), FleshBombRenderer::new);
         event.registerEntityRenderer(Sentities.SCENT.get(), ScentEntityRenderer::new);
         event.registerEntityRenderer(Sentities.TENDRIL.get(), TendrilRenderer::new);
         event.registerEntityRenderer(Sentities.STINGER.get(), StingerRenderer::new);
@@ -169,8 +176,6 @@ public class ClientModEvents {
 
     @SubscribeEvent
     public static void clientSetup(final FMLClientSetupEvent event) {
-
-
         SItemProperties.addCustomItemProperties();
 
         event.enqueueWork(() -> {

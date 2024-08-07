@@ -52,6 +52,8 @@ public class Spore
         Sparticles.register(modEventBus);
         Ssounds.register(modEventBus);
         Sfeatures.register(modEventBus);
+        Sfluids.SPORE_FLUID_TYPE.register(modEventBus);
+        Sfluids.SPORE_FLUID.register(modEventBus);
         SMenu.register(modEventBus);
         SblockEntities.register(modEventBus);
         final DeferredRegister<Codec<? extends BiomeModifier>> biomeModifiers =
