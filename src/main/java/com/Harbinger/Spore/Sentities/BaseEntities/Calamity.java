@@ -44,6 +44,7 @@ import java.util.List;
 public class Calamity extends UtilityEntity implements Enemy {
     public static final EntityDataAccessor<Integer> KILLS = SynchedEntityData.defineId(Calamity.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<BlockPos> SEARCH_AREA = SynchedEntityData.defineId(Calamity.class, EntityDataSerializers.BLOCK_POS);
+    public static final EntityDataAccessor<Boolean> ROOTED = SynchedEntityData.defineId(Calamity.class, EntityDataSerializers.BOOLEAN);
     private int breakCounter;
     private int stun = 0;
 
@@ -107,6 +108,7 @@ public class Calamity extends UtilityEntity implements Enemy {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("kills", entityData.get(KILLS));
+        tag.putBoolean("rooted", entityData.get(ROOTED));
         tag.putInt("AreaX", this.getSearchArea().getX());
         tag.putInt("AreaY", this.getSearchArea().getY());
         tag.putInt("AreaZ", this.getSearchArea().getZ());
@@ -121,12 +123,17 @@ public class Calamity extends UtilityEntity implements Enemy {
         }
         return new EntityDamageSource("calamity_damage3",entity);
     }
-
+    @Override
+    public void setTarget(@Nullable LivingEntity p_21544_) {
+        super.setTarget(p_21544_);
+        if (isRooted()){this.setRooted(false);}
+    }
     public double getDamageCap(){
         return 0;
     }
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        setRooted(false);
         if (this.getRandom().nextInt(20) == 0){
             this.grief(this.getBoundingBox().inflate(this.setInflation(),0.0,this.setInflation()));
         }
@@ -183,6 +190,7 @@ public class Calamity extends UtilityEntity implements Enemy {
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         entityData.set(KILLS, tag.getInt("kills"));
+        entityData.set(ROOTED, tag.getBoolean("rooted"));
         int i = tag.getInt("AreaX");
         int j = tag.getInt("AreaY");
         int k = tag.getInt("AreaZ");
@@ -191,6 +199,7 @@ public class Calamity extends UtilityEntity implements Enemy {
 
     protected void defineSynchedData() {
         super.defineSynchedData();
+        this.entityData.define(ROOTED, false);
         this.entityData.define(KILLS, 0);
         this.entityData.define(SEARCH_AREA, BlockPos.ZERO);
     }
@@ -200,6 +209,12 @@ public class Calamity extends UtilityEntity implements Enemy {
         return false;
     }
 
+    public boolean isRooted(){
+        return entityData.get(ROOTED);
+    }
+    public void setRooted(boolean value){
+        entityData.set(ROOTED,value);
+    }
 
     @Override
     public void registerGoals() {
@@ -280,6 +295,13 @@ public class Calamity extends UtilityEntity implements Enemy {
     @Override
     public void tick() {
         super.tick();
+        if (this.tickCount % 1200 == 0){
+            setRooted(this.getTarget() == null && this.getHealth() <= (this.getMaxHealth()*0.3) && onGround);
+            if (isRooted()){this.setKills(getKills()+1);}
+        }
+        if (isRooted()){
+            this.makeStuckInBlock(Blocks.AIR.defaultBlockState(), new Vec3(0, 1, 0));
+        }
         if (this.getHealth() < this.getMaxHealth() && !this.hasEffect(MobEffects.REGENERATION) && this.getKills() > 0){
             int level = this.getHealth() < this.getMaxHealth()/2 ? 1 : 0;
             this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,600,level));
