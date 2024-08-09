@@ -15,6 +15,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class BileLiquid extends FluidType {
@@ -67,15 +69,21 @@ public class BileLiquid extends FluidType {
         }else{
             movementVector.scale(0.7f);
             if (entity.tickCount % 40 == 0){
-                entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,100,0));
-                entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS,100,0));
-                entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,100,0));
-                entity.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(),200,0));
+                for (MobEffectInstance instance : bileEffects()){
+                    entity.addEffect(instance);
+                }
                 entity.hurt(DamageSource.GENERIC,1f);
             }
         }
         return super.move(state, entity, movementVector, gravity);
     }
-
+    public static List<MobEffectInstance> bileEffects(){
+        List<MobEffectInstance> values = new ArrayList<>();
+        values.add(new MobEffectInstance(MobEffects.WEAKNESS,100,0));
+        values.add(new MobEffectInstance(MobEffects.BLINDNESS,100,0));
+        values.add(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,100,0));
+        values.add(new MobEffectInstance(Seffects.MYCELIUM.get(),200,0));
+        return values;
+    }
 
 }
