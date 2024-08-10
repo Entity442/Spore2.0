@@ -74,6 +74,7 @@ public class BiologicalReagent extends Item {
                 itemStack.setCount(itemStack.getCount() -1);
                 if (Math.random() < chance()){
                     Enchantment curse = curses().get(player.getRandom().nextInt(curses().size()));
+                    if (stack.getEnchantmentLevel(curse) == 0)
                     stack.enchant(curse,curse.getMaxLevel());
                 }
                 return true;
