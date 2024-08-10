@@ -376,6 +376,9 @@ public class Howitzer extends Calamity implements TrueCalamity, RangedAttackMob 
         if (burnable_material.size() > 8){
             return Math.random() < 0.3f ? FleshBomb.BombType.BILE : FleshBomb.BombType.FLAME;
         }
+        if (SConfig.SERVER.corrosion.get().contains(living.getEncodeId())){
+            return FleshBomb.BombType.ACID;
+        }
         if (extra_targets.size() > 1 || living.getArmorValue() >=10){
             return FleshBomb.BombType.BILE;
         }
@@ -388,6 +391,7 @@ public class Howitzer extends Calamity implements TrueCalamity, RangedAttackMob 
         float damage = (float) (SConfig.SERVER.howit_ranged_damage.get() * SConfig.SERVER.global_damage.get());
         FleshBomb bomb = new FleshBomb(level,this,damage,compareEntity(entity),random.nextInt(4,7));
         bomb.setLivingEntityPredicate(TARGET_SELECTOR);
+        bomb.setCarrier(Math.random() < 0.2f);
         double dx = entity.getX() - this.getX();
         double dz = entity.getZ() - this.getZ();
         double dy = entity.getY() - this.getY();
