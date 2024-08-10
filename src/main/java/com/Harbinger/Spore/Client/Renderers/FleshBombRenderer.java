@@ -5,7 +5,7 @@ import com.Harbinger.Spore.Sentities.Projectile.FleshBomb;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -31,9 +31,9 @@ public class FleshBombRenderer<T extends FleshBomb>extends EntityRenderer<T> {
 
     public void render(T entity, float value2, float value, PoseStack stack, MultiBufferSource source, int p_116116_) {
         stack.pushPose();
-        stack.mulPose(Axis.ZN.rotationDegrees(180));
-        stack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(value, entity.yRotO, entity.getYRot()) - 90.0F));
-        stack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(value, entity.xRotO, entity.getXRot()) + 90.0F));
+        stack.mulPose(Vector3f.ZN.rotationDegrees(180));
+        stack.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(value, entity.yRotO, entity.getYRot()) - 90.0F));
+        stack.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(value, entity.xRotO, entity.getXRot()) + 90.0F));
         int scaling = entity.getCarrier() ? 2 : 1;
         stack.scale(scaling,scaling,scaling);
         VertexConsumer vertexconsumer = ItemRenderer.getFoilBufferDirect(source, this.model.renderType(this.getTextureLocation(entity)), false, false);

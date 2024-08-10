@@ -98,7 +98,7 @@ public class FleshBomb extends AbstractArrow {
     protected void onHitEntity(EntityHitResult result) {
         if (result.getEntity() instanceof LivingEntity living){
             if (level instanceof ServerLevel serverLevel){
-                Utilities.explodeCircle(serverLevel,this.getOwner(),result.getEntity().getOnPos(),getExplosion(),getDamage(),8,entity -> {return entity instanceof LivingEntity livingEntity && livingEntityPredicate.test(livingEntity);});
+                Utilities.explodeCircle(serverLevel,this.getOwner(),result.getEntity().getOnPos(),getExplosion(),getDamage(),SConfig.SERVER.calamity_bd.get(),entity -> {return entity instanceof LivingEntity livingEntity && livingEntityPredicate.test(livingEntity);});
                 if (getBombType() == 1){
                     living.setSecondsOnFire(20);
                     Utilities.convertBlocks(serverLevel,this.getOwner(),result.getEntity().getOnPos(),getExplosion(), Blocks.FIRE.defaultBlockState());
