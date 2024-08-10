@@ -69,7 +69,8 @@ public class InfectedRapier extends SwordItem {
         itemStack.hurtAndBreak(2, livingEntity, (p_41007_) -> {
             p_41007_.broadcastBreakEvent(EquipmentSlot.MAINHAND);
         });
-        entity.addEffect(new MobEffectInstance(Seffects.CORROSION.get(),60,1 ,true,true));
+        int value = itemStack.getEnchantmentLevel(Senchantments.CORROSIVE_POTENCY.get()) > 0 ? 3:1;
+        entity.addEffect(new MobEffectInstance(Seffects.CORROSION.get(),60,value ,true,true));
         return true;
     }
 

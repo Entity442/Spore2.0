@@ -256,10 +256,31 @@ public class Sitems {
     public  static final RegistryObject<Item> VIGIL_EYE = ITEMS.register("vigil_eye",
             VigilEye::new);
     public  static final RegistryObject<Item> SYMBIOTIC_REAGENT = ITEMS.register("symbiotic_reagent",
-            () -> new BiologicalReagent(new Item.Properties().tab(ScreativeTab.SPORE)){
+            () -> new BiologicalReagent(BiologicalReagent.AcceptedTypes.ALL_TYPES){
                 @Override
                 public Enchantment getAppliedEnchantment() {
                     return Senchantments.SYMBIOTIC_RECONSTITUTION.get();
+                }
+            });
+    public  static final RegistryObject<Item> CRYOGENIC_REAGENT = ITEMS.register("cryogenic_reagent",
+            () -> new BiologicalReagent(BiologicalReagent.AcceptedTypes.WEAPON_TYPES){
+                @Override
+                public Enchantment getAppliedEnchantment() {
+                    return Senchantments.CRYOGENIC_ASPECT.get();
+                }
+            });
+    public  static final RegistryObject<Item> GASTRIC_REAGENT = ITEMS.register("gastric_reagent",
+            () -> new BiologicalReagent(BiologicalReagent.AcceptedTypes.WEAPON_TYPES){
+                @Override
+                public Enchantment getAppliedEnchantment() {
+                    return Senchantments.GASTRIC_SPEWAGE.get();
+                }
+            });
+    public  static final RegistryObject<Item> CORROSIVE_REAGENT = ITEMS.register("corrosive_reagent",
+            () -> new BiologicalReagent(BiologicalReagent.AcceptedTypes.WEAPON_TYPES){
+                @Override
+                public Enchantment getAppliedEnchantment() {
+                    return Senchantments.CORROSIVE_POTENCY.get();
                 }
             });
 
