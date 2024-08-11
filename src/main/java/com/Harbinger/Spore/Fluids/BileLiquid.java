@@ -42,11 +42,6 @@ public class BileLiquid extends FluidType {
                 return FLUID_FLOWING;
             }
 
-            @Override
-            public ResourceLocation getRenderOverlayTexture(Minecraft mc) {
-                return OVERLAY;
-            }
-
         });
     }
 
