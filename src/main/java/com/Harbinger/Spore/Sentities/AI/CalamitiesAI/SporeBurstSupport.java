@@ -37,6 +37,7 @@ public class SporeBurstSupport extends Goal {
     }
 
     private void sporeBurst(List<? extends String> buffs, List<? extends String> debuffs, int range){
+        calamity.playAmbientSound();
         AABB boundingBox = calamity.getBoundingBox().inflate(range);
         List<Entity> entities = calamity.level.getEntities(calamity, boundingBox);
         for (Entity entity : entities) {
