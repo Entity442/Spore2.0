@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "tag": "minecraft:biomass"
+      "tag": "spore:biomass"
     }
   ],
   "result": {
