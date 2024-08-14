@@ -5,6 +5,7 @@ import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.ExtremelySusThings.SporeSavedData;
+import com.Harbinger.Spore.ExtremelySusThings.Utilities;
 import com.Harbinger.Spore.Sentities.AI.*;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.*;
 import com.Harbinger.Spore.Sentities.ArmedInfected;
@@ -184,23 +185,7 @@ public class Infected extends Monster{
     }
 
     public Predicate<LivingEntity> TARGET_SELECTOR = (entity) -> {
-        if (entity instanceof Infected || entity instanceof UtilityEntity){
-            return false;
-        }else if ((entity instanceof AbstractFish || entity instanceof Animal) && !SConfig.SERVER.at_an.get()){
-            return false;
-        }else if (!SConfig.SERVER.blacklist.get().isEmpty()){
-            for(String string : SConfig.SERVER.blacklist.get()){
-                if (string.endsWith(":") && entity.getEncodeId() != null){
-                    String[] mod = string.split(":");
-                    String[] iterations = entity.getEncodeId().split(":");
-                    if (Objects.equals(mod[0], iterations[0])){
-                        return false;
-                    }
-                }
-            }
-            return !SConfig.SERVER.blacklist.get().contains(entity.getEncodeId());
-        }
-        return true;
+        return Utilities.TARGET_SELECTOR.test(entity);
     };
 
     protected void addTargettingGoals(){
