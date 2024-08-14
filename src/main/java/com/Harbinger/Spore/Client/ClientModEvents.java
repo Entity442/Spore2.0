@@ -3,7 +3,10 @@ package com.Harbinger.Spore.Client;
 import com.Harbinger.Spore.Client.Layers.CustomArmorLayer;
 import com.Harbinger.Spore.Client.Models.*;
 import com.Harbinger.Spore.Client.Renderers.*;
-import com.Harbinger.Spore.Core.*;
+import com.Harbinger.Spore.Core.SMenu;
+import com.Harbinger.Spore.Core.SblockEntities;
+import com.Harbinger.Spore.Core.Sentities;
+import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.Particles.AcidParticle;
 import com.Harbinger.Spore.Particles.BloodParticle;
 import com.Harbinger.Spore.Particles.SporeParticle;
@@ -12,8 +15,6 @@ import com.Harbinger.Spore.Spore;
 import com.Harbinger.Spore.sEvents.SItemProperties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -92,16 +93,16 @@ public class ClientModEvents {
         event.registerLayerDefinition(StingerModel.LAYER_LOCATION, StingerModel::createBodyLayer);
         event.registerLayerDefinition(BraureiModel.LAYER_LOCATION, BraureiModel::createBodyLayer);
         event.registerLayerDefinition(ProtoRedesign.LAYER_LOCATION, ProtoRedesign::createBodyLayer);
-        event.registerLayerDefinition(RootsModel.LAYER_LOCATION, RootsModel::createBodyLayer);
         event.registerLayerDefinition(SiegerArrowModel.LAYER_LOCATION, SiegerArrowModel::createBodyLayer);
         event.registerLayerDefinition(DelusionerModel.LAYER_LOCATION, DelusionerModel::createBodyLayer);
         event.registerLayerDefinition(verwahrungModel.LAYER_LOCATION, verwahrungModel::createBodyLayer);
+        event.registerLayerDefinition(RootsModel.LAYER_LOCATION, RootsModel::createBodyLayer);
         event.registerLayerDefinition(GastgeberModel.LAYER_LOCATION, GastgeberModel::createBodyLayer);
         event.registerLayerDefinition(OvergrownSpawnerModel.LAYER_LOCATION, OvergrownSpawnerModel::createBodyLayer);
         event.registerLayerDefinition(brainMatterModel.LAYER_LOCATION, brainMatterModel::createBodyLayer);
         event.registerLayerDefinition(ZoaholicModel.LAYER_LOCATION, ZoaholicModel::createBodyLayer);
         event.registerLayerDefinition(IncubatorModel.LAYER_LOCATION, IncubatorModel::createBodyLayer);
-
+        event.registerLayerDefinition(OutpostWatcherModel.LAYER_LOCATION, OutpostWatcherModel::createBodyLayer);
     }
 
 
@@ -173,6 +174,7 @@ public class ClientModEvents {
         event.registerBlockEntityRenderer(SblockEntities.BRAIN_REMNANTS.get(), new BrainRemnantsRenderer());
         event.registerBlockEntityRenderer(SblockEntities.ZOAHOLIC.get(), new ZoaholicRenderer());
         event.registerBlockEntityRenderer(SblockEntities.INCUBATOR.get(), new IncubatorRenderer());
+        event.registerBlockEntityRenderer(SblockEntities.OUTPOST_WATCHER.get(), new OutpostWatcherRenderer());
     }
 
     @SubscribeEvent
@@ -207,5 +209,7 @@ public class ClientModEvents {
         Minecraft.getInstance().particleEngine.register(Sparticles.BLOOD_PARTICLE.get(),
                 BloodParticle.Provider::new);
     }
+
+
 
 }
