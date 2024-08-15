@@ -7,6 +7,7 @@ import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -18,9 +19,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,4 +97,15 @@ public class Utilities {
         }
         return true;
     };
+
+    public static List<Item> helmetList(){
+        List<Item> values = new ArrayList<>();
+        for (String string : SConfig.SERVER.gas_masks.get()){
+            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(string));
+            if (item != null){
+                values.add(item);
+            }
+        }
+        return values;
+    }
 }
