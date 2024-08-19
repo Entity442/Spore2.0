@@ -136,6 +136,12 @@ public class Spore
             SpawnPlacements.register(Sentities.WENDIGO.get(),
                     SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                     Infected::checkMonsterInfectedRules);
+            SpawnPlacements.register(Sentities.INQUISITOR.get(),
+                    SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    Infected::checkMonsterInfectedRules);
+            SpawnPlacements.register(Sentities.BROTKATZE.get(),
+                    SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    Infected::checkMonsterInfectedRules);
         });
     }
 
