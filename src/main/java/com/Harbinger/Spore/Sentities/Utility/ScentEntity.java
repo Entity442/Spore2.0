@@ -59,9 +59,8 @@ public class ScentEntity extends UtilityEntity {
     boolean checkForNonInfected(Entity entity){
         AABB boundingBox = entity.getBoundingBox().inflate(16);
         List<Entity> entities = entity.level.getEntities(entity, boundingBox ,EntitySelector.NO_CREATIVE_OR_SPECTATOR);
-
         for (Entity en : entities) {
-            if (en instanceof LivingEntity && !(SConfig.SERVER.blacklist.get().contains(en.getEncodeId()) || en instanceof Infected || en instanceof UtilityEntity)){
+            if (en instanceof LivingEntity livingEntity &&  TARGET_SELECTOR.test(livingEntity)){
                 return true;
             }
         }
