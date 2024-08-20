@@ -52,7 +52,7 @@ public class Thorn extends EvolvedInfected {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source.getEntity() instanceof LivingEntity livingEntity){
+        if (source.getEntity() instanceof LivingEntity livingEntity && livingEntity.distanceToSqr(this) < 100D){
             livingEntity.hurt(DamageSource.thorns(this),amount);
         }
         return super.hurt(source, amount);
