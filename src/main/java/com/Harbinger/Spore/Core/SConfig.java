@@ -161,6 +161,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> knight_damage;
         public final ForgeConfigSpec.ConfigValue<Double> knight_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> thorn_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> thorn_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> thorn_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> gastgeber_hp;
         public final ForgeConfigSpec.ConfigValue<Double> gastgeber_damage;
         public final ForgeConfigSpec.ConfigValue<Double> gastgeber_armor;
@@ -388,6 +392,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> villager_ev;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> pil_ev;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> wit_ev;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> husk_ev;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> undespawn;
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_summon;
@@ -508,6 +513,9 @@ public class SConfig {
             this.wit_ev = builder.defineList("Infected Witch Evolutions",
                     Lists.newArrayList(
                             "spore:volatile") , o -> o instanceof String);
+            this.husk_ev = builder.defineList("Infected Husk Evolutions",
+                    Lists.newArrayList(
+                            "spore:thorn") , o -> o instanceof String);
 
             this.undespawn = builder.defineList("Mobs that won't despawn after being created from assimilation",
                     Lists.newArrayList("spore:inf_villager", "spore:inf_pillager", "spore:inf_witch") , o -> o instanceof String);
@@ -882,6 +890,12 @@ public class SConfig {
             this.knight_armor = builder.comment("Default 7").defineInRange("Sets Knight Armor", 7, 1, Double.MAX_VALUE);
             builder.pop();
 
+            builder.push("Vervathorn");
+            this.thorn_hp = builder.comment("Default 40").defineInRange("Sets Vervathorn Max health", 40, 1, Double.MAX_VALUE);
+            this.thorn_damage = builder.comment("Default 7").defineInRange("Sets Vervathorn Damage", 7, 1, Double.MAX_VALUE);
+            this.thorn_armor = builder.comment("Default 10").defineInRange("Sets Vervathorn Armor", 10, 1, Double.MAX_VALUE);
+            builder.pop();
+
             builder.push("Gastgeber");
             this.gastgeber_hp = builder.comment("Default 70").defineInRange("Sets Gastgeber Max health", 70, 1, Double.MAX_VALUE);
             this.gastgeber_damage = builder.comment("Default 7").defineInRange("Sets Gastgeber Damage", 7, 1, Double.MAX_VALUE);
@@ -1138,6 +1152,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> inquisitor_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> brot_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> lacerator_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> thorn_loot;
 
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> name;
@@ -1215,6 +1230,10 @@ public class SConfig {
 
             this.inf_volatile_loot = builder.defineList("Volatile",
                     Lists.newArrayList("spore:mutated_fiber|70|1|5","spore:armor_fragment|80|2|6","spore:mutated_heart|10|1|1","spore:claw_fragment|80|6|9","spore:innards|50|1|1","spore:tumor|100|2|4") , o -> o instanceof String);
+
+            this.thorn_loot = builder.defineList("VervaThorn",
+                    Lists.newArrayList("spore:mutated_fiber|70|3|8","spore:armor_fragment|80|4|14","spore:mutated_heart|10|1|1","spore:claw_fragment|80|6|14") , o -> o instanceof String);
+
 
             this.gastgaber_loot = builder.defineList("Gastgaber",
                     Lists.newArrayList("spore:mutated_fiber|80|5|12","spore:armor_fragment|80|2|6","spore:mutated_heart|10|1|3","spore:claw_fragment|80|6|9","spore:innards|50|1|2","spore:tumor|100|4|8","spore:tendons|60|3|7") , o -> o instanceof String);
