@@ -482,4 +482,12 @@ public class Infected extends Monster{
             armedInfected.enchantItems(living);
         }
     }
+
+    @Override
+    public boolean hasLineOfSight(Entity entity) {
+        if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(Seffects.MARKER.get())){
+            return true;
+        }
+        return super.hasLineOfSight(entity);
+    }
 }
