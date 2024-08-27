@@ -138,6 +138,10 @@ public class Verwa extends Organoid {
         this.entityData.set(BORROW, burrowing + 1);
     }
 
+    public void setStoredMob(String storedMob){
+        entityData.set(STORED_MOB,storedMob);
+    }
+
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, SConfig.SERVER.verwa_hp.get() * SConfig.SERVER.global_health.get())

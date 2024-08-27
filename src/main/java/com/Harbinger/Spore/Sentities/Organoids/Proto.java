@@ -188,7 +188,8 @@ public class Proto extends Organoid implements CasingGenerator {
 
         @Override
         public boolean canUse() {
-            return this.proto.getTarget() != null && checkForScent() && this.proto.random.nextInt(0,20) == 10;
+            Entity target = this.proto.getTarget();
+            return this.proto.tickCount % 40 == 0  && target != null && target.distanceToSqr(proto) < 400 && checkForScent();
         }
 
         private boolean checkForScent() {
@@ -324,7 +325,7 @@ public class Proto extends Organoid implements CasingGenerator {
 
         @Override
         public boolean canUse() {
-            return this.proto.getTarget() != null &&  this.proto.random.nextInt(150) == 0;
+            return this.proto.getTarget() != null && this.proto.tickCount % 100 == 0;
         }
         @Override
         public void start() {
@@ -363,6 +364,10 @@ public class Proto extends Organoid implements CasingGenerator {
     public boolean hurt(DamageSource source, float amount) {
         if(amount > SConfig.SERVER.proto_dpsr.get() && SConfig.SERVER.proto_dpsr.get() > 0){
             return super.hurt(source, (float) (SConfig.SERVER.proto_dpsr.get() * 1F));
+        }
+        if (source.getEntity() != null && Math.random() < 0.3f){
+            for (int i = 0;i<random.nextInt(1,4);i++)
+                SummonHelpers();
         }
         return super.hurt(source, amount);
     }
@@ -468,6 +473,22 @@ public class Proto extends Organoid implements CasingGenerator {
             }
         }
     }
+
+    public void SummonHelpers(){
+        int a = random.nextInt(-12,12);
+        int b = random.nextInt(-12,12);
+        int c = random.nextInt(-4,4);
+        if (level instanceof ServerLevel serverLevel){
+            List<String> hypers = new ArrayList<>(){{add("spore:inquisitor");add("spore:wendigo");add("spore:brot");}};
+            int i = hypers.size();
+            Verwa verwa = new Verwa(Sentities.VERVA.get(),serverLevel);
+            verwa.setStoredMob(hypers.get(random.nextInt(i)));
+            verwa.moveTo(this.getX()+a,this.getY()+c,this.getZ()+b);
+            verwa.tickEmerging();
+            level.addFreshEntity(verwa);
+        }
+    }
+
     private boolean checkForLiquids(BlockPos blockPos){
         AABB aabb = AABB.ofSize(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ()), 14, 14, 14);
         List<BlockPos> liquids = new ArrayList<>();
