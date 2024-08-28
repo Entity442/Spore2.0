@@ -1,9 +1,7 @@
 package com.Harbinger.Spore.Fluids;
 
-import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;

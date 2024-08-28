@@ -396,6 +396,7 @@ public class Sitems {
     public static final RegistryObject<Item> ROOTED_BIOMASS = block(Sblocks.ROOTED_BIOMASS, ScreativeTab.SPORE);
     public static final RegistryObject<Item> BIOMASS_BLOCK = block(Sblocks.BIOMASS_BLOCK, ScreativeTab.SPORE);
     public static final RegistryObject<Item> SICKEN_BIOMASS_BLOCK = block(Sblocks.SICKEN_BIOMASS_BLOCK, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> GASTRIC_BIOMASS_BLOCK = block(Sblocks.GASTRIC_BIOMASS_BLOCK, ScreativeTab.SPORE);
     public static final RegistryObject<Item> CALCIFIED_BIOMASS_BLOCK = block(Sblocks.CALCIFIED_BIOMASS_BLOCK, ScreativeTab.SPORE);
     public static final RegistryObject<Item> MEMBRANE_BLOCK = block(Sblocks.MEMBRANE_BLOCK, ScreativeTab.SPORE);
     public static final RegistryObject<Item> ROOTED_MYCELIUM = block(Sblocks.ROOTED_MYCELIUM, ScreativeTab.SPORE);

@@ -200,13 +200,6 @@ public class Proto extends Organoid implements CasingGenerator {
                     return false;
                 }
             }
-            AABB aabb = this.proto.getBoundingBox().inflate(8);
-            List<Entity> entities1 = this.proto.level.getEntities(this.proto, aabb ,EntitySelector.NO_CREATIVE_OR_SPECTATOR);
-            for (Entity en : entities1) {
-                if (en instanceof Infected){
-                    return false;
-                }
-            }
             return true;
         }
 
