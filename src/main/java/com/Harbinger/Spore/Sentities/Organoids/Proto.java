@@ -47,6 +47,7 @@ public class Proto extends Organoid implements CasingGenerator {
     private static final EntityDataAccessor<Integer> HOSTS = SynchedEntityData.defineId(Mound.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Optional<UUID>> TARGET = SynchedEntityData.defineId(Proto.class, EntityDataSerializers.OPTIONAL_UUID);
     public static final EntityDataAccessor<BlockPos> NODE = SynchedEntityData.defineId(Proto.class, EntityDataSerializers.BLOCK_POS);
+    private int summonDefense = 0;
     public Proto(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         setPersistenceRequired();
@@ -149,6 +150,9 @@ public class Proto extends Organoid implements CasingGenerator {
         }
         if (this.tickCount % 3000 == 0 && SConfig.SERVER.proto_madness.get()){
             this.giveMadness(this);
+        }
+        if (this.summonDefense > 0){
+            --summonDefense;
         }
     }
     public boolean isNunny(){
@@ -358,9 +362,10 @@ public class Proto extends Organoid implements CasingGenerator {
         if(amount > SConfig.SERVER.proto_dpsr.get() && SConfig.SERVER.proto_dpsr.get() > 0){
             return super.hurt(source, (float) (SConfig.SERVER.proto_dpsr.get() * 1F));
         }
-        if (source.getEntity() != null && Math.random() < 0.3f){
+        if (source.getEntity() != null && Math.random() < 0.2f && summonDefense <= 0){
             for (int i = 0;i<random.nextInt(1,4);i++)
                 SummonHelpers();
+            summonDefense = 160;
         }
         return super.hurt(source, amount);
     }
@@ -535,8 +540,11 @@ public class Proto extends Organoid implements CasingGenerator {
 
     @Override
     public boolean hasLineOfSight(Entity entity) {
-        if (entity instanceof LivingEntity livingEntity && TARGET_SELECTOR.test(livingEntity)){
-            return true;
+        if (entity instanceof LivingEntity livingEntity){
+            if (livingEntity.hasEffect(Seffects.MARKER.get())){
+                return true;
+            }
+            return (livingEntity instanceof Player || SConfig.SERVER.proto_sapient_target.get().contains(livingEntity.getEncodeId())) && !livingEntity.hasEffect(Seffects.SYMBIOSIS.get());
         }
         return super.hasLineOfSight(entity);
     }
