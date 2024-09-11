@@ -1,8 +1,7 @@
 package com.Harbinger.Spore.Sentities.Projectile;
 
-import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Core.Sentities;
-import com.Harbinger.Spore.Core.Sitems;
+import com.Harbinger.Spore.Core.*;
+import com.Harbinger.Spore.Fluids.BileLiquid;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -11,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -129,18 +129,18 @@ public class ThrownSpear extends AbstractArrow {
                 return;
             }
 
-            if (entity instanceof LivingEntity) {
-                LivingEntity livingentity1 = (LivingEntity)entity;
+            if (entity instanceof LivingEntity livingEntity) {
                 if (entity1 instanceof LivingEntity) {
-                    EnchantmentHelper.doPostHurtEffects(livingentity1, entity1);
-                    EnchantmentHelper.doPostDamageEffects((LivingEntity)entity1, livingentity1);
+                    EnchantmentHelper.doPostHurtEffects(livingEntity, entity1);
+                    EnchantmentHelper.doPostDamageEffects((LivingEntity)entity1, livingEntity);
                 }
                 if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT , this.spearItem) > 0) {
                     int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, this.spearItem);
                     entity.setSecondsOnFire(4 * j);
                 }
+                abstractEffects(this.spearItem,livingEntity);
 
-                this.doPostHurtEffects(livingentity1);
+                this.doPostHurtEffects(livingEntity);
             }
         }
 
@@ -195,5 +195,18 @@ public class ThrownSpear extends AbstractArrow {
 
     public boolean shouldRender(double p_37588_, double p_37589_, double p_37590_) {
         return true;
+    }
+
+    public static void abstractEffects(ItemStack stack, LivingEntity livingEntity){
+        if (stack.getEnchantmentLevel(Senchantments.CORROSIVE_POTENCY.get())>0){
+            livingEntity.addEffect(new MobEffectInstance(Seffects.CORROSION.get(),200,1));
+        }
+        if (stack.getEnchantmentLevel(Senchantments.GASTRIC_SPEWAGE.get())>0){
+            for (MobEffectInstance instance : BileLiquid.bileEffects())
+                livingEntity.addEffect(instance);
+        }
+        if (stack.getEnchantmentLevel(Senchantments.CRYOGENIC_ASPECT.get())>0){
+            livingEntity.setTicksFrozen(livingEntity.getTicksFrozen()+300);
+        }
     }
 }

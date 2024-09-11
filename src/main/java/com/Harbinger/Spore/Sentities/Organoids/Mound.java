@@ -409,7 +409,17 @@ public class Mound extends Organoid implements Enemy {
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> dataAccessor) {
+        double health = SConfig.SERVER.mound_hp.get() * entityData.get(AGE) * SConfig.SERVER.global_health.get();
+        double armor = SConfig.SERVER.mound_armor.get() * entityData.get(AGE) * SConfig.SERVER.global_armor.get();
         if (AGE.equals(dataAccessor)){
+            AttributeInstance hp = this.getAttribute(Attributes.MAX_HEALTH);
+            AttributeInstance def = this.getAttribute(Attributes.ARMOR);
+            if (hp != null){
+                hp.setBaseValue(health);
+            }
+            if (def != null){
+                def.setBaseValue(armor);
+            }
             this.refreshDimensions();
         }
         super.onSyncedDataUpdated(dataAccessor);
