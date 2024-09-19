@@ -175,6 +175,10 @@ public class Sentities {
             () -> EntityType.Builder.of(Inquisitor::new, INFECTED).sized(1f, 2.8f)
                     .build(new ResourceLocation(Spore.MODID, "inquisitor").toString()));
 
+    public static final RegistryObject<EntityType<Specter>> SPECTER = SPORE_ENTITIES.register("specter",
+            () -> EntityType.Builder.of(Specter::new, INFECTED).sized(1.1f, 2.5f)
+                    .build(new ResourceLocation(Spore.MODID, "specter").toString()));
+
     public static final RegistryObject<EntityType<Brauerei>> BRAUREI = SPORE_ENTITIES.register("braurei",
             () -> EntityType.Builder.of(Brauerei::new, ORGANOID).sized(3f, 3f)
                     .build(new ResourceLocation(Spore.MODID, "braurei").toString()));

@@ -22,6 +22,7 @@ import com.Harbinger.Spore.Sentities.Organoids.*;
 import com.Harbinger.Spore.Sentities.Utility.GastGeber;
 import com.Harbinger.Spore.Sentities.Utility.Illusion;
 import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
+import com.Harbinger.Spore.Sentities.Utility.Specter;
 import com.Harbinger.Spore.Sentities.Variants.SlasherVariants;
 import com.Harbinger.Spore.Sitems.InfectedCombatShovel;
 import com.Harbinger.Spore.Sitems.InfectedMaul;
@@ -327,6 +328,15 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Target ? " + delusionare.getTarget()),false);
                                     player.displayClientMessage(Component.literal("Magic state " + delusionare.getSpellById() + " casting "+delusionare.isCasting()),false);
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
+                            }else if(entity1 instanceof Specter specter) {
+                                player.displayClientMessage(Component.literal("Entity "+ specter.getEncodeId() + " " + specter.getCustomName()),false);
+                                player.displayClientMessage(Component.literal("Current Health " + specter.getHealth()),false);
+                                player.displayClientMessage(Component.literal("Buffs " + specter.getActiveEffects()),false);
+                                player.displayClientMessage(Component.literal("Target ? " + specter.getTarget()),false);
+                                player.displayClientMessage(Component.literal("Target Pos " + specter.getTargetPos()),false);
+                                player.displayClientMessage(Component.literal("Stomach " + specter.getStomach()),false);
+                                player.displayClientMessage(Component.literal("Biomass " + specter.getBiomass()),false);
+                                player.displayClientMessage(Component.literal("-------------------------"),false);
                             }
                         }
                     }
@@ -596,6 +606,13 @@ public class HandlerEvents {
             float original_damage = event.getAmount();
             AttributeInstance attack = slasher.getAttribute(Attributes.ATTACK_DAMAGE);
             double recalculated_damage = attack != null ? attack.getValue()/2 : original_damage;
+            if (original_damage < recalculated_damage){
+                event.setAmount((float) recalculated_damage);
+            }
+        }if (living instanceof Specter specter) {
+            float original_damage = event.getAmount();
+            AttributeInstance attack = specter.getAttribute(Attributes.ATTACK_DAMAGE);
+            double recalculated_damage = attack != null ? attack.getValue()/4 : original_damage;
             if (original_damage < recalculated_damage){
                 event.setAmount((float) recalculated_damage);
             }

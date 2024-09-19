@@ -176,6 +176,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> stalker_damage;
         public final ForgeConfigSpec.ConfigValue<Double> stalker_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> specter_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> specter_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> specter_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> scamper_hp;
         public final ForgeConfigSpec.ConfigValue<Double> scamper_damage;
         public final ForgeConfigSpec.ConfigValue<Double> scamper_armor;
@@ -845,6 +849,12 @@ public class SConfig {
             this.stalker_armor = builder.comment("Default 3").defineInRange("Sets Stalker Armor", 3, 0, Double.MAX_VALUE);
             builder.pop();
 
+            builder.push("Specter");
+            this.specter_hp = builder.comment("Default 70").defineInRange("Sets Specter Max health", 70, 1, Double.MAX_VALUE);
+            this.specter_damage = builder.comment("Default 10").defineInRange("Sets Specter Damage", 10, 1, Double.MAX_VALUE);
+            this.specter_armor = builder.comment("Default 8").defineInRange("Sets Specter Armor", 8, 0, Double.MAX_VALUE);
+            builder.pop();
+
             builder.push("Plagued");
             this.plagued_hp = builder.comment("Default 30").defineInRange("Sets Plagued Max health", 30, 1, Double.MAX_VALUE);
             this.plagued_damage = builder.comment("Default 5").defineInRange("Sets Plagued Damage", 5, 1, Double.MAX_VALUE);
@@ -1155,6 +1165,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> brot_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> lacerator_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> thorn_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> specter_loot;
 
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> name;
@@ -1239,6 +1250,8 @@ public class SConfig {
 
             this.gastgaber_loot = builder.defineList("Gastgaber",
                     Lists.newArrayList("spore:mutated_fiber|80|5|12","spore:armor_fragment|80|2|6","spore:mutated_heart|10|1|3","spore:claw_fragment|80|6|9","spore:innards|50|1|2","spore:tumor|100|4|8","spore:tendons|60|3|7") , o -> o instanceof String);
+            this.specter_loot = builder.defineList("Specter",
+                    Lists.newArrayList("spore:mutated_fiber|80|5|17","spore:armor_fragment|80|2|9","spore:mutated_heart|10|1|3","spore:claw_fragment|80|6|9","spore:innards|50|1|2","spore:tumor|100|4|8","spore:tendons|60|3|7") , o -> o instanceof String);
 
 
             this.sca_loot = builder.defineList("Scamper",
@@ -1330,7 +1343,7 @@ public class SConfig {
             builder.pop();
             builder.push("Structure data");
             this.biomass_lump_kills = builder.comment("Default 5").defineInRange("Biomass Lump minimal kills", 5, 0, Integer.MAX_VALUE);
-            this.hive_spawn_kills = builder.comment("Default 25").defineInRange("Reconstructed Mind Block kills", 25, 0, Integer.MAX_VALUE);
+            this.hive_spawn_kills = builder.comment("Default 40").defineInRange("Reconstructed Mind Block kills", 40, 0, Integer.MAX_VALUE);
             this.spawner_range = builder.comment("Default 32").defineInRange("The range of the overgrown spawner", 32, 0, Integer.MAX_VALUE);
             this.zoaholic_range = builder.comment("Default 450").defineInRange("The range of the Zoaholic", 450, 0, Integer.MAX_VALUE);
             this.outpost_range = builder.comment("Default 50").defineInRange("The range of the Outpost watcher", 50, 0, Integer.MAX_VALUE);
