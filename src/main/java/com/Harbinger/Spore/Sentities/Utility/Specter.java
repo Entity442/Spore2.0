@@ -294,7 +294,7 @@ public class Specter extends UtilityEntity implements Enemy {
                     int amount = stack.getCount() > 1 ? this.random.nextInt(stack.getCount()) : stack.getCount();
                     this.playSound(SoundEvents.GENERIC_EAT);
                     stack.shrink(amount);
-                    this.setStomach((int) ((this.getStomach()+properties.getNutrition() + properties.getSaturationModifier())*amount));
+                    this.setStomach(this.getStomach()+(int) (properties.getNutrition() + properties.getSaturationModifier())*amount);
                 }
             }
         }else{
