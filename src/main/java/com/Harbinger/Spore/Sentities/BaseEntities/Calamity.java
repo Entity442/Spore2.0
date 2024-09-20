@@ -15,6 +15,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -24,6 +25,8 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.level.Level;
@@ -86,7 +89,11 @@ public class Calamity extends UtilityEntity implements Enemy {
 
     @Override
     public void awardKillScore(Entity entity, int i, DamageSource damageSource) {
+        AttributeInstance armor = this.getAttribute(Attributes.ARMOR);
         this.entityData.set(KILLS, entityData.get(KILLS) + 1);
+        if (canCalcify(entity) && armor != null){
+            armor.setBaseValue(armor.getValue()+1);
+        }
         super.awardKillScore(entity, i, damageSource);
     }
 
@@ -168,6 +175,11 @@ public class Calamity extends UtilityEntity implements Enemy {
     public int getKills() {
         return entityData.get(KILLS);
     }
+
+    public boolean canCalcify(Entity entity){
+        return entity.getType().is(EntityTypeTags.SKELETONS);
+    }
+
 
     @Override
     public Packet<?> getAddEntityPacket() {

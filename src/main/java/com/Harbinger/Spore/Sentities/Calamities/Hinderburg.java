@@ -167,6 +167,11 @@ public class Hinderburg extends Calamity implements FlyingInfected , TrueCalamit
     }
 
     @Override
+    public boolean canCalcify(Entity entity) {
+        return false;
+    }
+
+    @Override
     public boolean hurt(CalamityMultipart calamityMultipart, DamageSource source, float value) {
         if (calamityMultipart == this.mouth){
             this.hurt(source,value * 2f);
