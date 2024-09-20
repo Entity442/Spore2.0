@@ -55,6 +55,7 @@ public class Spore
         Sfluids.SPORE_FLUID_TYPE.register(modEventBus);
         Sfluids.SPORE_FLUID.register(modEventBus);
         SMenu.register(modEventBus);
+        Spaintings.register(modEventBus);
         SblockEntities.register(modEventBus);
         final DeferredRegister<Codec<? extends BiomeModifier>> biomeModifiers =
                 DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Spore.MODID);
