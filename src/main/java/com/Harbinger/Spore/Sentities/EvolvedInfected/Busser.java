@@ -193,12 +193,6 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected, 
     @Override
     protected void customServerAiStep() {
         if (this.getTypeVariant() == 1){
-            AttributeInstance armor = this.getAttribute(Attributes.ARMOR);
-            AttributeInstance health = this.getAttribute(Attributes.MAX_HEALTH);
-            if (armor != null && health != null){
-                armor.setBaseValue(SConfig.SERVER.bus_armor.get() * SConfig.SERVER.global_armor.get() * 2);
-                health.setBaseValue(SConfig.SERVER.bus_hp.get() * SConfig.SERVER.global_health.get() * 2);
-            }
             if (this.isVehicle()){
                 this.setDeltaMovement(this.getDeltaMovement().add(0,0.025,0));
                 if (this.flytimeV < 200){
@@ -244,6 +238,12 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected, 
                                         @Nullable CompoundTag p_146750_) {
         BusserVariants variant = Util.getRandom(BusserVariants.values(), this.random);
         setVariant(variant);
+        if (this.getTypeVariant() == 1){
+            AttributeInstance health = this.getAttribute(Attributes.MAX_HEALTH);
+            AttributeInstance armor = this.getAttribute(Attributes.ARMOR);
+            if (health != null){health.setBaseValue(SConfig.SERVER.bus_hp.get() * 2 * SConfig.SERVER.global_health.get());}
+            if (armor != null){armor.setBaseValue(SConfig.SERVER.bus_armor.get() * 2 * SConfig.SERVER.global_armor.get());}
+        }
         return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_);
     }
 
@@ -288,7 +288,6 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected, 
         double dy = entity.getY() + entity.getEyeHeight() - 2;
         double dz = entity.getZ() - this.getZ();
         stinger.shoot(dx, dy - stinger.getY() + Math.hypot(dx, dz) * 0.2F, dz, 1f * 2, 12.0F);
-        this.level.addFreshEntity(stinger);
         this.level.addFreshEntity(stinger);
         this.setDeltaMovement(this.getDeltaMovement().add(0,0.3,0));
     }
