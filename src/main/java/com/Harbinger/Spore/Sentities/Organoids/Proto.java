@@ -322,19 +322,28 @@ public class Proto extends Organoid implements CasingGenerator {
 
         @Override
         public boolean canUse() {
-            return this.proto.getTarget() != null && this.proto.tickCount % 100 == 0;
+            return this.proto.getTarget() != null && this.proto.tickCount % 200 == 0;
         }
         @Override
         public void start() {
-            SummonDefense();
+            LivingEntity target = this.proto.getTarget();
+            if (target != null && checkForOrganoids(target)){
+                for (int i = 0; i<proto.random.nextInt(3,6);i++){
+                    SummonDefense(target);
+                }
+            }
             super.start();
         }
 
 
     }
-    private void SummonDefense() {
+    protected boolean checkForOrganoids(Entity entity){
+        AABB aabb = entity.getBoundingBox().inflate(8);
+        List<Entity> entities = level.getEntities(this,aabb,entity1 -> { return entity1 instanceof Organoid;});
+        return entities.size() <= 4;
+    }
+    private void SummonDefense(LivingEntity target) {
         List<? extends String> summons = SConfig.SERVER.proto_summonable_troops.get();
-        LivingEntity target = this.getTarget();
         int x = random.nextInt(-10,10);
         int z = random.nextInt(-10,10);
         if (target != null && this.level instanceof ServerLevelAccessor world){
