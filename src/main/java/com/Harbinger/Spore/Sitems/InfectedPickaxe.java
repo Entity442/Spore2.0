@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sitems;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.ScreativeTab;
 import com.Harbinger.Spore.Core.Sitems;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
@@ -54,7 +55,7 @@ public class InfectedPickaxe extends PickaxeItem {
 
             public Ingredient getRepairIngredient() {
                 return Ingredient.of(Sitems.BIOMASS.get());
-            }}, 3, -3f, new Item.Properties());
+            }}, 3, -3f, new Item.Properties().tab(ScreativeTab.SPORE));
         UUID BONUS_REACH_MODIFIER_UUID = UUID.fromString("30a9271c-d6b2-4651-b088-800acc43f282");
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", SConfig.SERVER.inf_pickaxe_damage.get() -1, AttributeModifier.Operation.ADDITION));
