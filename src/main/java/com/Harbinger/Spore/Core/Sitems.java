@@ -244,6 +244,8 @@ public class Sitems {
             () -> new InfectedGreatBow( new Item.Properties().tab(ScreativeTab.SPORE).durability(SConfig.SERVER.bow_durability.get())));
     public  static final RegistryObject<Item> MAUL = ITEMS.register("maul",
             InfectedMaul::new);
+    public  static final RegistryObject<Item> COMBAT_PICKAXE = ITEMS.register("combat_pickaxe",
+            InfectedPickaxe::new);
     public  static final RegistryObject<Item> SCYTHE = ITEMS.register("scythe",
             InfectedScythe::new);
     public  static final RegistryObject<Item> COMBAT_SHOVEL = ITEMS.register("combat_shovel",
