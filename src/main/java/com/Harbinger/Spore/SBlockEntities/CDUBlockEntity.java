@@ -127,8 +127,8 @@ public class CDUBlockEntity extends BlockEntity{
                 for (Entity entity : entities){
                     if (entity instanceof LivingEntity livingEntity &&
                             (livingEntity.getType().is(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES))){
-                        livingEntity.hurt(DamageSource.FREEZE,5);
                         livingEntity.setTicksFrozen(livingEntity.getTicksFrozen()+100);
+                        livingEntity.hurt(DamageSource.FREEZE,5);
                     }
                     if (entity instanceof ScentEntity || entity instanceof InfectionTendril){
                         entity.discard();

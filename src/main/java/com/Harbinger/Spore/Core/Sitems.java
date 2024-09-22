@@ -410,6 +410,7 @@ public class Sitems {
     public static final RegistryObject<Item> FUNGAL_SHELL = block(Sblocks.FUNGAL_SHELL, ScreativeTab.SPORE);
     public static final RegistryObject<Item> ORGANITE = block(Sblocks.ORGANITE, ScreativeTab.SPORE);
     public static final RegistryObject<Item> FREEZE_BURNED_BIOMASS = block(Sblocks.FREEZE_BURNED_BIOMASS, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> FROZEN_REMAINS = block(Sblocks.FROZEN_REMAINS, ScreativeTab.SPORE);
 
     public static final RegistryObject<Item> INFESTED_DEEPSLATE = block(Sblocks.INFESTED_DEEPSLATE, ScreativeTab.SPORE);
     public static final RegistryObject<Item> INFESTED_DIRT = block(Sblocks.INFESTED_DIRT, ScreativeTab.SPORE);
