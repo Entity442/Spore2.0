@@ -95,6 +95,10 @@ public class Sentities {
             () -> EntityType.Builder.of(Thorn::new, INFECTED).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "thorn").toString()));
 
+    public static final RegistryObject<EntityType<Jagdhund>> JAGD = SPORE_ENTITIES.register("jagd",
+            () -> EntityType.Builder.of(Jagdhund::new, INFECTED).sized(1.3f, 1.1f)
+                    .build(new ResourceLocation(Spore.MODID, "jagd").toString()));
+
     public static final RegistryObject<EntityType<Spitter>> SPITTER = SPORE_ENTITIES.register("spitter",
             () -> EntityType.Builder.of(Spitter::new, INFECTED).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "spitter").toString()));

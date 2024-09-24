@@ -169,7 +169,7 @@ public class Wendigo extends Hyper {
         }
     }
     public static boolean shouldDropItemsPerSlot(EquipmentSlot slot){
-        return true;
+        return SConfig.SERVER.wendigo_disarmor.get();
     }
     public List<SoundEvent> LureList(){
         List<SoundEvent> values = new ArrayList<>();
