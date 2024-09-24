@@ -2,15 +2,12 @@ package com.Harbinger.Spore.Effect;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
-import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.ExtremelySusThings.CoolDamageSources;
 import com.Harbinger.Spore.ExtremelySusThings.Utilities;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -31,9 +28,6 @@ public class Mycelium extends MobEffect {
             }else {
                 entity.hurt(CoolDamageSources.MYCELIUM_OVERTAKE, 1.0F);
             }
-            if (entity.tickCount % 100 == 0 && intense > 1){
-                spreadLowerPotency(entity,intense);
-            }
         }
         }
 
@@ -50,21 +44,5 @@ public class Mycelium extends MobEffect {
             }
         }
         return false;
-    }
-
-    public void spreadLowerPotency(LivingEntity entity,int intensity){
-        AABB aabb = entity.getBoundingBox().inflate(6);
-        List<Entity> entityList = entity.level.getEntities(entity,aabb);
-        for (Entity entity2 : entityList){
-            if (entity2 instanceof LivingEntity livingEntity && Utilities.TARGET_SELECTOR.test(livingEntity) && !livingEntity.hasEffect(Seffects.MYCELIUM.get())){
-                livingEntity.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(),200,intensity-1));
-            }
-        }
-        if (entity.level instanceof ServerLevel serverLevel){
-            double x0 = entity.getX() - (entity.getRandom().nextFloat() - 0.1) * 0.1D;
-            double y0 = entity.getY() + (entity.getRandom().nextFloat() - 0.25) * 0.25D * 5;
-            double z0 = entity.getZ() + (entity.getRandom().nextFloat() - 0.1) * 0.1D;
-            serverLevel.sendParticles(Sparticles.SPORE_PARTICLE.get(), x0, y0, z0, 4,0, 0, 0,1);
-        }
     }
 }
