@@ -63,25 +63,25 @@ public class Vigil extends Organoid{
     }
     @Override
     public int getEmerge_tick(){
-        return 180;
+        return isStalker() ? 90 : 180;
     }
 
     @Override
     public int getBorrow_tick() {
-        return 200;
+        return isStalker() ? 100 : 200;
     }
 
     @Override
     public void tickBurrowing(){
         int burrowing = this.entityData.get(BORROW);
         if (burrowing > this.getBorrow_tick()) {
+            burrowing = -1;
             if (this.isStalker() && this.getTarget() != null){
                 this.ReEmerge();
             }else{
                 this.discard();
                 this.TimeToLeave();
             }
-            burrowing = -1;
         }
         this.entityData.set(BORROW, burrowing + 1);
     }
