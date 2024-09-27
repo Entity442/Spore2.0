@@ -18,6 +18,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
@@ -38,6 +39,7 @@ public class Vigil extends Organoid{
     private static final EntityDataAccessor<Integer> TRIGGER = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> WAVE_SIZE = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> TIMER = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> STALKER = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.BOOLEAN);
     private int summon_counter;
     @Nullable
     private Proto proto;
@@ -57,6 +59,7 @@ public class Vigil extends Organoid{
         this.entityData.define(WAVE_SIZE, 0);
         this.entityData.define(TIMER, 0);
         this.entityData.define(TRIGGER, 0);
+        this.entityData.define(STALKER, false);
     }
     @Override
     public int getEmerge_tick(){
@@ -72,8 +75,12 @@ public class Vigil extends Organoid{
     public void tickBurrowing(){
         int burrowing = this.entityData.get(BORROW);
         if (burrowing > this.getBorrow_tick()) {
-            this.discard();
-            this.TimeToLeave();
+            if (this.isStalker() && this.getTarget() != null){
+                this.ReEmerge();
+            }else{
+                this.discard();
+                this.TimeToLeave();
+            }
             burrowing = -1;
         }
         this.entityData.set(BORROW, burrowing + 1);
@@ -97,6 +104,11 @@ public class Vigil extends Organoid{
         entityData.set(WAVE_SIZE,i);
     }
     public int getTimer(){return entityData.get(TIMER);}
+    public void setStalker(boolean i){
+        refreshDimensions();
+        entityData.set(STALKER,i);
+    }
+    public boolean isStalker(){return entityData.get(STALKER);}
     @Override
     public boolean isNoAi() {
         return this.isBurrowing() || this.isEmerging();
@@ -126,6 +138,7 @@ public class Vigil extends Organoid{
         tag.putInt("trigger",entityData.get(TRIGGER));
         tag.putInt("timer",entityData.get(TIMER));
         tag.putInt("wave_size",entityData.get(WAVE_SIZE));
+        tag.putBoolean("stalker",entityData.get(STALKER));
     }
 
     @Override
@@ -134,6 +147,7 @@ public class Vigil extends Organoid{
         entityData.set(TRIGGER, tag.getInt("trigger"));
         entityData.set(TIMER, tag.getInt("timer"));
         entityData.set(WAVE_SIZE, tag.getInt("wave_size"));
+        entityData.set(STALKER, tag.getBoolean("stalker"));
     }
 
     @Override
@@ -168,7 +182,11 @@ public class Vigil extends Organoid{
                 }}
         }
     }
-
+    public void ReEmerge(){
+        entityData.set(TIMER,0);
+        this.randomTeleport(this.getX()+random.nextInt(-30,30),this.getY(),this.getZ()+random.nextInt(-30,30),false);
+        tickEmerging();
+    }
     boolean checkForScents(){
         AABB aabb = this.getBoundingBox().inflate(16);
         List<ScentEntity> entities = this.level.getEntitiesOfClass(ScentEntity.class, aabb);
@@ -365,5 +383,18 @@ public class Vigil extends Organoid{
         this.goalSelector.addGoal(2 ,new WatcherMobSummon(this));
         this.goalSelector.addGoal(3 ,new RandomLookAroundGoal(this));
         super.registerGoals();
+    }
+
+    @Override
+    public EntityDimensions getDimensions(Pose pose) {
+        return this.isStalker() ? super.getDimensions(pose).scale(1.2f)  : super.getDimensions(pose);
+    }
+
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_146746_, DifficultyInstance p_146747_,
+                                        MobSpawnType p_146748_, @Nullable SpawnGroupData p_146749_,
+                                        @Nullable CompoundTag p_146750_) {
+        setStalker(Math.random() < 0.3f);
+        return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_);
     }
 }
