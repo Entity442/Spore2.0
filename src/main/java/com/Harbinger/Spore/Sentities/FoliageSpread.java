@@ -28,13 +28,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface FoliageSpread {
-    default boolean isInTag(BlockState state){
-        return state.is(TagKey.create(ForgeRegistries.BLOCKS.getRegistryKey(),new ResourceLocation(Spore.MODID,"removable_foliage")));
-    }
     default void SpreadInfection(Level level, double range, BlockPos pos){
          if (SConfig.SERVER.mound_foliage.get()){
              additionPlacers(level,pos,range);
-             List<BlockPos> positionWithFoliage = new ArrayList<>();
              for(int i = 0; i <= 2*range; ++i) {
                 for(int j = 0; j <= 2*range; ++j) {
                     for(int k = 0; k <= 2*range; ++k) {
@@ -43,14 +39,14 @@ public interface FoliageSpread {
                             if (distance<range+(0.5)){
                                 BlockPos blockpos = pos.offset( i-(int)range,j-(int)range,k-(int)range);
                                 BlockState blockstate = level.getBlockState(blockpos);
-                                SpreadFoliageAndConvert(level,blockstate,blockpos,true);
+                                SpreadFoliageAndConvert(level,blockstate,blockpos);
                             }}}}}
 
          }else{
              additionIgnoreConfigPlacers(level,pos,range);
          }
     }
-    default void SpreadFoliageAndConvert(Level level,BlockState blockstate,BlockPos blockpos,boolean value){
+    default void SpreadFoliageAndConvert(Level level,BlockState blockstate,BlockPos blockpos){
         BlockState nord = level.getBlockState(blockpos.north());
         BlockState south = level.getBlockState(blockpos.south());
         BlockState west = level.getBlockState(blockpos.west());
@@ -70,16 +66,16 @@ public interface FoliageSpread {
         if (Math.random() < 0.2){
             convertWood(level,blockstate,blockpos);
         }
-        if (Math.random() < 0.01 && value){
+        if (Math.random() < 0.01){
             placeGroundFoliage(above,level,blockpos,blockstate);
         }
-        if (Math.random() < 0.01 && value){
+        if (Math.random() < 0.01){
             placeWaterFoliage(above,level,blockpos,blockstate);
         }
-        if (Math.random() < 0.01 && value){
+        if (Math.random() < 0.01){
             placeHangingFoliage(below,level,blockpos,blockstate);
         }
-        if (Math.random() < 0.01 && value){
+        if (Math.random() < 0.01){
             placeWallFoliage(nord,south,west,east,nordT,southT,westT,eastT,level,blockpos,blockstate);
         }
     }
