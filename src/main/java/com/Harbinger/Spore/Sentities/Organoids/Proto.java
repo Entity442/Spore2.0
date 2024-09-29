@@ -193,7 +193,7 @@ public class Proto extends Organoid implements CasingGenerator {
         @Override
         public boolean canUse() {
             Entity target = this.proto.getTarget();
-            return this.proto.tickCount % 40 == 0  && target != null && target.distanceToSqr(proto) < 400 && checkForScent();
+            return this.proto.tickCount % 40 == 0  && target != null && target.distanceToSqr(proto) < 400D && checkForScent();
         }
 
         private boolean checkForScent() {
@@ -552,8 +552,10 @@ public class Proto extends Organoid implements CasingGenerator {
         if (entity instanceof LivingEntity livingEntity){
             if (livingEntity.hasEffect(Seffects.MARKER.get())){
                 return true;
+            }else if ((livingEntity instanceof Player || SConfig.SERVER.proto_sapient_target.get().contains(livingEntity.getEncodeId())) && !livingEntity.hasEffect(Seffects.SYMBIOSIS.get())){
+                return true;
             }
-            return (livingEntity instanceof Player || SConfig.SERVER.proto_sapient_target.get().contains(livingEntity.getEncodeId())) && !livingEntity.hasEffect(Seffects.SYMBIOSIS.get());
+            return super.hasLineOfSight(entity);
         }
         return super.hasLineOfSight(entity);
     }
