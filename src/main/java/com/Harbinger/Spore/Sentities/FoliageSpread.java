@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sentities;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sblocks;
+import com.Harbinger.Spore.Sblocks.GenericFoliageBlock;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,6 +17,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -29,7 +32,8 @@ import java.util.Map;
 
 public interface FoliageSpread {
     default void SpreadInfection(Level level, double range, BlockPos pos){
-         if (SConfig.SERVER.mound_foliage.get()){
+        if (!level.isClientSide)
+            if (SConfig.SERVER.mound_foliage.get()){
              additionPlacers(level,pos,range);
              for(int i = 0; i <= 2*range; ++i) {
                 for(int j = 0; j <= 2*range; ++j) {
@@ -42,9 +46,9 @@ public interface FoliageSpread {
                                 SpreadFoliageAndConvert(level,blockstate,blockpos);
                             }}}}}
 
-         }else{
+            }else{
              additionIgnoreConfigPlacers(level,pos,range);
-         }
+            }
     }
     default void SpreadFoliageAndConvert(Level level,BlockState blockstate,BlockPos blockpos){
         BlockState nord = level.getBlockState(blockpos.north());
@@ -59,12 +63,13 @@ public interface FoliageSpread {
         boolean eastT = !east.isSolidRender(level,blockpos.east());
         boolean aboveT = !above.isSolidRender(level,blockpos.above());
         boolean belowT = !below.isSolidRender(level,blockpos.below());
-        if (Math.random() < 0.02 && blockstate.isSolidRender(level,blockpos)
+        if (Math.random() < 0.1 && blockstate.isSolidRender(level,blockpos)
                 && (nordT || southT || westT || eastT || aboveT || belowT)){
             convertBlocks(blockstate,level,blockpos);
         }
         if (Math.random() < 0.2){
             convertWood(level,blockstate,blockpos);
+            placeRottenBush(above,level,blockpos,blockstate);
         }
         if (Math.random() < 0.01){
             placeGroundFoliage(above,level,blockpos,blockstate);
@@ -86,16 +91,21 @@ public interface FoliageSpread {
     }
 
     default void placeGroundFoliage(BlockState above,Level level,BlockPos blockpos,BlockState blockstate){
-        if ((above.isAir() || level.getBlockState(blockpos).is(BlockTags.REPLACEABLE_PLANTS)) && blockstate.isSolidRender(level ,blockpos)){
+        if (above.isAir() && blockstate.isSolidRender(level ,blockpos)){
             BlockState block1 =  (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.create(new ResourceLocation("spore:ground_foliage")))
-                    .getRandomElement(RandomSource.create()).orElse(Blocks.AIR)).defaultBlockState();
+                    .getRandomElement(RandomSource.create()).orElse(Sblocks.GROWTHS_BIG.get())).defaultBlockState();
             level.setBlock(blockpos.above(),block1,3);
+        }
+    }
+    default void placeRottenBush(BlockState above,Level level,BlockPos blockpos,BlockState blockstate){
+        if (above.getBlock() instanceof BushBlock && !(above.getBlock() instanceof GenericFoliageBlock) && blockstate.isSolidRender(level ,blockpos)){
+            level.setBlock(blockpos.above(),Sblocks.ROTTEN_BUSH.get().defaultBlockState(), 3);
         }
     }
     default void placeWaterFoliage(BlockState above,Level level,BlockPos blockpos,BlockState blockstate){
         BlockState block5 =  (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.create(new ResourceLocation("spore:underwater_blocks")))
-                .getRandomElement(RandomSource.create()).orElse(Blocks.WATER)).defaultBlockState();
-        if (blockstate.isSolidRender(level,blockpos ) && (above.getFluidState().is(Fluids.WATER) || above.getFluidState().is(Fluids.FLOWING_WATER))){
+                .getRandomElement(RandomSource.create()).orElse(Sblocks.GROWTHS_SMALL.get())).defaultBlockState();
+        if (blockstate.isSolidRender(level,blockpos ) && above.getFluidState().is(Fluids.WATER)){
             if (block5.getBlock().getStateDefinition().getProperty("waterlogged") instanceof BooleanProperty property){
                 level.setBlock(blockpos.above(),block5.setValue(property, true),3);
             }else {
@@ -106,7 +116,7 @@ public interface FoliageSpread {
     default void placeHangingFoliage(BlockState below,Level level,BlockPos blockpos,BlockState blockstate){
         if (below.isAir() && blockstate.isSolidRender(level ,blockpos)){
             BlockState block2 =  (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.create(new ResourceLocation("spore:roof_foliage")))
-                    .getRandomElement(RandomSource.create()).orElse(Blocks.AIR)).defaultBlockState();
+                    .getRandomElement(RandomSource.create()).orElse(Sblocks.FUNGAL_ROOTS.get())).defaultBlockState();
             if (block2.getBlock().getStateDefinition().getProperty("hanging") instanceof BooleanProperty property){
                 level.setBlock(blockpos.below(),block2.setValue(property, true),3);
             }else {
@@ -115,7 +125,7 @@ public interface FoliageSpread {
     default void placeWallFoliage(BlockState nord,BlockState south,BlockState west,BlockState east,boolean nordT,boolean southT,boolean westT,boolean eastT,Level level,BlockPos blockpos,BlockState blockstate){
         if (blockstate.isSolidRender(level , blockpos) && (nordT || southT || westT || eastT)){
             BlockState block3 =  (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.create(new ResourceLocation("spore:wall_foliage")))
-                    .getRandomElement(RandomSource.create()).orElse(Blocks.AIR)).defaultBlockState();
+                    .getRandomElement(RandomSource.create()).orElse(Sblocks.WALL_GROWTHS.get())).defaultBlockState();
             Direction direction = Direction.NORTH;
             Direction direction2 = Direction.SOUTH;
             Direction direction3 = Direction.EAST;
@@ -133,6 +143,30 @@ public interface FoliageSpread {
                 }
                 if (east.isAir() && Math.random() < 0.5){
                     level.setBlock(blockpos.east(),block3.setValue(directionProperty,direction3),3);
+                }
+            }
+        }
+    }
+    default void placeBranches(Level level,BlockPos blockpos,BlockState blockstate){
+        if (blockstate.isSolidRender(level , blockpos)){
+            BlockState block3 = Sblocks.ROTTEN_BRANCH.get().defaultBlockState();
+            BlockState nord = level.getBlockState(blockpos.north());
+            BlockState south = level.getBlockState(blockpos.south());
+            BlockState west = level.getBlockState(blockpos.west());
+            BlockState east = level.getBlockState(blockpos.east());
+            Property<?> property = block3.getBlock().getStateDefinition().getProperty("facing");
+            if (property instanceof DirectionProperty directionProperty) {
+                if (nord.getBlock() instanceof LeavesBlock && Math.random() < 0.3){
+                    level.setBlock(blockpos.north(),block3.setValue(directionProperty,Direction.NORTH),3);
+                }
+                if (south.getBlock() instanceof LeavesBlock && Math.random() < 0.3){
+                    level.setBlock(blockpos.south(),block3.setValue(directionProperty,Direction.SOUTH),3);
+                }
+                if (west.getBlock() instanceof LeavesBlock && Math.random() < 0.3){
+                    level.setBlock(blockpos.west(),block3.setValue(directionProperty,Direction.WEST),3);
+                }
+                if (east.getBlock() instanceof LeavesBlock && Math.random() < 0.3){
+                    level.setBlock(blockpos.east(),block3.setValue(directionProperty,Direction.EAST),3);
                 }
             }
         }
@@ -162,6 +196,7 @@ public interface FoliageSpread {
                     }
             }
             level.setBlock(blockpos, _bs, 3);
+            placeBranches(level, blockpos, blockstate);
         }
         if (blockstate.is(BlockTags.WOODEN_STAIRS)){
             BlockState _bs = Sblocks.ROTTEN_STAIR.get().defaultBlockState();

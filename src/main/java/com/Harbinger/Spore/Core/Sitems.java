@@ -400,6 +400,8 @@ public class Sitems {
     public static final RegistryObject<Item> ROTTEN_LOG = block(Sblocks.ROTTEN_LOG, ScreativeTab.SPORE);
     public static final RegistryObject<Item> ROTTEN_PLANKS = block(Sblocks.ROTTEN_PLANKS, ScreativeTab.SPORE);
     public static final RegistryObject<Item> ROTTEN_STAIR = block(Sblocks.ROTTEN_STAIR, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> ROTTEN_BRANCH = block(Sblocks.ROTTEN_BRANCH, ScreativeTab.SPORE);
+    public static final RegistryObject<Item> ROTTEN_BUSH = block(Sblocks.ROTTEN_BUSH, ScreativeTab.SPORE);
     public static final RegistryObject<Item> ROOTED_BIOMASS = block(Sblocks.ROOTED_BIOMASS, ScreativeTab.SPORE);
     public static final RegistryObject<Item> BIOMASS_BLOCK = block(Sblocks.BIOMASS_BLOCK, ScreativeTab.SPORE);
     public static final RegistryObject<Item> SICKEN_BIOMASS_BLOCK = block(Sblocks.SICKEN_BIOMASS_BLOCK, ScreativeTab.SPORE);
