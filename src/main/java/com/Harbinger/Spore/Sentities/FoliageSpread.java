@@ -12,6 +12,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -208,11 +209,19 @@ public interface FoliageSpread {
                     } catch (Exception e) {
                     }
             }
-            level.setBlock(blockpos, _bs, 3);
+            if (Math.random() < 0.3f && level.getBlockState(blockpos.below()).isAir()){
+                FallingBlockEntity.fall(level,blockpos,_bs);
+            }else {
+                level.setBlock(blockpos, _bs, 3);
+            }
         }
         if (blockstate.is(BlockTags.PLANKS)){
             BlockState _bs = Sblocks.ROTTEN_PLANKS.get().defaultBlockState();
-            level.setBlock(blockpos, _bs, 3);
+            if (Math.random() < 0.3f && level.getBlockState(blockpos.below()).isAir()){
+                FallingBlockEntity.fall(level,blockpos,_bs);
+            }else {
+                level.setBlock(blockpos, _bs, 3);
+            }
         }
     }
 }
