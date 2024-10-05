@@ -594,31 +594,14 @@ public class HandlerEvents {
     @SubscribeEvent
     public static void DefenseBypass(LivingDamageEvent event) {
         Entity living = event.getSource().getEntity();
-        if (living instanceof Calamity calamity) {
+        if (living instanceof ArmorPersentageBypass bypass){
             float original_damage = event.getAmount();
-            AttributeInstance attack = calamity.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE);
-            double recalculated_damage = attack != null ? (attack.getValue()/10)*2 : original_damage;
-            if (original_damage < recalculated_damage){
-                event.setAmount((float) recalculated_damage);
+            float recalculatedDamage = bypass.amountOfDamage(original_damage);
+            if (recalculatedDamage <= 0 || original_damage > recalculatedDamage){
+                return;
+            }else{
+                event.setAmount(recalculatedDamage);
             }
-        }
-        if (living instanceof Slasher slasher && slasher.getVariant() == SlasherVariants.PIERCER) {
-            float original_damage = event.getAmount();
-            AttributeInstance attack = slasher.getAttribute(Attributes.ATTACK_DAMAGE);
-            double recalculated_damage = attack != null ? attack.getValue()/2 : original_damage;
-            if (original_damage < recalculated_damage){
-                event.setAmount((float) recalculated_damage);
-            }
-        }if (living instanceof Specter specter) {
-            float original_damage = event.getAmount();
-            AttributeInstance attack = specter.getAttribute(Attributes.ATTACK_DAMAGE);
-            double recalculated_damage = attack != null ? attack.getValue()/4 : original_damage;
-            if (original_damage < recalculated_damage){
-                event.setAmount((float) recalculated_damage);
-            }
-        }
-        if (living instanceof Illusion illusion && !illusion.getSeeAble()){
-            event.setAmount((float) (SConfig.SERVER.halucinations_damage.get()*1f));
         }
         if (living instanceof Infected || living instanceof UtilityEntity && !(living instanceof Illusion)){
             LivingEntity livingEntity = event.getEntity();

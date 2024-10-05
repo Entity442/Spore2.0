@@ -5,6 +5,7 @@ import com.Harbinger.Spore.ExtremelySusThings.SporeSavedData;
 import com.Harbinger.Spore.Sentities.AI.CalamitiesAI.CalamityVigilCall;
 import com.Harbinger.Spore.Sentities.AI.CalamityPathNavigation;
 import com.Harbinger.Spore.Sentities.AI.FloatDiveGoal;
+import com.Harbinger.Spore.Sentities.ArmorPersentageBypass;
 import com.Harbinger.Spore.Sentities.MovementControls.CalamityMovementControl;
 import com.Harbinger.Spore.Sentities.Organoids.Mound;
 import net.minecraft.core.BlockPos;
@@ -44,7 +45,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-public class Calamity extends UtilityEntity implements Enemy {
+public class Calamity extends UtilityEntity implements Enemy, ArmorPersentageBypass {
     public static final EntityDataAccessor<Integer> KILLS = SynchedEntityData.defineId(Calamity.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<BlockPos> SEARCH_AREA = SynchedEntityData.defineId(Calamity.class, EntityDataSerializers.BLOCK_POS);
     public static final EntityDataAccessor<Boolean> ROOTED = SynchedEntityData.defineId(Calamity.class, EntityDataSerializers.BOOLEAN);
@@ -342,6 +343,12 @@ public class Calamity extends UtilityEntity implements Enemy {
 
     public int getDestroySpeed(){
         return SConfig.SERVER.calamity_bd.get();
+    }
+
+    @Override
+    public float amountOfDamage(float value) {
+        AttributeInstance attack = this.getAttribute(Attributes.ATTACK_DAMAGE);
+        return attack == null ? value : (float) (attack.getValue() * 0.2f);
     }
 
     static class GoToLocation extends Goal {
