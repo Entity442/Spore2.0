@@ -14,6 +14,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 
 public class BruteModel<T extends Brute> extends EntityModel<T> implements ArmedModel {
@@ -26,6 +27,8 @@ public class BruteModel<T extends Brute> extends EntityModel<T> implements Armed
 	private final ModelPart Arms;
 	private final ModelPart LeftArm;
 	private final ModelPart RightArm;
+	private final ModelPart LeftForArm;
+	private final ModelPart RightForArm;
 	private final ModelPart Neck;
 	private final ModelPart Head;
 	private final ModelPart Jaw;
@@ -38,6 +41,8 @@ public class BruteModel<T extends Brute> extends EntityModel<T> implements Armed
 		this.Arms = this.Brute.getChild("Arms");
 		this.LeftArm = this.Arms.getChild("LeftArm");
 		this.RightArm = this.Arms.getChild("RightArm");
+		this.LeftForArm = LeftArm.getChild("LeftArmSeg2");
+		this.RightForArm = RightArm.getChild("RightArmSeg3");
 		this.Neck = this.Brute.getChild("Neck");
 		this.Head = this.Neck.getChild("Head");
 		this.Jaw = this.Head.getChild("Jaw");
@@ -195,7 +200,19 @@ public class BruteModel<T extends Brute> extends EntityModel<T> implements Armed
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+		this.Head.yRot = netHeadYaw / (180F / (float) Math.PI);
+		this.Jaw.xRot =0.4f+Mth.sin(ageInTicks/5)/3;
+		if (!(limbSwingAmount > -0.15F && limbSwingAmount < 0.15F)){
+			float moveValue  = Mth.cos(limbSwing * 0.3F) * 0.8F * limbSwingAmount;
+			LeftLeg.yRot = LeftLeg.getInitialPose().yRot + moveValue * 1.6f;
+			RightLeg.yRot = RightLeg.getInitialPose().yRot + moveValue * 1.6f;
+			LeftLeg.xRot = LeftLeg.getInitialPose().xRot + moveValue;
+			RightLeg.xRot = RightLeg.getInitialPose().xRot - moveValue;
+			LeftArm.yRot = RightArm.getInitialPose().yRot + moveValue;
+			RightArm.yRot = RightArm.getInitialPose().yRot + moveValue;
+			RightForArm.zRot = RightForArm.getInitialPose().zRot + moveValue;
+			LeftForArm.zRot = LeftForArm.getInitialPose().zRot - moveValue;
+		}
 	}
 
 	@Override
