@@ -56,7 +56,7 @@ public class Brute extends EvolvedInfected implements Carrier, RangedAttackMob {
         this.goalSelector.addGoal(2, new RangedAttackGoal(this,1.3,40,48){
             @Override
             public boolean canUse() {
-                return super.canUse() && Brute.this.getCarriedBlock() != null && Brute.this.getTarget() != null && Brute.this.distanceToSqr(Brute.this.getTarget()) > 400.0D;
+                return super.canUse() && Brute.this.getCarriedBlock() != null && Brute.this.getTarget() != null && Brute.this.distanceToSqr(Brute.this.getTarget()) > 200.0D;
             }
         });
         this.goalSelector.addGoal(3, new CustomMeleeAttackGoal(this, 1.3, false) {
