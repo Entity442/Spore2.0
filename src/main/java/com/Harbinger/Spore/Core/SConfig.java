@@ -1381,7 +1381,9 @@ public class SConfig {
                             ,"minecraft:sand|spore:infested_sand","minecraft:gravel|spore:infested_gravel","minecraft:netherrack|spore:infested_netherrack","minecraft:end_stone|spore:infested_end_stone"
                             ,"minecraft:soul_sand|spore:infested_soul_sand","minecraft:soul_soil|spore:infested_soul_sand","minecraft:sculk|spore:rooted_mycelium","minecraft:red_sand|spore:infested_red_sand"
                             ,"minecraft:clay|spore:infested_clay","minecraft:cobblestone|spore:infested_cobblestone","minecraft:cobbled_deepslate|spore:infested_cobbled_deepslate","spore:lab_block|spore:infested_laboratory_block"
-                            ,"spore:lab_block1|spore:infested_laboratory_block1","spore:lab_block2|spore:infested_laboratory_block2","spore:lab_block3|spore:infested_laboratory_block3") , o -> o instanceof String);
+                            ,"spore:lab_block1|spore:infested_laboratory_block1","spore:lab_block2|spore:infested_laboratory_block2","spore:lab_block3|spore:infested_laboratory_block3","the_flesh_that_hates:flesh_block|spore:biomass_block"
+                            ,"the_flesh_that_hates:flesh_sand|spore:biomass_block","the_flesh_that_hates:flesh_tree|spore:biomass_block","the_flesh_that_hates:flesh_plank|spore:biomass_block"
+                            ,"the_flesh_that_hates:flesh_pile|spore:biomass_block","the_flesh_that_hates:tumor|spore:biomass_block","the_flesh_that_hates:purulent_tumor|spore:biomass_block") , o -> o instanceof String);
             builder.pop();
             builder.push("Cryogenic machine parameters");
             this.block_cleaning = builder.defineList("Blocks and their cleaned counterparts",
