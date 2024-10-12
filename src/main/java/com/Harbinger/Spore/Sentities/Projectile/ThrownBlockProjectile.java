@@ -72,7 +72,7 @@ public class ThrownBlockProjectile extends Projectile {
             FallingBlockEntity.fall(level,new BlockPos((int) this.getX(), (int) this.getY(), (int) this.getZ()),STATE);
         }
         HitResult hitresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
-        Vec3 vec3 = this.getDeltaMovement().add(0,-0.1,0);
+        Vec3 vec3 = this.getDeltaMovement();
         double d0 = this.getX() + vec3.x;
         double d1 = this.getY() + vec3.y;
         double d2 = this.getZ() + vec3.z;
@@ -81,6 +81,7 @@ public class ThrownBlockProjectile extends Projectile {
         if (hitresult.getType() != HitResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitresult)) {
             this.onHit(hitresult);
         }
+        this.getDeltaMovement().add(0,-0.2,0);
     }
 
     @Override

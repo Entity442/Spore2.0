@@ -195,6 +195,10 @@ public class Sentities {
             () -> EntityType.Builder.of(GastGeber::new, ORGANOID).sized(1.1f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "gastgaber").toString()));
 
+    public static final RegistryObject<EntityType<InfestedConstruct>> INF_CONSTRUCT = SPORE_ENTITIES.register("inf_contruct",
+            () -> EntityType.Builder.of(InfestedConstruct::new, INFECTED).sized(1.5f, 2.6f)
+                    .build(new ResourceLocation(Spore.MODID, "inf_contruct").toString()));
+
     public static final RegistryObject<EntityType<Illusion>> ILLUSION = SPORE_ENTITIES.register("illusion",
             () -> EntityType.Builder.of(Illusion::new, MobCategory.MISC).sized(1f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "illusion").toString()));
@@ -233,7 +237,7 @@ public class Sentities {
 
     public static final RegistryObject<EntityType<ThrownBlockProjectile>> THROWN_BLOCK = register("thrown_block",
             EntityType.Builder.of((EntityType<ThrownBlockProjectile> p_33002_, Level level) -> new ThrownBlockProjectile(level), MobCategory.MISC)
-                    .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.4f, 0.4f));
+                    .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(1f, 1f));
 
     public static final RegistryObject<EntityType<ScentEntity>> SCENT = SPORE_ENTITIES.register("scent",
             () -> EntityType.Builder.of(ScentEntity::new, MobCategory.MISC).sized(0.2f,0.2f)
