@@ -57,6 +57,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
+import static com.Harbinger.Spore.ExtremelySusThings.Utilities.biomass;
+
 public class Infected extends Monster{
     public static final EntityDataAccessor<Integer> HUNGER = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Integer> KILLS = SynchedEntityData.defineId(Infected.class, EntityDataSerializers.INT);
@@ -263,17 +265,6 @@ public class Infected extends Monster{
         if (this.horizontalCollision && this.isInWater()){
             this.jumpInFluid(ForgeMod.WATER_TYPE.get());
         }
-    }
-    protected List<BlockState> biomass(){
-        List<BlockState> states = new ArrayList<>();
-        states.add(Sblocks.BIOMASS_BLOCK.get().defaultBlockState());
-        states.add(Sblocks.SICKEN_BIOMASS_BLOCK.get().defaultBlockState());
-        states.add(Sblocks.CALCIFIED_BIOMASS_BLOCK.get().defaultBlockState());
-        states.add(Sblocks.MEMBRANE_BLOCK.get().defaultBlockState());
-        states.add(Sblocks.ROOTED_BIOMASS.get().defaultBlockState());
-        states.add(Sblocks.ROOTED_MYCELIUM.get().defaultBlockState());
-        states.add(Sblocks.GASTRIC_BIOMASS_BLOCK.get().defaultBlockState());
-        return states;
     }
     public boolean interactBlock(BlockPos blockPos , Level level){
         BlockState state = level.getBlockState(blockPos);

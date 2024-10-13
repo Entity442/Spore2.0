@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sentities.Utility;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
@@ -25,6 +26,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.Harbinger.Spore.ExtremelySusThings.Utilities.biomass;
 
 public class InfestedConstruct extends UtilityEntity implements RangedAttackMob {
     private int attackAnimationTick;
@@ -164,5 +167,40 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
             }
         }
         return null;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (tickCount % 40 == 0 && horizontalCollision && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)){
+            griefBlocks();
+        }
+    }
+
+    private void griefBlocks(){
+        AABB aabb = this.getBoundingBox().inflate(0.5D).move(0,0.5,0);
+        for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
+            BlockState blockstate = this.level.getBlockState(blockpos);
+            if (blockBreakingParameter(blockstate,blockpos)) {
+                interactBlock(blockpos,this.level);
+            }
+        }
+    }
+
+    public boolean blockBreakingParameter(BlockState blockstate, BlockPos blockpos) {
+        float value = blockstate.getDestroySpeed(this.level,blockpos);
+        return this.tickCount % 20 == 0 && value > 0 && value <=getBreaking();
+    }
+    public int getBreaking(){
+        return SConfig.SERVER.hyper_bd.get();
+    }
+
+
+    public boolean interactBlock(BlockPos blockPos, Level level) {
+        BlockState state = level.getBlockState(blockPos);
+        if (biomass().contains(state)){
+            return level.setBlock(blockPos, Sblocks.MEMBRANE_BLOCK.get().defaultBlockState(), 3);
+        }
+        return level.destroyBlock(blockPos, false, this);
     }
 }
