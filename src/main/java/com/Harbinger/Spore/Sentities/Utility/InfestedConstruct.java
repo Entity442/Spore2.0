@@ -265,6 +265,6 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
     }
 
     protected SoundEvent getStepSound() {
-        return SoundEvents.ZOMBIE_STEP;
+        return SoundEvents.IRON_GOLEM_STEP;
     }
 }
