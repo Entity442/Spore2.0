@@ -3,10 +3,18 @@ package com.Harbinger.Spore.Sentities.Utility;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Core.Seffects;
+import com.Harbinger.Spore.Core.Ssounds;
+import com.Harbinger.Spore.ExtremelySusThings.SporeSavedData;
 import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownBlockProjectile;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -30,6 +38,8 @@ import java.util.List;
 import static com.Harbinger.Spore.ExtremelySusThings.Utilities.biomass;
 
 public class InfestedConstruct extends UtilityEntity implements RangedAttackMob {
+    public static final EntityDataAccessor<Boolean> ACTIVE = SynchedEntityData.defineId(InfestedConstruct.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Float> MACHINE_HEALTH = SynchedEntityData.defineId(InfestedConstruct.class, EntityDataSerializers.FLOAT);
     private int attackAnimationTick;
     public InfestedConstruct(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -45,7 +55,14 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1)
                 .add(Attributes.ATTACK_KNOCKBACK, 2);
     }
-
+    @Override
+    public boolean removeWhenFarAway(double value) {
+        if (this.level instanceof ServerLevel serverLevel){
+            SporeSavedData data = SporeSavedData.getDataLocation(serverLevel);
+            return data != null && data.getAmountOfHiveminds() >= SConfig.SERVER.proto_spawn_world_mod.get() && value > 256;
+        }
+        return false;
+    }
 
     @Override
     public void aiStep() {
@@ -84,9 +101,32 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
 
     private boolean canRangeAttack(){
         LivingEntity livingEntity = this.getTarget();
-        return livingEntity != null && livingEntity.getY() - 2 > this.getY();
+        return livingEntity != null && livingEntity.getY() - 2 > this.getY() && !this.navigation.isInProgress();
+    }
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(ACTIVE,true);
+        entityData.define(MACHINE_HEALTH,30f);
+    }
+    public void setActive(boolean value){entityData.set(ACTIVE,value);}
+    public boolean isActive(){return entityData.get(ACTIVE);}
+    public void setMachineHealth(float value){entityData.set(MACHINE_HEALTH,value);}
+    public float getMachineHealth(){return entityData.get(MACHINE_HEALTH);}
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        setActive(tag.getBoolean("active"));
+        setMachineHealth(tag.getFloat("machine_hp"));
     }
 
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("active",isActive());
+        tag.putFloat("machine_hp",getMachineHealth());
+    }
     @Override
     protected void registerGoals() {
         super.registerGoals();
@@ -114,13 +154,18 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
         resistentSources.add(DamageSource.IN_FIRE);
         resistentSources.add(DamageSource.LAVA);
         resistentSources.add(DamageSource.HOT_FLOOR);
-        return  resistentSources;
+        return resistentSources;
     }
 
     @Override
     public boolean hurt(DamageSource source, float value) {
         value = resistentSources().contains(source) ? value/2:value;
-        return super.hurt(source, value);
+        if (getMachineHealth() > 0f){
+            setMachineHealth(getMachineHealth()-getDamageAfterArmorAbsorb(source,value));
+        }else{
+            return super.hurt(source, value);
+        }
+        return true;
     }
 
     @Override
@@ -202,5 +247,21 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
             return level.setBlock(blockPos, Sblocks.MEMBRANE_BLOCK.get().defaultBlockState(), 3);
         }
         return level.destroyBlock(blockPos, false, this);
+    }
+
+    protected SoundEvent getAmbientSound() {
+        return Ssounds.INF_GROWL.get();
+    }
+
+    protected SoundEvent getHurtSound(DamageSource p_34327_) {
+        return this.getMachineHealth() > 0 ? SoundEvents.IRON_GOLEM_HURT : Ssounds.INF_DAMAGE.get();
+    }
+
+    protected SoundEvent getDeathSound() {
+        return Ssounds.INF_DAMAGE.get();
+    }
+
+    protected SoundEvent getStepSound() {
+        return SoundEvents.ZOMBIE_STEP;
     }
 }

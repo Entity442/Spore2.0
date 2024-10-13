@@ -1,6 +1,5 @@
 package com.Harbinger.Spore.Client.Renderers;
 
-import com.Harbinger.Spore.Client.Models.BrotkatzeModel;
 import com.Harbinger.Spore.Client.Models.InfestedContructModel;
 import com.Harbinger.Spore.Client.Special.BaseInfectedRenderer;
 import com.Harbinger.Spore.Sentities.Utility.InfestedConstruct;
@@ -32,4 +31,6 @@ public class InfestedConstructRenderer<Type extends InfestedConstruct> extends B
     public ResourceLocation eyeLayerTexture() {
         return EYES_TEXTURE;
     }
+
+
 }
