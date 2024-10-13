@@ -161,7 +161,10 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
     public boolean hurt(DamageSource source, float value) {
         value = resistentSources().contains(source) ? value/2:value;
         if (getMachineHealth() > 0f){
-            setMachineHealth(getMachineHealth()-getDamageAfterArmorAbsorb(source,value));
+            float damage = getDamageAfterArmorAbsorb(source,value);
+            setMachineHealth(damage > getMachineHealth() ? 0 : getMachineHealth()-damage);
+            hurtTime = 10;
+            playHurtSound(source);
         }else{
             return super.hurt(source, value);
         }

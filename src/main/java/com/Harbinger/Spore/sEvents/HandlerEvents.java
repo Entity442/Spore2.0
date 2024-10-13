@@ -19,10 +19,7 @@ import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
 import com.Harbinger.Spore.Sentities.FallenMultipart.Licker;
 import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
 import com.Harbinger.Spore.Sentities.Organoids.*;
-import com.Harbinger.Spore.Sentities.Utility.GastGeber;
-import com.Harbinger.Spore.Sentities.Utility.Illusion;
-import com.Harbinger.Spore.Sentities.Utility.InfEvoClaw;
-import com.Harbinger.Spore.Sentities.Utility.Specter;
+import com.Harbinger.Spore.Sentities.Utility.*;
 import com.Harbinger.Spore.Sentities.Variants.SlasherVariants;
 import com.Harbinger.Spore.Sitems.InfectedCombatShovel;
 import com.Harbinger.Spore.Sitems.InfectedMaul;
@@ -336,6 +333,13 @@ public class HandlerEvents {
                                 player.displayClientMessage(Component.literal("Target Pos " + specter.getTargetPos()),false);
                                 player.displayClientMessage(Component.literal("Stomach " + specter.getStomach()),false);
                                 player.displayClientMessage(Component.literal("Biomass " + specter.getBiomass()),false);
+                                player.displayClientMessage(Component.literal("-------------------------"),false);
+                            }else if(entity1 instanceof InfestedConstruct construct) {
+                                player.displayClientMessage(Component.literal("Entity "+ construct.getEncodeId() + " " + construct.getCustomName()),false);
+                                player.displayClientMessage(Component.literal("Current Health " + construct.getHealth()),false);
+                                player.displayClientMessage(Component.literal("Buffs " + construct.getActiveEffects()),false);
+                                player.displayClientMessage(Component.literal("Target ? " + construct.getTarget()),false);
+                                player.displayClientMessage(Component.literal("Machine hp " + construct.getMachineHealth()),false);
                                 player.displayClientMessage(Component.literal("-------------------------"),false);
                             }
                         }
