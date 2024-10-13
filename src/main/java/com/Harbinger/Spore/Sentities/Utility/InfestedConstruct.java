@@ -101,7 +101,7 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
 
     private boolean canRangeAttack(){
         LivingEntity livingEntity = this.getTarget();
-        return livingEntity != null && livingEntity.getY() - 2 > this.getY() && !this.navigation.isInProgress();
+        return !this.navigation.isInProgress() && livingEntity != null && livingEntity.getY() - 2 > this.getY();
     }
     @Override
     protected void defineSynchedData() {
@@ -131,16 +131,16 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
     protected void registerGoals() {
         super.registerGoals();
         addTargettingGoals();
-        this.goalSelector.addGoal(3, new RangedAttackGoal(this,1,60,16){
-            @Override
-            public boolean canUse() {
-                return super.canUse() && canRangeAttack();
-            }
-        });
-        this.goalSelector.addGoal(4, new AOEMeleeAttackGoal(this, 1.2, false,1.5,2,livingEntity -> {return TARGET_SELECTOR.test(livingEntity);}) {
+        this.goalSelector.addGoal(3, new AOEMeleeAttackGoal(this, 1.2, false,1.5,2,livingEntity -> {return TARGET_SELECTOR.test(livingEntity);}) {
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 return 6.0 + entity.getBbWidth() * entity.getBbWidth();}});
+        this.goalSelector.addGoal(3, new RangedAttackGoal(this,1,60,32){
+            @Override
+            public boolean canUse() {
+                return canRangeAttack() && super.canUse();
+            }
+        });
         this.goalSelector.addGoal(5,new RandomStrollGoal(this,1));
     }
 
