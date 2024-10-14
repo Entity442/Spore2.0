@@ -6,9 +6,12 @@ import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.ExtremelySusThings.SporeSavedData;
 import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
+import com.Harbinger.Spore.Sentities.BaseEntities.Hyper;
+import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownBlockProjectile;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -39,7 +42,9 @@ import static com.Harbinger.Spore.ExtremelySusThings.Utilities.biomass;
 
 public class InfestedConstruct extends UtilityEntity implements RangedAttackMob {
     public static final EntityDataAccessor<Boolean> ACTIVE = SynchedEntityData.defineId(InfestedConstruct.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Boolean> DISPENSER = SynchedEntityData.defineId(InfestedConstruct.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Float> MACHINE_HEALTH = SynchedEntityData.defineId(InfestedConstruct.class, EntityDataSerializers.FLOAT);
+    public static final EntityDataAccessor<Integer> METAL_RESERVE = SynchedEntityData.defineId(InfestedConstruct.class, EntityDataSerializers.INT);
     private int attackAnimationTick;
     public InfestedConstruct(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -107,6 +112,8 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
     protected void defineSynchedData() {
         super.defineSynchedData();
         entityData.define(ACTIVE,true);
+        entityData.define(DISPENSER,false);
+        entityData.define(METAL_RESERVE,0);
         entityData.define(MACHINE_HEALTH,30f);
     }
     public void setActive(boolean value){entityData.set(ACTIVE,value);}
@@ -119,6 +126,8 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
         super.readAdditionalSaveData(tag);
         setActive(tag.getBoolean("active"));
         setMachineHealth(tag.getFloat("machine_hp"));
+        entityData.set(DISPENSER,tag.getBoolean("dispenser"));
+        entityData.set(METAL_RESERVE,tag.getInt("metal"));
     }
 
     @Override
@@ -126,6 +135,8 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
         super.addAdditionalSaveData(tag);
         tag.putBoolean("active",isActive());
         tag.putFloat("machine_hp",getMachineHealth());
+        tag.putBoolean("dispenser",entityData.get(DISPENSER));
+        tag.putInt("metal",entityData.get(METAL_RESERVE));
     }
     @Override
     protected void registerGoals() {
@@ -144,6 +155,10 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
         this.goalSelector.addGoal(5,new RandomStrollGoal(this,1));
     }
 
+    @Override
+    public boolean isNoAi() {
+        return super.isNoAi() || !isActive();
+    }
 
     @Override
     public boolean canDrownInFluidType(FluidType type) {
@@ -156,6 +171,7 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
         resistentSources.add(DamageSource.HOT_FLOOR);
         return resistentSources;
     }
+
 
     @Override
     public boolean hurt(DamageSource source, float value) {
@@ -223,6 +239,9 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
         if (tickCount % 40 == 0 && horizontalCollision && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)){
             griefBlocks();
         }
+        if (tickCount % 200 == 0 && !isActive()){
+            callUponInfected();
+        }
     }
 
     private void griefBlocks(){
@@ -253,11 +272,11 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
     }
 
     protected SoundEvent getAmbientSound() {
-        return Ssounds.INF_GROWL.get();
+        return isActive() ? Ssounds.INF_GROWL.get() : null;
     }
 
     protected SoundEvent getHurtSound(DamageSource p_34327_) {
-        return this.getMachineHealth() > 0 ? SoundEvents.IRON_GOLEM_HURT : Ssounds.INF_DAMAGE.get();
+        return this.getMachineHealth() > 0 || !isActive() ? SoundEvents.IRON_GOLEM_HURT : Ssounds.INF_DAMAGE.get();
     }
 
     protected SoundEvent getDeathSound() {
@@ -266,5 +285,46 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
 
     protected SoundEvent getStepSound() {
         return SoundEvents.IRON_GOLEM_STEP;
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> dataAccessor) {
+        if (dataAccessor.equals(ACTIVE)){
+            refreshDimensions();
+            if (isActive()){
+                setMachineHealth(getMachineHealth()+30f);
+                setHealth(this.getMaxHealth());
+            }
+        }
+    }
+
+    @Override
+    public EntityDimensions getDimensions(Pose pose) {
+        if (isActive()){
+            return super.getDimensions(pose);
+        }else{
+            return super.getDimensions(pose).scale(1f,0.4f);
+        }
+    }
+
+    public void callUponInfected(){
+        AABB aabb = this.getBoundingBox().inflate(16);
+        List<Entity> infected = level.getEntities(this,aabb,entity -> {return entity instanceof Infected && !(entity instanceof Hyper);});
+        for (Entity entity : infected){
+            if (entity instanceof Infected infected1 && infected1.getLinked()){
+                infected1.setSearchPos(this.getOnPos());
+                if (infected1.distanceToSqr(this) < 30){
+                    setActive(true);
+                    infected1.discard();
+                    if (level instanceof ServerLevel serverLevel){
+                        double x0 = this.getX() - (random.nextFloat() - 0.1) * 0.1D;
+                        double y0 = this.getY() + (random.nextFloat() - 0.25) * 0.15D * 5;
+                        double z0 = this.getZ() + (random.nextFloat() - 0.1) * 0.1D;
+                        serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x0, y0, z0, 2, 0, 0, 0, 1);
+                    }
+                    break;
+                }
+            }
+        }
     }
 }

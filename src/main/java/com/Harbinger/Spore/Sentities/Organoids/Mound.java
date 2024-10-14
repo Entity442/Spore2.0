@@ -240,11 +240,6 @@ public class Mound extends Organoid implements Enemy, FoliageSpread {
     }
 
     @Override
-    public boolean canDrownInFluidType(FluidType type) {
-        return false;
-    }
-
-    @Override
     public boolean hurt(DamageSource p_21016_, float p_21017_) {
         if (attack_counter == 0){
             LivingEntity entity = this;
