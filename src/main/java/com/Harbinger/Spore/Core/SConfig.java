@@ -102,6 +102,12 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> bus_ranged_damage;
         public final ForgeConfigSpec.ConfigValue<Double> bus_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> inf_cons_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_machine_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_cons_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> inf_cons_armor;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> cons_blocks;
+
         public final ForgeConfigSpec.ConfigValue<Double> inf_pil_hp;
         public final ForgeConfigSpec.ConfigValue<Double> inf_pil_damage;
         public final ForgeConfigSpec.ConfigValue<Double> inf_pil_armor;
@@ -609,6 +615,15 @@ public class SConfig {
             this.brot_armor = builder.comment("Default 5").defineInRange("Sets Brotkatze Armor", 5, 1, Double.MAX_VALUE);
             this.brot_effects = builder.comment("Default values: minecraft:poison|120|0 ,spore:mycelium|600|0 ,spore:marker|2400|1").defineList("Braiomil Effects",
                     Lists.newArrayList("minecraft:wither|200|0" ,"minecraft:weakness|300|1" , "spore:mycelium_ef|600|1","spore:marker|2400|1") , o -> o instanceof String);
+            builder.pop();
+
+            builder.push("Infested Construct");
+            this.inf_cons_hp = builder.comment("Default 60").defineInRange("Sets Infested Construct Max health", 60, 1, Double.MAX_VALUE);
+            this.inf_machine_hp = builder.comment("Default 50").defineInRange("Sets Infested Construct Golem Max health", 50, 1, Double.MAX_VALUE);
+            this.inf_cons_damage = builder.comment("Default 15").defineInRange("Sets Infested Construct Damage", 15, 1, Double.MAX_VALUE);
+            this.inf_cons_armor = builder.comment("Default 10").defineInRange("Sets Infested Construct Armor", 10, 1, Double.MAX_VALUE);
+            this.cons_blocks = builder.defineList("Infested Construct Metal values",
+                    Lists.newArrayList("minecraft:iron_block|27" ,"minecraft:anvil|93") , o -> o instanceof String);
             builder.pop();
 
             builder.push("Infected Drowned");

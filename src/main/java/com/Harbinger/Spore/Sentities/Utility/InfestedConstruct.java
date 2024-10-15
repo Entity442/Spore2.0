@@ -11,11 +11,13 @@ import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownBlockProjectile;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -28,23 +30,31 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.Harbinger.Spore.ExtremelySusThings.Utilities.biomass;
 
-public class InfestedConstruct extends UtilityEntity implements RangedAttackMob {
+public class InfestedConstruct extends UtilityEntity implements RangedAttackMob, Enemy {
     public static final EntityDataAccessor<Boolean> ACTIVE = SynchedEntityData.defineId(InfestedConstruct.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Boolean> DISPENSER = SynchedEntityData.defineId(InfestedConstruct.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Float> MACHINE_HEALTH = SynchedEntityData.defineId(InfestedConstruct.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Integer> METAL_RESERVE = SynchedEntityData.defineId(InfestedConstruct.class, EntityDataSerializers.INT);
+    private final Double maXmachineHp = SConfig.SERVER.inf_machine_hp.get();
+    private final List<? extends String> metalAndValues = SConfig.SERVER.cons_blocks.get();
     private int attackAnimationTick;
     public InfestedConstruct(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -52,10 +62,10 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, SConfig.SERVER.specter_hp.get() * SConfig.SERVER.global_health.get())
+                .add(Attributes.MAX_HEALTH, SConfig.SERVER.inf_cons_hp.get() * SConfig.SERVER.global_health.get())
                 .add(Attributes.MOVEMENT_SPEED, 0.25)
-                .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.specter_damage.get() * SConfig.SERVER.global_damage.get())
-                .add(Attributes.ARMOR, SConfig.SERVER.specter_armor.get() * SConfig.SERVER.global_armor.get())
+                .add(Attributes.ATTACK_DAMAGE, SConfig.SERVER.inf_cons_damage.get() * SConfig.SERVER.global_damage.get())
+                .add(Attributes.ARMOR, SConfig.SERVER.inf_cons_armor.get() * SConfig.SERVER.global_armor.get())
                 .add(Attributes.FOLLOW_RANGE, 32)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1)
                 .add(Attributes.ATTACK_KNOCKBACK, 2);
@@ -233,11 +243,30 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob 
         return null;
     }
 
+    public Map<ItemStack,Integer> getValues(){
+        Map<ItemStack,Integer> values = new HashMap<>();
+        for (String string : metalAndValues){
+            String[] strings = string.split("\\|");
+            int value = Integer.parseInt(strings[1]);
+            ItemStack stack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(strings[0])));
+            if (!stack.equals(ItemStack.EMPTY) && value > 0){
+                values.put(stack,value);
+            }
+        }
+        return values;
+    }
+
     @Override
     public void tick() {
         super.tick();
-        if (tickCount % 40 == 0 && horizontalCollision && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)){
-            griefBlocks();
+        if (tickCount % 40 == 0 && horizontalCollision){
+            if (ForgeEventFactory.getMobGriefingEvent(this.level, this)){
+                griefBlocks();
+            }
+            if (getMachineHealth() < maXmachineHp && entityData.get(METAL_RESERVE) > 0){
+                this.setMachineHealth(getMachineHealth()+1);
+                entityData.set(METAL_RESERVE,entityData.get(METAL_RESERVE)-1);
+            }
         }
         if (tickCount % 200 == 0 && !isActive()){
             callUponInfected();
