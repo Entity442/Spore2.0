@@ -53,8 +53,8 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
     public static final EntityDataAccessor<Boolean> DISPENSER = SynchedEntityData.defineId(InfestedConstruct.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Float> MACHINE_HEALTH = SynchedEntityData.defineId(InfestedConstruct.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Integer> METAL_RESERVE = SynchedEntityData.defineId(InfestedConstruct.class, EntityDataSerializers.INT);
-    private final Double maXmachineHp = SConfig.SERVER.inf_machine_hp.get();
-    private final List<? extends String> metalAndValues = SConfig.SERVER.cons_blocks.get();
+    private static final Double maXmachineHp = SConfig.SERVER.inf_machine_hp.get();
+    private static final List<? extends String> metalAndValues = SConfig.SERVER.cons_blocks.get();
     private int attackAnimationTick;
     public InfestedConstruct(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -321,7 +321,7 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
         if (dataAccessor.equals(ACTIVE)){
             refreshDimensions();
             if (isActive()){
-                setMachineHealth(getMachineHealth()+30f);
+                setMachineHealth((float) (maXmachineHp * 1f));
                 setHealth(this.getMaxHealth());
             }
         }
