@@ -22,29 +22,35 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Container;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.Harbinger.Spore.ExtremelySusThings.Utilities.biomass;
 
@@ -55,6 +61,8 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
     public static final EntityDataAccessor<Integer> METAL_RESERVE = SynchedEntityData.defineId(InfestedConstruct.class, EntityDataSerializers.INT);
     private static final Double maXmachineHp = SConfig.SERVER.inf_machine_hp.get();
     private static final List<? extends String> metalAndValues = SConfig.SERVER.cons_blocks.get();
+    @Nullable
+    private BlockPos Targetpos;
     private int attackAnimationTick;
     public InfestedConstruct(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -124,13 +132,21 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
         entityData.define(ACTIVE,true);
         entityData.define(DISPENSER,false);
         entityData.define(METAL_RESERVE,0);
-        entityData.define(MACHINE_HEALTH,30f);
+        entityData.define(MACHINE_HEALTH,(float)(maXmachineHp * 1f));
     }
     public void setActive(boolean value){entityData.set(ACTIVE,value);}
     public boolean isActive(){return entityData.get(ACTIVE);}
     public void setMachineHealth(float value){entityData.set(MACHINE_HEALTH,value);}
     public float getMachineHealth(){return entityData.get(MACHINE_HEALTH);}
-
+    public void setMetalReserve(int value){entityData.set(METAL_RESERVE,value);}
+    public int getMetalReserve(){return entityData.get(METAL_RESERVE);}
+    @Nullable
+    public BlockPos getTargetPos() {
+        return Targetpos;
+    }
+    public void setTargetPos(@Nullable BlockPos pos) {
+        this.Targetpos = pos;
+    }
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
@@ -162,6 +178,7 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
                 return canRangeAttack() && super.canUse();
             }
         });
+        this.goalSelector.addGoal(4,new SearchAroundGoal(this));
         this.goalSelector.addGoal(5,new RandomStrollGoal(this,1));
     }
 
@@ -196,7 +213,11 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
         }
         return true;
     }
-
+    public boolean hasLineOfSightBlocks(BlockPos pos) {
+        BlockHitResult raytraceresult = this.level.clip(new ClipContext(this.getEyePosition(1.0F), new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+        BlockPos position = raytraceresult.getBlockPos();
+        return pos.equals(position) || this.level.isEmptyBlock(pos) || this.level.getBlockEntity(pos) == this.level.getBlockEntity(position);
+    }
     @Override
     protected int calculateFallDamage(float p_21237_, float p_21238_) {
         return 0;
@@ -243,13 +264,13 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
         return null;
     }
 
-    public Map<ItemStack,Integer> getValues(){
-        Map<ItemStack,Integer> values = new HashMap<>();
+    public Map<Item,Integer> getValues(){
+        Map<Item,Integer> values = new HashMap<>();
         for (String string : metalAndValues){
             String[] strings = string.split("\\|");
             int value = Integer.parseInt(strings[1]);
-            ItemStack stack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(strings[0])));
-            if (!stack.equals(ItemStack.EMPTY) && value > 0){
+            Item stack = ForgeRegistries.ITEMS.getValue(new ResourceLocation(strings[0]));
+            if (stack != null && value > 0){
                 values.put(stack,value);
             }
         }
@@ -259,8 +280,8 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
     @Override
     public void tick() {
         super.tick();
-        if (tickCount % 40 == 0 && horizontalCollision){
-            if (ForgeEventFactory.getMobGriefingEvent(this.level, this)){
+        if (tickCount % 40 == 0){
+            if (ForgeEventFactory.getMobGriefingEvent(this.level, this) && horizontalCollision){
                 griefBlocks();
             }
             if (getMachineHealth() < maXmachineHp && entityData.get(METAL_RESERVE) > 0){
@@ -268,8 +289,11 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
                 entityData.set(METAL_RESERVE,entityData.get(METAL_RESERVE)-1);
             }
         }
-        if (tickCount % 200 == 0 && !isActive()){
-            callUponInfected();
+        if (tickCount % 200 == 0){
+            if (!isActive()){
+                callUponInfected();
+            }
+            searchBlocks();
         }
     }
 
@@ -326,7 +350,18 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
             }
         }
     }
-
+    public void searchBlocks(){
+        AABB aabb = this.getBoundingBox().inflate(32,4,32);
+        for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
+            BlockState block = level.getBlockState(blockpos);
+            if (getValues().containsKey(block.getBlock().asItem())){
+                if (hasLineOfSightBlocks(blockpos) && this.random.nextFloat() < 0.5f){
+                    setTargetPos(blockpos);
+                    break;
+                }
+            }
+        }
+    }
     @Override
     public EntityDimensions getDimensions(Pose pose) {
         if (isActive()){
@@ -356,4 +391,70 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
             }
         }
     }
+
+    public static class SearchAroundGoal extends Goal {
+        private final InfestedConstruct construct;
+        public int tryTicks;
+
+        public SearchAroundGoal(InfestedConstruct construct){
+            this.construct = construct;
+            this.setFlags(EnumSet.of(Flag.MOVE));
+        }
+
+        @Override
+        public boolean canUse() {
+            return construct.getTargetPos() != null && this.construct.getTarget() == null;
+        }
+
+        protected void moveToBlock(BlockPos pos){
+            if (pos != null){
+                construct.navigation.moveTo(pos.getX()+0.5D,pos.getY()+1D,pos.getZ()+0.5D,1);
+            }
+        }
+        @Override
+        public void start() {
+            this.moveToBlock(construct.getTargetPos());
+            this.tryTicks = 0;
+            super.start();
+        }
+
+
+        @Override
+        public boolean canContinueToUse() {
+            return construct.getTarget() == null;
+        }
+
+        public boolean shouldRecalculatePath() {
+            return this.tryTicks % 40 == 0;
+        }
+
+
+        @Override
+        public boolean requiresUpdateEveryTick() {
+            return true;
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+            ++this.tryTicks;
+            BlockPos pos = construct.getTargetPos();
+            if (pos != null && shouldRecalculatePath()){
+                moveToBlock(pos);
+            }
+            if (pos != null && pos.closerToCenterThan(this.construct.position(),3.5f)){
+                assimilateMetal(pos,construct.level);
+                construct.setTargetPos((BlockPos) null);
+                construct.searchBlocks();
+            }
+        }
+
+        public void assimilateMetal(BlockPos pos,Level level){
+            Item item = level.getBlockState(pos).getBlock().asItem();
+            construct.setMetalReserve(construct.getMetalReserve() + construct.getValues().get(item));
+            level.destroyBlock(pos,false,construct);
+            construct.playSound(SoundEvents.IRON_GOLEM_REPAIR);
+        }
+    }
+
 }

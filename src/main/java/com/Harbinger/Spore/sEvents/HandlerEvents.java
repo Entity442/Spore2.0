@@ -340,6 +340,7 @@ public class HandlerEvents {
                                 player.displayClientMessage(Component.literal("Buffs " + construct.getActiveEffects()),false);
                                 player.displayClientMessage(Component.literal("Target ? " + construct.getTarget()),false);
                                 player.displayClientMessage(Component.literal("Machine hp " + construct.getMachineHealth()),false);
+                                player.displayClientMessage(Component.literal("Metal " + construct.getMetalReserve()),false);
                                 player.displayClientMessage(Component.literal("-------------------------"),false);
                             }
                         }
