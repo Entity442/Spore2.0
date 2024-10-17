@@ -31,6 +31,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.projectile.Arrow;
@@ -63,7 +64,7 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
     private int attackAnimationTick;
     public InfestedConstruct(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
-        this.navigation = new HybridPathNavigation(this,this.level);
+        this.navigation = new WallClimberNavigation(this,this.level);
         this.maxUpStep = 1.0F;
     }
 
@@ -308,7 +309,7 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
     }
 
     private void griefBlocks(){
-        AABB aabb = this.getBoundingBox().inflate(0.5D).move(0,0.5,0);
+        AABB aabb = this.getBoundingBox().inflate(0.5D).move(0,1,0);
         for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
             BlockState blockstate = this.level.getBlockState(blockpos);
             if (blockBreakingParameter(blockstate,blockpos)) {
