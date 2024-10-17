@@ -626,7 +626,7 @@ public class SConfig {
             this.machine_infestation = builder.comment("Default 70").defineInRange("The chance for an iron golem to be corrupted", 70, 1, Double.MAX_VALUE);
             this.cons_blocks = builder.defineList("Infested Construct Metal values",
                     Lists.newArrayList("minecraft:iron_block|27" ,"minecraft:anvil|93","minecraft:dispenser|4","minecraft:dropper|3","minecraft:hopper|15"
-                            ,"minecraft:repeater|6","minecraft:comparator|3","minecraft:iron_ore|16","minecraft:gold_ore|20","minecraft:blast_furnace|27","minecraft:iron_door|12") , o -> o instanceof String);
+                            ,"minecraft:repeater|6","minecraft:comparator|3","minecraft:iron_ore|16","minecraft:gold_ore|20","minecraft:copper_ore|10","minecraft:blast_furnace|27","minecraft:iron_door|12") , o -> o instanceof String);
             builder.pop();
 
             builder.push("Infected Drowned");
