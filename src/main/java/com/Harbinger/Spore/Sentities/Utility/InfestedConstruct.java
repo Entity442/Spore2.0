@@ -286,6 +286,9 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
                 this.setMachineHealth(getMachineHealth()+1);
                 entityData.set(METAL_RESERVE,entityData.get(METAL_RESERVE)-1);
             }
+            if (hasEffect(Seffects.CORROSION.get())){
+                this.setMachineHealth(getMachineHealth()-2);
+            }
         }
         if (tickCount % 200 == 0){
             if (!isActive()){
@@ -455,7 +458,9 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
 
         public void assimilateMetal(BlockPos pos,Level level){
             Item item = level.getBlockState(pos).getBlock().asItem();
-            construct.setMetalReserve(construct.getMetalReserve() + construct.getValues().get(item));
+            try {
+                construct.setMetalReserve(construct.getMetalReserve() + construct.getValues().get(item));
+            }catch (Exception ignored){}
             level.destroyBlock(pos,false,construct);
             construct.playSound(SoundEvents.IRON_GOLEM_REPAIR);
             if (item == Items.DISPENSER){
