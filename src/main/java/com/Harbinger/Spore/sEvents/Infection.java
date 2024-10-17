@@ -121,7 +121,7 @@ public class Infection {
                         livingEntity.discard();
                     }
                 }
-            if (livingEntity instanceof IronGolem golem){
+            if (livingEntity instanceof IronGolem golem && Math.random() < SConfig.SERVER.machine_infestation.get()/100){
                 InfestedConstruct construct = new InfestedConstruct(Sentities.INF_CONSTRUCT.get(),golem.level);
                 construct.setPos(golem.position());
                 construct.setHealth(10);

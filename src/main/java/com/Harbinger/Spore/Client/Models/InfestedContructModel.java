@@ -15,7 +15,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class InfestedContructModel<T extends InfestedConstruct> extends EntityModel<T> implements TentacledModel{
+public class InfestedContructModel<T extends InfestedConstruct> extends EntityModel<T> implements TentacledModel {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Spore.MODID, "infestedcontructmodel"), "main");
 	private final ModelPart Infgolem;
@@ -61,10 +61,10 @@ public class InfestedContructModel<T extends InfestedConstruct> extends EntityMo
 	private final ModelPart PilotArm;
 	private final ModelPart Head;
 	private final ModelPart Jaw;
+	private final ModelPart Dispenser;
 
 	public InfestedContructModel(ModelPart root) {
-		this.Infgolem = root.getChild("Infgolem");
-		this.RightLeg = Infgolem.getChild("Legs").getChild("RightLeg");
+		this.Infgolem = root.getChild("Infgolem");this.RightLeg = Infgolem.getChild("Legs").getChild("RightLeg");
 		this.LeftLeg = Infgolem.getChild("Legs").getChild("LeftLeg");
 		this.RightForLeg = RightLeg.getChild("RightLegSeg2");
 		this.LeftForLeg = LeftLeg.getChild("LeftLegSeg2");
@@ -106,6 +106,7 @@ public class InfestedContructModel<T extends InfestedConstruct> extends EntityMo
 		this.PilotArm = Torso.getChild("Pilot").getChild("PilotArm");
 		this.Head = Torso.getChild("Pilot").getChild("PilotHead");
 		this.Jaw = Head.getChild("Jaw");
+		this.Dispenser = Torso.getChild("Dispenser");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -437,6 +438,10 @@ public class InfestedContructModel<T extends InfestedConstruct> extends EntityMo
 
 		PartDefinition StuckArm = Pilot.addOrReplaceChild("StuckArm", CubeListBuilder.create().texOffs(0, 120).addBox(-1.0F, -1.5F, -2.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(4.4849F, -6.2556F, 0.4466F, -0.2618F, 0.0F, -0.3927F));
 
+		PartDefinition Dispenser = UpperTorso.addOrReplaceChild("Dispenser", CubeListBuilder.create(), PartPose.offset(6.0F, -10.0F, -2.0F));
+
+		PartDefinition cube_r1 = Dispenser.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(192, 0).addBox(-8.0F, -8.0F, -8.0F, 16.0F, 16.0F, 16.0F, new CubeDeformation(-5.0F)), PartPose.offsetAndRotation(2.0F, -2.0F, 0.0F, -0.6545F, 0.1309F, -0.1309F));
+
 		return LayerDefinition.create(meshdefinition, 256, 256);
 	}
 
@@ -482,6 +487,7 @@ public class InfestedContructModel<T extends InfestedConstruct> extends EntityMo
 		this.Head.yRot = headY/2;
 		this.Torso.yRot = headY/2;
 		this.Jaw.xRot = Jaw.getInitialPose().xRot +Mth.cos(ageInTicks/6)/6;
+		this.Dispenser.visible = entity.isDispenser();
 
 		if (entity.getAttackAnimationTick() <= 0){
 			this.LeftArm.xRot = Mth.cos(ageInTicks/6)/5;
@@ -503,9 +509,9 @@ public class InfestedContructModel<T extends InfestedConstruct> extends EntityMo
 			this.RightForArm.xRot = RightArm.xRot/2;
 		}
 	}
-
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		Infgolem.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
+
 }
