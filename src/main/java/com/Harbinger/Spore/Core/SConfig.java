@@ -623,7 +623,8 @@ public class SConfig {
             this.inf_cons_damage = builder.comment("Default 15").defineInRange("Sets Infested Construct Damage", 15, 1, Double.MAX_VALUE);
             this.inf_cons_armor = builder.comment("Default 10").defineInRange("Sets Infested Construct Armor", 10, 1, Double.MAX_VALUE);
             this.cons_blocks = builder.defineList("Infested Construct Metal values",
-                    Lists.newArrayList("minecraft:iron_block|27" ,"minecraft:anvil|93") , o -> o instanceof String);
+                    Lists.newArrayList("minecraft:iron_block|27" ,"minecraft:anvil|93","minecraft:dispenser|4","minecraft:dropper|3","minecraft:hopper|15"
+                            ,"minecraft:repeater|6","minecraft:comparator|3","minecraft:iron_ore|16","minecraft:gold_ore|20","minecraft:blast_furnace|27","minecraft:iron_door|12") , o -> o instanceof String);
             builder.pop();
 
             builder.push("Infected Drowned");

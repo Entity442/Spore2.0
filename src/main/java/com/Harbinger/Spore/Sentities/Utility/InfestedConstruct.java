@@ -37,6 +37,7 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -136,6 +137,8 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
     }
     public void setActive(boolean value){entityData.set(ACTIVE,value);}
     public boolean isActive(){return entityData.get(ACTIVE);}
+    public void setDispenser(boolean value){entityData.set(DISPENSER,value);}
+    public boolean isDispenser(){return entityData.get(DISPENSER);}
     public void setMachineHealth(float value){entityData.set(MACHINE_HEALTH,value);}
     public float getMachineHealth(){return entityData.get(MACHINE_HEALTH);}
     public void setMetalReserve(int value){entityData.set(METAL_RESERVE,value);}
@@ -454,6 +457,9 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
             construct.setMetalReserve(construct.getMetalReserve() + construct.getValues().get(item));
             level.destroyBlock(pos,false,construct);
             construct.playSound(SoundEvents.IRON_GOLEM_REPAIR);
+            if (item == Items.DISPENSER){
+                construct.setDispenser(true);
+            }
         }
     }
 
