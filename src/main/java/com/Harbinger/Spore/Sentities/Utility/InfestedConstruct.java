@@ -32,10 +32,12 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -66,6 +68,11 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
         super(type, level);
         this.navigation = new WallClimberNavigation(this,this.level);
         this.maxUpStep = 1.0F;
+    }
+
+    @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.construct_loot.get();
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -300,11 +307,14 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
             }
             searchBlocks();
         }
-        if (tickCount % 100 == 0){
+        if (tickCount % 100 == 0 && this.isDispenser() && isActive()){
             LivingEntity target = this.getTarget();
             if (target != null && this.hasLineOfSight(target)){
                 performDispenserShot(target);
             }
+        }
+        if (!isActive() && !onGround){
+            this.setDeltaMovement(getDeltaMovement().add(0,-0.1,0));
         }
     }
 
@@ -336,7 +346,7 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
     }
 
     protected SoundEvent getAmbientSound() {
-        return isActive() ? Ssounds.INF_GROWL.get() : null;
+        return isActive() ? Ssounds.CONSTRUCT_AMBIENT.get() : null;
     }
 
     protected SoundEvent getHurtSound(DamageSource p_34327_) {
@@ -491,4 +501,14 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
         this.level.addFreshEntity(abstractarrow);
     }
 
+    @Override
+    public void die(DamageSource p_21014_) {
+        super.die(p_21014_);
+        dropIron();
+    }
+
+    private void dropIron(){
+        ItemEntity itemEntity = new ItemEntity(level,this.getX(),this.getY(),this.getZ(),new ItemStack(Items.IRON_INGOT,random.nextInt(1,5)));
+        level.addFreshEntity(itemEntity);
+    }
 }

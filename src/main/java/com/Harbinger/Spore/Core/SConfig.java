@@ -626,7 +626,7 @@ public class SConfig {
             this.machine_infestation = builder.comment("Default 70").defineInRange("The chance for an iron golem to be corrupted", 70, 1, Double.MAX_VALUE);
             this.cons_blocks = builder.defineList("Infested Construct Metal values",
                     Lists.newArrayList("minecraft:iron_block|27" ,"minecraft:anvil|93","minecraft:dispenser|4","minecraft:dropper|3","minecraft:hopper|15"
-                            ,"minecraft:repeater|6","minecraft:comparator|3","minecraft:iron_ore|16","minecraft:gold_ore|20","minecraft:copper_ore|10","minecraft:blast_furnace|27","minecraft:iron_door|12") , o -> o instanceof String);
+                            ,"minecraft:repeater|6","minecraft:comparator|3","minecraft:iron_ore|16","minecraft:deepslate_iron_ore|16","minecraft:blast_furnace|27","minecraft:iron_door|12","minecraft:piston|8") , o -> o instanceof String);
             builder.pop();
 
             builder.push("Infected Drowned");
@@ -1204,6 +1204,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> thorn_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> specter_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> jagd_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> construct_loot;
 
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> name;
@@ -1290,6 +1291,8 @@ public class SConfig {
                     Lists.newArrayList("spore:mutated_fiber|80|5|12","spore:armor_fragment|80|2|6","spore:mutated_heart|10|1|3","spore:claw_fragment|80|6|9","spore:innards|50|1|2","spore:tumor|100|4|8","spore:tendons|60|3|7") , o -> o instanceof String);
             this.specter_loot = builder.defineList("Specter",
                     Lists.newArrayList("spore:mutated_fiber|80|5|17","spore:armor_fragment|80|2|9","spore:mutated_heart|10|1|3","spore:claw_fragment|80|6|9","spore:innards|50|1|2","spore:tumor|100|4|8","spore:tendons|60|3|7") , o -> o instanceof String);
+            this.construct_loot = builder.defineList("Construct",
+                    Lists.newArrayList("spore:mutated_fiber|80|5|17","spore:mutated_heart|10|1|3","spore:innards|50|1|2","spore:tumor|100|4|8","spore:tendons|60|3|7") , o -> o instanceof String);
 
 
             this.sca_loot = builder.defineList("Scamper",
