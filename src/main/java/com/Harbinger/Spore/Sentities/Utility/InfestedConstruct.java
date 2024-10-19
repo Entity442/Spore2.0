@@ -6,7 +6,6 @@ import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.ExtremelySusThings.SporeSavedData;
 import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
-import com.Harbinger.Spore.Sentities.AI.HybridPathNavigation;
 import com.Harbinger.Spore.Sentities.BaseEntities.Hyper;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
@@ -30,7 +29,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Enemy;
@@ -72,7 +70,7 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
 
     @Override
     public List<? extends String> getDropList() {
-        return SConfig.DATAGEN.construct_loot.get();
+        return isActive() ? SConfig.DATAGEN.construct_loot.get() : null;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -181,12 +179,6 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
             @Override
             protected double getAttackReachSqr(LivingEntity entity) {
                 return 6.0 + entity.getBbWidth() * entity.getBbWidth();}});
-        this.goalSelector.addGoal(3, new RangedAttackGoal(this,1,60,32){
-            @Override
-            public boolean canUse() {
-                return canRangeAttack() && super.canUse();
-            }
-        });
         this.goalSelector.addGoal(4,new SearchAroundGoal(this));
         this.goalSelector.addGoal(5,new RandomStrollGoal(this,1));
     }
@@ -239,7 +231,7 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
     }
     @Override
     public boolean addEffect(MobEffectInstance effectInstance, @Nullable Entity entity) {
-        if (effectInstance.getEffect().isBeneficial()){
+        if (effectInstance.getEffect().isBeneficial() || effectInstance.getEffect() == Seffects.CORROSION.get()){
             return super.addEffect(effectInstance, entity);
         }
         return false;
@@ -316,10 +308,16 @@ public class InfestedConstruct extends UtilityEntity implements RangedAttackMob,
         if (!isActive() && !onGround){
             this.setDeltaMovement(getDeltaMovement().add(0,-0.1,0));
         }
+        if (tickCount % 60 == 0 && this.canRangeAttack()){
+            LivingEntity target = this.getTarget();
+            if (target != null && this.hasLineOfSight(target)){
+                performRangedAttack(target,0);
+            }
+        }
     }
 
     private void griefBlocks(){
-        AABB aabb = this.getBoundingBox().inflate(0.5D).move(0,1,0);
+        AABB aabb = this.getBoundingBox().inflate(0.5D,0,0.5D).move(0,1,0);
         for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
             BlockState blockstate = this.level.getBlockState(blockpos);
             if (blockBreakingParameter(blockstate,blockpos)) {
