@@ -12,6 +12,7 @@ import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import com.Harbinger.Spore.Sentities.Variants.GrieferVariants;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -38,6 +39,7 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
@@ -138,26 +140,19 @@ public class Griefer extends EvolvedInfected {
     public int getSwell(){return swell;}
 
     private void explodeGriefer() {
-        if (!this.level.isClientSide) {
+        if (this.level instanceof ServerLevel serverLevel) {
             int explosionRadius = this.getTypeVariant() == 2 ? 2 * SConfig.SERVER.explosion.get() : SConfig.SERVER.explosion.get();
-            if (SConfig.SERVER.explosion_on.get()){
-            Explosion.BlockInteraction explosion$blockinteraction = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
-            this.dead = true;
-            this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)explosionRadius, explosion$blockinteraction);
-            } else {
-                Explosion.BlockInteraction explosion$blockinteraction = Explosion.BlockInteraction.NONE;
-                this.dead = true;
-                this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)explosionRadius, explosion$blockinteraction);
-                this.discard();
-
-            }
-        }
-        this.discard();
+            Explosion.BlockInteraction explosion$blockinteraction = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) && SConfig.SERVER.explosion_on.get() ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float) explosionRadius, explosion$blockinteraction);
             this.summonScent(this.level, this.getX(), this.getY(), this.getZ());
-        if (this.getTypeVariant() == 1 || this.getTypeVariant() == 3){
-            explodeToxicTumor(this.getTypeVariant() == 1);
+            if (this.getTypeVariant() == 1 || this.getTypeVariant() == 3) {
+                explodeToxicTumor(this.getTypeVariant() == 1);
+            }
+            if (this.getTypeVariant() == 4){
+                Utilities.convertBlocks(serverLevel,this,this.getOnPos(),7, Blocks.FIRE.defaultBlockState());
+            }
+            this.discard();
         }
-
     }
     private void explodeToxicTumor(boolean poison){
         AABB boundingBox = this.getBoundingBox().inflate(6);
@@ -262,16 +257,23 @@ public class Griefer extends EvolvedInfected {
     private boolean checkForNucMod(){
         return ModList.get().isLoaded("alexscaves") || ModList.get().isLoaded("bigreactors");
     }
+    private GrieferVariants getSpawnVariant(){
+        GrieferVariants variants = Util.getRandom(GrieferVariants.values(), this.random);
+        if (variants == GrieferVariants.TOXIC || variants == GrieferVariants.RADIOACTIVE){
+            if (checkForNucMod()){
+                return GrieferVariants.RADIOACTIVE;
+            }else{
+                return GrieferVariants.TOXIC;
+            }
+        }
+        return variants;
+    }
 
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_146746_, DifficultyInstance p_146747_,
                                         MobSpawnType p_146748_, @Nullable SpawnGroupData p_146749_,
                                         @Nullable CompoundTag p_146750_) {
-        GrieferVariants variant = Math.random() < 0.5 ? GrieferVariants.DEFAULT : Math.random() < 0.5 ? GrieferVariants.TOXIC : GrieferVariants.BILE;
-        if (checkForNucMod()){
-            variant = Math.random() < 0.5 ? GrieferVariants.DEFAULT : Math.random() < 0.5 ? GrieferVariants.RADIOACTIVE : GrieferVariants.BILE;
-        }
-        setVariant(variant);
+        setVariant(getSpawnVariant());
         return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_);
     }
 
