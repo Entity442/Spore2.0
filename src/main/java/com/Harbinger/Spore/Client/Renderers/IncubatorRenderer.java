@@ -34,7 +34,7 @@ public class IncubatorRenderer extends BaseBlockEntityRenderer<IncubatorBlockEnt
         super(new IncubatorModel<>());
     }
     @Override
-    public ResourceLocation getTexture() {
+    public ResourceLocation getTexture(IncubatorBlockEntity entity) {
         return TEXTURE;
     }
     @Override

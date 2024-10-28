@@ -203,6 +203,10 @@ public class Sentities {
             () -> EntityType.Builder.of(Illusion::new, MobCategory.MISC).sized(1f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "illusion").toString()));
 
+    public static final RegistryObject<EntityType<ArenaEntity>> ARENA_TENDRIL = SPORE_ENTITIES.register("arena_tendril",
+            () -> EntityType.Builder.of(ArenaEntity::new, ORGANOID).sized(1f, 3f)
+                    .build(new ResourceLocation(Spore.MODID, "arena_tendril").toString()));
+
     public static final RegistryObject<EntityType<AcidBall>> ACID_BALL = register("acid_ball",
             EntityType.Builder.<AcidBall>of(AcidBall::new, MobCategory.MISC).setCustomClientFactory(AcidBall::new)
                     .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
