@@ -120,9 +120,13 @@ public class ArenaEntity extends UtilityEntity {
     public int getBorrow(){return entityData.get(BORROW);}
 
     @Override
-    public boolean hurt(DamageSource p_21016_, float p_21017_) {
+    public boolean hurt(DamageSource source, float p_21017_) {
+        if (source == DamageSource.OUT_OF_WORLD){
+            return super.hurt(source, p_21017_);
+        }
         return false;
     }
+
     public void recalculateHosts(){
         waveHosts.clear();
         waveHosts = level.getEntities(this,this.getBoundingBox().inflate(16), entity -> {return (entity instanceof Infected || entity instanceof UtilityEntity) && !(entity instanceof com.Harbinger.Spore.Sentities.Utility.ArenaEntity);});
@@ -307,5 +311,10 @@ public class ArenaEntity extends UtilityEntity {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(1,new RandomLookAroundGoal(this));
+    }
+
+    @Override
+    public boolean isInvulnerable() {
+        return true;
     }
 }
