@@ -523,6 +523,14 @@ public class HandlerEvents {
             }
         }
     }
+    @SubscribeEvent
+    public static void onServerStart(ServerStartedEvent event){
+        ServerLevel level  = event.getServer().overworld();
+        SporeSavedData data = SporeSavedData.getDataLocation(level);
+        if (data != null){
+            SporeSavedData.resetHive(level);
+        }
+    }
 
 
     @SubscribeEvent
