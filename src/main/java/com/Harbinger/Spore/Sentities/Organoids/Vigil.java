@@ -19,13 +19,17 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -42,7 +46,7 @@ public class Vigil extends Organoid{
     private static final EntityDataAccessor<Boolean> STALKER = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.BOOLEAN);
     private int summon_counter;
     @Nullable
-    private Proto proto;
+    private Mob proto;
     public Vigil(EntityType<? extends UtilityEntity> type, Level level) {
         super(type, level);
         setPersistenceRequired();
@@ -201,7 +205,7 @@ public class Vigil extends Organoid{
             level.addFreshEntity(scent);
         }
     }
-    public void setProto(@Nullable Proto proto) {
+    public void setProto(@Nullable Mob proto) {
         this.proto = proto;
     }
 
@@ -396,5 +400,13 @@ public class Vigil extends Organoid{
                                         @Nullable CompoundTag p_146750_) {
         setStalker(Math.random() < 0.3f);
         return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_);
+    }
+
+    @Override
+    protected InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
+        if (proto != null){
+            proto.addEffect(new MobEffectInstance(MobEffects.GLOWING,200,0));
+        }
+        return super.mobInteract(player, interactionHand);
     }
 }
