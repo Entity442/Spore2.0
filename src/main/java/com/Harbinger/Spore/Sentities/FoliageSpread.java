@@ -3,6 +3,7 @@ package com.Harbinger.Spore.Sentities;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sblocks;
 import com.Harbinger.Spore.Sblocks.GenericFoliageBlock;
+import com.Harbinger.Spore.Sblocks.SelectableFallingBlock;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,10 +17,7 @@ import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BushBlock;
-import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -100,7 +98,8 @@ public interface FoliageSpread {
     }
     default void placeRottenBush(BlockState above,Level level,BlockPos blockpos,BlockState blockstate){
         if (above.getBlock() instanceof BushBlock && !(above.getBlock() instanceof GenericFoliageBlock) && blockstate.isSolidRender(level ,blockpos)){
-            level.setBlock(blockpos.above(),Sblocks.ROTTEN_BUSH.get().defaultBlockState(), 3);
+            BlockState state = Math.random() < 0.5f ? Sblocks.ROTTEN_BUSH.get().defaultBlockState() : Sblocks.GROWTHS_BIG.get().defaultBlockState();
+            level.setBlock(blockpos.above(),state, 3);
         }
     }
     default void placeWaterFoliage(BlockState above,Level level,BlockPos blockpos,BlockState blockstate){
@@ -209,7 +208,7 @@ public interface FoliageSpread {
                     } catch (Exception e) {
                     }
             }
-            if (Math.random() < 0.3f && level.getBlockState(blockpos.below()).isAir()){
+            if (Math.random() < 0.3f){
                 FallingBlockEntity.fall(level,blockpos,_bs);
             }else {
                 level.setBlock(blockpos, _bs, 3);
@@ -217,6 +216,26 @@ public interface FoliageSpread {
         }
         if (blockstate.is(BlockTags.PLANKS)){
             BlockState _bs = Sblocks.ROTTEN_PLANKS.get().defaultBlockState();
+            if (Math.random() < 0.3f && level.getBlockState(blockpos.below()).isAir()){
+                FallingBlockEntity.fall(level,blockpos,_bs);
+            }else {
+                level.setBlock(blockpos, _bs, 3);
+            }
+        }
+        if (blockstate.is(BlockTags.WOODEN_SLABS)){
+            BlockState _bs = Sblocks.ROTTEN_SLAB.get().defaultBlockState();
+            for (Map.Entry<Property<?>, Comparable<?>> entry : blockstate.getValues().entrySet()) {
+                Property _property = _bs.getBlock().getStateDefinition().getProperty(entry.getKey().getName());
+                if (_property != null && _bs.getValue(_property) != null)
+                    try {
+                        _bs = _bs.setValue(_property, (Comparable) entry.getValue());
+                    } catch (Exception e) {
+                    }
+            }
+            level.setBlock(blockpos, _bs, 3);
+        }
+        if (blockstate.is(BlockTags.WOODEN_DOORS) || blockstate.is(BlockTags.WOODEN_TRAPDOORS) || blockstate.is(BlockTags.WOODEN_FENCES) || blockstate.is(BlockTags.WOODEN_PRESSURE_PLATES)){
+            BlockState _bs = Sblocks.ROTTEN_SCRAPS.get().defaultBlockState();
             if (Math.random() < 0.3f && level.getBlockState(blockpos.below()).isAir()){
                 FallingBlockEntity.fall(level,blockpos,_bs);
             }else {
