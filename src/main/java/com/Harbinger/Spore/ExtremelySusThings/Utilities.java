@@ -79,7 +79,7 @@ public class Utilities {
                         }}}}}
     }
 
-    public static Predicate<LivingEntity> TARGET_SELECTOR = (entity) -> {
+    public static Predicate<LivingEntity> TARGET_SELECTOR_PREDICATE = (entity) -> {
         if (entity instanceof Infected || entity instanceof UtilityEntity){
             return false;
         }else if ((entity instanceof AbstractFish || entity instanceof Animal) && !SConfig.SERVER.at_an.get()){
@@ -98,6 +98,8 @@ public class Utilities {
         }
         return true;
     };
+    public static BooleanCache<LivingEntity> TARGET_SELECTOR = new BooleanCache<>(8,TARGET_SELECTOR_PREDICATE);
+
 
     public static List<Item> helmetList(){
         List<Item> values = new ArrayList<>();

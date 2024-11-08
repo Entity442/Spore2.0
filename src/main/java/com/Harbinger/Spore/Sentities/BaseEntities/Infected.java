@@ -187,7 +187,7 @@ public class Infected extends Monster{
     }
 
     public Predicate<LivingEntity> TARGET_SELECTOR = (entity) -> {
-        return Utilities.TARGET_SELECTOR.test(entity);
+        return Utilities.TARGET_SELECTOR.Test(entity);
     };
 
     protected void addTargettingGoals(){
