@@ -14,7 +14,6 @@ import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import com.Harbinger.Spore.Sentities.Variants.GrieferVariants;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -159,7 +158,7 @@ public class Griefer extends EvolvedInfected {
         List<Entity> entities = this.level.getEntities(this, boundingBox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
 
         for (Entity entity1 : entities) {
-            if (entity1 instanceof LivingEntity livingEntity && Utilities.TARGET_SELECTOR.test(livingEntity)) {
+            if (entity1 instanceof LivingEntity livingEntity && Utilities.TARGET_SELECTOR.Test(livingEntity)) {
                 if (poison){
                     livingEntity.addEffect( new MobEffectInstance(MobEffects.POISON ,  1200, 2));
                     livingEntity.addEffect( new MobEffectInstance(MobEffects.WEAKNESS ,  400, 0));
@@ -287,5 +286,13 @@ public class Griefer extends EvolvedInfected {
 
     private void setVariant(GrieferVariants variant) {
         this.entityData.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
+    }
+
+    @Override
+    public String getMutation() {
+        if (getTypeVariant() != 0){
+            return this.getVariant().getName();
+        }
+        return super.getMutation();
     }
 }

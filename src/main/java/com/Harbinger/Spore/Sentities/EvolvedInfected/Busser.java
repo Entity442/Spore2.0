@@ -27,13 +27,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
-import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
-import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -310,5 +306,13 @@ public class Busser extends EvolvedInfected implements Carrier, FlyingInfected, 
         stinger.shoot(dx, dy - stinger.getY() + Math.hypot(dx, dz) * 0.2F, dz, 1f * 2, 12.0F);
         this.level.addFreshEntity(stinger);
         this.setDeltaMovement(this.getDeltaMovement().add(0,0.3,0));
+    }
+
+    @Override
+    public String getMutation() {
+        if (getTypeVariant() != 0){
+            return this.getVariant().getName();
+        }
+        return super.getMutation();
     }
 }

@@ -506,4 +506,7 @@ public class Infected extends Monster{
         }
         return super.hasLineOfSight(entity);
     }
+    public String getMutation(){
+        return null;
+    }
 }
