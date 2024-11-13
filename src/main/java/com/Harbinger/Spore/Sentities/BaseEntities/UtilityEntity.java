@@ -112,4 +112,8 @@ public class UtilityEntity extends PathfinderMob {
             }
         });
     }
+
+    public String getMutation(){
+        return null;
+    }
 }

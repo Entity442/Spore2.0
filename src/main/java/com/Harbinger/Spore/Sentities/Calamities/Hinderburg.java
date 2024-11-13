@@ -457,4 +457,11 @@ public class Hinderburg extends Calamity implements FlyingInfected , TrueCalamit
         return super.doHurtTarget(entity);
     }
 
+    @Override
+    public String getMutation() {
+        if (isAdapted()){
+            return "spore.entity.variant.overclocked";
+        }
+        return super.getMutation();
+    }
 }

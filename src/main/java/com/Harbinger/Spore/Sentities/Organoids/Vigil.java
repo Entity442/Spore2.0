@@ -409,4 +409,12 @@ public class Vigil extends Organoid{
         }
         return super.mobInteract(player, interactionHand);
     }
+
+    @Override
+    public String getMutation() {
+        if (isStalker()){
+            return "spore.entity.variant.stalker";
+        }
+        return super.getMutation();
+    }
 }
