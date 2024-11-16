@@ -18,7 +18,9 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -473,8 +475,9 @@ public class Proto extends Organoid implements CasingGenerator {
                 creature.tickEmerging();
                 creature.setPos(entity.getX()+a,entity.getY()+c,entity.getZ()+b);
                 level.addFreshEntity(creature);
-                if (level.getServer() != null && !level.isClientSide()){
-                    level.getServer().getPlayerList().broadcastSystemMessage(Component.translatable("calamity_summon_message"), false);
+                for(ServerPlayer player : level.getServer().getPlayerList().getPlayers()){
+                    player.playNotifySound(Ssounds.CALAMITY_SPAWN.get(), SoundSource.AMBIENT,1f,1f);
+                    player.displayClientMessage(Component.translatable("calamity_summon_message"), false);
                 }
                 this.setSignal(false);
             }
@@ -486,7 +489,7 @@ public class Proto extends Organoid implements CasingGenerator {
         int b = random.nextInt(-12,12);
         int c = random.nextInt(4);
         if (level instanceof ServerLevel serverLevel){
-            List<String> hypers = new ArrayList<>(){{add("spore:inquisitor");add("spore:wendigo");add("spore:brot");}};
+            List<String> hypers = new ArrayList<>(){{add("spore:inquisitor");add("spore:wendigo");add("spore:brot");add("spore:ogre");}};
             int i = hypers.size();
             Verwa verwa = new Verwa(Sentities.VERVA.get(),serverLevel);
             verwa.setStoredMob(hypers.get(random.nextInt(i)));
@@ -513,8 +516,9 @@ public class Proto extends Organoid implements CasingGenerator {
             if (en instanceof Calamity calamity && calamity.getSearchArea() == BlockPos.ZERO){
                 calamity.setSearchArea(pos);
                 this.setSignal(false);
-                if (level.getServer() != null && !level.isClientSide()){
-                    level.getServer().getPlayerList().broadcastSystemMessage(Component.translatable("calamity_coming_message"), false);
+                for(ServerPlayer player : this.level.getServer().getPlayerList().getPlayers()){
+                    player.playNotifySound(Ssounds.CALAMITY_INCOMING.get(), SoundSource.AMBIENT,1f,1f);
+                    player.displayClientMessage(Component.translatable("calamity_coming_message"), false);
                 }
                 return false;
             }
