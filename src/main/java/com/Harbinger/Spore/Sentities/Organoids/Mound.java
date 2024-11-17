@@ -206,7 +206,7 @@ public class Mound extends Organoid implements Enemy, FoliageSpread {
         AABB aabb = entity.getBoundingBox().inflate(SConfig.SERVER.mound_tendril_checker.get());
         for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
             BlockState blockState = level.getBlockState(blockpos);
-            if (isStucture(blockpos) || isChestWithFood(blockpos) || blockState.is(Sblocks.REMAINS.get()) || blockState.is(Blocks.SPAWNER)){
+            if (isStucture(blockpos) || (isChestWithFood(blockpos) && SConfig.SERVER.tendril_chest.get()) || (blockState.is(Sblocks.REMAINS.get()) && SConfig.SERVER.tendril_corpse.get()) || (blockState.is(Blocks.SPAWNER) && SConfig.SERVER.tendril_spawner.get())){
                 InfectionTendril tendril = new InfectionTendril(Sentities.TENDRIL.get(),level);
                 tendril.setAgeM(this.getMaxAge() -1);
                 tendril.setSearchArea(blockpos);
