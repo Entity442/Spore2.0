@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sentities.Hyper;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.ArmorPersentageBypass;
@@ -124,6 +125,9 @@ public class Ogre extends Hyper implements RangedAttackMob , ArmorPersentageBypa
         }
         if (entity instanceof Player player && Math.random() < 0.2){
             player.startRiding(this);
+        }
+        if (entity instanceof  LivingEntity living){
+            living.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(),  600, 0), this);
         }
         return super.doHurtTarget(entity);
     }
