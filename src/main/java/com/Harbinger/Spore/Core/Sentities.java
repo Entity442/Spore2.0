@@ -156,6 +156,10 @@ public class Sentities {
             () -> EntityType.Builder.of(InfectedDrowned::new, INFECTED).sized(0.6f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "inf_drowned").toString()));
 
+    public static final RegistryObject<EntityType<Bloater>> BLOATER = SPORE_ENTITIES.register("bloater",
+            () -> EntityType.Builder.of(Bloater::new, INFECTED).sized(0.8f, 1.9f)
+                    .build(new ResourceLocation(Spore.MODID, "bloater").toString()));
+
     public static final RegistryObject<EntityType<Vigil>> VIGIL = SPORE_ENTITIES.register("vigil",
             () -> EntityType.Builder.of(Vigil::new, ORGANOID).sized(1f, 3f)
                     .build(new ResourceLocation(Spore.MODID, "vigil").toString()));
