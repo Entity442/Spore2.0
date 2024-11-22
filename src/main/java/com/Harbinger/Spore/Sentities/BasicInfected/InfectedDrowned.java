@@ -6,6 +6,7 @@ import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.ReturnToWater;
 import com.Harbinger.Spore.Sentities.AI.SemiWaterNavigation;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
+import com.Harbinger.Spore.Sentities.EvolvingInfected;
 import com.Harbinger.Spore.Sentities.MovementControls.WaterXlandMovement;
 import com.Harbinger.Spore.Sentities.WaterInfected;
 import net.minecraft.core.BlockPos;
@@ -31,7 +32,7 @@ import net.minecraftforge.fluids.FluidType;
 
 import java.util.List;
 
-public class InfectedDrowned extends Infected implements WaterInfected {
+public class InfectedDrowned extends Infected implements WaterInfected, EvolvingInfected {
     public InfectedDrowned(EntityType<? extends Infected> type, Level level) {
         super(type, level);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
@@ -127,5 +128,11 @@ public class InfectedDrowned extends Infected implements WaterInfected {
                 .add(Attributes.FOLLOW_RANGE, 48)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.3);
 
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        tickEvolution(this,SConfig.SERVER.drowned_ev.get());
     }
 }
