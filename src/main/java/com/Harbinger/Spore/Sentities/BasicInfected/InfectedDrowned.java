@@ -3,8 +3,8 @@ package com.Harbinger.Spore.Sentities.BasicInfected;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
+import com.Harbinger.Spore.Sentities.AI.HybridPathNavigation;
 import com.Harbinger.Spore.Sentities.AI.ReturnToWater;
-import com.Harbinger.Spore.Sentities.AI.SemiWaterNavigation;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.EvolvingInfected;
 import com.Harbinger.Spore.Sentities.MovementControls.WaterXlandMovement;
@@ -37,7 +37,7 @@ public class InfectedDrowned extends Infected implements WaterInfected, Evolving
         super(type, level);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
         this.moveControl = new WaterXlandMovement(this);
-        this.navigation = new SemiWaterNavigation(this,level);
+        this.navigation = new HybridPathNavigation(this,level);
     }
 
     public void travel(Vec3 p_32858_) {
