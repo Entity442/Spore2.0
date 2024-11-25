@@ -123,4 +123,15 @@ public class Utilities {
         states.add(Sblocks.GASTRIC_BIOMASS_BLOCK.get().defaultBlockState());
         return states;
     }
+    public static Vec3 generatePositionAway(Vec3 origin, double distance) {
+        Random random = new Random();
+        double theta = random.nextDouble() * 2 * Math.PI; // Random angle around the z-axis (0 to 2π)
+        double phi = Math.acos(2 * random.nextDouble() - 1); // Random angle from the z-axis (0 to π)
+        // Convert spherical coordinates to Cartesian coordinates for the offset
+        double offsetX = Math.sin(phi) * Math.cos(theta) * distance;
+        double offsetY = Math.sin(phi) * Math.sin(theta) * distance;
+        double offsetZ = Math.cos(phi) * distance;
+        // Generate the new position
+        return new Vec3(origin.x + offsetX, origin.y + offsetY,origin.z + offsetZ);
+    }
 }

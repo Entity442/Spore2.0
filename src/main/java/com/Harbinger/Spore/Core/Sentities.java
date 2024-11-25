@@ -6,6 +6,7 @@ import com.Harbinger.Spore.Sentities.Calamities.Hinderburg;
 import com.Harbinger.Spore.Sentities.Calamities.Howitzer;
 import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
+import com.Harbinger.Spore.Sentities.EvolvedInfected.Scavenger;
 import com.Harbinger.Spore.Sentities.Experiments.Lacerator;
 import com.Harbinger.Spore.Sentities.Experiments.Plagued;
 import com.Harbinger.Spore.Sentities.FallenMultipart.HowitzerArm;
@@ -159,6 +160,10 @@ public class Sentities {
     public static final RegistryObject<EntityType<Bloater>> BLOATER = SPORE_ENTITIES.register("bloater",
             () -> EntityType.Builder.of(Bloater::new, INFECTED).sized(0.8f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "bloater").toString()));
+
+    public static final RegistryObject<EntityType<Scavenger>> SCAVENGER = SPORE_ENTITIES.register("scavenger",
+            () -> EntityType.Builder.of(Scavenger::new, INFECTED).sized(1.3f, 1.1f)
+                    .build(new ResourceLocation(Spore.MODID, "scavenger").toString()));
 
     public static final RegistryObject<EntityType<Vigil>> VIGIL = SPORE_ENTITIES.register("vigil",
             () -> EntityType.Builder.of(Vigil::new, ORGANOID).sized(1f, 3f)

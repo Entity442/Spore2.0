@@ -24,7 +24,7 @@ public class EvolvedInfected extends Infected {
         return false;
     }
     public double getDamageCap(){
-        return 15;
+        return getMaxHealth()/3;
     }
     @Override
     public boolean hurt(DamageSource source, float amount) {

@@ -2,7 +2,6 @@ package com.Harbinger.Spore.Client.Models;// Made with Blockbench 4.11.2
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
-
 import com.Harbinger.Spore.Client.Animations.ScavengerAnimations;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.Scavenger;
 import com.Harbinger.Spore.Spore;
@@ -18,7 +17,6 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import org.joml.Vector3f;
 
 public class ScavengerModel<T extends Scavenger> extends HierarchicalModel<T> implements TentacledModel{
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -305,7 +303,7 @@ public class ScavengerModel<T extends Scavenger> extends HierarchicalModel<T> im
 		float idleMovementValue = Mth.cos(ageInTicks/6)/6;
 		float headSpin = (netHeadYaw / (180F / (float) Math.PI))/3;
 		if (!entity.isOnGround() && !entity.isInFluidType()){
-			this.animateState(ScavengerAnimations., ageInTicks,1f,!entity.isOnGround());
+			this.animateState(ScavengerAnimations.FLIGHT, ageInTicks,1f,!entity.isOnGround());
 			this.leftLeg.xRot = idleMovementValue;
 			this.rightLeg.xRot= -idleMovementValue;
 		}else{
