@@ -329,7 +329,7 @@ public class Proto extends Organoid implements CasingGenerator {
         @Override
         public void start() {
             LivingEntity target = this.proto.getTarget();
-            if (target != null && checkForOrganoids(target)){
+            if (target != null && checkForOrganoids(target) && target.getBlockStateOn().getDestroySpeed(target.level,target.getOnPos()) < 4){
                 for (int i = 0; i<proto.random.nextInt(3,6);i++){
                     SummonDefense(target);
                 }
