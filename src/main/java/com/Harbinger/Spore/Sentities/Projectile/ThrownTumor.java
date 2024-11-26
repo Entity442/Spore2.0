@@ -1,9 +1,6 @@
 package com.Harbinger.Spore.Sentities.Projectile;
 
-import com.Harbinger.Spore.Core.Seffects;
-import com.Harbinger.Spore.Core.Sentities;
-import com.Harbinger.Spore.Core.Sitems;
-import com.Harbinger.Spore.Core.Sparticles;
+import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Fluids.BileLiquid;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -78,7 +75,7 @@ public class ThrownTumor extends ThrowableItemProjectile {
     protected void onHit(HitResult hitResult) {
         super.onHit(hitResult);
         if (!this.level.isClientSide){
-            this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)2, explode);
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float) SConfig.SERVER.tumor_explosion.get(), explode);
             AABB aabb = this.getBoundingBox().inflate(3);
             List<Entity> entities = level.getEntities(this,aabb);
             switch (entityData.get(TYPE)){

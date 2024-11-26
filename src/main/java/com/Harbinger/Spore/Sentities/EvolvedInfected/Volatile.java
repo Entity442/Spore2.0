@@ -148,7 +148,7 @@ public class Volatile extends EvolvedInfected{
     private void explodeVolatile() {
         if (!this.level.isClientSide) {
             Explosion.BlockInteraction explosion$blockinteraction = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
-            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 3f, explosion$blockinteraction);
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), SConfig.SERVER.volatile_explosion.get(), explosion$blockinteraction);
             discard();
             AreaEffectCloud areaeffectcloud = new AreaEffectCloud(this.level, this.getX(), this.getY(), this.getZ());
             areaeffectcloud.setRadius(5.5F);
