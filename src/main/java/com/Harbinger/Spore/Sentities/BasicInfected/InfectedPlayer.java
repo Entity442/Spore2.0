@@ -2,13 +2,18 @@ package com.Harbinger.Spore.Sentities.BasicInfected;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
+import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.ArmedInfected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
+import com.Harbinger.Spore.Sentities.EvolvedInfected.Scamper;
+import com.Harbinger.Spore.Sentities.EvolvingInfected;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -29,16 +34,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
-public class InfectedPlayer extends Infected implements RangedAttackMob, ArmedInfected {
+public class InfectedPlayer extends Infected implements RangedAttackMob, ArmedInfected, EvolvingInfected {
 
     public InfectedPlayer(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -100,78 +109,38 @@ public class InfectedPlayer extends Infected implements RangedAttackMob, ArmedIn
         this.populateDefaultEquipmentEnchantments(randomsource, p_33283_);
         return super.finalizeSpawn(p_33282_, p_33283_, p_33284_, p_33285_, p_33286_);
     }
-    
-
-
-
-    protected void populateDefaultEquipmentSlots(RandomSource p_219059_, DifficultyInstance p_219060_) {
-        ItemStack helmetG = ItemStack.EMPTY;
-        ItemStack chestG = ItemStack.EMPTY;
-        ItemStack legsG = ItemStack.EMPTY;
-        ItemStack bootG = ItemStack.EMPTY;
-        ItemStack mainG = ItemStack.EMPTY;
-        ItemStack offG = ItemStack.EMPTY;
-        List<? extends String> name = SConfig.DATAGEN.name.get();
-        Random rand = new Random();
-        if (this.getCustomName() == null){
+    public static void createItems(LivingEntity living,EquipmentSlot slot,List<? extends String> list){
+        if (living.getItemBySlot(slot) != ItemStack.EMPTY){
+            return;
+        }
+        ItemStack stack = ItemStack.EMPTY;
+        for (String str : list){
+            String[] string = str.split("\\|" );
+            ItemStack itemStack = new ItemStack(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0]))));
+            if (Math.random() < Integer.parseUnsignedInt(string[1]) / 100F) {
+                stack = itemStack;
+            }
+        }
+        living.setItemSlot(slot, stack);
+    }
+    public static void createName(LivingEntity living,List<? extends String> list){
+        if (living.getCustomName() != null){
+            return;
+        }
         for (int i = 0; i < 1; ++i) {
-            int randomIndex = rand.nextInt(name.size());
-            Component component = Component.nullToEmpty(name.get(randomIndex));
-            this.setCustomName(component);
-           }
+            int randomIndex = living.getRandom().nextInt(list.size());
+            Component component = Component.nullToEmpty(list.get(randomIndex));
+            living.setCustomName(component);
         }
-
-
-
-        for (String str : SConfig.DATAGEN.player_h.get()){
-            String[] string = str.split("\\|" );
-            ItemStack helmet = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0])));
-            if (Math.random() < Integer.parseUnsignedInt(string[1]) / 100F) {
-                helmetG = helmet;
-            }
-        }
-        for (String str : SConfig.DATAGEN.player_c.get()){
-            String[] string = str.split("\\|" );
-            ItemStack chest = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0])));
-            if (Math.random() < Integer.parseUnsignedInt(string[1]) / 100F) {
-                chestG = chest;
-            }
-        }
-        for (String str : SConfig.DATAGEN.player_l.get()){
-            String[] string = str.split("\\|" );
-            ItemStack legs = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0])));
-            if (Math.random() < Integer.parseUnsignedInt(string[1]) / 100F) {
-                legsG = legs;
-            }
-        }
-        for (String str : SConfig.DATAGEN.player_b.get()){
-            String[] string = str.split("\\|" );
-            ItemStack boot = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0])));
-            if (Math.random() < Integer.parseUnsignedInt(string[1]) / 100F) {
-                bootG = boot;
-            }
-        }
-        for (String str : SConfig.DATAGEN.player_hm.get()){
-            String[] string = str.split("\\|" );
-            ItemStack main = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0])));
-            if (Math.random() < Integer.parseUnsignedInt(string[1]) / 100F) {
-                mainG = main;
-            }
-        }
-        for (String str : SConfig.DATAGEN.player_ho.get()){
-            String[] string = str.split("\\|" );
-            ItemStack off = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(string[0])));
-            if (Math.random() < Integer.parseUnsignedInt(string[1]) / 100F) {
-                offG = off;
-            }
-        }
-        
-        this.setItemSlot(EquipmentSlot.MAINHAND, mainG);
-        this.setItemSlot(EquipmentSlot.OFFHAND, offG);
-        this.setItemSlot(EquipmentSlot.HEAD, helmetG);
-        this.setItemSlot(EquipmentSlot.CHEST, chestG);
-        this.setItemSlot(EquipmentSlot.LEGS, legsG);
-        this.setItemSlot(EquipmentSlot.FEET, bootG);
+    }
+    protected void populateDefaultEquipmentSlots(RandomSource p_219059_, DifficultyInstance p_219060_) {
+        InfectedPlayer.createName(this,SConfig.DATAGEN.name.get());
+        InfectedPlayer.createItems(this,EquipmentSlot.HEAD,SConfig.DATAGEN.player_h.get());
+        InfectedPlayer.createItems(this,EquipmentSlot.CHEST,SConfig.DATAGEN.player_c.get());
+        InfectedPlayer.createItems(this,EquipmentSlot.LEGS,SConfig.DATAGEN.player_l.get());
+        InfectedPlayer.createItems(this,EquipmentSlot.FEET,SConfig.DATAGEN.player_b.get());
+        InfectedPlayer.createItems(this,EquipmentSlot.MAINHAND,SConfig.DATAGEN.player_hm.get());
+        InfectedPlayer.createItems(this,EquipmentSlot.OFFHAND,SConfig.DATAGEN.player_ho.get());
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -221,5 +190,76 @@ public class InfectedPlayer extends Infected implements RangedAttackMob, ArmedIn
 
     protected AbstractArrow getArrow(ItemStack p_32156_, float p_32157_) {
         return ProjectileUtil.getMobArrow(this, p_32156_, p_32157_);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        tickEvolution(this,SConfig.SERVER.player_ev.get());
+    }
+
+    @Override
+    public void Evolve(Infected livingEntity, List<? extends String> value) {
+        if (livingEntity != null && value != null && livingEntity.level instanceof ServerLevel world){
+            Level level = livingEntity.level;
+            RandomSource random = RandomSource.create();
+            if (Math.random() < 0.9) {
+                Random rand = new Random();
+                for (int i = 0; i < 1; ++i) {
+                    int randomIndex = rand.nextInt(value.size());
+                    ResourceLocation randomElement1 = new ResourceLocation(value.get(randomIndex));
+                    EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
+                    Entity waveentity = randomElement.create(level);
+                    waveentity.setPos(livingEntity.getX(), livingEntity.getY() + 0.5D, livingEntity.getZ());
+                    waveentity.setCustomName(livingEntity.getCustomName());
+                    if (waveentity instanceof LivingEntity entity){
+                        Collection<MobEffectInstance> collection = livingEntity.getActiveEffects();
+                        for(MobEffectInstance mobeffectinstance : collection) {
+                            entity.addEffect(new MobEffectInstance(mobeffectinstance));
+                        }
+                    }
+                    if (waveentity instanceof Infected infected){
+                        infected.setKills(livingEntity.getKills());
+                        infected.setEvoPoints(livingEntity.getEvoPoints());
+                        infected.setSearchPos(livingEntity.getSearchPos());
+                        infected.setLinked(livingEntity.getLinked());
+                        for(EquipmentSlot slot : EquipmentSlot.values()){
+                            infected.setItemSlot(slot,this.getItemBySlot(slot));
+                        }
+                    }
+                    level.addFreshEntity(waveentity);
+
+                    livingEntity.discard();
+                }
+            }else {
+                Scamper scamper = new Scamper(Sentities.SCAMPER.get(), level);
+                scamper.setPos(livingEntity.getX(), livingEntity.getY() + 0.5D, livingEntity.getZ());
+                scamper.setCustomName(livingEntity.getCustomName());
+                scamper.setKills(livingEntity.getKills());
+                scamper.setEvoPoints(livingEntity.getEvoPoints());
+                scamper.setLinked(livingEntity.getLinked());
+                scamper.setSearchPos(livingEntity.getSearchPos());
+                Collection<MobEffectInstance> collection = livingEntity.getActiveEffects();
+                for(MobEffectInstance mobeffectinstance : collection) {
+                    scamper.addEffect(new MobEffectInstance(mobeffectinstance));
+                }
+                level.addFreshEntity(scamper);
+                livingEntity.discard();
+            }
+            if (level instanceof ServerLevel serverLevel){
+                double x0 = livingEntity.getX() - (random.nextFloat() - 0.1) * 0.1D;
+                double y0 = livingEntity.getY() + (random.nextFloat() - 0.25) * 0.15D * 5;
+                double z0 = livingEntity.getZ() + (random.nextFloat() - 0.1) * 0.1D;
+                serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x0, y0, z0, 2, 0, 0, 0, 1);
+            }
+        }
+    }
+    @Override
+    public boolean doHurtTarget(Entity entity) {
+        Item item = Items.FLINT_AND_STEEL;
+        if (getMainHandItem().getItem() == item || getOffhandItem().getItem() == item){
+            entity.setSecondsOnFire(10);
+        }
+        return super.doHurtTarget(entity);
     }
 }

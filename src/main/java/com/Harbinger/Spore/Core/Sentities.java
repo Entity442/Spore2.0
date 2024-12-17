@@ -213,6 +213,10 @@ public class Sentities {
             () -> EntityType.Builder.of(InfestedConstruct::new, INFECTED).sized(1.5f, 2.6f)
                     .build(new ResourceLocation(Spore.MODID, "inf_contruct").toString()));
 
+    public static final RegistryObject<EntityType<Nuclealave>> NUCLEA = SPORE_ENTITIES.register("nuclea",
+            () -> EntityType.Builder.of(Nuclealave::new, INFECTED).sized(1.1f, 2.2f)
+                    .build(new ResourceLocation(Spore.MODID, "nuclea").toString()));
+
     public static final RegistryObject<EntityType<Illusion>> ILLUSION = SPORE_ENTITIES.register("illusion",
             () -> EntityType.Builder.of(Illusion::new, MobCategory.MISC).sized(1f, 2f)
                     .build(new ResourceLocation(Spore.MODID, "illusion").toString()));
