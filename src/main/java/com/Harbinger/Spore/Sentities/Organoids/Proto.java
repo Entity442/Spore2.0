@@ -354,18 +354,31 @@ public class Proto extends Organoid implements CasingGenerator {
             ResourceLocation randomElement1 = new ResourceLocation(summons.get(randomIndex));
             EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
             Mob waveentity = (Mob) randomElement.create(this.level);
-            assert waveentity != null;
-            if (waveentity instanceof Vigil vigil){
-                vigil.setProto(this);
+            if (waveentity != null){
+                if (waveentity instanceof Vigil vigil){
+                    vigil.setProto(this);
+                }
+                if (waveentity instanceof Mound mound){
+                    mound.setMaxAge(1);
+                    mound.setLinked(true);
+                }
+                waveentity.randomTeleport(target.getX() + x,target.getY(),target.getZ() + z,false);
+                if (checkTheGround(waveentity.getOnPos(),waveentity.level)){
+                    waveentity.finalizeSpawn(world, this.level.getCurrentDifficultyAt(new BlockPos((int) this.getX(),(int)  this.getY(),(int)  this.getZ())), MobSpawnType.NATURAL, null, null);
+                    this.level.addFreshEntity(waveentity);
+                }
             }
-            if (waveentity instanceof Mound mound){
-                mound.setMaxAge(1);
-                mound.setLinked(true);
-            }
-            waveentity.randomTeleport(target.getX() + x,target.getY(),target.getZ() + z,false);
-            waveentity.finalizeSpawn(world, this.level.getCurrentDifficultyAt(new BlockPos((int) this.getX(),(int)  this.getY(),(int)  this.getZ())), MobSpawnType.NATURAL, null, null);
-            this.level.addFreshEntity(waveentity);
+
         }
+    }
+    private boolean checkTheGround(BlockPos pos,Level level){
+        for (int i = 0;i < 3;i++){
+            BlockState state = level.getBlockState(pos.below(i));
+            if (state.getDestroySpeed(level,pos.below(i)) > 4 || state.isAir()){
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -473,7 +486,7 @@ public class Proto extends Organoid implements CasingGenerator {
                 }
                 BiomassReformator creature = new BiomassReformator(Sentities.RECONSTRUCTOR.get(),level,terrain,pos);
                 creature.tickEmerging();
-                creature.setPos(entity.getX()+a,entity.getY()+c,entity.getZ()+b);
+                creature.randomTeleport(entity.getX()+a,entity.getY()+c,entity.getZ()+b,false);
                 level.addFreshEntity(creature);
                 for(ServerPlayer player : level.getServer().getPlayerList().getPlayers()){
                     player.playNotifySound(Ssounds.CALAMITY_SPAWN.get(), SoundSource.AMBIENT,1f,1f);

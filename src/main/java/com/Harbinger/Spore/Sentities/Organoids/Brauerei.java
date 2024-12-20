@@ -1,12 +1,16 @@
 package com.Harbinger.Spore.Sentities.Organoids;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Spotion;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.AI.CalamitiesAI.ScatterShotRangedGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Organoid;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
+import com.Harbinger.Spore.Sentities.EvolvedInfected.Busser;
+import com.Harbinger.Spore.Sentities.Variants.BraureiVariants;
+import net.minecraft.Util;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -17,6 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -33,6 +38,7 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -42,6 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Brauerei extends Organoid implements RangedAttackMob {
+    private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData.defineId(Busser.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> TIMER = SynchedEntityData.defineId(Brauerei.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> COLOR = SynchedEntityData.defineId(Brauerei.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<ParticleOptions> DATA_PARTICLE = SynchedEntityData.defineId(Brauerei.class, EntityDataSerializers.PARTICLE);
@@ -109,9 +116,17 @@ public class Brauerei extends Organoid implements RangedAttackMob {
             }
         }
         if (this.tickCount % 300 == 0){
-            this.setEffect(testList().get(this.random.nextInt(testList().size())));
+            if (this.getVariant() == BraureiVariants.HAZARD){
+                this.setEffect(debuff_List().get(this.random.nextInt(debuff_List().size())));
+            }else{
+                this.setEffect(testList().get(this.random.nextInt(testList().size())));
+            }
             if (this.getEffect() != null) {
-                spreadBuffs(this, this.getEffect());
+                if (this.getVariant() == BraureiVariants.HAZARD){
+                    spreadDeBuffs(this,this.getEffect());
+                }else{
+                    spreadBuffs(this, this.getEffect());
+                }
             }
         }
         if (this.entityData.get(COLOR) != 0){
@@ -122,7 +137,7 @@ public class Brauerei extends Organoid implements RangedAttackMob {
                 double d6 = (float)(k >> 8 & 255) / 255.0F;
                 double d7 = (float)(k & 255) / 255.0F;
                 for (int i = 0;i < 4; i++)
-                this.level.addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), d5, d6, d7);
+                    this.level.addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), d5, d6, d7);
             }
         }
     }
@@ -145,6 +160,17 @@ public class Brauerei extends Organoid implements RangedAttackMob {
         }
         if (contents.isEmpty()){
             contents.add(MobEffects.REGENERATION);
+        }
+        return contents;
+    }
+    private List<MobEffect> debuff_List(){
+        List<MobEffect> contents = new ArrayList<>();
+        for (String str : SConfig.SERVER.braurei_debuffs.get()){
+            MobEffect effect = ForgeRegistries.MOB_EFFECTS.getValue(new ResourceLocation(str));
+            if (effect != null){contents.add(effect);}
+        }
+        if (contents.isEmpty()){
+            contents.add(Seffects.MYCELIUM.get());
         }
         return contents;
     }
@@ -171,7 +197,16 @@ public class Brauerei extends Organoid implements RangedAttackMob {
             }
         }
     }
-
+    protected void spreadDeBuffs(LivingEntity entity, MobEffect effect){
+        AABB aabb = entity.getBoundingBox().inflate(32);
+        List<Entity> entities = entity.level.getEntities(entity,aabb,living ->{return living instanceof LivingEntity livingEntity && TARGET_SELECTOR.test(livingEntity);});
+        for (Entity testEntity : entities){
+            if (testEntity instanceof LivingEntity living){
+                int level = entity.level.getDifficulty() == Difficulty.HARD ? 1 : 0;
+                living.addEffect(new MobEffectInstance(effect,600,level));
+            }
+        }
+    }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
@@ -230,5 +265,34 @@ public class Brauerei extends Organoid implements RangedAttackMob {
 
     protected SoundEvent getDeathSound() {
         return Ssounds.INF_DAMAGE.get();
+    }
+
+    public BraureiVariants getVariant() {
+        return BraureiVariants.byId(this.getTypeVariant() & 255);
+    }
+
+    private int getTypeVariant() {
+        return this.entityData.get(DATA_ID_TYPE_VARIANT);
+    }
+
+    private void setVariant(BraureiVariants variant) {
+        this.entityData.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
+    }
+
+    @Override
+    public String getMutation() {
+        if (getTypeVariant() != 0){
+            return this.getVariant().getName();
+        }
+        return super.getMutation();
+    }
+
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_146746_, DifficultyInstance p_146747_,
+                                        MobSpawnType p_146748_, @javax.annotation.Nullable SpawnGroupData p_146749_,
+                                        @javax.annotation.Nullable CompoundTag p_146750_) {
+        BraureiVariants variant = Util.getRandom(BraureiVariants.values(), this.random);
+        setVariant(variant);
+        return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_);
     }
 }
