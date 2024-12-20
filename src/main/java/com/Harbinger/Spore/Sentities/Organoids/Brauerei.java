@@ -75,6 +75,7 @@ public class Brauerei extends Organoid implements RangedAttackMob {
         super.addAdditionalSaveData(tag);
         tag.putInt("timer",entityData.get(TIMER));
         tag.putInt("color",entityData.get(COLOR));
+        tag.putInt("Variant", this.getTypeVariant());
     }
 
     @Override
@@ -82,6 +83,7 @@ public class Brauerei extends Organoid implements RangedAttackMob {
         super.readAdditionalSaveData(tag);
         entityData.set(TIMER, tag.getInt("timer"));
         entityData.set(COLOR, tag.getInt("color"));
+        this.entityData.set(DATA_ID_TYPE_VARIANT, tag.getInt("Variant"));
     }
     @Override
     protected void defineSynchedData() {
@@ -89,6 +91,7 @@ public class Brauerei extends Organoid implements RangedAttackMob {
         this.entityData.define(TIMER,0);
         this.entityData.define(COLOR,0);
         this.getEntityData().define(DATA_PARTICLE, ParticleTypes.ENTITY_EFFECT);
+        this.entityData.define(DATA_ID_TYPE_VARIANT, 0);
     }
 
     public MobEffect getEffect() {
