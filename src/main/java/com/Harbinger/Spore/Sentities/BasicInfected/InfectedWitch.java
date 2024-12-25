@@ -8,6 +8,7 @@ import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.RangedBuff;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.EvolvingInfected;
+import com.Harbinger.Spore.Sentities.Variants.ScamperVariants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -118,7 +119,7 @@ public class InfectedWitch extends Infected implements RangedAttackMob , RangedB
             this.setItemSlot(EquipmentSlot.OFFHAND,PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), potion));
         }
         super.tick();
-        tickEvolution(this,SConfig.SERVER.wit_ev.get());
+        tickEvolution(this,SConfig.SERVER.wit_ev.get(), ScamperVariants.VILLAGER);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

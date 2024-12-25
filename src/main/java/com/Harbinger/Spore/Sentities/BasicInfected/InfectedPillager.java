@@ -5,6 +5,7 @@ import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.ArmedInfected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.EvolvingInfected;
+import com.Harbinger.Spore.Sentities.Variants.ScamperVariants;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -186,7 +187,7 @@ public class InfectedPillager extends Infected implements CrossbowAttackMob , In
     @Override
     public void baseTick() {
         super.baseTick();
-        tickEvolution(this,SConfig.SERVER.pil_ev.get());
+        tickEvolution(this,SConfig.SERVER.pil_ev.get(), ScamperVariants.VILLAGER);
     }
 
 

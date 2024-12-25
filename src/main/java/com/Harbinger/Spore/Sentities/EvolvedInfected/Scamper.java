@@ -2,10 +2,12 @@ package com.Harbinger.Spore.Sentities.EvolvedInfected;
 
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
+import com.Harbinger.Spore.Sentities.AI.HybridPathNavigation;
 import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.Organoids.Mound;
 import com.Harbinger.Spore.Sentities.Utility.GastGeber;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
+import com.Harbinger.Spore.Sentities.Variants.ScamperVariants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -24,21 +26,31 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fluids.FluidType;
 
 import java.util.List;
 
 public class Scamper extends EvolvedInfected {
+    private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData.defineId(Busser.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Integer> AGE = SynchedEntityData.defineId(Scamper.class, EntityDataSerializers.INT);
     public int deployClock = 0;
     public boolean deploying;
+    private final HybridPathNavigation waterNavigation;
+    private final GroundPathNavigation villagerNavigation;
 
     public Scamper(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         setPersistenceRequired();
+        this.waterNavigation = new HybridPathNavigation(this,this.level);
+        this.villagerNavigation  = new GroundPathNavigation(this,level);
+        this.villagerNavigation.setCanOpenDoors(true);
     }
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
@@ -61,15 +73,18 @@ public class Scamper extends EvolvedInfected {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("age",entityData.get(AGE));
+        tag.putInt("Variant", this.getTypeVariant());
     }
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         entityData.set(AGE, tag.getInt("age"));
+        this.entityData.set(DATA_ID_TYPE_VARIANT, tag.getInt("Variant"));
     }
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(AGE, 0);
+        this.entityData.define(DATA_ID_TYPE_VARIANT, 0);
     }
 
     public void setAge(int e){
@@ -79,6 +94,33 @@ public class Scamper extends EvolvedInfected {
         return this.entityData.get(AGE);
     }
 
+    @Override
+    public boolean canDrownInFluidType(FluidType type) {
+        if (getVariant() == ScamperVariants.DROWNED){
+            return false;
+        }
+        return super.canDrownInFluidType(type);
+    }
+
+    public void travel(Vec3 vec3) {
+        if (this.isEffectiveAi() && this.isInFluidType() && getVariant() == ScamperVariants.DROWNED) {
+            this.moveRelative(0.1F, vec3);
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.85D));
+        } else {
+            super.travel(vec3);
+        }
+    }
+
+    @Override
+    public PathNavigation getNavigation() {
+        if (getVariant() == ScamperVariants.DROWNED){
+            return waterNavigation;
+        }else if (getVariant() == ScamperVariants.VILLAGER){
+            return villagerNavigation;
+        }
+        return super.getNavigation();
+    }
 
     @Override
     public void tick() {
@@ -209,6 +251,18 @@ public class Scamper extends EvolvedInfected {
             entity.level.addFreshEntity(areaeffectcloud);
         }
 
+    }
+
+    public ScamperVariants getVariant() {
+        return ScamperVariants.byId(this.getTypeVariant() & 255);
+    }
+
+    private int getTypeVariant() {
+        return this.entityData.get(DATA_ID_TYPE_VARIANT);
+    }
+
+    public void setVariant(ScamperVariants variant) {
+        this.entityData.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }
 
 }

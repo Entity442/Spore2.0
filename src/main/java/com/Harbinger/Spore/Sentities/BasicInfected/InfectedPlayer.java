@@ -9,6 +9,7 @@ import com.Harbinger.Spore.Sentities.ArmedInfected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.Scamper;
 import com.Harbinger.Spore.Sentities.EvolvingInfected;
+import com.Harbinger.Spore.Sentities.Variants.ScamperVariants;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -195,12 +196,12 @@ public class InfectedPlayer extends Infected implements RangedAttackMob, ArmedIn
     @Override
     public void tick() {
         super.tick();
-        tickEvolution(this,SConfig.SERVER.player_ev.get());
+        tickEvolution(this,SConfig.SERVER.player_ev.get(), ScamperVariants.DEFAULT);
     }
 
     @Override
-    public void Evolve(Infected livingEntity, List<? extends String> value) {
-        if (livingEntity != null && value != null && livingEntity.level instanceof ServerLevel world){
+    public void Evolve(Infected livingEntity, List<? extends String> value,ScamperVariants variants) {
+        if (livingEntity != null && value != null && livingEntity.level instanceof ServerLevel){
             Level level = livingEntity.level;
             RandomSource random = RandomSource.create();
             if (Math.random() < 0.9) {
