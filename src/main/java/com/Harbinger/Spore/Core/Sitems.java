@@ -1,6 +1,9 @@
 package com.Harbinger.Spore.Core;
 
 import com.Harbinger.Spore.Sitems.*;
+import com.Harbinger.Spore.Sitems.Agents.ConnectingAgent;
+import com.Harbinger.Spore.Sitems.Agents.HardeningAgent;
+import com.Harbinger.Spore.Sitems.Agents.SharpeningAgent;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -27,6 +30,7 @@ public class Sitems {
     }
 
     public  static  final List<Item> BIOLOGICAL_ITEMS = new ArrayList<>();
+    public  static  final List<Item> TINTABLE_ITEMS = new ArrayList<>();
 
     public  static final RegistryObject<Item> CLAW_FRAGMENT = ITEMS.register("claw_fragment",
             () -> new OrganItem( new Item.Properties().tab(ScreativeTab.SPORE),"spore.scanner.organ.claw_fragment"));
@@ -265,7 +269,7 @@ public class Sitems {
     public  static final RegistryObject<Item> ARMADS = ITEMS.register("armads",
             InfectedArmads::new);
     public  static final RegistryObject<Item> INFECTED_BOW = ITEMS.register("infected_bow",
-            () -> new InfectedGreatBow( new Item.Properties().tab(ScreativeTab.SPORE).durability(SConfig.SERVER.bow_durability.get())));
+            InfectedGreatBow::new);
     public  static final RegistryObject<Item> MAUL = ITEMS.register("maul",
             InfectedMaul::new);
     public  static final RegistryObject<Item> COMBAT_PICKAXE = ITEMS.register("combat_pickaxe",
@@ -275,7 +279,7 @@ public class Sitems {
     public  static final RegistryObject<Item> COMBAT_SHOVEL = ITEMS.register("combat_shovel",
             InfectedCombatShovel::new);
     public  static final RegistryObject<Item> INFECTED_SPEAR = ITEMS.register("infected_spear",
-            () -> new InfectedSpearItem(new Item.Properties().tab(ScreativeTab.SPORE).durability(SConfig.SERVER.spear_durability.get())));
+            InfectedSpearItem::new);
     public  static final RegistryObject<Item> INFECTED_CROSSBOW = ITEMS.register("infected_crossbow",
             InfectedCrossbow::new);
     public  static final RegistryObject<Item> MACE = ITEMS.register("mace",
@@ -368,7 +372,12 @@ public class Sitems {
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE_T)));
     public  static final RegistryObject<Item> BUCKET_OF_BILE = ITEMS.register("bucket_of_bile",
             () -> new BucketItem( Sfluids.Bile_FLUID_SOURCE,new Item.Properties().tab(ScreativeTab.SPORE_T)));
-
+    public  static final RegistryObject<Item> HARDENING_AGENT = ITEMS.register("hardening_agent",
+            HardeningAgent::new);
+    public  static final RegistryObject<Item> SHARPENING_AGENT = ITEMS.register("sharpening_agent",
+            SharpeningAgent::new);
+    public  static final RegistryObject<Item> INTEGRATING_AGENT = ITEMS.register("integrating_agent",
+            ConnectingAgent::new);
 
 
 

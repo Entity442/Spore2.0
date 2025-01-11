@@ -3,15 +3,14 @@ package com.Harbinger.Spore.Client;
 import com.Harbinger.Spore.Client.Layers.CustomArmorLayer;
 import com.Harbinger.Spore.Client.Models.*;
 import com.Harbinger.Spore.Client.Renderers.*;
-import com.Harbinger.Spore.Core.SMenu;
-import com.Harbinger.Spore.Core.SblockEntities;
-import com.Harbinger.Spore.Core.Sentities;
-import com.Harbinger.Spore.Core.Sparticles;
+import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Particles.AcidParticle;
 import com.Harbinger.Spore.Particles.BloodParticle;
 import com.Harbinger.Spore.Particles.SporeParticle;
 import com.Harbinger.Spore.Screens.ContainerScreen;
-import com.Harbinger.Spore.Sentities.EvolvedInfected.Nuclealave;
+import com.Harbinger.Spore.Screens.SurgeryScreen;
+import com.Harbinger.Spore.Sitems.BaseWeapons.SporeToolsBaseItem;
+import com.Harbinger.Spore.Sitems.BaseWeapons.SporeWeaponData;
 import com.Harbinger.Spore.Spore;
 import com.Harbinger.Spore.sEvents.SItemProperties;
 import net.minecraft.client.Minecraft;
@@ -20,8 +19,10 @@ import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -212,6 +213,7 @@ public class ClientModEvents {
 
         event.enqueueWork(() -> {
             MenuScreens.register(SMenu.CONTAINER.get(), ContainerScreen::new);
+            MenuScreens.register(SMenu.SURGERY_MENU.get(), SurgeryScreen::new);
         });
 
     }
@@ -239,6 +241,19 @@ public class ClientModEvents {
                 BloodParticle.Provider::new);
     }
 
+    @SubscribeEvent
+    public static void registerItemColorHandlers(RegisterColorHandlersEvent.Item event) {
+        for (Item item : Sitems.TINTABLE_ITEMS){
+            if (item instanceof SporeWeaponData data){
+                event.register((itemStack, tintIndex) -> {
+                    if (tintIndex == 0) {
+                        return data.getVariant(itemStack).getColor();
+                    }
+                    return -1;
+                },item);
 
+            }
+        }
+    }
 
 }

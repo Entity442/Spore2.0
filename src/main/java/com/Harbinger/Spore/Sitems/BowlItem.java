@@ -7,8 +7,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
-import java.util.Properties;
-
 public class BowlItem extends Item {
     public BowlItem(Properties properties) {
         super(properties);

@@ -45,6 +45,7 @@
   "block.spore.frozen_reinforced_door": "Frozen Reinforced Door",
   "block.spore.zoaholic": "Zoaholic",
   "block.spore.incubator": "Incubator",
+  "block.spore.surgery_table": "Surgery Table",
   "block.spore.outpost_watcher": "Outpost Watcher",
   "block.spore.biomass_bulb": "Biomass Bulb",
   "block.spore.frozen_remains": "Frozen Remains",
@@ -124,12 +125,27 @@
   "item.spore.circuit_board": "Circuit Board",
   "item.spore.combat_pickaxe": "Combat Pickaxe",
   "item.spore.scanner": "Scanner",
+  "item.spore.hardening_agent": "Hardening Agent",
+  "item.spore.sharpening_agent": "Refining Agent",
+  "item.spore.integrating_agent": "Integrating Agent",
 
 
   "item.spore.symbiotic_reagent": "Symbiotic Reagent",
   "item.spore.cryogenic_reagent": "Cryogenic Reagent",
   "item.spore.gastric_reagent": "Gastric Reagent",
   "item.spore.corrosive_reagent": "Corrosive Reagent",
+
+  "spore.item.mutation.vampiric" : "Vampiric",
+  "spore.item.mutation.calcified" : "Calcified",
+  "spore.item.mutation.bezerk" : "Bezerk",
+  "spore.item.mutation.toxic" : "Toxic",
+  "spore.item.mutation.rotten" : "Rotten",
+
+  "spore.item.damage_increase" : "Damage Increase ",
+  "spore.item.durability_increase" : "Durability Increase ",
+  "spore.item.additional_durability" : "Additional Durability ",
+  "spore.item.enchant" : "Enchantability ",
+  "spore.item.mutation" : "Mutation ",
 
 
   "item.spore.saber": "Infected Saber",
