@@ -3,10 +3,10 @@ package com.Harbinger.Spore.Sitems;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Sitems.BaseWeapons.SporePickaxeItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
@@ -16,6 +16,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.http.config.Registry;
 
 public class InfectedPickaxe extends SporePickaxeItems {
     public InfectedPickaxe() {
@@ -36,7 +38,7 @@ public class InfectedPickaxe extends SporePickaxeItems {
         AABB aabb = AABB.ofSize(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ()), 35, 35, 35);
         BlockState state = null;
         for(BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
-            if (level.getBlockState(blockpos).is(TagKey.create(Registries.BLOCK,new ResourceLocation("forge:ores")))){
+            if (level.getBlockState(blockpos).is(BlockTags.create(new ResourceLocation("forge:ores")))){
                 if (player.getRandom().nextFloat() < 0.3f){
                     state = level.getBlockState(blockpos);
                     break;

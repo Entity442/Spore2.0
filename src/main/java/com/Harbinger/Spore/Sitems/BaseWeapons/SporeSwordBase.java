@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 
@@ -24,7 +25,8 @@ public class SporeSwordBase extends SporeToolsBaseItem{
         if (state.is(Blocks.COBWEB)) {
             return 15.0F;
         } else {
-            return state.is(BlockTags.SWORD_EFFICIENT) ? 1.5F : miningLevel;
+            Material material = state.getMaterial();
+            return material != Material.PLANT && material != Material.REPLACEABLE_PLANT && !state.is(BlockTags.LEAVES) && material != Material.VEGETABLE ? 1.0F : 1.5F;
         }
     }
 

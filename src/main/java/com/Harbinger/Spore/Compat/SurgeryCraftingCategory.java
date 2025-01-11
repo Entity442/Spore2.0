@@ -82,7 +82,7 @@ public class SurgeryCraftingCategory implements IRecipeCategory<SurgeryRecipe> {
         builder.addSlot(RecipeIngredientRole.INPUT, 61, 62).addIngredients(recipe.getIngredients().get(15));
         builder.addSlot(RecipeIngredientRole.CATALYST, 97, 8).addIngredients(stiches);
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 124, 53).addItemStack(recipe.getResultItem(null));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 124, 53).addItemStack(recipe.getResultItem());
     }
 
 }

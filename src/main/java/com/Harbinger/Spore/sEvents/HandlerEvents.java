@@ -21,6 +21,7 @@ import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
 import com.Harbinger.Spore.Sentities.Organoids.*;
 import com.Harbinger.Spore.Sentities.Utility.*;
 import com.Harbinger.Spore.Sentities.Variants.SlasherVariants;
+import com.Harbinger.Spore.Sitems.BaseWeapons.SporeToolsBaseItem;
 import com.Harbinger.Spore.Sitems.InfectedCombatShovel;
 import com.Harbinger.Spore.Sitems.InfectedMaul;
 import com.Harbinger.Spore.Spore;
@@ -404,52 +405,6 @@ public class HandlerEvents {
             }
         }
     }
-    private static final Set<BlockPos> HARVESTED_BLOCKS = new HashSet<>();
-    @SubscribeEvent
-    public static void onExtendedToolUsage(BlockEvent.BreakEvent event)
-    {
-        Player player = event.getPlayer();
-        ItemStack mainHandItem = player.getMainHandItem();
-
-        if(mainHandItem.getItem() instanceof InfectedMaul hammer && player instanceof ServerPlayer serverPlayer && !serverPlayer.isCrouching())
-        {
-            BlockPos initalBlockPos = event.getPos();
-            if (HARVESTED_BLOCKS.contains(initalBlockPos))
-            {
-                return;
-            }
-
-            for (BlockPos pos : InfectedMaul.getBlocksToBeDestroyed(1, initalBlockPos, serverPlayer))
-            {
-                if(pos == initalBlockPos || !hammer.isCorrectToolForDrops(mainHandItem, event.getLevel().getBlockState(pos)))
-                {
-                    continue;
-                }
-                HARVESTED_BLOCKS.add(pos);
-                serverPlayer.gameMode.destroyBlock(pos);
-                HARVESTED_BLOCKS.remove(pos);
-            }
-        }
-        if(mainHandItem.getItem() instanceof InfectedCombatShovel shovel && player instanceof ServerPlayer serverPlayer && !serverPlayer.isCrouching())
-        {
-            BlockPos initalBlockPos = event.getPos();
-            if (HARVESTED_BLOCKS.contains(initalBlockPos))
-            {
-                return;
-            }
-
-            for (BlockPos pos : InfectedCombatShovel.getBlocksToBeDestroyed(1, initalBlockPos, serverPlayer))
-            {
-                if(pos == initalBlockPos || !shovel.isCorrectToolForDrops(mainHandItem, event.getLevel().getBlockState(pos)))
-                {
-                    continue;
-                }
-                HARVESTED_BLOCKS.add(pos);
-                serverPlayer.gameMode.destroyBlock(pos);
-                HARVESTED_BLOCKS.remove(pos);
-            }
-        }
-    }
     @SubscribeEvent
     public static void DiscardProto(EntityLeaveLevelEvent event){
         if (event.getEntity() instanceof Proto && event.getLevel() instanceof ServerLevel level){
@@ -471,8 +426,12 @@ public class HandlerEvents {
                     for (int i = 0;i <= size;i++){
                         ItemStack itemStack = player.getInventory().getItem(i);
                         if (EnchantmentHelper.getTagEnchantmentLevel(Senchantments.SYMBIOTIC_RECONSTITUTION.get(),itemStack) != 0 && itemStack.isDamaged()){
-                            int l = itemStack.getDamageValue()-2;
-                            itemStack.setDamageValue(l);
+                            if (itemStack.getItem() instanceof SporeToolsBaseItem base){
+                                base.healTool(itemStack,2);
+                            }else{
+                                int l = itemStack.getDamageValue()-2;
+                                itemStack.setDamageValue(l);
+                            }
                         }
                     }
                 }
