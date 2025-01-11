@@ -1,0 +1,24 @@
+{
+  "type": "spore:surgery",
+  "ingredients": [
+    {"slot": 2,
+      "item": "spore:spine_fragment" },
+    {"slot": 3,
+      "item": "spore:spine" },
+    {"slot": 4,
+      "item": "spore:spine_fragment" },
+    {"slot": 5,
+      "item": "spore:sickle_fragment" },
+    {"slot": 6,
+      "item": "spore:living_core" },
+    {"slot": 8,
+      "item": "spore:sickle_fragment" },
+    {"slot": 12,
+      "item": "spore:spine_fragment" },
+    {"slot": 13,
+      "item": "spore:sickle_fragment" },
+    {"slot": 14,
+      "item": "spore:sickle_fragment" }
+  ],
+  "output": { "item": "spore:sickle" }
+}
