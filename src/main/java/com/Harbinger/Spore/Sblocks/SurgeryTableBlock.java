@@ -83,7 +83,6 @@ public class SurgeryTableBlock extends BaseEntityBlock implements SimpleWaterlog
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState p_153274_, BlockEntityType<T> type) {
         return createSurgeryTicker(level, type, SblockEntities.SURGERY_TABLE_ENTITY.get());
     }
-
     @javax.annotation.Nullable
     protected static <T extends BlockEntity> BlockEntityTicker<T> createSurgeryTicker(Level level, BlockEntityType<T> type, BlockEntityType<? extends SurgeryTableBlockEntity> p_151990_) {
         return level.isClientSide ? null : createTickerHelper(type, p_151990_, SurgeryTableBlockEntity::serverTick);
