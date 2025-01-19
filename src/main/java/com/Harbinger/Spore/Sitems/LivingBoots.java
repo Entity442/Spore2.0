@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class LivingBoots extends LivingExoskeleton {
     public LivingBoots() {
-        super(EquipmentSlot.LEGS);
+        super(EquipmentSlot.FEET);
     }
     @Override
     public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {

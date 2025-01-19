@@ -21,7 +21,10 @@ import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
 import com.Harbinger.Spore.Sentities.Organoids.*;
 import com.Harbinger.Spore.Sentities.Utility.*;
 import com.Harbinger.Spore.Sentities.Variants.SlasherVariants;
+import com.Harbinger.Spore.Sitems.BaseWeapons.SporeArmorData;
+import com.Harbinger.Spore.Sitems.BaseWeapons.SporeBaseArmor;
 import com.Harbinger.Spore.Sitems.BaseWeapons.SporeToolsBaseItem;
+import com.Harbinger.Spore.Sitems.BaseWeapons.SporeWeaponData;
 import com.Harbinger.Spore.Sitems.InfectedCombatShovel;
 import com.Harbinger.Spore.Sitems.InfectedMaul;
 import com.Harbinger.Spore.Spore;
@@ -428,6 +431,8 @@ public class HandlerEvents {
                         if (EnchantmentHelper.getTagEnchantmentLevel(Senchantments.SYMBIOTIC_RECONSTITUTION.get(),itemStack) != 0 && itemStack.isDamaged()){
                             if (itemStack.getItem() instanceof SporeToolsBaseItem base){
                                 base.healTool(itemStack,2);
+                            }else if (itemStack.getItem() instanceof SporeArmorData base){
+                                base.healTool(itemStack,2);
                             }else{
                                 int l = itemStack.getDamageValue()-2;
                                 itemStack.setDamageValue(l);
@@ -584,6 +589,16 @@ public class HandlerEvents {
                 boolean jumpLevel = duration < 12000;
                 livingEntity.addEffect(new MobEffectInstance(Seffects.MADNESS.get(),jumpLevel ? duration: duration-12000,jumpLevel ? level : level+1));
             }
+        }
+        if (event.getEntity() instanceof Player player) {
+            float totalDamageModification = 0.0F;
+
+            for (ItemStack stack : player.getArmorSlots()) {
+                if (stack.getItem() instanceof SporeBaseArmor armor) {
+                    totalDamageModification += armor.calculateAdditionalDamage(event.getSource(), stack, event.getAmount());
+                }
+            }
+            event.setAmount(event.getAmount() + totalDamageModification);
         }
     }
 

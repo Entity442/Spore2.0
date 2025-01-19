@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.Sitems.BaseWeapons;
 
+import com.Harbinger.Spore.Core.ScreativeTab;
 import com.Harbinger.Spore.Core.Sitems;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Maps;
@@ -78,7 +79,7 @@ public abstract class SporeBaseArmor extends ArmorItem implements SporeArmorData
             public float getKnockbackResistance() {
                 return 0;
             }
-        }, type, new Item.Properties());
+        }, type, new Item.Properties().tab(ScreativeTab.SPORE));
         Sitems.TINTABLE_ITEMS.add(this);
         Sitems.BIOLOGICAL_ITEMS.add(this);
         this.protection = protection;
