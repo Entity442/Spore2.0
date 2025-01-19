@@ -1,13 +1,15 @@
 package com.Harbinger.Spore.Sitems;
 
 import com.Harbinger.Spore.Client.Models.LivingChestplateModel;
-import com.Harbinger.Spore.Core.ScreativeTab;
+import com.Harbinger.Spore.Spore;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,21 +31,11 @@ import java.util.function.Consumer;
 
 public class InfectedChestplate extends InfectedExoskeleton{
     public InfectedChestplate() {
-        super(EquipmentSlot.CHEST, new Item.Properties().tab(ScreativeTab.SPORE));
+        super(EquipmentSlot.CHEST, new Item.Properties());
     }
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
         return "spore:textures/armor/infected_wing.png";
-    }
-    @Override
-    public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
-
-        if (Screen.hasShiftDown()){
-            components.add(Component.translatable("item.armor.shift").withStyle(ChatFormatting.DARK_RED));
-        } else {
-            components.add(Component.translatable("item.armor.normal").withStyle(ChatFormatting.GOLD));
-        }
-        super.appendHoverText(itemStack, level, components, tooltipFlag);
     }
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
@@ -67,6 +59,16 @@ public class InfectedChestplate extends InfectedExoskeleton{
                 return armorModel;
             }
         });
+    }
+    @Override
+    public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
+
+        if (Screen.hasShiftDown()){
+            components.add(Component.translatable("item.armor.shift").withStyle(ChatFormatting.DARK_RED));
+        } else {
+            components.add(Component.translatable("item.armor.normal").withStyle(ChatFormatting.GOLD));
+        }
+        super.appendHoverText(itemStack, level, components, tooltipFlag);
     }
 
 

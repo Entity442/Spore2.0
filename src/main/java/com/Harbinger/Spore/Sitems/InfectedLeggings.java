@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class InfectedLeggings extends InfectedExoskeleton{
     public InfectedLeggings() {
-        super(EquipmentSlot.LEGS, new Item.Properties().tab(ScreativeTab.SPORE));
+        super(EquipmentSlot.LEGS, new Item.Properties());
     }
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {

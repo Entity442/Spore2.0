@@ -2,9 +2,7 @@ package com.Harbinger.Spore.Sitems;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
-import com.Harbinger.Spore.Core.Senchantments;
 import com.Harbinger.Spore.Core.Sitems;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -15,13 +13,9 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class InfectedExoskeleton extends ArmorItem {
-
-
     public InfectedExoskeleton(EquipmentSlot slot, Properties properties) {
         super(new ArmorMaterial() {
             @Override
@@ -43,7 +37,7 @@ public class InfectedExoskeleton extends ArmorItem {
 
             @Override
             public SoundEvent getEquipSound() {
-                return SoundEvents.ARMOR_EQUIP_LEATHER;
+                return SoundEvents.ARMOR_EQUIP_CHAIN;
             }
 
             @Override
@@ -86,5 +80,7 @@ public class InfectedExoskeleton extends ArmorItem {
                 entity.addEffect(new MobEffectInstance(Seffects.SYMBIOSIS.get(), 200, 0, (false), (false)));
             }
         }
+
     }
+
 }
