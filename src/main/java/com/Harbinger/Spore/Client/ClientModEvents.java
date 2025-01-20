@@ -65,7 +65,6 @@ public class ClientModEvents {
         event.registerLayerDefinition(InfectedHazmatModel.LAYER_LOCATION, InfectedHazmatModel::createBodyLayer);
         event.registerLayerDefinition(ElytrumModel.LAYER_LOCATION, ElytrumModel::createBodyLayer);
         event.registerLayerDefinition(InfectedHazmatWithTank.LAYER_LOCATION, InfectedHazmatWithTank::createBodyLayer);
-        event.registerLayerDefinition(WingedChestplate.LAYER_LOCATION, WingedChestplate::createBodyLayer);
         event.registerLayerDefinition(CoreModel.LAYER_LOCATION, CoreModel::createBodyLayer);
         event.registerLayerDefinition(MoundModel.LAYER_LOCATION, MoundModel::createBodyLayer);
         event.registerLayerDefinition(BraionmilBabe.LAYER_LOCATION, BraionmilBabe::createBodyLayer);
@@ -75,7 +74,6 @@ public class ClientModEvents {
         event.registerLayerDefinition(VigilModel.LAYER_LOCATION, VigilModel::createBodyLayer);
         event.registerLayerDefinition(GasMaskModel.LAYER_LOCATION, GasMaskModel::createBodyLayer);
         event.registerLayerDefinition(BileRound.LAYER_LOCATION, BileRound::createBodyLayer);
-        event.registerLayerDefinition(LivingChestplateModel.LAYER_LOCATION, LivingChestplateModel::createBodyLayer);
         event.registerLayerDefinition(ProtoHivemindModel.LAYER_LOCATION, ProtoHivemindModel::createBodyLayer);
         event.registerLayerDefinition(SiegerModel.LAYER_LOCATION, SiegerModel::createBodyLayer);
         event.registerLayerDefinition(GazenbrecherModel.LAYER_LOCATION, GazenbrecherModel::createBodyLayer);
