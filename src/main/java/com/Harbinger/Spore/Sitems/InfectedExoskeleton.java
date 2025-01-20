@@ -1,68 +1,49 @@
+
 package com.Harbinger.Spore.Sitems;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sitems;
-import net.minecraft.sounds.SoundEvent;
+import com.Harbinger.Spore.Sitems.BaseWeapons.SporeArmorMutations;
+import com.Harbinger.Spore.Sitems.BaseWeapons.SporeBaseArmor;
+import com.google.common.collect.Maps;
+import net.minecraft.Util;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 
-public class InfectedExoskeleton extends ArmorItem {
-    public InfectedExoskeleton(EquipmentSlot slot, Properties properties) {
-        super(new ArmorMaterial() {
-            @Override
-            public int getDurabilityForSlot(EquipmentSlot slot1) {
-                return new int[]{SConfig.SERVER.boots_durability.get(), SConfig.SERVER.pants_durability.get(), SConfig.SERVER.chestplate_durability.get(), SConfig.SERVER.helmet_durability.get()}
-                        [slot.getIndex()];
-            }
+import java.util.Map;
 
-            @Override
-            public int getDefenseForSlot(EquipmentSlot slot1) {
-                return new int[]{SConfig.SERVER.boots_protection.get(), SConfig.SERVER.pants_protection.get(), SConfig.SERVER.chestplate_protection.get(), SConfig.SERVER.helmet_protection.get()}
-                        [slot.getIndex()];
-            }
-
-            @Override
-            public int getEnchantmentValue() {
-                return 18;
-            }
-
-            @Override
-            public SoundEvent getEquipSound() {
-                return SoundEvents.ARMOR_EQUIP_CHAIN;
-            }
-
-            @Override
-            public Ingredient getRepairIngredient() {
-                return Ingredient.of(Sitems.BIOMASS.get());
-            }
-
-            @Override
-            public String getName() {
-                return "Living";
-            }
-
-            @Override
-            public float getToughness() {
-                return SConfig.SERVER.armor_toughness.get();
-            }
-
-            @Override
-            public float getKnockbackResistance() {
-                return SConfig.SERVER.knockback_resistance.get() /10F;
-            }
-        } , slot,properties);
-        Sitems.BIOLOGICAL_ITEMS.add(this);
+public class InfectedExoskeleton extends SporeBaseArmor {
+    public InfectedExoskeleton(EquipmentSlot type) {
+        super(type, new int[]{
+                SConfig.SERVER.boots_durability.get(), SConfig.SERVER.pants_durability.get(), SConfig.SERVER.chestplate_durability.get(), SConfig.SERVER.helmet_durability.get()},new int[]{
+                SConfig.SERVER.boots_protection.get(), SConfig.SERVER.pants_protection.get(), SConfig.SERVER.chestplate_protection.get(), SConfig.SERVER.helmet_protection.get()
+        }, SConfig.SERVER.armor_toughness.get(),SConfig.SERVER.knockback_resistance.get(), SoundEvents.ARMOR_EQUIP_LEATHER,"Infected");
     }
 
+
+
+    public static Map<SporeArmorMutations,String> GET_LOCATION_1 =
+            Util.make(Maps.newEnumMap(SporeArmorMutations.class), (p_114874_) -> {
+                p_114874_.put(SporeArmorMutations.DEFAULT, "spore:textures/armor/default/infected_layer_1.png");
+                p_114874_.put(SporeArmorMutations.REINFORCED, "spore:textures/armor/reinforced/infected_layer_1.png");
+                p_114874_.put(SporeArmorMutations.SKELETAL, "spore:textures/armor/skeletal/infected_layer_1.png");
+                p_114874_.put(SporeArmorMutations.DROWNED, "spore:textures/armor/drowned/infected_layer_1.png");
+                p_114874_.put(SporeArmorMutations.CHARRED, "spore:textures/armor/charred/infected_layer_1.png");
+            });
+    public static Map<SporeArmorMutations,String> GET_LOCATION_2 =
+            Util.make(Maps.newEnumMap(SporeArmorMutations.class), (p_114874_) -> {
+                p_114874_.put(SporeArmorMutations.DEFAULT, "spore:textures/armor/default/infected_layer_2.png");
+                p_114874_.put(SporeArmorMutations.REINFORCED, "spore:textures/armor/reinforced/infected_layer_2.png");
+                p_114874_.put(SporeArmorMutations.SKELETAL, "spore:textures/armor/skeletal/infected_layer_2.png");
+                p_114874_.put(SporeArmorMutations.DROWNED, "spore:textures/armor/drowned/infected_layer_2.png");
+                p_114874_.put(SporeArmorMutations.CHARRED, "spore:textures/armor/charred/infected_layer_2.png");
+            });
 
 
     @Override
