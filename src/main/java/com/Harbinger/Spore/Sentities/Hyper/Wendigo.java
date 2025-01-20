@@ -167,7 +167,7 @@ public class Wendigo extends Hyper {
             if (livingEntity instanceof Player player){
                 player.addItem(stack);
             }else {
-                ItemEntity entity = new ItemEntity(this.level(),this.getX(),this.getY(),this.getZ(),stack);
+                ItemEntity entity = new ItemEntity(this.level,this.getX(),this.getY(),this.getZ(),stack);
                 level.addFreshEntity(entity);
                 livingEntity.setItemSlot(slot,ItemStack.EMPTY);
             }
