@@ -42,6 +42,7 @@ public class Hevoker extends Hyper {
     private static final EntityDataAccessor<Boolean> DEAD = SynchedEntityData.defineId(Hevoker.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> HAS_ARM = SynchedEntityData.defineId(Hevoker.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> TIME_REGROW = SynchedEntityData.defineId(Hevoker.class, EntityDataSerializers.INT);
+    boolean value = true;
     private final HevokerPart[] subEntities;
     private final HevokerPart totem;
     private final HevokerPart arm1;
@@ -359,9 +360,10 @@ public class Hevoker extends Hyper {
     }
 
     public InteractionResult interact(HevokerPart hevokerPart, Player player, InteractionHand hand) {
-        if (this.isFakeDead() && hevokerPart == totem && reviveTimer > 20){
+        if (this.isFakeDead() && hevokerPart == totem && reviveTimer > 20 && value){
             this.hurt(DamageSource.FREEZE,Float.MAX_VALUE);
             createTotem();
+            value = false;
             return InteractionResult.SUCCESS;
         }
         return super.mobInteract(player, hand);
