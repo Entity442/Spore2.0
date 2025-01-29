@@ -9,8 +9,8 @@ import com.Harbinger.Spore.Particles.BloodParticle;
 import com.Harbinger.Spore.Particles.SporeParticle;
 import com.Harbinger.Spore.Screens.ContainerScreen;
 import com.Harbinger.Spore.Screens.SurgeryScreen;
+import com.Harbinger.Spore.Sentities.Utility.HyperClaw;
 import com.Harbinger.Spore.Sitems.BaseWeapons.SporeArmorData;
-import com.Harbinger.Spore.Sitems.BaseWeapons.SporeToolsBaseItem;
 import com.Harbinger.Spore.Sitems.BaseWeapons.SporeWeaponData;
 import com.Harbinger.Spore.Spore;
 import com.Harbinger.Spore.sEvents.SItemProperties;
@@ -121,6 +121,9 @@ public class ClientModEvents {
         event.registerLayerDefinition(NuckelaveArmorModel.LAYER_LOCATION, NuckelaveArmorModel::createBodyLayer);
         event.registerLayerDefinition(ScamperVillagerModel.LAYER_LOCATION, ScamperVillagerModel::createBodyLayer);
         event.registerLayerDefinition(DrownedScamperModel.LAYER_LOCATION, DrownedScamperModel::createBodyLayer);
+        event.registerLayerDefinition(HevokerModel.LAYER_LOCATION, HevokerModel::createBodyLayer);
+        event.registerLayerDefinition(HevokerModelDead.LAYER_LOCATION, HevokerModelDead::createBodyLayer);
+        event.registerLayerDefinition(DetasheHyperClaw.LAYER_LOCATION, DetasheHyperClaw::createBodyLayer);
     }
 
 
@@ -184,6 +187,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.BLOATER.get(), BloaterRenderer::new);
         event.registerEntityRenderer(Sentities.SCAVENGER.get(), ScavengerRenderer::new);
         event.registerEntityRenderer(Sentities.NUCLEA.get(), NucleaRenderer::new);
+        event.registerEntityRenderer(Sentities.HEVOKER.get(), HevokerRenderer::new);
 
         event.registerEntityRenderer(Sentities.ACID_BALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.SPIT.get(), BulletRender::new);
@@ -198,6 +202,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.BRAUREI.get(), BraureiRenderer::new);
         event.registerEntityRenderer(Sentities.DELUSIONARE.get(), DelusionareRenderer::new);
         event.registerEntityRenderer(Sentities.ARENA_TENDRIL.get(), RaidTendrilRenderer::new);
+        event.registerEntityRenderer(Sentities.HEVOKER_ARM.get(), HyperClawRenderer::new);
 
         event.registerBlockEntityRenderer(SblockEntities.OVERGROWN_SPAWNER.get(), new OvergrownSpawnerRenderer());
         event.registerBlockEntityRenderer(SblockEntities.BRAIN_REMNANTS.get(), new BrainRemnantsRenderer());

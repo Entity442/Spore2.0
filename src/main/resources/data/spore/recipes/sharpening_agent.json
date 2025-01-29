@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CRC",
+    "RDR",
+    "CRC"
+  ],
+  "key": {
+    "R": {
+      "item": "spore:claw_fragment"
+    },
+    "C": {
+      "item": "minecraft:iron_nugget"
+    },
+    "D": {
+      "item": "minecraft:glass_bottle"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "spore:sharpening_agent"
+  }
+}

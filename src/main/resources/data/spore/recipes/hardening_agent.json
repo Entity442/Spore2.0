@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CRC",
+    "RDR",
+    "CRC"
+  ],
+  "key": {
+    "R": {
+      "item": "spore:armor_fragment"
+    },
+    "C": {
+      "item": "minecraft:bone"
+    },
+    "D": {
+      "item": "minecraft:glass_bottle"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "spore:hardening_agent"
+  }
+}

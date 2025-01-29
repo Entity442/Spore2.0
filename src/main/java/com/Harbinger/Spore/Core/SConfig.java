@@ -319,6 +319,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> player_damage;
         public final ForgeConfigSpec.ConfigValue<Double> player_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> hevoker_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> hevoker_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> hevoker_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> halucinations_damage;
         public final ForgeConfigSpec.ConfigValue<Double> chance_hallucination_spawn;
 
@@ -1051,6 +1055,12 @@ public class SConfig {
             this.player_armor = builder.comment("Default 2").defineInRange("Infected Player Armor", 2, 1, Double.MAX_VALUE);
             builder.pop();
 
+            builder.push("Hexenmeister");
+            this.hevoker_hp = builder.comment("Default 80").defineInRange("Infected Hexenmeister Max health", 80, 1, Double.MAX_VALUE);
+            this.hevoker_damage = builder.comment("Default 15").defineInRange("Infected Hexenmeister Damage", 15, 1, Double.MAX_VALUE);
+            this.hevoker_armor = builder.comment("Default 10").defineInRange("Infected Hexenmeister Armor", 10, 1, Double.MAX_VALUE);
+            builder.pop();
+
             builder.push("Tendril");
             this.tendril_chest = builder.comment("Default true").define("Should tendrils go to food containers ?",true);
             this.tendril_spawner = builder.comment("Default true").define("Should tendrils go to spawners ?",true);
@@ -1102,11 +1112,11 @@ public class SConfig {
                     Lists.newArrayList("spore:gas_mask") , o -> o instanceof String);
             builder.pop();
             builder.push("Weapon Agents data");
-            this.agent_durability = builder.comment("Default durability increase 60%").defineInRange("the value resulted will be between half of the max value and the maximum",60,2, Integer.MAX_VALUE);
-            this.agent_damage = builder.comment("Default damage increase 40%").defineInRange("the value resulted will be between half of the max value and the maximum", 40, 2, Integer.MAX_VALUE);
-            this.agent_protection = builder.comment("Default damage increase 30%").defineInRange("the value resulted will be between half of the max value and the maximum", 30, 2, Integer.MAX_VALUE);
-            this.agent_toughness = builder.comment("Default damage increase 3").defineInRange("the value resulted will be between half of the max value and the maximum", 3, 0, Integer.MAX_VALUE);
-            this.agent_enchantability = builder.comment("Default 6").defineInRange("the value resulted will be between the minimum and maximum value", 6, 1, Integer.MAX_VALUE);
+            this.agent_durability = builder.comment("Durability increase 60%").defineInRange("Durability increase 60%",60,2, Integer.MAX_VALUE);
+            this.agent_damage = builder.comment("Damage increase 40%").defineInRange("Damage increase 40%", 40, 2, Integer.MAX_VALUE);
+            this.agent_protection = builder.comment("Protection increase 30%").defineInRange("Protection increase 30%", 30, 2, Integer.MAX_VALUE);
+            this.agent_toughness = builder.comment("Toughness increase 3").defineInRange("Toughness increase 3", 3, 0, Integer.MAX_VALUE);
+            this.agent_enchantability = builder.comment("Enchantability increase 6").defineInRange("Enchantability increase 6", 6, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Spear");
             this.spear_durability = builder.comment("Default 500").define("Durability",500);
@@ -1293,6 +1303,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> bloater_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> scavenger_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> nucke_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> hevoker_loot;
 
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> name;
@@ -1457,6 +1468,8 @@ public class SConfig {
             this.ogre_loot = builder.defineList("Inquisitor",
                     Lists.newArrayList("spore:mutated_fiber|70|12|34","spore:armor_fragment|80|12|22","spore:mutated_heart|50|1|1","spore:claw_fragment|80|5|15") , o -> o instanceof String);
 
+            this.hevoker_loot = builder.defineList("Hexenmeister",
+                    Lists.newArrayList("spore:mutated_fiber|70|12|34","spore:armor_fragment|80|12|22","spore:mutated_heart|50|1|1","spore:claw_fragment|80|5|15") , o -> o instanceof String);
 
             this.brot_loot = builder.defineList("Brotkatze",
                     Lists.newArrayList("spore:mutated_fiber|70|5|9","spore:armor_fragment|80|2|10","spore:mutated_heart|50|1|1","spore:claw_fragment|80|5|10","spore:alveolic_sack|80|2|4") , o -> o instanceof String);
