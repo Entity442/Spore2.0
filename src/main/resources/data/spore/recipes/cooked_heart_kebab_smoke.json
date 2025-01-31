@@ -1,6 +1,6 @@
 {
   "type": "minecraft:smoking",
-  "cookingtime": 200,
+  "cookingtime": 100,
   "experience": 1.0,
   "ingredient": {
     "item": "spore:heart_kebab"
