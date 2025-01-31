@@ -195,7 +195,7 @@ public class Proto extends Organoid implements CasingGenerator {
         @Override
         public boolean canUse() {
             Entity target = this.proto.getTarget();
-            return this.proto.tickCount % 40 == 0  && target != null && target.distanceToSqr(proto) < 400D && checkForScent();
+            return this.proto.tickCount % 40 == 0  && target != null && checkForScent();
         }
 
         private boolean checkForScent() {
@@ -502,7 +502,7 @@ public class Proto extends Organoid implements CasingGenerator {
         int b = random.nextInt(-12,12);
         int c = random.nextInt(4);
         if (level instanceof ServerLevel serverLevel){
-            List<String> hypers = new ArrayList<>(){{add("spore:inquisitor");add("spore:wendigo");add("spore:brot");add("spore:ogre");}};
+            List<String> hypers = new ArrayList<>(){{add("spore:inquisitor");add("spore:wendigo");add("spore:brot");add("spore:ogre");add("spore:hevoker");}};
             int i = hypers.size();
             Verwa verwa = new Verwa(Sentities.VERVA.get(),serverLevel);
             verwa.setStoredMob(hypers.get(random.nextInt(i)));
