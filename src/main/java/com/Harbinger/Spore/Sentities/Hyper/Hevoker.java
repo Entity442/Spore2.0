@@ -146,7 +146,6 @@ public class Hevoker extends Hyper {
     public void reviveBody(){
         float hp = (float) ((SConfig.SERVER.hevoker_hp.get() * SConfig.SERVER.global_health.get())/4f);
         this.setHealth(hp);
-        ItemStack stack = new ItemStack(Items.TOTEM_OF_UNDYING);
         this.level.broadcastEntityEvent(this, (byte)35);
         setFakeDead(false);
         this.playSound(SoundEvents.TOTEM_USE);
@@ -281,7 +280,7 @@ public class Hevoker extends Hyper {
     }
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (this.isInPowderSnow || source == DamageSource.FREEZE){
+        if (this.isInPowderSnow || source == DamageSource.FREEZE || amount > 100){
             return super.hurt(source, amount);
         }
         if (isFakeDead()){
@@ -293,7 +292,7 @@ public class Hevoker extends Hyper {
             reviveTimer = 200;
             return true;
         }
-        if (Math.random() < 0.2){
+        if (Math.random() < 0.2 && !isFakeDead()){
             performTelekineticThrow();
         }
         return super.hurt(source, amount);
@@ -322,7 +321,7 @@ public class Hevoker extends Hyper {
             }
         }
         if (isFakeDead() && hevokerArm == totem){
-            return this.hurt(DamageSource.FREEZE,Float.MAX_VALUE);
+            return this.hurt(source,Float.MAX_VALUE);
         }
         return this.hurt(source,amount);
     }
@@ -361,7 +360,7 @@ public class Hevoker extends Hyper {
 
     public InteractionResult interact(HevokerPart hevokerPart, Player player, InteractionHand hand) {
         if (this.isFakeDead() && hevokerPart == totem && reviveTimer > 20 && value){
-            this.hurt(DamageSource.FREEZE,Float.MAX_VALUE);
+            this.hurt(DamageSource.playerAttack(player),Float.MAX_VALUE);
             createTotem();
             value = false;
             return InteractionResult.SUCCESS;
