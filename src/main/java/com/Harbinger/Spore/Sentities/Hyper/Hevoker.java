@@ -375,7 +375,7 @@ public class Hevoker extends Hyper {
 
 
     protected SoundEvent getAmbientSound() {
-        return Ssounds.HEVOKER_AMBIENT.get();
+        return isFakeDead() ? null : Ssounds.HEVOKER_AMBIENT.get();
     }
 
     protected SoundEvent getHurtSound(DamageSource p_34327_) {
