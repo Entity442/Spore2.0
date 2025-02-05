@@ -7,6 +7,7 @@ import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.AI.CustomMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.Organoid;
 import com.Harbinger.Spore.Sentities.Utility.WaveEntity;
+import com.Harbinger.Spore.Sentities.VariantKeeper;
 import com.Harbinger.Spore.Sentities.Variants.UmarmerVariants;
 import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
@@ -34,7 +35,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class Umarmer extends Organoid {
+public class Umarmer extends Organoid implements VariantKeeper {
     private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData.defineId(Umarmer.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> TIMER = SynchedEntityData.defineId(Umarmer.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(Umarmer.class, EntityDataSerializers.BOOLEAN);
@@ -615,8 +616,17 @@ public class Umarmer extends Organoid {
         return UmarmerVariants.byId(this.getTypeVariant() & 255);
     }
 
-    private int getTypeVariant() {
+    public int getTypeVariant() {
         return this.entityData.get(DATA_ID_TYPE_VARIANT);
+    }
+
+    @Override
+    public void setVariant(int i) {
+        if (i > UmarmerVariants.values().length || i < 0){
+            this.entityData.set(DATA_ID_TYPE_VARIANT, 0);
+        }else {
+            this.entityData.set(DATA_ID_TYPE_VARIANT, i);
+        }
     }
 
     private void setVariant(UmarmerVariants variant) {

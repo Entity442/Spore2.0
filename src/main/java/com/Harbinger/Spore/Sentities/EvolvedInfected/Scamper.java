@@ -7,6 +7,7 @@ import com.Harbinger.Spore.Sentities.BaseEntities.EvolvedInfected;
 import com.Harbinger.Spore.Sentities.Organoids.Mound;
 import com.Harbinger.Spore.Sentities.Utility.GastGeber;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
+import com.Harbinger.Spore.Sentities.VariantKeeper;
 import com.Harbinger.Spore.Sentities.Variants.ScamperVariants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -29,7 +30,6 @@ import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -37,7 +37,7 @@ import net.minecraftforge.fluids.FluidType;
 
 import java.util.List;
 
-public class Scamper extends EvolvedInfected {
+public class Scamper extends EvolvedInfected implements VariantKeeper {
     private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData.defineId(Busser.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Integer> AGE = SynchedEntityData.defineId(Scamper.class, EntityDataSerializers.INT);
     public int deployClock = 0;
@@ -257,8 +257,17 @@ public class Scamper extends EvolvedInfected {
         return ScamperVariants.byId(this.getTypeVariant() & 255);
     }
 
-    private int getTypeVariant() {
+    public int getTypeVariant() {
         return this.entityData.get(DATA_ID_TYPE_VARIANT);
+    }
+
+    @Override
+    public void setVariant(int i) {
+        if (i > ScamperVariants.values().length || i < 0){
+            this.entityData.set(DATA_ID_TYPE_VARIANT, 0);
+        }else {
+            this.entityData.set(DATA_ID_TYPE_VARIANT, i);
+        }
     }
 
     public void setVariant(ScamperVariants variant) {
