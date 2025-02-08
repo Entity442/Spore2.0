@@ -8,8 +8,9 @@ import com.Harbinger.Spore.Particles.AcidParticle;
 import com.Harbinger.Spore.Particles.BloodParticle;
 import com.Harbinger.Spore.Particles.SporeParticle;
 import com.Harbinger.Spore.Screens.ContainerScreen;
+import com.Harbinger.Spore.Screens.InjectionScreen;
 import com.Harbinger.Spore.Screens.SurgeryScreen;
-import com.Harbinger.Spore.Sentities.Utility.HyperClaw;
+import com.Harbinger.Spore.Sitems.Agents.AbstractSyringe;
 import com.Harbinger.Spore.Sitems.BaseWeapons.SporeArmorData;
 import com.Harbinger.Spore.Sitems.BaseWeapons.SporeWeaponData;
 import com.Harbinger.Spore.Spore;
@@ -19,15 +20,20 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+
+import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = Spore.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEvents {
@@ -220,6 +226,7 @@ public class ClientModEvents {
         event.enqueueWork(() -> {
             MenuScreens.register(SMenu.CONTAINER.get(), ContainerScreen::new);
             MenuScreens.register(SMenu.SURGERY_MENU.get(), SurgeryScreen::new);
+            MenuScreens.register(SMenu.INJECTION_MENU.get(), InjectionScreen::new);
         });
 
     }
@@ -268,7 +275,14 @@ public class ClientModEvents {
                 },item);
 
             }
+            if (item instanceof AbstractSyringe data){
+                event.register((itemStack, tintIndex) -> {
+                    if (tintIndex == 0) {
+                        return data.getColor();
+                    }
+                    return -1;
+                },item);
+            }
         }
     }
-
 }

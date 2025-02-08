@@ -1,10 +1,9 @@
 package com.Harbinger.Spore.Core;
 
 import com.Harbinger.Spore.Sitems.*;
-import com.Harbinger.Spore.Sitems.Agents.ConnectingAgent;
-import com.Harbinger.Spore.Sitems.Agents.HardeningAgent;
-import com.Harbinger.Spore.Sitems.Agents.MutationSyringe;
-import com.Harbinger.Spore.Sitems.Agents.SharpeningAgent;
+import com.Harbinger.Spore.Sitems.Agents.*;
+import com.Harbinger.Spore.Sitems.BaseWeapons.SporeArmorMutations;
+import com.Harbinger.Spore.Sitems.BaseWeapons.SporeToolsMutations;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -393,7 +392,26 @@ public class Sitems {
             ConnectingAgent::new);
     public  static final RegistryObject<Item> MUTATION_SYRINGE = ITEMS.register("mutation_syringe",
             MutationSyringe::new);
-
+    public  static final RegistryObject<Item> SYRINGE = ITEMS.register("syringe",
+            Syringe::new);
+    public  static final RegistryObject<Item> VAMPIRIC_SYRINGE = ITEMS.register("vampiric_syringe",
+            () -> new WeaponSyringe(SporeToolsMutations.VAMPIRIC));
+    public  static final RegistryObject<Item> CALCIFIED_SYRINGE = ITEMS.register("calcified_syringe",
+            () -> new WeaponSyringe(SporeToolsMutations.CALCIFIED));
+    public  static final RegistryObject<Item> BEZERK_SYRINGE = ITEMS.register("bezerk_syringe",
+            () -> new WeaponSyringe(SporeToolsMutations.BEZERK));
+    public  static final RegistryObject<Item> TOXIC_SYRINGE = ITEMS.register("toxic_syringe",
+            () -> new WeaponSyringe(SporeToolsMutations.TOXIC));
+    public  static final RegistryObject<Item> ROTTEN_SYRINGE = ITEMS.register("rotten_syringe",
+            () -> new WeaponSyringe(SporeToolsMutations.ROTTEN));
+    public  static final RegistryObject<Item> REINFORCED_SYRINGE = ITEMS.register("reinforced_syringe",
+            () -> new ArmorSyringe(SporeArmorMutations.REINFORCED));
+    public  static final RegistryObject<Item> SKELETAL_SYRINGE = ITEMS.register("skeletal_syringe",
+            () -> new ArmorSyringe(SporeArmorMutations.SKELETAL));
+    public  static final RegistryObject<Item> DROWNED_SYRINGE = ITEMS.register("drowned_syringe",
+            () -> new ArmorSyringe(SporeArmorMutations.DROWNED));
+    public  static final RegistryObject<Item> CHARRED_SYRINGE = ITEMS.register("charred_syringe",
+            () -> new ArmorSyringe(SporeArmorMutations.CHARRED));
 
 
 
