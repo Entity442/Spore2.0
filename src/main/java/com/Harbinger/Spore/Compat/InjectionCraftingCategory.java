@@ -8,7 +8,6 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -88,10 +87,9 @@ public class InjectionCraftingCategory implements IRecipeCategory<InjectionRecip
                 }
             }
         }
-        IRecipeCategory.super.draw(recipe, recipeSlotsView, stack, mouseX, mouseY);
     }
 
-    public static void renderEntityInInventoryFollowsAngle(PoseStack poseStack, int x, int y, int scale, float angleXComponent, float angleYComponent, LivingEntity entity) {
+    public void renderEntityInInventoryFollowsAngle(PoseStack poseStack, int x, int y, int scale, float angleXComponent, float angleYComponent, LivingEntity entity) {
         poseStack.pushPose();
 
         // Apply rotations using Quaternion (correct for 1.19.2)
@@ -126,9 +124,8 @@ public class InjectionCraftingCategory implements IRecipeCategory<InjectionRecip
         poseStack.popPose();
     }
 
-    private static void renderEntityInInventory(PoseStack poseStack, int x, int y, int scale,Quaternion quaternion, LivingEntity entity) {
+    private void renderEntityInInventory(PoseStack poseStack, int x, int y, int scale,Quaternion quaternion, LivingEntity entity) {
         poseStack.pushPose();
-
         poseStack.translate(x, y, 50.0);
         poseStack.scale(scale, scale, scale);
         poseStack.mulPose(quaternion);
@@ -137,10 +134,14 @@ public class InjectionCraftingCategory implements IRecipeCategory<InjectionRecip
         RenderSystem.applyModelViewMatrix();
         EntityRenderDispatcher dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
         dispatcher.setRenderShadow(false);
+        dispatcher.setRenderShadow(false);
         RenderSystem.runAsFancy(() -> {
             dispatcher.render(entity, 0.0, 0.0, 0.0, 0.0F, 1.0F, poseStack, bufferSource, 15728880);
         });
+        bufferSource.endBatch();
         poseStack.popPose();
+        RenderSystem.applyModelViewMatrix();
+        Lighting.setupFor3DItems();
     }
 
 
