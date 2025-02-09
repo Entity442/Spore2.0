@@ -4,7 +4,10 @@ import com.Harbinger.Spore.Core.Sitems;
 import com.Harbinger.Spore.Recipes.InjectionRecipe;
 import com.Harbinger.Spore.Sentities.VariantKeeper;
 import com.Harbinger.Spore.Spore;
+import com.mojang.blaze3d.platform.Lighting;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -16,8 +19,9 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -78,46 +82,64 @@ public class InjectionCraftingCategory implements IRecipeCategory<InjectionRecip
             if (entity instanceof LivingEntity living){
                 if (living instanceof VariantKeeper keeper){
                     keeper.setVariant(recipe.getEntityType());
-                    renderEntityInInventoryFollowsAngle(stack,34,70,20,0f,0f,living);
+                    renderEntityInInventoryFollowsAngle(stack, 34,70,20,0,0,living);
                 }else{
-                    renderEntityInInventoryFollowsAngle(stack,34,70,20,0f,0f,living);
+                    renderEntityInInventoryFollowsAngle(stack, 34,70,20,0,0,living);
                 }
             }
         }
         IRecipeCategory.super.draw(recipe, recipeSlotsView, stack, mouseX, mouseY);
     }
 
-    private void renderEntityInInventoryFollowsAngle(PoseStack poseStack, int x, int y, int scale, float angleXComponent, float angleYComponent, LivingEntity entity) {
+    public static void renderEntityInInventoryFollowsAngle(PoseStack poseStack, int x, int y, int scale, float angleXComponent, float angleYComponent, LivingEntity entity) {
         poseStack.pushPose();
-        // Rotate entity for proper display
-        poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));  // Rotate around Z-axis
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(angleYComponent * 20.0F));  // Rotate around X-axis
-        poseStack.translate(0,y,x);
 
-        // Store previous entity rotation states
-        float prevBodyRot = entity.yBodyRot;
-        float prevYRot = entity.getYRot();
-        float prevXRot = entity.getXRot();
-        float prevHeadRotO = entity.yHeadRotO;
-        float prevHeadRot = entity.yHeadRot;
+        // Apply rotations using Quaternion (correct for 1.19.2)
+        Quaternion pose = new Quaternion(0.0F, 180.0F, 180.0F, true);
+        Quaternion cameraOrientation = new Quaternion(angleYComponent * 20.0F, 0.0F, 0.0F, true);
+        pose.mul(cameraOrientation);
 
-        // Apply new rotation angles
+        // Save entity's original rotation states
+        float originalBodyRot = entity.yBodyRot;
+        float originalYRot = entity.getYRot();
+        float originalXRot = entity.getXRot();
+        float originalHeadRotO = entity.yHeadRotO;
+        float originalHeadRot = entity.yHeadRot;
+
+        // Apply new rotation based on angles
         entity.yBodyRot = 180.0F + angleXComponent * 20.0F;
         entity.setYRot(180.0F + angleXComponent * 40.0F);
         entity.setXRot(-angleYComponent * 20.0F);
         entity.yHeadRot = entity.getYRot();
         entity.yHeadRotO = entity.getYRot();
 
-        // Render entity
-        InventoryScreen.renderEntityInInventory(x, y, scale, angleXComponent, angleYComponent, entity);
+        // Render entity using the correct method for 1.19.2
+        renderEntityInInventory(poseStack, x, y, scale,pose, entity);
 
-        // Restore previous rotation states
-        entity.yBodyRot = prevBodyRot;
-        entity.setYRot(prevYRot);
-        entity.setXRot(prevXRot);
-        entity.yHeadRotO = prevHeadRotO;
-        entity.yHeadRot = prevHeadRot;
+        // Restore entity's original rotation states
+        entity.yBodyRot = originalBodyRot;
+        entity.setYRot(originalYRot);
+        entity.setXRot(originalXRot);
+        entity.yHeadRotO = originalHeadRotO;
+        entity.yHeadRot = originalHeadRot;
 
+        poseStack.popPose();
+    }
+
+    private static void renderEntityInInventory(PoseStack poseStack, int x, int y, int scale,Quaternion quaternion, LivingEntity entity) {
+        poseStack.pushPose();
+
+        poseStack.translate(x, y, 50.0);
+        poseStack.scale(scale, scale, scale);
+        poseStack.mulPose(quaternion);
+        MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+        Lighting.setupForEntityInInventory();
+        RenderSystem.applyModelViewMatrix();
+        EntityRenderDispatcher dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+        dispatcher.setRenderShadow(false);
+        RenderSystem.runAsFancy(() -> {
+            dispatcher.render(entity, 0.0, 0.0, 0.0, 0.0F, 1.0F, poseStack, bufferSource, 15728880);
+        });
         poseStack.popPose();
     }
 
