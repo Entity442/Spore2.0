@@ -37,10 +37,14 @@ public class InjectionRecipe implements Recipe<EntityContainer> {
         if (level.isClientSide){
             return false;
         }
-        if (entityContainer.entity() instanceof VariantKeeper keeper){
-            return keeper.getTypeVariant() == this.getEntityType() && entityContainer.entity().getType().equals(EntityType.byString(entityId).orElse(null));
+        EntityType<?> entityType = entityContainer.entity().getType();
+        EntityType<?> expectedType = EntityType.byString(entityId).orElse(null);
+        if (expectedType == null) return false;
+
+        if (entityContainer.entity() instanceof VariantKeeper keeper) {
+            return keeper.getTypeVariant() == this.getEntityType() && entityType.equals(expectedType);
         }
-        return entityContainer.entity().getType().equals(EntityType.byString(entityId).orElse(null));
+        return entityType.equals(expectedType);
     }
 
     @Override
@@ -55,7 +59,7 @@ public class InjectionRecipe implements Recipe<EntityContainer> {
 
     @Override
     public ItemStack getResultItem() {
-        return result;
+        return result == null ? ItemStack.EMPTY : result.copy();
     }
 
     @Override
@@ -93,18 +97,18 @@ public class InjectionRecipe implements Recipe<EntityContainer> {
         }
 
         @Override
-        public @Nullable InjectionRecipe fromNetwork(ResourceLocation resourceLocation, FriendlyByteBuf friendlyByteBuf) {
-            String entityId = friendlyByteBuf.readUtf();
-            ItemStack result = friendlyByteBuf.readItem();
-            int type = friendlyByteBuf.readInt();
-            return new InjectionRecipe(resourceLocation, entityId,type, result);
+        public @Nullable InjectionRecipe fromNetwork(ResourceLocation resourceLocation, FriendlyByteBuf buf) {
+            String entityId = buf.readUtf();
+            int type = buf.readInt();
+            ItemStack result = buf.readItem();
+            return new InjectionRecipe(resourceLocation, entityId, type, result);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf friendlyByteBuf, InjectionRecipe injectionRecipe) {
-            friendlyByteBuf.writeUtf(injectionRecipe.getEntityId());
+            friendlyByteBuf.writeUtf(injectionRecipe.entityId);
             friendlyByteBuf.writeInt(injectionRecipe.getEntityType());
-            friendlyByteBuf.writeItem(injectionRecipe.getResultItem());
+            friendlyByteBuf.writeItemStack(injectionRecipe.getResultItem(),false);
         }
     }
 }
