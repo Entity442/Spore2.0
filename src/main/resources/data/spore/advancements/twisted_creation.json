@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "spore:surgery_table"
+    },
+    "title":{"translate": "advancement.spore.surgery_table.title"},
+    "description":{"translate": "advancement.spore.surgery_table.description"}
+  },
+
+  "parent": "spore:lost_technology",
+  "criteria": {
+    "pick_up_surgery": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "spore:surgery_table"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": []
+}

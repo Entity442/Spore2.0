@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "spore:cdu"
+    },
+    "title":{"translate": "advancement.spore.cdu.title"},
+    "description":{"translate": "advancement.spore.cdu.description"}
+  },
+
+  "parent": "spore:lost_technology",
+  "criteria": {
+    "pick_up_cdu": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "spore:cdu"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": []
+}
