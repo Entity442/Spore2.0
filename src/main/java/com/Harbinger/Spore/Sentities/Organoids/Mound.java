@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sentities.Organoids;
 
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.ExtremelySusThings.SporeSavedData;
+import com.Harbinger.Spore.SBlockEntities.ContainerBlockEntity;
 import com.Harbinger.Spore.SBlockEntities.LivingStructureBlocks;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Organoid;
@@ -218,7 +219,7 @@ public class Mound extends Organoid implements Enemy, FoliageSpread {
     }
     private boolean isChestWithFood(BlockPos pos){
         BlockEntity blockEntity = this.level.getBlockEntity(pos);
-        if (blockEntity instanceof Container container){
+        if (blockEntity instanceof Container container && !(container instanceof ContainerBlockEntity)){
             return container.hasAnyMatching((ItemStack::isEdible));
         }
         return false;
