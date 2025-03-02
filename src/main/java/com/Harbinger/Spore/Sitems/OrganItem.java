@@ -1,5 +1,6 @@
 package com.Harbinger.Spore.Sitems;
 
+import com.Harbinger.Spore.Core.ScreativeTab;
 import com.Harbinger.Spore.Core.Sitems;
 import com.Harbinger.Spore.ExtremelySusThings.ClientAdvancementTracker;
 import com.Harbinger.Spore.ExtremelySusThings.Package.RequestAdvancementPacket;
@@ -21,8 +22,8 @@ public class OrganItem extends Item {
     private final String info;
     private final String advancementIds;
 
-    public OrganItem(Properties properties, String value, String advancementId) {
-        super(properties);
+    public OrganItem(String value, String advancementId) {
+        super(new Item.Properties().tab(ScreativeTab.SPORE));
         this.info = value;
         this.advancementIds = advancementId;
         Sitems.BIOLOGICAL_ITEMS.add(this);
