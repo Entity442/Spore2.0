@@ -1,7 +1,6 @@
 package com.Harbinger.Spore.Sitems;
 
 import com.Harbinger.Spore.Core.ScreativeTab;
-import com.Harbinger.Spore.Core.Sitems;
 import com.Harbinger.Spore.ExtremelySusThings.ClientAdvancementTracker;
 import com.Harbinger.Spore.ExtremelySusThings.Package.RequestAdvancementPacket;
 import com.Harbinger.Spore.ExtremelySusThings.SporePacketHandler;
@@ -27,7 +26,6 @@ public class OrganItem extends Item {
         super(new Item.Properties().tab(ScreativeTab.SPORE));
         this.info = value;
         this.advancementIds = advancementId;
-        Sitems.BIOLOGICAL_ITEMS.add(this);
     }
 
     public String getAdvancementIds() {
@@ -44,8 +42,8 @@ public class OrganItem extends Item {
                     list.add(Component.translatable(info).withStyle(ChatFormatting.GOLD));
                 } else {
                     list.add(Component.translatable("spore.scanner.organ.default").withStyle(ChatFormatting.RED));
-                    SporePacketHandler.sendToServer(new RequestAdvancementPacket(advancementIds,player.getId()));
                 }
+                SporePacketHandler.sendToServer(new RequestAdvancementPacket(advancementIds,player.getId()));
             }
         }else{
             list.add(Component.translatable("spore.scanner.organ.default").withStyle(ChatFormatting.RED));
