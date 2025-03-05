@@ -21,10 +21,7 @@ import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
 import com.Harbinger.Spore.Sentities.Organoids.*;
 import com.Harbinger.Spore.Sentities.Utility.*;
 import com.Harbinger.Spore.Sentities.Variants.SlasherVariants;
-import com.Harbinger.Spore.Sitems.BaseWeapons.SporeArmorData;
-import com.Harbinger.Spore.Sitems.BaseWeapons.SporeBaseArmor;
-import com.Harbinger.Spore.Sitems.BaseWeapons.SporeToolsBaseItem;
-import com.Harbinger.Spore.Sitems.BaseWeapons.SporeWeaponData;
+import com.Harbinger.Spore.Sitems.BaseWeapons.*;
 import com.Harbinger.Spore.Sitems.InfectedCombatShovel;
 import com.Harbinger.Spore.Sitems.InfectedMaul;
 import com.Harbinger.Spore.Spore;
@@ -599,6 +596,17 @@ public class HandlerEvents {
                 }
             }
             event.setAmount(event.getAmount() + totalDamageModification);
+        }
+        if (event.getSource().getEntity() instanceof ServerPlayer serverPlayer){
+            int i = 0;
+            for (ItemStack stack : serverPlayer.getInventory().armor){
+                if (stack.getItem() instanceof SporeBaseArmor baseArmor && baseArmor.getVariant(stack) == SporeArmorMutations.CHARRED){
+                    i=i+2;
+                }
+            }
+            if (i > 0){
+                event.getEntity().setSecondsOnFire(i);
+            }
         }
     }
 
