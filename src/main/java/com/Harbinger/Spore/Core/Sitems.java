@@ -70,6 +70,8 @@ public class Sitems {
             () -> new OrganItem("spore.scanner.organ.altered_spleen","spore:anatomy_act_8"));
     public  static final RegistryObject<Item> CORROSIVE_SACK = ITEMS.register("corrosive_sack",
             () -> new OrganItem("spore.scanner.organ.corrosive_sack","spore:anatomy_act_9"));
+    public  static final RegistryObject<Item> ORGANOID_MEMBRANE = ITEMS.register("organoid_membrane",
+            () -> new OrganItem("spore.scanner.organ.organoid_membrane","spore:anatomy_act_10"));
     public  static final RegistryObject<Item> TENDONS = ITEMS.register("tendons",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> INNARDS = ITEMS.register("innards",
@@ -366,6 +368,8 @@ public class Sitems {
 
     public  static final RegistryObject<Item> CORRUPTED_RECORD = ITEMS.register("corrupted_record",
             CorruptedRecord::new);
+    public  static final RegistryObject<Item> FORGOTTEN_RECORD = ITEMS.register("forgotten_record",
+            ForgottenRecord::new);
     public  static final RegistryObject<Item> GAS_MASK = ITEMS.register("gas_mask",
             GasMaskItem::new);
     public  static final RegistryObject<Item> SCANNER = ITEMS.register("scanner",
