@@ -2,6 +2,8 @@ package com.Harbinger.Spore.Sentities.Organoids;
 
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.ExtremelySusThings.ChunkLoaderHelper;
+import com.Harbinger.Spore.ExtremelySusThings.Package.AdvancementGivingPackage;
+import com.Harbinger.Spore.ExtremelySusThings.SporePacketHandler;
 import com.Harbinger.Spore.SBlockEntities.BrainRemnantBlockEntity;
 import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.Calamity;
@@ -173,6 +175,9 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
         for (Entity entity : entities){
             if (entity instanceof LivingEntity living && (SConfig.SERVER.proto_sapient_target.get().contains(living.getEncodeId()) || living instanceof Player)){
                 living.addEffect(new MobEffectInstance(Seffects.MADNESS.get(),6000,0,false,false));
+                if (living instanceof ServerPlayer serverPlayer){
+                    SporePacketHandler.sendToServer(new AdvancementGivingPackage("spore:proto",serverPlayer.getId()));
+                }
             }
         }
     }
@@ -201,18 +206,13 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
         @Override
         public boolean canUse() {
             Entity target = this.proto.getTarget();
-            return this.proto.tickCount % 40 == 0  && target != null && checkForScent();
+            return this.proto.tickCount % 40 == 0  && target != null && checkForScent() ;
         }
 
         private boolean checkForScent() {
             AABB hitbox = this.proto.getBoundingBox().inflate(3);
-            List<Entity> entities = this.proto.level.getEntities(this.proto, hitbox ,EntitySelector.NO_CREATIVE_OR_SPECTATOR);
-            for (Entity en : entities) {
-                if (en instanceof ScentEntity){
-                    return false;
-                }
-            }
-            return true;
+            List<ScentEntity> entities = this.proto.level.getEntitiesOfClass(ScentEntity.class, hitbox);
+            return entities.size() < 1;
         }
 
         @Override
@@ -330,12 +330,12 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
 
         @Override
         public boolean canUse() {
-            return this.proto.getTarget() != null && this.proto.tickCount % 200 == 0;
+            return this.proto.getTarget() != null &&  this.proto.tickCount % 200 == 0;
         }
         @Override
         public void start() {
             LivingEntity target = this.proto.getTarget();
-            if (target != null && checkForOrganoids(target) && target.getBlockStateOn().getDestroySpeed(target.level,target.getOnPos()) < 4){
+            if (target != null && checkForOrganoids(target)){
                 for (int i = 0; i<proto.random.nextInt(3,6);i++){
                     SummonDefense(target);
                 }
@@ -345,12 +345,14 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
 
 
     }
+
+
     protected boolean checkForOrganoids(Entity entity){
         AABB aabb = entity.getBoundingBox().inflate(12);
         List<Entity> entities = level.getEntities(this,aabb,entity1 -> { return entity1 instanceof Organoid;});
         return entities.size() <= 4;
     }
-    private void SummonDefense(LivingEntity target) {
+    private void SummonDefense(Entity target) {
         List<? extends String> summons = SConfig.SERVER.proto_summonable_troops.get();
         int x = random.nextInt(-10,10);
         int z = random.nextInt(-10,10);
@@ -361,20 +363,19 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
             EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
             Mob waveentity = (Mob) randomElement.create(this.level);
             if (waveentity != null){
-                if (waveentity instanceof Vigil vigil){
-                    vigil.setProto(this);
-                }
+                waveentity.randomTeleport(target.getX() + x,target.getY(),target.getZ() + z,false);
                 if (waveentity instanceof Mound mound){
                     mound.setMaxAge(1);
                     mound.setLinked(true);
                 }
-                waveentity.randomTeleport(target.getX() + x,target.getY(),target.getZ() + z,false);
+                if (waveentity instanceof Vigil vigil){
+                    vigil.setProto(this);
+                }
                 if (checkTheGround(waveentity.getOnPos(),waveentity.level)){
                     waveentity.finalizeSpawn(world, this.level.getCurrentDifficultyAt(new BlockPos((int) this.getX(),(int)  this.getY(),(int)  this.getZ())), MobSpawnType.NATURAL, null, null);
                     this.level.addFreshEntity(waveentity);
                 }
             }
-
         }
     }
     private boolean checkTheGround(BlockPos pos,Level level){

@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "spore:mutated_heart"
+      "item": "spore:proto_spawnegg"
     },
     "title":{"translate": "advancement.spore.spore.title"},
     "description":{"translate": "advancement.spore.spore.description"},
