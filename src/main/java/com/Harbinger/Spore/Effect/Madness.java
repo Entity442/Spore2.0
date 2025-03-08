@@ -26,8 +26,13 @@ public class Madness extends MobEffect {
     }
 
     public void applyEffectTick(LivingEntity entity, int intense) {
-        if (Math.random() < (SConfig.SERVER.chance_hallucination_spawn.get() * 0.01) && intense > 1 && entity.level instanceof ServerLevel serverLevel){
-            SummonIllusion(entity,serverLevel);
+        if (Math.random() < (SConfig.SERVER.chance_hallucination_spawn.get() * 0.01) && entity.level instanceof ServerLevel serverLevel){
+            if (intense > 1 && intense < 4){
+                SummonIllusion(entity,serverLevel,false,entity.getId());
+            }
+            if (intense >= 4){
+                SummonIllusion(entity,serverLevel,true,entity.getId());
+            }
         }
         if (Math.random() < 0.1){
             this.playClientSounds(entity);
@@ -41,11 +46,13 @@ public class Madness extends MobEffect {
         player.displayClientMessage(Component.translatable("vigil.message"),true);
     }
 
-    public void SummonIllusion(LivingEntity entity,ServerLevel serverLevel){
+    public void SummonIllusion(LivingEntity entity,ServerLevel serverLevel,boolean value,int targetId){
         int x = entity.getRandom().nextInt(-6,6);
         int z = entity.getRandom().nextInt(-6,6);
         Illusion illusion = new Illusion(Sentities.ILLUSION.get(), serverLevel);
         illusion.setSeeAble(false);
+        illusion.setAdvanced(value);
+        illusion.setTargetId(targetId);
         DifficultyInstance difficultyInstance = serverLevel.getCurrentDifficultyAt(entity.blockPosition());
         illusion.moveTo(entity.getX() + x,entity.getY(),entity.getZ()+z);
         illusion.finalizeSpawn(serverLevel, difficultyInstance, MobSpawnType.MOB_SUMMONED,null,null);

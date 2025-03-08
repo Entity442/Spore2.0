@@ -31,6 +31,8 @@ public class Illusion extends UtilityEntity implements Enemy, ArmorPersentageByp
     private static final EntityDataAccessor<Boolean> SEE_ABLE = SynchedEntityData.defineId(Illusion.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<String> BODY = SynchedEntityData.defineId(Illusion.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Integer> TYPE = SynchedEntityData.defineId(Illusion.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> TARGET_ID = SynchedEntityData.defineId(Illusion.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> ADVANCED = SynchedEntityData.defineId(Illusion.class, EntityDataSerializers.BOOLEAN);
     public Illusion(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
     }
@@ -38,20 +40,26 @@ public class Illusion extends UtilityEntity implements Enemy, ArmorPersentageByp
     protected void defineSynchedData() {
         super.defineSynchedData();
         entityData.define(SEE_ABLE,true);
+        entityData.define(ADVANCED,false);
         entityData.define(TYPE,0);
+        entityData.define(TARGET_ID,0);
         entityData.define(BODY,"spore:knight");
     }
 
     public void addAdditionalSaveData(CompoundTag tag) {
         tag.putInt("type",entityData.get(TYPE));
+        tag.putInt("target_id",entityData.get(TARGET_ID));
         tag.putBoolean("see_able",entityData.get(SEE_ABLE));
+        tag.putBoolean("advanced",entityData.get(ADVANCED));
         tag.putString("body",entityData.get(BODY));
         super.addAdditionalSaveData(tag);
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {
         entityData.set(SEE_ABLE,tag.getBoolean("see_able"));
+        entityData.set(ADVANCED,tag.getBoolean("advanced"));
         entityData.set(TYPE,tag.getInt("type"));
+        entityData.set(TARGET_ID,tag.getInt("target_id"));
         entityData.set(BODY,tag.getString("body"));
         super.readAdditionalSaveData(tag);
     }
@@ -68,7 +76,9 @@ public class Illusion extends UtilityEntity implements Enemy, ArmorPersentageByp
     public boolean canBeSeenByAnyone() {
         return entityData.get(SEE_ABLE);
     }
-
+    public int getTargetId(){return entityData.get(TARGET_ID);}
+    public void setTargetId(int value){entityData.set(TARGET_ID,value);}
+    public void setAdvanced(boolean value){entityData.set(ADVANCED,value);}
 
     @Override
     protected void registerGoals() {
@@ -77,7 +87,7 @@ public class Illusion extends UtilityEntity implements Enemy, ArmorPersentageByp
                     return Illusion.this.getSeeAble() && TARGET_SELECTOR.test(livingEntity);}));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>
                 (this, LivingEntity.class,  true,livingEntity -> {
-                    return livingEntity.hasEffect(Seffects.MADNESS.get());}));
+                    return !Illusion.this.getSeeAble() && livingEntity.getId() == getTargetId();}));
         this.goalSelector.addGoal(3,new CustomMeleeAttackGoal(this,1.3,true));
     }
 
@@ -102,8 +112,8 @@ public class Illusion extends UtilityEntity implements Enemy, ArmorPersentageByp
     }
 
     @Override
-    public boolean hurt(DamageSource p_21016_, float p_21017_) {
-        if (Math.random() < 0.3){
+    public boolean hurt(DamageSource source, float p_21017_) {
+        if (source.getEntity() != null){
             this.discard();
         }
         return false;
