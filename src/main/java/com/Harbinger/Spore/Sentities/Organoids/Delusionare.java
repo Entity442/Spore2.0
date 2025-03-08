@@ -46,6 +46,11 @@ public class Delusionare extends Organoid {
     }
 
     @Override
+    public List<? extends String> getDropList() {
+        return SConfig.DATAGEN.delusioner_loot.get();
+    }
+
+    @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("spell_timer",entityData.get(SPELL_TIME));

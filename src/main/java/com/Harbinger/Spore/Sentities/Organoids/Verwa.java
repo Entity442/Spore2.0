@@ -5,6 +5,7 @@ import com.Harbinger.Spore.Core.Sentities;
 import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Organoid;
+import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.Knight;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -26,6 +27,8 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Verwa extends Organoid {
     public static final EntityDataAccessor<String> STORED_MOB = SynchedEntityData.defineId(Verwa.class, EntityDataSerializers.STRING);
@@ -75,7 +78,22 @@ public class Verwa extends Organoid {
             this.tickBurrowing();
         }
     }
+    @Override
+    public List<String> getDropList() {
+        List<? extends String> baseLoot = SConfig.DATAGEN.verwa_loot.get();
+        List<? extends String> storedLoot = new ArrayList<>();
 
+        if (getStoredEntity() instanceof Infected infected && !infected.getDropList().isEmpty()) {
+            storedLoot = infected.getDropList();
+        }
+        if (getStoredEntity() instanceof UtilityEntity infected && !infected.getDropList().isEmpty()) {
+            storedLoot = infected.getDropList();
+        }
+        List<String> combinedLoot = new ArrayList<>();
+        combinedLoot.addAll(baseLoot);
+        combinedLoot.addAll(storedLoot);
+        return combinedLoot;
+    }
     public void SummonStoredEntity(){
         Entity entity = this.getStoredEntity();
         if (entity instanceof LivingEntity living){
