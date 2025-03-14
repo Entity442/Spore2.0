@@ -166,6 +166,10 @@ public class Sentities {
             () -> EntityType.Builder.of(Vigil::new, ORGANOID).sized(1f, 3f)
                     .build(new ResourceLocation(Spore.MODID, "vigil").toString()));
 
+    public static final RegistryObject<EntityType<Hvindicator>> HVINDICATOR = SPORE_ENTITIES.register("hvindicator",
+            () -> EntityType.Builder.of(Hvindicator::new, INFECTED).sized(1.1f, 3.5f)
+                    .build(new ResourceLocation(Spore.MODID, "hvindicator").toString()));
+
     public static final RegistryObject<EntityType<Umarmer>> UMARMED = SPORE_ENTITIES.register("umarmed",
             () -> EntityType.Builder.of(Umarmer::new, ORGANOID).sized(1f, 3f)
                     .build(new ResourceLocation(Spore.MODID, "umarmed").toString()));
@@ -237,6 +241,10 @@ public class Sentities {
     public static final RegistryObject<EntityType<Vomit>> ACID = register("acid",
             EntityType.Builder.<Vomit>of(Vomit::new, MobCategory.MISC).setCustomClientFactory(Vomit::new)
                     .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
+
+    public static final RegistryObject<EntityType<ThrownItemProjectile>> THROWN_TOOL = register("thrown_tool",
+            EntityType.Builder.of((EntityType<ThrownItemProjectile> p_33002_, Level level) -> new ThrownItemProjectile(level), MobCategory.MISC)
+                    .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.4f, 0.4f));
 
     public static final RegistryObject<EntityType<ThrownSpear>> THROWN_SPEAR = register("thrown_spear",
             EntityType.Builder.<ThrownSpear>of(ThrownSpear::new, MobCategory.MISC).setCustomClientFactory(ThrownSpear::new)

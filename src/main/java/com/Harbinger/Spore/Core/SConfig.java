@@ -92,6 +92,11 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> inquisitor_damage;
         public final ForgeConfigSpec.ConfigValue<Double> inquisitor_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> hindicator_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> hindicator_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> hindicator_ranged_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> hindicator_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> ogre_hp;
         public final ForgeConfigSpec.ConfigValue<Double> ogre_damage;
         public final ForgeConfigSpec.ConfigValue<Double> ogre_armor;
@@ -657,6 +662,13 @@ public class SConfig {
             this.inquisitor_hp = builder.comment("Default 60").defineInRange("Sets Inquisitor Max health", 60, 1, Double.MAX_VALUE);
             this.inquisitor_damage = builder.comment("Default 20").defineInRange("Sets Inquisitor Damage", 20, 1, Double.MAX_VALUE);
             this.inquisitor_armor = builder.comment("Default 7").defineInRange("Sets Inquisitor Armor", 7, 1, Double.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Axtwerfer");
+            this.hindicator_hp = builder.comment("Default 80").defineInRange("Sets Axtwerfer Max health", 80, 1, Double.MAX_VALUE);
+            this.hindicator_damage = builder.comment("Default 18").defineInRange("Sets Axtwerfer Damage", 18, 1, Double.MAX_VALUE);
+            this.hindicator_ranged_damage = builder.comment("Default 9").defineInRange("Sets Axtwerfer Ranged Damage", 9, 1, Double.MAX_VALUE);
+            this.hindicator_armor = builder.comment("Default 8").defineInRange("Sets Axtwerfer Armor", 7, 1, Double.MAX_VALUE);
             builder.pop();
 
             builder.push("Ogre");
@@ -1307,7 +1319,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> womb_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> verwa_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> delusioner_loot;
-
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> hindicator_loot;
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> name;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_h;
@@ -1473,6 +1485,9 @@ public class SConfig {
             this.wendigo_loot = builder.defineList("Wendigo",
                     Lists.newArrayList("spore:mutated_fiber|70|5|9","spore:armor_fragment|80|7|12","spore:mutated_heart|50|1|1","spore:claw_fragment|80|5|15","spore:cerebrum|20|1|1","spore:spine_fragment|15|1|3","spore:altered_spleen|70|1|2") , o -> o instanceof String);
 
+            this.hindicator_loot = builder.defineList("Axtwerfer",
+                    Lists.newArrayList("spore:mutated_fiber|70|4|15","spore:armor_fragment|80|7|12","spore:mutated_heart|50|1|1","spore:claw_fragment|80|5|15","spore:cerebrum|20|1|1","spore:spine_fragment|15|1|3") , o -> o instanceof String);
+
             this.inquisitor_loot = builder.defineList("Inquisitor",
                     Lists.newArrayList("spore:mutated_fiber|70|5|9","spore:armor_fragment|80|12|22","spore:mutated_heart|50|1|1","spore:claw_fragment|80|5|15") , o -> o instanceof String);
 
@@ -1502,9 +1517,9 @@ public class SConfig {
                     Lists.newArrayList(
                             "The_Harbinger69", "ABucketOfFriedChicken", "LoneGuy", "cheesepuff", "Sire_AwfulThe1st", "Azami",
                             "Deyvid", "Dany_Why", "Technoblade", "Ike", "Hypnotizd", "That_Insane_Guy", "JhonOK22", "hacie", "WhisperFire26",
-                            "Pajera", "Gistique", "Demonid", "Bowser", "Mad_Dog", "Ripley", "Kraken", "Zero", "Joker_de_Coeur", "bartsek009 ",
+                            "Pajera", "Gistique", "Demonid", "Bowser", "Mad_Dog", "Ripley", "Nunny", "Greg", "Joker_de_Coeur", "Slasher ",
                             "xXFuryXx", "Nova69", "Belladonna","Entity","Keymind","Whisper","Helldwin",
-                            "Mademoiselle2016", "Dr_Pilot_MOO") , o -> o instanceof String);
+                            "Mademoiselle2016", "Dr_Pilot_MOO", "Nex") , o -> o instanceof String);
             builder.comment("Items|chance of giving");
             this.player_h = builder.defineList("Head Slot",
                     Lists.newArrayList("minecraft:leather_helmet|50","minecraft:iron_helmet|20","minecraft:chainmail_helmet|20") , o -> o instanceof String);

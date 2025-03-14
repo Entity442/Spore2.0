@@ -132,6 +132,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(HevokerModel.LAYER_LOCATION, HevokerModel::createBodyLayer);
         event.registerLayerDefinition(HevokerModelDead.LAYER_LOCATION, HevokerModelDead::createBodyLayer);
         event.registerLayerDefinition(DetasheHyperClaw.LAYER_LOCATION, DetasheHyperClaw::createBodyLayer);
+        event.registerLayerDefinition(hVindicatorModel.LAYER_LOCATION, hVindicatorModel::createBodyLayer);
     }
 
 
@@ -196,11 +197,13 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.SCAVENGER.get(), ScavengerRenderer::new);
         event.registerEntityRenderer(Sentities.NUCLEA.get(), NucleaRenderer::new);
         event.registerEntityRenderer(Sentities.HEVOKER.get(), HevokerRenderer::new);
+        event.registerEntityRenderer(Sentities.HVINDICATOR.get(), HyperVindicatorRenderer::new);
 
         event.registerEntityRenderer(Sentities.ACID_BALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.SPIT.get(), BulletRender::new);
         event.registerEntityRenderer(Sentities.BILE.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.ACID.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(Sentities.THROWN_TOOL.get(), ThrownMeleeItemRenderer::new);
         event.registerEntityRenderer(Sentities.THROWN_TUMOR.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.FLESH_BOMB.get(), FleshBombRenderer::new);
         event.registerEntityRenderer(Sentities.THROWN_BLOCK.get(), ThrownBlockRenderer::new);

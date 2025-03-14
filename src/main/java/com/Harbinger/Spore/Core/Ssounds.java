@@ -121,6 +121,8 @@ public class Ssounds {
 
     public static final RegistryObject<SoundEvent> OGRE_AMBIENT = soundRegistry("ogre_ambient");
 
+    public static final RegistryObject<SoundEvent> HINDICATOR_AMBIENT = soundRegistry("hindicator_ambient");
+
     public static final RegistryObject<SoundEvent> CALAMITY_SPAWN = soundRegistry("calamity_spawn");
 
     public static final RegistryObject<SoundEvent> CALAMITY_INCOMING = soundRegistry("calamity_incoming");

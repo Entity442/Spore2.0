@@ -199,9 +199,6 @@ public class Sitems {
     public  static final RegistryObject<Item> ILLUSION_SPAWNEGG = ITEMS.register("illusion_spawnegg",
             () -> new SporeSpawnEgg(Sentities.ILLUSION,-1, SpawnEggType.UNKNOWN));
 
-    public  static final RegistryObject<Item> CLAW_SPAWNEGG = ITEMS.register("claw_spawnegg",
-            () -> new SporeSpawnEgg(Sentities.CLAW,-5437216, SpawnEggType.UNKNOWN));
-
     public  static final RegistryObject<Item> SCAMPER_SPAWNEGG = ITEMS.register("scamper_spawnegg",
             () -> new SporeSpawnEgg(Sentities.SCAMPER,-33777216, SpawnEggType.UNKNOWN));
 
@@ -255,6 +252,9 @@ public class Sitems {
 
     public  static final RegistryObject<Item> OGRE_SPAWNEGG = ITEMS.register("ogre_spawnegg",
             () -> new SporeSpawnEgg(Sentities.OGRE,-241434523,SpawnEggType.HYPER));
+
+    public  static final RegistryObject<Item> HVINDICATOR_SPAWNEGG = ITEMS.register("hvindicator_spawnegg",
+            () -> new SporeSpawnEgg(Sentities.HVINDICATOR,-347898989,SpawnEggType.HYPER));
 
     public  static final RegistryObject<Item> SIEGER_SPAWNEGG = ITEMS.register("sieger_spawnegg",
             () -> new SporeSpawnEgg(Sentities.SIEGER,244208, SpawnEggType.CALAMITY));
