@@ -509,7 +509,7 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
         int b = random.nextInt(-12,12);
         int c = random.nextInt(4);
         if (level instanceof ServerLevel serverLevel){
-            List<String> hypers = new ArrayList<>(){{add("spore:inquisitor");add("spore:wendigo");add("spore:brot");add("spore:ogre");add("spore:hevoker");}};
+            List<String> hypers = new ArrayList<>(){{add("spore:inquisitor");add("spore:hvindicator");add("spore:wendigo");add("spore:brot");add("spore:ogre");add("spore:hevoker");}};
             int i = hypers.size();
             Verwa verwa = new Verwa(Sentities.VERVA.get(),serverLevel);
             verwa.setStoredMob(hypers.get(random.nextInt(i)));
