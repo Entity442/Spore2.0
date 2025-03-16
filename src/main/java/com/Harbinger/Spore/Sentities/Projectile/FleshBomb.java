@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sentities.Projectile;
 
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.ExtremelySusThings.Utilities;
+import com.Harbinger.Spore.Sentities.Utility.NukeEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -169,6 +170,16 @@ public class FleshBomb extends AbstractArrow {
                 Utilities.convertBlocks(serverLevel,this.getOwner(),result.getBlockPos(),getExplosion(), Sblocks.BILE.get().defaultBlockState());
             }if(getBombType() == 3){
                 summonAcid(this.getX(),this.getY()-(getExplosion()-2),this.getZ(),getExplosion());
+            }if(getBombType() == 4){
+                NukeEntity nukeEntity = new NukeEntity(Sentities.NUKE.get(), level);
+                nukeEntity.setInitRange(1);
+                nukeEntity.setRange((float) (SConfig.SERVER.nuke_range.get()*1f));
+                nukeEntity.setInitDuration(0);
+                nukeEntity.setDuration(SConfig.SERVER.nuke_time.get());
+                nukeEntity.setDamage((float) (SConfig.SERVER.nuke_damage.get()*1f));
+                nukeEntity.livingEntityPredicate = livingEntityPredicate;
+                nukeEntity.setPos(result.getBlockPos().getX(),result.getBlockPos().getY()-getExplosion()+1,result.getBlockPos().getZ());
+                level.addFreshEntity(nukeEntity);
             }
             if (this.getCarrier()){
                 SummonInfected(serverLevel);
@@ -213,7 +224,8 @@ public class FleshBomb extends AbstractArrow {
         BASIC(0),
         FLAME(1),
         BILE(2),
-        ACID(3);
+        ACID(3),
+        NUCLEAR(4);
         private final int value;
         BombType(int value1){
             value = value1;

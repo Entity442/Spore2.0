@@ -2,6 +2,9 @@ package com.Harbinger.Spore.Client;
 
 import com.Harbinger.Spore.Client.Layers.CustomArmorLayer;
 import com.Harbinger.Spore.Client.Models.*;
+import com.Harbinger.Spore.Client.Models.BombFunnelModel;
+import com.Harbinger.Spore.Client.Models.FireDiskModel;
+import com.Harbinger.Spore.Client.Models.MushroomExplosionTop;
 import com.Harbinger.Spore.Client.Renderers.*;
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Particles.AcidParticle;
@@ -20,20 +23,13 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-
-import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = Spore.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEvents {
@@ -133,6 +129,10 @@ public class ClientModEvents {
         event.registerLayerDefinition(HevokerModelDead.LAYER_LOCATION, HevokerModelDead::createBodyLayer);
         event.registerLayerDefinition(DetasheHyperClaw.LAYER_LOCATION, DetasheHyperClaw::createBodyLayer);
         event.registerLayerDefinition(hVindicatorModel.LAYER_LOCATION, hVindicatorModel::createBodyLayer);
+
+        event.registerLayerDefinition(BombFunnelModel.LAYER_LOCATION, BombFunnelModel::createBodyLayer);
+        event.registerLayerDefinition(MushroomExplosionTop.LAYER_LOCATION, MushroomExplosionTop::createBodyLayer);
+        event.registerLayerDefinition(FireDiskModel.LAYER_LOCATION, FireDiskModel::createBodyLayer);
     }
 
 
@@ -214,6 +214,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.DELUSIONARE.get(), DelusionareRenderer::new);
         event.registerEntityRenderer(Sentities.ARENA_TENDRIL.get(), RaidTendrilRenderer::new);
         event.registerEntityRenderer(Sentities.HEVOKER_ARM.get(), HyperClawRenderer::new);
+        event.registerEntityRenderer(Sentities.NUKE.get(), NuclearBombRenderer::new);
 
         event.registerBlockEntityRenderer(SblockEntities.OVERGROWN_SPAWNER.get(), new OvergrownSpawnerRenderer());
         event.registerBlockEntityRenderer(SblockEntities.BRAIN_REMNANTS.get(), new BrainRemnantsRenderer());
@@ -288,4 +289,5 @@ public class ClientModEvents {
             }
         }
     }
+
 }

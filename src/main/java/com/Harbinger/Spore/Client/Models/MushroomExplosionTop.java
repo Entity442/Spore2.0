@@ -1,4 +1,4 @@
-package com.Harbinger.Spore.Client.Models.NukeParts;// Made with Blockbench 4.12.3
+package com.Harbinger.Spore.Client.Models;// Made with Blockbench 4.12.3
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 

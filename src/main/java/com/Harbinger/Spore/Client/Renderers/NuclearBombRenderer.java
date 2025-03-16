@@ -1,14 +1,13 @@
 package com.Harbinger.Spore.Client.Renderers;
 
 import com.Harbinger.Spore.Client.Layers.SporeRenderTypes;
-import com.Harbinger.Spore.Client.Models.NukeParts.BombFunnelModel;
-import com.Harbinger.Spore.Client.Models.NukeParts.FireDiskModel;
-import com.Harbinger.Spore.Client.Models.NukeParts.MushroomExplosionTop;
+import com.Harbinger.Spore.Client.Models.BombFunnelModel;
+import com.Harbinger.Spore.Client.Models.FireDiskModel;
+import com.Harbinger.Spore.Client.Models.MushroomExplosionTop;
 import com.Harbinger.Spore.Sentities.Utility.NukeEntity;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

@@ -1,7 +1,6 @@
-package com.Harbinger.Spore.Client.Models.NukeParts;// Made with Blockbench 4.12.3
+package com.Harbinger.Spore.Client.Models;// Made with Blockbench 4.12.3
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
-
 
 import com.Harbinger.Spore.Sentities.Utility.NukeEntity;
 import com.Harbinger.Spore.Spore;
@@ -13,35 +12,33 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
-
-public class BombFunnelModel<T extends NukeEntity> extends EntityModel<T> {
+public class FireDiskModel<T extends NukeEntity> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Spore.MODID, "bombfunnelmodel"), "main");
-	private final ModelPart body;
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Spore.MODID, "firediskmodel"), "main");
+	private final ModelPart fire_disk;
 
-	public BombFunnelModel() {
+	public FireDiskModel() {
 		ModelPart root = createBodyLayer().bakeRoot();
-		this.body = root.getChild("body");
+		this.fire_disk = root.getChild("fire_disk");
 	}
 
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 42).addBox(-8.0F, -4.0F, -8.0F, 16.0F, 4.0F, 16.0F, new CubeDeformation(0.0F))
-		.texOffs(48, 0).addBox(-7.0F, -8.0F, -7.0F, 14.0F, 4.0F, 14.0F, new CubeDeformation(0.0F))
-		.texOffs(0, 0).addBox(-6.0F, -38.0F, -6.0F, 12.0F, 30.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
+		PartDefinition fire_disk = partdefinition.addOrReplaceChild("fire_disk", CubeListBuilder.create().texOffs(0, 0).addBox(-40.0F, 27.0F, -40.0F, 80.0F, 0.0F, 80.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 80).addBox(-24.0F, 1.0F, -24.0F, 48.0F, 0.0F, 48.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -4.0F, 0.0F));
 
-		return LayerDefinition.create(meshdefinition, 128, 128);
+		return LayerDefinition.create(meshdefinition, 512, 512);
 	}
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+		this.fire_disk.yRot = ageInTicks * 0.01f;
 	}
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		fire_disk.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 }

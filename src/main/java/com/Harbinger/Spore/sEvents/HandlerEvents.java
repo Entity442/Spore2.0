@@ -147,6 +147,22 @@ public class HandlerEvents {
              }
             return 1;
         }).requires(s -> s.hasPermission(1)));
+        event.getDispatcher().register(Commands.literal(Spore.MODID+":nuke_the_land")
+                .executes(arguments -> {
+                    ServerLevel world = arguments.getSource().getLevel();
+                    int x = (int) arguments.getSource().getPosition().x();
+                    int y = (int) arguments.getSource().getPosition().y();
+                    int z = (int) arguments.getSource().getPosition().z();
+                    NukeEntity nukeEntity = new NukeEntity(Sentities.NUKE.get(), world);
+                    nukeEntity.setInitRange(1f);
+                    nukeEntity.setRange((float) (SConfig.SERVER.nuke_range.get()*1f));
+                    nukeEntity.setInitDuration(0);
+                    nukeEntity.setDuration(SConfig.SERVER.nuke_time.get());
+                    nukeEntity.setDamage((float) (SConfig.SERVER.nuke_damage.get()*1f));
+                    nukeEntity.setPos(x,y,z);
+                    world.addFreshEntity(nukeEntity);
+                    return 1;
+                }).requires(s -> s.hasPermission(1)));
         event.getDispatcher().register(Commands.literal(Spore.MODID+":evolve")
                 .executes(arguments -> {
                     ServerLevel world = arguments.getSource().getLevel();

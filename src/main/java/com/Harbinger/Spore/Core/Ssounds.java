@@ -25,6 +25,8 @@ public class Ssounds {
 
     public static final RegistryObject<SoundEvent> REBIRTH = soundRegistry("rebirth");
 
+    public static final RegistryObject<SoundEvent> NUKE = soundRegistry("nuke");
+
     public static final RegistryObject<SoundEvent> INF_DAMAGE = soundRegistry("inf_damage");
 
     public static final RegistryObject<SoundEvent> INF_GROWL = soundRegistry("inf_growl");
