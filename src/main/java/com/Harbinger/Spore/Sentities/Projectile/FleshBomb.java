@@ -112,6 +112,16 @@ public class FleshBomb extends AbstractArrow {
                     Utilities.convertBlocks(serverLevel,this.getOwner(),result.getEntity().getOnPos(),getExplosion(), Blocks.FIRE.defaultBlockState());
                 }if (getBombType() == 2){
                     Utilities.convertBlocks(serverLevel,this.getOwner(),result.getEntity().getOnPos(),getExplosion(), Sblocks.BILE.get().defaultBlockState());
+                }if(getBombType() == 4){
+                    NukeEntity nukeEntity = new NukeEntity(Sentities.NUKE.get(), level);
+                    nukeEntity.setInitRange(1);
+                    nukeEntity.setRange((float) (SConfig.SERVER.nuke_range.get()*1f));
+                    nukeEntity.setInitDuration(0);
+                    nukeEntity.setDuration(SConfig.SERVER.nuke_time.get());
+                    nukeEntity.setDamage((float) (SConfig.SERVER.nuke_damage.get()*1f));
+                    nukeEntity.livingEntityPredicate = livingEntityPredicate;
+                    nukeEntity.setPos(living.getX(),living.getY(),living.getZ());
+                    level.addFreshEntity(nukeEntity);
                 }
             }
         }

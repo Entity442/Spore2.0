@@ -6,13 +6,17 @@ import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -31,6 +35,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 
 public class Utilities {
@@ -133,5 +138,15 @@ public class Utilities {
         double offsetZ = Math.cos(phi) * distance;
         // Generate the new position
         return new Vec3(origin.x + offsetX, origin.y + offsetY,origin.z + offsetZ);
+    }
+
+    public static List<Item> getItemsFromTag(ServerLevel level, String namespace, String tagName) {
+        Registry<Item> itemRegistry = level.registryAccess().registryOrThrow(Registry.ITEM_REGISTRY);
+
+        TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(namespace, tagName));
+
+        return itemRegistry.getTag(tagKey)
+                .map(tag -> tag.stream().map(Holder::value).collect(Collectors.toList()))
+                .orElse(List.of());  // Return an empty list if no items are found
     }
 }
