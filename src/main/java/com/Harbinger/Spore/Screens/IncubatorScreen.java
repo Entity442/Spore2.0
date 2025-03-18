@@ -5,17 +5,13 @@ import com.Harbinger.Spore.ExtremelySusThings.Utilities;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class IncubatorScreen extends AbstractContainerScreen<IncubatorMenu> implements TutorialMenuMethods{
@@ -28,11 +24,7 @@ public class IncubatorScreen extends AbstractContainerScreen<IncubatorMenu> impl
         super(pMenu, pPlayerInventory, pTitle);
         this.imageWidth = 176;
         this.imageHeight = 84;
-        if (Minecraft.getInstance().cameraEntity instanceof ServerPlayer player && player.level instanceof ServerLevel serverLevel){
-            this.tagItems = Utilities.getItemsFromTag(serverLevel,Spore.MODID, "weapons");
-        }else {
-            tagItems = new ArrayList<>();
-        }
+        this.tagItems = Utilities.getItemsFromTag("spore:weapons");
     }
 
     @Override

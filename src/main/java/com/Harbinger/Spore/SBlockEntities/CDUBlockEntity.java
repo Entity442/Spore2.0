@@ -23,14 +23,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -39,15 +36,18 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class CDUBlockEntity extends BlockEntity implements MenuProvider {
     public final int maxFuel = SConfig.DATAGEN.cryo_time.get();
     public int fuel;
+    private final List<StoreDouble> blockMap;
+    private final List<BlockState> biomass;
     public CDUBlockEntity(BlockPos pos, BlockState state) {
         super(SblockEntities.CDU.get(), pos, state);
+        blockMap = fabricateBlocks();
+        biomass = stateList();
     }
-
+    record StoreDouble(Block value1, Block value2){}
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
@@ -59,7 +59,18 @@ public class CDUBlockEntity extends BlockEntity implements MenuProvider {
         super.load(tag);
         this.setFuel(tag.getInt("fuel"));
     }
-
+    private List<StoreDouble> fabricateBlocks(){
+        List<StoreDouble> blocks = new ArrayList<>();
+        for (String str : SConfig.DATAGEN.block_cleaning.get()){
+            String[] string = str.split("\\|" );
+            Block blockCon1 = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(string[0]));
+            Block blockCon2 = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(string[1]));
+            if (blockCon1 != null && blockCon2 != null){
+                blocks.add(new StoreDouble(blockCon1,blockCon2));
+            }
+        }
+        return blocks;
+    }
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
@@ -99,20 +110,15 @@ public class CDUBlockEntity extends BlockEntity implements MenuProvider {
                 if (Math.random() < 0.2)
                     level.removeBlock(blockpos,false);
             }
-            if (Math.random() < 0.2){
-                for (String str : SConfig.DATAGEN.block_cleaning.get()){
-                    String[] string = str.split("\\|" );
-                    Block blockCon1 = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(string[0]));
-                    Block blockCon2 = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(string[1]));
-                    if (blockCon1 != null && blockCon2 != null){
-                        if (blockCon1 == state.getBlock()){
-                            level.setBlock(blockpos,blockCon2.defaultBlockState(),3);
-                        }
+            if (Math.random() < 0.2 && !blockMap.isEmpty()){
+                for (StoreDouble storeDouble : blockMap){
+                    if (storeDouble.value1 == state.getBlock()){
+                        level.setBlock(blockpos,storeDouble.value2.defaultBlockState(),3);
                     }
                 }
             }
             if (Math.random() < 0.1){
-                if (this.stateList().contains(state)){
+                if (biomass.contains(state)){
                     level.setBlock(blockpos,Sblocks.FREEZE_BURNED_BIOMASS.get().defaultBlockState(),3);
                 }
                 if (state == Sblocks.BILE.get().defaultBlockState()){

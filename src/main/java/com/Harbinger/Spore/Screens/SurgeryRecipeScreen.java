@@ -13,8 +13,6 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -37,11 +35,7 @@ public class SurgeryRecipeScreen extends AbstractContainerScreen<SurgeryRecipeMe
     public static final ResourceLocation UID = new ResourceLocation(Spore.MODID, "surgery");
     public SurgeryRecipeScreen(SurgeryRecipeMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
-        if (Minecraft.getInstance().cameraEntity instanceof ServerPlayer player && player.level instanceof ServerLevel serverLevel){
-            this.tagItems = Utilities.getItemsFromTag(serverLevel,Spore.MODID, "weapons");
-        }else {
-            tagItems = new ArrayList<>();
-        }
+        this.tagItems = Utilities.getItemsFromTag("spore:stitches");
         this.imageWidth = 176;
         this.imageHeight = 84;
         ClientLevel level = Minecraft.getInstance().level;

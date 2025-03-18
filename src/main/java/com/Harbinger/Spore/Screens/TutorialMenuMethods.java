@@ -11,8 +11,7 @@ public interface TutorialMenuMethods {
     }
 
     default void renderFakeDamagedItem(ItemRenderer itemRenderer, Font font,ItemStack stack, int damage, int x, int y) {
-        ItemStack damagedStack = stack.copy();
-        damagedStack.setDamageValue(damage);
+        stack.setDamageValue(damage);
         itemRenderer.renderAndDecorateItem(stack, x, y);
         itemRenderer.renderGuiItemDecorations(font, stack, x, y);
     }
