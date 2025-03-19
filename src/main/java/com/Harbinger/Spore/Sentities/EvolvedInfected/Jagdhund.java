@@ -92,7 +92,7 @@ public class Jagdhund extends EvolvedInfected {
         this.goalSelector.addGoal(3, new CustomMeleeAttackGoal(this, 1.5, false) {
             @Override
             protected void checkAndPerformAttack(LivingEntity entity, double at) {
-                if (!isUnderground()){
+                if (!isUnderground()  || isEmerging()){
                     super.checkAndPerformAttack(entity, at);
                 }
             }
