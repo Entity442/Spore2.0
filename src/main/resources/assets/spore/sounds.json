@@ -76,6 +76,7 @@
       "spore:surgery"
     ]
   },
+
   "construct_ambient" :{
     "subtitle": "sounds.spore.growl",
     "sounds": [

@@ -207,6 +207,7 @@ public class Howitzer extends Calamity implements TrueCalamity, RangedAttackMob 
             entityData.set(SELF_DETONATION,entityData.get(SELF_DETONATION)+1);
         }
     }
+
     public int getSelfDetonation(){
         return entityData.get(SELF_DETONATION);
     }

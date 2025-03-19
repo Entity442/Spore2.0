@@ -7,6 +7,6 @@ import net.minecraft.world.item.RecordItem;
 
 public class ForsakenRecord extends RecordItem {
     public ForsakenRecord() {
-        super(0, Ssounds.FORSAKEN_RECORD, new Properties().stacksTo(1).rarity(Rarity.EPIC).tab(ScreativeTab.SPORE_T), 1100);
+        super(0, Ssounds.FORSAKEN_RECORD, new Properties().stacksTo(1).rarity(Rarity.EPIC).tab(ScreativeTab.SPORE_T), 1200);
     }
 }

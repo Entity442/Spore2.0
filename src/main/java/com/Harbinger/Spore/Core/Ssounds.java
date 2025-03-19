@@ -20,7 +20,7 @@ public class Ssounds {
 
     public static final RegistryObject<SoundEvent> FORGOTTEN_PATIENT = soundRegistry("forgotten_patient");
 
-    public static final RegistryObject<SoundEvent> FORSAKEN_RECORD = soundRegistry("forsaken_record");
+    public static final RegistryObject<SoundEvent> FORSAKEN_RECORD = soundRegistry("forsaken_future");
 
     public static final RegistryObject<SoundEvent> AREA_AMBIENT = soundRegistry("spore_area_ambient");
 
