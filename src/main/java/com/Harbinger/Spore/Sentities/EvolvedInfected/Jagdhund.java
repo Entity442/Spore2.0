@@ -123,7 +123,6 @@ public class Jagdhund extends EvolvedInfected {
             }
         }
         if (isEmerging() || isBurrowing()){
-            this.makeStuckInBlock(Blocks.AIR.defaultBlockState(),new Vec3(0,1,0));
             SummonParticles(getOnPos());
         }
         if (this.navigation.isInProgress() && isUnderground()){
@@ -185,7 +184,7 @@ public class Jagdhund extends EvolvedInfected {
         if (source.isFire() || source.isExplosion()){
             return super.hurt(source, amount);
         }
-        if (isUnderground() || isEmerging() || isBurrowing()){
+        if (isUnderground()){
             return false;
         }
         return super.hurt(source, amount);
