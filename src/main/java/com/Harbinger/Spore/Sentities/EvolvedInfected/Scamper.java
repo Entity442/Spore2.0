@@ -270,6 +270,11 @@ public class Scamper extends EvolvedInfected implements VariantKeeper {
         }
     }
 
+    @Override
+    public int amountOfMutations() {
+        return ScamperVariants.values().length;
+    }
+
     public void setVariant(ScamperVariants variant) {
         this.entityData.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }

@@ -300,8 +300,23 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Current Target " + proto.getTarget()),false);
                                     player.displayClientMessage(Component.literal("Buffs " + proto.getActiveEffects()),false);
                                     player.displayClientMessage(Component.literal("Mobs under control " + proto.getHosts()),false);
-                                    player.displayClientMessage(Component.literal("Specific target " + proto.readTargets()),false);
-                                    player.displayClientMessage(Component.literal("-------------------------"),false);
+                                player.displayClientMessage(Component.literal("Biomass " + proto.getBiomass()),false);
+                                for (int i = 0;i<proto.getWeights().length;i++){
+                                    player.displayClientMessage(Component.literal("Neuron_"+i+" " + proto.getWeightsValue(i)),false);
+                                }
+                                for (String s : proto.team_1){
+                                    player.displayClientMessage(Component.literal("TEAM_1 "+ s),false);
+                                }
+                                for (String s : proto.team_2){
+                                    player.displayClientMessage(Component.literal("TEAM_2 "+ s),false);
+                                }
+                                for (String s : proto.team_3){
+                                    player.displayClientMessage(Component.literal("TEAM_3 "+ s),false);
+                                }
+                                for (String s : proto.team_4){
+                                    player.displayClientMessage(Component.literal("TEAM_4 "+ s),false);
+                                }
+                                player.displayClientMessage(Component.literal("-------------------------"),false);
                             }
                             else if(entity1 instanceof BiomassReformator reformator) {
                                     player.displayClientMessage(Component.literal("Entity "+ reformator.getEncodeId() + " " + reformator.getCustomName()),false);
@@ -375,8 +390,6 @@ public class HandlerEvents {
                             if (entity instanceof Player player && !player.level.isClientSide) {
                                 if (blockEntity instanceof LivingStructureBlocks structureBlocks){
                                     player.displayClientMessage(Component.literal("Structure block with " + structureBlocks.getKills() + " kills"), false);
-                                }else if (blockEntity instanceof BrainRemnantBlockEntity block){
-                                    player.displayClientMessage(Component.literal("Brain with source " + block.getSource() +", time"+ block.getTime()+ " and UUID "+block.getUUID()), false);
                                 }else if (blockEntity instanceof CDUBlockEntity block){
                                     player.displayClientMessage(Component.literal("Fuel " + block.fuel), false);
                                 }
