@@ -294,6 +294,11 @@ public class Griefer extends EvolvedInfected implements VariantKeeper {
         }
     }
 
+    @Override
+    public int amountOfMutations() {
+        return GrieferVariants.values().length;
+    }
+
     private void setVariant(GrieferVariants variant) {
         this.entityData.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }

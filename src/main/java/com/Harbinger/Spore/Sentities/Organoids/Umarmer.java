@@ -629,6 +629,11 @@ public class Umarmer extends Organoid implements VariantKeeper {
         }
     }
 
+    @Override
+    public int amountOfMutations() {
+        return UmarmerVariants.values().length;
+    }
+
     private void setVariant(UmarmerVariants variant) {
         this.entityData.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }
@@ -661,7 +666,10 @@ public class Umarmer extends Organoid implements VariantKeeper {
         }
         super.onSyncedDataUpdated(dataAccessor);
     }
-
+    @Override
+    public boolean isCloseCombatant() {
+        return true;
+    }
     @Override
     public EntityDimensions getDimensions(Pose pose) {
         if (this.isPinned()){

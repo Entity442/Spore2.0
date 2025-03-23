@@ -288,6 +288,11 @@ public class Brauerei extends Organoid implements RangedAttackMob, VariantKeeper
         }
     }
 
+    @Override
+    public int amountOfMutations() {
+        return BraureiVariants.values().length;
+    }
+
     private void setVariant(BraureiVariants variant) {
         this.entityData.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }

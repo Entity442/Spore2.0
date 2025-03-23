@@ -169,4 +169,8 @@ public class Organoid extends UtilityEntity implements Enemy {
             tickBurrowing();
         }
     }
+
+    public boolean isCloseCombatant(){
+        return false;
+    }
 }

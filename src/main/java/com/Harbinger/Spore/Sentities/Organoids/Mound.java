@@ -8,6 +8,7 @@ import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Organoid;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import com.Harbinger.Spore.Sentities.FoliageSpread;
+import com.Harbinger.Spore.Sentities.Signal;
 import com.Harbinger.Spore.Sentities.Utility.InfectionTendril;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -307,14 +308,18 @@ public class Mound extends Organoid implements Enemy, FoliageSpread {
             List<Proto> entities = this.level.getEntitiesOfClass(Proto.class,searchbox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
                 for (Proto proto : entities) {
                     int y = source.getDirectEntity() != null ? (int)  source.getDirectEntity().getY() :(int)  this.getY();
-                    proto.setSignal(true);
-                    proto.setPlace(new BlockPos((int) this.getX(),y,(int) this.getZ()));
+                    proto.setSignal(new Signal(true,new BlockPos((int) this.getX(),y,(int) this.getZ())));
                 }
             }
         }
         for (int i = 0;i <= this.getAge(); i++){
             super.die(source);
         }
+    }
+
+    @Override
+    public boolean isCloseCombatant() {
+        return true;
     }
 
     @Override

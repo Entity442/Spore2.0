@@ -4,6 +4,7 @@ import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Organoid;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
+import com.Harbinger.Spore.Sentities.Signal;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -180,10 +181,21 @@ public class Vigil extends Organoid{
             List<Entity> entities = this.level.getEntities(this, searchbox , EntitySelector.NO_CREATIVE_OR_SPECTATOR);
             for (Entity en : entities) {
                 if (en instanceof Proto proto){
-                    proto.setSignal(true);
-                    proto.setPlace(new BlockPos((int)this.getX(),(int)this.getY(),(int)this.getZ()));
+                    proto.setSignal(new Signal(true,new BlockPos((int)this.getX(),(int)this.getY(),(int)this.getZ())));
                     break;
                 }}
+        }
+        CompoundTag data = this.getPersistentData();
+        if (data.contains("hivemind")) {
+            int summonerUUID = data.getInt("hivemind");
+            Level level = this.level;
+            Entity summoner = level.getEntity(summonerUUID);
+
+            if (summoner instanceof Proto smartMob) {
+                int decision = data.getInt("decision");
+                int member = data.getInt("member");
+                smartMob.punishForDecision(decision,member);
+            }
         }
     }
     public void ReEmerge(){
@@ -294,7 +306,18 @@ public class Vigil extends Organoid{
         } else {
                 summons = SConfig.SERVER.vigil_max_wave.get();
         }
+        CompoundTag data = this.getPersistentData();
+        if (data.contains("hivemind")) {
+            int summonerUUID = data.getInt("hivemind");
+            Level level = this.level;
+            Entity summoner = level.getEntity(summonerUUID);
 
+            if (summoner instanceof Proto smartMob) {
+                int decision = data.getInt("decision");
+                int member = data.getInt("member");
+                smartMob.praisedForDecision(decision,member);
+            }
+        }
         LivingEntity target = this.getTarget();
         if (target != null && this.getTrigger() > 0 && this.level instanceof ServerLevelAccessor world){
             RandomSource rand = RandomSource.create();

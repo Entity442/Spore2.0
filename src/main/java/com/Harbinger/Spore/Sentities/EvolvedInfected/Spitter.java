@@ -195,6 +195,11 @@ public class Spitter extends EvolvedInfected implements RangedAttackMob, Variant
         }
     }
 
+    @Override
+    public int amountOfMutations() {
+        return SpitterVariants.values().length;
+    }
+
     private void setVariant(SpitterVariants variant) {
         this.entityData.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }
