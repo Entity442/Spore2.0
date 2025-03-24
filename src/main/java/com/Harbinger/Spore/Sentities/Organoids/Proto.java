@@ -276,7 +276,6 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
             }
         }
     }
-
     public double[] inputs(LivingEntity entity){
         if (entity == null){
             return new double[]{0,0,0,0};
