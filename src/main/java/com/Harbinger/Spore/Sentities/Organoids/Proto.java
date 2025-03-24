@@ -278,6 +278,9 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
     }
 
     public double[] inputs(LivingEntity entity){
+        if (entity == null){
+            return new double[]{0,0,0,0};
+        }
         double distance = entity.distanceToSqr(this) < 200 ? 1.0 : 0.0;
         double isOnGround = entity.isOnGround() ? 1.0 : 0.0;
         double hasAllotOfHealth = entity.getMaxHealth() >= 20 ? 1.0 : 0.0;
@@ -594,7 +597,6 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
             level.addFreshEntity(verwa);
         }
     }
-
     private boolean checkForLiquids(BlockPos blockPos){
         AABB aabb = AABB.ofSize(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ()), 14, 14, 14);
         List<BlockPos> liquids = new ArrayList<>();
