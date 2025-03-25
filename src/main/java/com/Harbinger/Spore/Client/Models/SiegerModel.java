@@ -13,28 +13,54 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class SiegerModel<T extends Sieger> extends EntityModel<T> {
+public class SiegerModel<T extends Sieger> extends EntityModel<T> implements TentacledModel{
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Spore.MODID, "siegermodel"), "main");
 	private final ModelPart smolleg;
 	private final ModelPart mainbody;
 	private final ModelPart mainbody2;
 	private final ModelPart tail;
+	private final ModelPart tail2;
+	private final ModelPart tail3;
+	private final ModelPart tail4;
+	private final ModelPart tailTumor1;
+	private final ModelPart tailTumor2;
+	private final ModelPart tailTumor3;
 	private final ModelPart RightLegJointY;
+	private final ModelPart RightLegForLeg;
 	private final ModelPart LeftLegJointY;
+	private final ModelPart LeftLegForleg1;
+	private final ModelPart LeftLegForleg2;
 	private final ModelPart jaw;
 	private final ModelPart BackRightLeg;
+	private final ModelPart BackRightForLeg;
+	private final ModelPart BackRightForLeg2;
 	private final ModelPart BackLeftLeg;
+	private final ModelPart BackLeftForLeg;
+	private final ModelPart BackLeftForLeg2;
 	public SiegerModel(ModelPart root) {
 		this.smolleg = root.getChild("smolleg");
 		this.mainbody = root.getChild("mainbody");
 		this.mainbody2 = root.getChild("mainbody2");
 		this.tail = root.getChild("tail");
+		this.tail2 = tail.getChild("tail2");
+		this.tail3 = tail2.getChild("tail3");
+		this.tail4 = tail3.getChild("tail4");
+		this.tailTumor1 = tail3.getChild("TumorBase3");
+		this.tailTumor2 = tail4.getChild("tumor").getChild("TumorBase2");
+		this.tailTumor3 = tail4.getChild("tumor").getChild("TumorBase");
 		this.RightLegJointY = root.getChild("RightLegJointY");
+		this.RightLegForLeg = RightLegJointY.getChild("RightLeg").getChild("RightForleg");
 		this.LeftLegJointY = root.getChild("LeftLegJointY");
+		this.LeftLegForleg1 = LeftLegJointY.getChild("LeftLeg").getChild("leg2").getChild("twitstedleg");
+		this.LeftLegForleg2 = LeftLegJointY.getChild("LeftLeg").getChild("leg2").getChild("twitstedleg2");
 		this.jaw = root.getChild("jaw");
 		this.BackRightLeg = root.getChild("BackRightLeg");
 		this.BackLeftLeg = root.getChild("BackLeftLeg");
+		this.BackRightForLeg = BackRightLeg.getChild("legback3");
+		this.BackRightForLeg2 = BackRightForLeg.getChild("BackRightLeg2").getChild("legback4");
+		this.BackLeftForLeg = BackLeftLeg.getChild("legback");
+		this.BackLeftForLeg2 = BackLeftForLeg.getChild("BackLeftLeg2").getChild("legback2");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -1369,7 +1395,30 @@ public class SiegerModel<T extends Sieger> extends EntityModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+		animateTentacleY(RightLegJointY,Mth.cos(limbSwing * 0.2F) * 0.5F * limbSwingAmount);
+		animateTentacleY(LeftLegJointY,Mth.cos(limbSwing * 0.4F) * -0.5F * limbSwingAmount);
+		animateTentacleX(RightLegForLeg,RightLegJointY.yRot*1.5f);
+		animateTentacleZ(LeftLegForleg1,-LeftLegJointY.yRot);
+		animateTentacleZ(LeftLegForleg2,LeftLegJointY.yRot);
+		animateTentacleX(BackRightForLeg,Mth.cos(limbSwing * 0.4F) * -0.4F * limbSwingAmount);
+		animateTentacleX(BackRightForLeg2,-BackRightForLeg.xRot);
+		animateTentacleX(BackLeftForLeg,-Mth.cos(limbSwing * 0.3F) * -0.3F * limbSwingAmount);
+		animateTentacleX(BackLeftForLeg2,-BackRightForLeg.xRot);
+		animateTentacleY(smolleg,Mth.sin(limbSwing * 0.5F) * -0.5F * limbSwingAmount);
+		animateTentacleX(jaw,Mth.sin(ageInTicks/8)/10);
+		if (entity.getTailHp() > 0){
+			this.tail.visible = true;
+			float value = Mth.sin(ageInTicks/8)/10;
+			animateTentacleX(tail,value);
+			animateTentacleX(tail2,value);
+			animateTentacleX(tail3,value);
+			animateTentacleX(tail4,value);
+			animateTumor(tailTumor1,Mth.sin(ageInTicks/7)/6);
+			animateTumor(tailTumor2,Mth.cos(ageInTicks/6)/9);
+			animateTumor(tailTumor3,-Mth.sin(ageInTicks/7)/8);
+		}else {
+			this.tail.visible = false;
+		}
 	}
 
 	@Override

@@ -8,42 +8,38 @@ import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.GoatModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraftforge.fml.common.Mod;
 
-public class SiegerTailModel<T extends SiegerTail> extends EntityModel<T> {
+public class SiegerTailModel<T extends SiegerTail> extends EntityModel<T> implements TentacledModel{
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Spore.MODID, "siegertailmodel"), "main");
 	private final ModelPart gore;
 	private final ModelPart tail5;
 	private final ModelPart tail6;
-	private final ModelPart flower27;
 	private final ModelPart tail7;
 	private final ModelPart TumorBase3;
 	private final ModelPart tail8;
 	private final ModelPart tumor2;
 	private final ModelPart TumorBase;
 	private final ModelPart TumorBase2;
-	private final ModelPart flower28;
-	private final ModelPart flower29;
 
 	public SiegerTailModel(ModelPart root) {
 		this.gore = root.getChild("gore");
 		this.tail5 = root.getChild("tail5");
 		this.tail6 = this.tail5.getChild("tail6");
-		this.flower27 = this.tail6.getChild("flower27");
 		this.tail7 = this.tail6.getChild("tail7");
 		this.TumorBase3 = this.tail7.getChild("TumorBase3");
 		this.tail8 = this.tail7.getChild("tail8");
 		this.tumor2 = this.tail8.getChild("tumor2");
 		this.TumorBase = this.tumor2.getChild("TumorBase");
 		this.TumorBase2 = this.tumor2.getChild("TumorBase2");
-		this.flower28 = this.tail7.getChild("flower28");
-		this.flower29 = this.tail7.getChild("flower29");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -121,10 +117,20 @@ public class SiegerTailModel<T extends SiegerTail> extends EntityModel<T> {
 
 		return LayerDefinition.create(meshdefinition, 512, 512);
 	}
+	void animateGore(ModelPart part,float value){
+		part.xScale = 1 + Mth.cos(value/10)/11;
+		part.yScale = 1 - Mth.cos(value/12)/11;
+		part.zScale = 1 + Mth.cos(value/11)/10;
+	}
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+		animateGore(gore,ageInTicks);
+		animateTumor(TumorBase,Mth.sin(ageInTicks/7)/6);
+		animateTumor(TumorBase2,Mth.cos(ageInTicks/6)/9);
+		animateTumor(TumorBase3,-Mth.sin(ageInTicks/7)/8);
+		animateTentacleX(tail6,Mth.sin(ageInTicks/15)/15);
+		animateTentacleX(tail7,Mth.sin(ageInTicks/15)/15);
 	}
 
 	@Override
