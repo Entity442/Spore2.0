@@ -6,7 +6,6 @@ import com.Harbinger.Spore.ExtremelySusThings.Package.AdvancementGivingPackage;
 import com.Harbinger.Spore.ExtremelySusThings.SporePacketHandler;
 import com.Harbinger.Spore.ExtremelySusThings.Utilities;
 import com.Harbinger.Spore.Sentities.AI.AOEMeleeAttackGoal;
-import com.Harbinger.Spore.Sentities.AI.NeuralProcessing.ProtoAIs.ProtoScentDefense;
 import com.Harbinger.Spore.Sentities.AI.NeuralProcessing.ProtoAIs.ProtoTargeting;
 import com.Harbinger.Spore.Sentities.BaseEntities.*;
 import com.Harbinger.Spore.Sentities.CasingGenerator;
@@ -14,6 +13,7 @@ import com.Harbinger.Spore.Sentities.EvolvedInfected.Scamper;
 import com.Harbinger.Spore.Sentities.FoliageSpread;
 import com.Harbinger.Spore.Sentities.Signal;
 import com.Harbinger.Spore.Sentities.Utility.GastGeber;
+import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
 import com.Harbinger.Spore.Sentities.VariantKeeper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -122,7 +122,6 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
     @Override
     protected void registerGoals() {
         this.addTargettingGoals();
-        this.goalSelector.addGoal(2,new ProtoScentDefense(this));
         this.goalSelector.addGoal(3,new ProtoTargeting(this));
         this.goalSelector.addGoal(4,new AOEMeleeAttackGoal(this,0,false,2.5,8,livingEntity -> {return TARGET_SELECTOR.test(livingEntity);}));
         this.goalSelector.addGoal(4,new RandomLookAroundGoal(this));
@@ -251,6 +250,10 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
         }
         if (this.tickCount % 40 == 0){
             griefBlocks();
+            Entity target = this.getTarget();
+            if (target != null && checkForScent() && !level.isClientSide){
+                SummonScent();
+            }
         }
         if (this.tickCount % 200 == 0){
             addBiomass(1);
@@ -276,6 +279,17 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
             }
         }
     }
+    private boolean checkForScent() {
+        AABB hitbox = this.getBoundingBox().inflate(3);
+        List<ScentEntity> entities = this.level.getEntitiesOfClass(ScentEntity.class, hitbox);
+        return entities.isEmpty();
+    }
+    private void SummonScent() {
+        ScentEntity scent = new ScentEntity(Sentities.SCENT.get(), this.level);
+        scent.setOvercharged(true);
+        scent.moveTo(this.getX(),this.getY(),this.getZ());
+        this.level.addFreshEntity(scent);
+    }
     public double[] inputs(LivingEntity entity){
         if (entity == null){
             return new double[]{0,0,0,0};
@@ -286,13 +300,7 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
         double hasAllotOfArmor = entity.getArmorValue() >= 20 ? 1.0 : 0.0;
         return new double[]{distance,isOnGround,hasAllotOfHealth,hasAllotOfArmor};
     }
-    public double[] ownInputs(){
-        double hidden = level.canSeeSky(this.getOnPos()) ? 1.0 : 0.0;
-        double hosts = this.getHosts() > 30 ? 1.0 : 0.0;
-        double isHurt = this.getHealth() < this.getMaxHealth() ? 1.0 : 0.0;
-        double hasBiomass = getBiomass() > 40 ?  1.0 : 0;
-        return new double[]{hidden,hosts,isHurt,hasBiomass};
-    }
+
     public Entity entityResourceLocation(int decision, List<String> string){
         if (string.isEmpty()){
             return null;
@@ -330,9 +338,13 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
         return true;
     }
     private void summonMob(int decision, BlockPos pos) {
-        int i = this.decide(ownInputs());
+        if (pos == BlockPos.ZERO){
+            return;
+        }
+        List<String> team = getDecisionList(decision);
+        int i = this.getRandom().nextInt(team.size());
         BlockPos blockPos = pos;
-        Entity summoned = entityResourceLocation(i,getDecisionList(decision));
+        Entity summoned = entityResourceLocation(i,team);
         if (summoned instanceof Organoid organoid) {
             Vec3 vec3 = Utilities.generatePositionAway(new Vec3(pos.getX(),pos.getY(),pos.getZ()),random.nextInt(8,16));
             blockPos = organoid.isCloseCombatant() ? pos : new BlockPos(vec3.x,vec3.y,vec3.z);
@@ -351,7 +363,7 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
         data.putInt("hivemind",this.getId());
         data.putInt("decision",decision);
         data.putInt("member",decision);
-        if (summoned instanceof Mob mob){
+        if (summoned instanceof LivingEntity mob){
             mob.randomTeleport(blockPos.getX(), blockPos.getY(), blockPos.getZ(),false);
         }else {
             summoned.teleportTo(blockPos.getX(), blockPos.getY(), blockPos.getZ());
