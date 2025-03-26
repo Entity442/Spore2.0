@@ -255,6 +255,7 @@ public class Delusionare extends Organoid {
                 }
             }
         }
+        awardHivemind();
     }
 
     public enum Spells{

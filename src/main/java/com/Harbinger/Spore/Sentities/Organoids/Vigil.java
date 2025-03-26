@@ -185,18 +185,7 @@ public class Vigil extends Organoid{
                     break;
                 }}
         }
-        CompoundTag data = this.getPersistentData();
-        if (data.contains("hivemind")) {
-            int summonerUUID = data.getInt("hivemind");
-            Level level = this.level;
-            Entity summoner = level.getEntity(summonerUUID);
-
-            if (summoner instanceof Proto smartMob) {
-                int decision = data.getInt("decision");
-                int member = data.getInt("member");
-                smartMob.punishForDecision(decision,member);
-            }
-        }
+        punishHivemind();
     }
     public void ReEmerge(){
         entityData.set(TIMER,0);
@@ -306,18 +295,7 @@ public class Vigil extends Organoid{
         } else {
                 summons = SConfig.SERVER.vigil_max_wave.get();
         }
-        CompoundTag data = this.getPersistentData();
-        if (data.contains("hivemind")) {
-            int summonerUUID = data.getInt("hivemind");
-            Level level = this.level;
-            Entity summoner = level.getEntity(summonerUUID);
-
-            if (summoner instanceof Proto smartMob) {
-                int decision = data.getInt("decision");
-                int member = data.getInt("member");
-                smartMob.praisedForDecision(decision,member);
-            }
-        }
+        awardHivemind();
         LivingEntity target = this.getTarget();
         if (target != null && this.getTrigger() > 0 && this.level instanceof ServerLevelAccessor world){
             RandomSource rand = RandomSource.create();

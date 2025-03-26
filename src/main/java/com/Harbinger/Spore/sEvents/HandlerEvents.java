@@ -5,10 +5,8 @@ import com.Harbinger.Spore.ExtremelySusThings.ChunkLoaderHelper;
 import com.Harbinger.Spore.ExtremelySusThings.CoolDamageSources;
 import com.Harbinger.Spore.ExtremelySusThings.SporeSavedData;
 import com.Harbinger.Spore.ExtremelySusThings.Utilities;
-import com.Harbinger.Spore.SBlockEntities.BrainRemnantBlockEntity;
 import com.Harbinger.Spore.SBlockEntities.CDUBlockEntity;
 import com.Harbinger.Spore.SBlockEntities.LivingStructureBlocks;
-import com.Harbinger.Spore.Sentities.AI.LocHiv.FollowOthersGoal;
 import com.Harbinger.Spore.Sentities.BaseEntities.*;
 import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.BasicInfected.*;
@@ -16,14 +14,9 @@ import com.Harbinger.Spore.Sentities.Calamities.Gazenbrecher;
 import com.Harbinger.Spore.Sentities.Calamities.Hinderburg;
 import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
-import com.Harbinger.Spore.Sentities.FallenMultipart.Licker;
-import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
 import com.Harbinger.Spore.Sentities.Organoids.*;
 import com.Harbinger.Spore.Sentities.Utility.*;
-import com.Harbinger.Spore.Sentities.Variants.SlasherVariants;
 import com.Harbinger.Spore.Sitems.BaseWeapons.*;
-import com.Harbinger.Spore.Sitems.InfectedCombatShovel;
-import com.Harbinger.Spore.Sitems.InfectedMaul;
 import com.Harbinger.Spore.Spore;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
@@ -40,8 +33,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -64,7 +55,6 @@ import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
-import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -196,10 +186,7 @@ public class HandlerEvents {
                     if (entity instanceof Player player){
                         SporeSavedData data = SporeSavedData.getDataLocation(world);
                         int numberofprotos = data.getAmountOfHiveminds();
-                        int time = data.getMinutesBeforeSpawning();
                         player.displayClientMessage(Component.literal("There are "+numberofprotos + " proto hiveminds in this dimension"),false);
-                        if (SConfig.SERVER.spawn.get())
-                        player.displayClientMessage(Component.literal("Time before spawns "+time + "/"+1200*SConfig.SERVER.days.get()),false);
                     }
                     return 1;
                 }).requires(s -> s.hasPermission(1)));
@@ -223,14 +210,6 @@ public class HandlerEvents {
                     }
                     return 1;
                 }).requires(s -> s.hasPermission(1)));
-        if (SConfig.SERVER.spawn.get()){
-            event.getDispatcher().register(Commands.literal(Spore.MODID+":add_day")
-                    .executes(arguments -> {
-                        ServerLevel world = arguments.getSource().getLevel();
-                        SporeSavedData.addDay(world);
-                        return 1;
-                    }).requires(s -> s.hasPermission(1)));
-        }
         event.getDispatcher().register(Commands.literal(Spore.MODID+":check_entity")
                 .executes(arguments -> {
                     ServerLevel world = arguments.getSource().getLevel();
@@ -315,6 +294,9 @@ public class HandlerEvents {
                                 }
                                 for (String s : proto.team_4){
                                     player.displayClientMessage(Component.literal("TEAM_4 "+ s),false);
+                                }
+                                for (String s : proto.team_5){
+                                    player.displayClientMessage(Component.literal("Beloved Mobs "+ s),false);
                                 }
                                 player.displayClientMessage(Component.literal("-------------------------"),false);
                             }
@@ -498,16 +480,6 @@ public class HandlerEvents {
                     }
                 });
                 effectsToRemove.forEach(mobEffectInstance -> entity.removeEffect(mobEffectInstance.getEffect()));
-            }
-        }
-    }
-    @SubscribeEvent
-    public static void ServerCount(TickEvent.ServerTickEvent event){
-        if (SConfig.SERVER.spawn.get()){
-            ServerLevel level  = event.getServer().overworld();
-            SporeSavedData data = SporeSavedData.getDataLocation(level);
-            if (level.getDayTime() % 20 == 0 && data != null  && data.getMinutesBeforeSpawning()<(1200 * SConfig.SERVER.days.get())){
-                SporeSavedData.addTime(level);
             }
         }
     }

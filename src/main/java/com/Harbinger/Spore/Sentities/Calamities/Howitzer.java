@@ -114,6 +114,9 @@ public class Howitzer extends Calamity implements TrueCalamity, RangedAttackMob 
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (source.getEntity() != null && this.random.nextFloat() <0.2f){setTarget(null);}
+        if (source == DamageSource.FREEZE){
+            entityData.set(NUKE,0);
+        }
         if (getHealth() <= 50f && isRadioactive() && getSelfDetonation() <= 0){
             tickDetonation();
         }
@@ -325,7 +328,7 @@ public class Howitzer extends Calamity implements TrueCalamity, RangedAttackMob 
         if (canEntitySeeTheSky(entity) && canEntitySeeTheSky(this) || entity.distanceToSqr(this) < 200){
             return true;
         }else
-        return super.hasLineOfSight(entity) || calculateHouseThiccness(entity);
+            return super.hasLineOfSight(entity) || calculateHouseThiccness(entity);
     }
 
     private boolean canEntitySeeTheSky(Entity entity){

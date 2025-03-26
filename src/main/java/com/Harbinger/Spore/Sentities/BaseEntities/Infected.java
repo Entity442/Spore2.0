@@ -9,7 +9,6 @@ import com.Harbinger.Spore.ExtremelySusThings.Utilities;
 import com.Harbinger.Spore.Sentities.AI.*;
 import com.Harbinger.Spore.Sentities.AI.LocHiv.*;
 import com.Harbinger.Spore.Sentities.ArmedInfected;
-import com.Harbinger.Spore.Sentities.EvolvedInfected.Scamper;
 import com.Harbinger.Spore.Sentities.EvolvingInfected;
 import com.Harbinger.Spore.Sentities.Projectile.AcidBall;
 import com.Harbinger.Spore.Sentities.Projectile.Vomit;
@@ -31,8 +30,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.AbstractFish;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
@@ -52,9 +49,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Predicate;
 
 import static com.Harbinger.Spore.ExtremelySusThings.Utilities.biomass;
@@ -382,18 +377,7 @@ public class Infected extends Monster{
 
     public static boolean checkMonsterInfectedRules(EntityType<? extends Infected> p_219014_, ServerLevelAccessor levelAccessor, MobSpawnType type, BlockPos pos, RandomSource source) {
         if (levelAccessor.getDifficulty() != Difficulty.PEACEFUL){
-            if (SConfig.SERVER.spawn.get() && levelAccessor instanceof ServerLevel serverLevel){
-                SporeSavedData data = SporeSavedData.getDataLocation(serverLevel);
-                if (data != null){
-                    int e = data.getMinutesBeforeSpawning();
-                    int i = 1200 * SConfig.SERVER.days.get();
-                    if (e >= i){
-                        return furtherSpawnParameters(p_219014_,levelAccessor,type,pos,source);
-                    }
-                }
-            }else{
-                return furtherSpawnParameters(p_219014_,levelAccessor,type,pos,source);
-            }
+            return furtherSpawnParameters(p_219014_,levelAccessor,type,pos,source);
         }
         return false;
     }
