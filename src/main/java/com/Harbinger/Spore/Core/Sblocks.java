@@ -108,7 +108,9 @@ public class Sblocks {
     public static final RegistryObject<Block> OVERGROWN_SPAWNER = BLOCKS.register("overgrown_spawner", OvergrownSpawner::new);
     public static final RegistryObject<Block> BRAIN_REMNANTS = BLOCKS.register("brain_remnants", BrainRemnants::new);
     public static final RegistryObject<Block> OUTPOST_WATCHER = BLOCKS.register("outpost_watcher", OutpostWatcher::new);
-
+    public static final RegistryObject<Block> SKULL_SOUP = BLOCKS.register("skull_soup", SkullSoupBlock::new);
+    public static final RegistryObject<Block> HEART_PIE = BLOCKS.register("heart_pie", HeartPie::new);
+    public static final RegistryObject<Block> COOKED_TORSO = BLOCKS.register("cooked_torso", CookedTorsoBlock::new);
 
     public static final RegistryObject<Block> ORGANITE = BLOCKS.register("organite", OrganiteBlock::new);
     public static final RegistryObject<Block> ROOTED_BIOMASS = BLOCKS.register("rooted_biomass", () -> new Block(BlockBehaviour.Properties.of(Material.MOSS).strength(2f,2f).sound(SoundType.SLIME_BLOCK)));

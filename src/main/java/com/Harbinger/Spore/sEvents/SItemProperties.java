@@ -1,8 +1,10 @@
 package com.Harbinger.Spore.sEvents;
 
+import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sitems;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -12,6 +14,7 @@ public class SItemProperties {
         makeBow(Sitems.INFECTED_BOW.get());
         makeTrident(Sitems.INFECTED_SPEAR.get());
         makeCrossbow(Sitems.INFECTED_CROSSBOW.get());
+        makeDecayedLimbs(Sitems.DECAYED_LIMBS.get());
     }
     private static void makeBow(Item item) {
         ItemProperties.register(item, new ResourceLocation("pull"), (p_174635_, p_174636_, p_174637_, p_174638_) -> {
@@ -59,5 +62,10 @@ public class SItemProperties {
             return p_174607_ != null && CrossbowItem.isCharged(p_174605_) && CrossbowItem.containsChargedProjectile(p_174605_, Items.FIREWORK_ROCKET) ? 1.0F : 0.0F;
         });
 
+    }
+    private static void makeDecayedLimbs(Item item){
+        ItemProperties.register(item, new ResourceLocation("decayed"), (p_174585_, p_174586_, p_174587_, p_174588_) -> {
+            return p_174587_ instanceof Player player && player.hasEffect(Seffects.MADNESS.get()) ? 1.0F : 0.0F;
+        });
     }
 }
