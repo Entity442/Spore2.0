@@ -40,7 +40,6 @@ public class SporePacketHandler {
                 .consumerMainThread(AdvancementGivingPackage::handle)
                 .add();
     }
-
     public static <T> void sendToServer(T packet) {
         INSTANCE.sendToServer(packet);
     }
