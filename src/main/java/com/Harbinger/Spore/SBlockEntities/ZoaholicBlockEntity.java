@@ -12,10 +12,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
@@ -31,6 +33,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ZoaholicBlockEntity extends BlockEntity implements AnimatedEntity , MenuProvider {
@@ -159,19 +162,28 @@ public class ZoaholicBlockEntity extends BlockEntity implements AnimatedEntity ,
     public static <E extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, ZoaholicBlockEntity e) {
         e.tickBlockEntity();
     }
-
     @Nullable
-    protected LivingEntity getAnomaly(Level level,BlockPos blockPos){
-        int range =2 * SConfig.DATAGEN.zoaholic_range.get();
-        AABB aabb = AABB.ofSize(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ()), range, range, range);
-        List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, aabb,e -> e instanceof Proto || e instanceof Calamity);
-        for(LivingEntity entity : entities) {
-            return entity;
+    protected LivingEntity getAnomaly(Level level){
+        RandomSource source = RandomSource.create();
+        List<LivingEntity> entities = new ArrayList<>();
+        if (level instanceof ServerLevel serverLevel){
+            for (Entity entity : serverLevel.getAllEntities()){
+                if (entity instanceof LivingEntity living){
+                    if (living instanceof Proto || living instanceof Calamity){
+                        entities.add(living);
+                    }
+                }
+            }
         }
-        return null;
+        if (entities.isEmpty()){
+            return null;
+        }else {
+            int size = entities.size();
+            return entities.get(source.nextInt(size));
+        }
     }
     public void writeDocument(Level level,BlockPos blockPos){
-        LivingEntity livingEntity = getAnomaly(level,blockPos);
+        LivingEntity livingEntity = getAnomaly(level);
         RandomSource randomSource = RandomSource.create();
         ItemStack stack = new ItemStack(Items.PAPER);
         if (livingEntity != null){
