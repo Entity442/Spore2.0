@@ -136,4 +136,9 @@ public class InfectedDrowned extends Infected implements WaterInfected, Evolving
         super.tick();
         tickEvolution(this,SConfig.SERVER.drowned_ev.get(), ScamperVariants.DROWNED);
     }
+
+    @Override
+    public String origin() {
+        return "minecraft:drowned";
+    }
 }
