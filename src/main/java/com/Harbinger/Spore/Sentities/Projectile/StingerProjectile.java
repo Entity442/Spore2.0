@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -17,6 +18,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+
+import java.util.Objects;
 
 public class StingerProjectile extends AbstractArrow {
     private static final EntityDataAccessor<Float> DAMAGE = SynchedEntityData.defineId(StingerProjectile.class, EntityDataSerializers.FLOAT);
@@ -56,9 +59,11 @@ public class StingerProjectile extends AbstractArrow {
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
         if (result.getEntity() instanceof LivingEntity living){
-            living.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(),200,0));
-            living.addEffect(new MobEffectInstance(MobEffects.POISON,200,2));
-            living.setArrowCount(living.getArrowCount() - 1);
+            if (hurt(this.getOwner() == null ? DamageSource.GENERIC : DamageSource.mobAttack((LivingEntity) Objects.requireNonNull(this.getOwner())),getDamage())){
+                living.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(),200,0));
+                living.addEffect(new MobEffectInstance(MobEffects.POISON,200,2));
+                living.setArrowCount(living.getArrowCount() - 1);
+            }
         }
         this.discard();
     }
