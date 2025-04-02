@@ -371,7 +371,7 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
         }else {
             summoned.teleportTo(blockPos.getX(), blockPos.getY(), blockPos.getZ());
         }
-        if (checkTheGround(pos,summoned.level)){
+        if (checkTheGround(pos,summoned.level) && summoned.getOnPos() != BlockPos.ZERO){
             eatBiomass(2);
             level.addFreshEntity(summoned);
         }
@@ -552,6 +552,9 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
                 if (infected.getLinked()){
                     infected.addEffect(new MobEffectInstance(MobEffects.WITHER,400,1));
                 }
+            }
+            if (en instanceof Calamity infected){
+                infected.setSearchArea(this.getOnPos());
             }
         }
     }
