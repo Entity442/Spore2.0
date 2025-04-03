@@ -127,6 +127,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(HevokerModelDead.LAYER_LOCATION, HevokerModelDead::createBodyLayer);
         event.registerLayerDefinition(DetasheHyperClaw.LAYER_LOCATION, DetasheHyperClaw::createBodyLayer);
         event.registerLayerDefinition(hVindicatorModel.LAYER_LOCATION, hVindicatorModel::createBodyLayer);
+        event.registerLayerDefinition(ReconstructedMindModel.LAYER_LOCATION, ReconstructedMindModel::createBodyLayer);
 
         event.registerLayerDefinition(BombFunnelModel.LAYER_LOCATION, BombFunnelModel::createBodyLayer);
         event.registerLayerDefinition(MushroomExplosionTop.LAYER_LOCATION, MushroomExplosionTop::createBodyLayer);
@@ -219,6 +220,7 @@ public class ClientModEvents {
         event.registerBlockEntityRenderer(SblockEntities.ZOAHOLIC.get(), new ZoaholicRenderer());
         event.registerBlockEntityRenderer(SblockEntities.INCUBATOR.get(), new IncubatorRenderer());
         event.registerBlockEntityRenderer(SblockEntities.OUTPOST_WATCHER.get(), new OutpostWatcherRenderer());
+        event.registerBlockEntityRenderer(SblockEntities.HIVE_SPAWN.get(), new ReconMindRenderer());
     }
 
     @SubscribeEvent
