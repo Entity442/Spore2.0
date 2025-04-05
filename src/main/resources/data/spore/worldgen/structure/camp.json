@@ -1,7 +1,7 @@
 {
   "type": "minecraft:jigsaw",
 
-  "start_pool": "spore:military_camp/start_pool",
+  "start_pool": "spore:camp/start_pool",
 
   "size": 2,
 
