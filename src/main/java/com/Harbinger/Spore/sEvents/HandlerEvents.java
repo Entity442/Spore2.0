@@ -319,6 +319,9 @@ public class HandlerEvents {
                                     player.displayClientMessage(Component.literal("Buffs " + reformator.getActiveEffects()),false);
                                     player.displayClientMessage(Component.literal("Biomass " + reformator.getBiomass()),false);
                                     player.displayClientMessage(Component.literal("State " + reformator.getVariant().getValue()),false);
+                                for (String s : reformator.getAttributeIDs()){
+                                    player.displayClientMessage(Component.translatable(s),false);
+                                }
                                     player.displayClientMessage(Component.literal("-------------------------"),false);
                             }else if(entity1 instanceof Vigil vigil) {
                                     player.displayClientMessage(Component.literal("Entity "+ vigil.getEncodeId() + " " + vigil.getCustomName()),false);
