@@ -312,7 +312,7 @@ public class HandlerEvents {
                                 }
                                 player.displayClientMessage(Component.literal("-------------------------"),false);
                             }
-                            else if(entity1 instanceof BiomassReformator reformator) {
+                            else if(entity1 instanceof Womb reformator) {
                                     player.displayClientMessage(Component.literal("Entity "+ reformator.getEncodeId() + " " + reformator.getCustomName()),false);
                                     player.displayClientMessage(Component.literal("Current Health " + reformator.getHealth()),false);
                                     player.displayClientMessage(Component.literal("Stored Location " + reformator.getLocation()),false);

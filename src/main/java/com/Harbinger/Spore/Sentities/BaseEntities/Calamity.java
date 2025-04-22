@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sentities.BaseEntities;
 
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.ExtremelySusThings.SporeSavedData;
+import com.Harbinger.Spore.ExtremelySusThings.Utilities;
 import com.Harbinger.Spore.Sentities.AI.CalamitiesAI.CalamityVigilCall;
 import com.Harbinger.Spore.Sentities.AI.CalamityPathNavigation;
 import com.Harbinger.Spore.Sentities.AI.FloatDiveGoal;
@@ -42,15 +43,14 @@ import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
+import java.util.*;
 
 import static com.Harbinger.Spore.ExtremelySusThings.Utilities.biomass;
 
 public class Calamity extends UtilityEntity implements Enemy, ArmorPersentageBypass {
     public static final EntityDataAccessor<Integer> KILLS = SynchedEntityData.defineId(Calamity.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<BlockPos> SEARCH_AREA = SynchedEntityData.defineId(Calamity.class, EntityDataSerializers.BLOCK_POS);
+    public static final EntityDataAccessor<Integer> MUTATION = SynchedEntityData.defineId(Calamity.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Boolean> ROOTED = SynchedEntityData.defineId(Calamity.class, EntityDataSerializers.BOOLEAN);
     protected int breakCounter;
     private int stun = 0;
@@ -83,6 +83,7 @@ public class Calamity extends UtilityEntity implements Enemy, ArmorPersentageByp
     public boolean doHurtTarget(Entity entity) {
         if (super.doHurtTarget(entity)) {
             if (entity instanceof LivingEntity livingEntity) {
+                Utilities.doCustomModifiersAfterEffects(this,livingEntity);
                 livingEntity.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(), 600, 1), this);
             }
             return true;
@@ -119,6 +120,7 @@ public class Calamity extends UtilityEntity implements Enemy, ArmorPersentageByp
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("kills", entityData.get(KILLS));
+        tag.putInt("mutation", entityData.get(MUTATION));
         tag.putBoolean("rooted", entityData.get(ROOTED));
         tag.putInt("AreaX", this.getSearchArea().getX());
         tag.putInt("AreaY", this.getSearchArea().getY());
@@ -206,6 +208,7 @@ public class Calamity extends UtilityEntity implements Enemy, ArmorPersentageByp
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         entityData.set(KILLS, tag.getInt("kills"));
+        entityData.set(MUTATION, tag.getInt("mutation"));
         entityData.set(ROOTED, tag.getBoolean("rooted"));
         int i = tag.getInt("AreaX");
         int j = tag.getInt("AreaY");
@@ -217,9 +220,40 @@ public class Calamity extends UtilityEntity implements Enemy, ArmorPersentageByp
         super.defineSynchedData();
         this.entityData.define(ROOTED, false);
         this.entityData.define(KILLS, 0);
+        this.entityData.define(MUTATION, 0);
         this.entityData.define(SEARCH_AREA, BlockPos.ZERO);
     }
-
+    public void setMutationColor(){
+        int value =colorMap().isEmpty() ? 0 : Utilities.mixColors(colorMap());
+        this.entityData.set(MUTATION,value);
+    }
+    public int getMutationColor(){
+        return entityData.get(MUTATION);
+    }
+    Map<Integer, Float> colorMap(){
+        Map<Integer, Float> values = new HashMap<>();
+        float toxic = getAtLevel(this.getAttribute(SAttributes.TOXICITY.get()));
+        float rejuvenation = getAtLevel(this.getAttribute(SAttributes.REJUVENATION.get()));
+        float local = getAtLevel(this.getAttribute(SAttributes.LOCALIZATION.get()));
+        float laceration = getAtLevel(this.getAttribute(SAttributes.LACERATION.get()));
+        float corrosive = getAtLevel(this.getAttribute(SAttributes.CORROSIVES.get()));
+        float ballistic = getAtLevel(this.getAttribute(SAttributes.BALLISTIC.get()));
+        float grinding = getAtLevel(this.getAttribute(SAttributes.GRINDING.get()));
+        if (toxic > 0){values.put(-16751104,toxic);}
+        if (rejuvenation > 0){values.put(-10092442,rejuvenation);}
+        if (local > 0){values.put(-6711040,local);}
+        if (laceration > 0){values.put(-65536,laceration);}
+        if (corrosive > 0){values.put(-13369549,corrosive);}
+        if (ballistic > 0){values.put(-10066330,ballistic);}
+        if (grinding > 0){values.put(-16764058,grinding);}
+        return values;
+    }
+    public float getAtLevel(AttributeInstance instance){
+        if (instance != null){
+            return (float) instance.getValue();
+        }
+        return 0;
+    }
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
         return false;
@@ -309,7 +343,7 @@ public class Calamity extends UtilityEntity implements Enemy, ArmorPersentageByp
         }
         if (this.getHealth() < this.getMaxHealth() && !this.hasEffect(MobEffects.REGENERATION) && this.getKills() > 0){
             int level = this.getHealth() < this.getMaxHealth()/2 ? 1 : 0;
-            this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,600,level));
+            this.addEffect(new MobEffectInstance(MobEffects.REGENERATION,600,level + calculateHealing()));
             this.setKills(this.getKills()-1);
         }
         if (this.getRandom().nextInt(300) == 0 && this.getSearchArea() != BlockPos.ZERO){
@@ -335,11 +369,29 @@ public class Calamity extends UtilityEntity implements Enemy, ArmorPersentageByp
     public int getDestroySpeed(){
         return SConfig.SERVER.calamity_bd.get();
     }
-
+    private int calculateHealing(){
+        AttributeInstance toxic = this.getAttribute(SAttributes.REJUVENATION.get());
+        if(toxic != null){
+            double level = toxic.getValue();
+            if (level < 1){
+                return 0;
+            }
+            return (int) level;
+        }
+        return 0;
+    }
     @Override
     public float amountOfDamage(float value) {
+        float extra = 0;
+        AttributeInstance penetration = this.getAttribute(SAttributes.LACERATION.get());
+        if (penetration != null){
+            double e = penetration.getValue();
+            if (e >= 1){
+                extra = (float) (e * 0.1f);
+            }
+        }
         AttributeInstance attack = this.getAttribute(Attributes.ATTACK_DAMAGE);
-        return attack == null ? value : (float) (attack.getValue() * 0.2f);
+        return attack == null ? value : (float) (attack.getValue() * (0.2f + extra));
     }
 
     static class GoToLocation extends Goal {
@@ -448,6 +500,7 @@ public class Calamity extends UtilityEntity implements Enemy, ArmorPersentageByp
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor serverLevelAccessor, DifficultyInstance p_21435_, MobSpawnType p_21436_, @Nullable SpawnGroupData p_21437_, @Nullable CompoundTag p_21438_) {
         setDefaultAdaptation(serverLevelAccessor);
+        setMutationColor();
         return super.finalizeSpawn(serverLevelAccessor, p_21435_, p_21436_, p_21437_, p_21438_);
     }
     public void setDefaultAdaptation(ServerLevelAccessor level){

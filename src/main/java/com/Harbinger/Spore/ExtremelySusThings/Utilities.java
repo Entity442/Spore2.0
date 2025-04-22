@@ -1,8 +1,6 @@
 package com.Harbinger.Spore.ExtremelySusThings;
 
-import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Core.Sblocks;
-import com.Harbinger.Spore.Core.Ssounds;
+import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
 import net.minecraft.core.BlockPos;
@@ -21,8 +19,11 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.Item;
@@ -146,5 +147,64 @@ public class Utilities {
         }
         var tag = tagManager.getTag(ItemTags.create(new ResourceLocation(tagName)));
         return tag.stream().collect(Collectors.toList());
+    }
+
+    public static void doCustomModifiersAfterEffects(LivingEntity attacker, LivingEntity victim) {
+        if (attacker == null || victim == null) return;
+
+        AttributeInstance corrosion = attacker.getAttribute(SAttributes.CORROSIVES.get());
+        if (corrosion != null && corrosion.getValue() >= 1) {
+            int level = (int) corrosion.getValue() - 1;
+            victim.addEffect(new MobEffectInstance(Seffects.CORROSION.get(), 300, level), attacker);
+        }
+
+        AttributeInstance toxic = attacker.getAttribute(SAttributes.TOXICITY.get());
+        if (toxic != null && toxic.getValue() >= 1) {
+            int level = (int) toxic.getValue() - 1;
+            victim.addEffect(new MobEffectInstance(MobEffects.POISON, 400, level), attacker);
+        }
+
+        AttributeInstance local = attacker.getAttribute(SAttributes.LOCALIZATION.get());
+        if (local != null && local.getValue() >= 1) {
+            int level = (int) local.getValue() - 1;
+            victim.addEffect(new MobEffectInstance(Seffects.MARKER.get(), 600, level), attacker);
+        }
+
+        AttributeInstance grind = attacker.getAttribute(SAttributes.GRINDING.get());
+        if (grind != null && grind.getValue() >= 1) {
+            double level = grind.getValue();
+            victim.getArmorSlots().forEach(itemStack -> {
+                itemStack.setDamageValue(itemStack.getDamageValue() + (int) (10 * level));
+            });
+        }
+    }
+
+    public static int mixColors(Map<Integer, Float> colorsAndWeights) {
+        float totalWeight = 0f;
+        float r = 0f;
+        float g = 0f;
+        float b = 0f;
+
+        for (Map.Entry<Integer, Float> entry : colorsAndWeights.entrySet()) {
+            int color = entry.getKey();
+            float weight = entry.getValue();
+
+            r += ((color >> 16) & 0xFF) * weight;
+            g += ((color >> 8) & 0xFF) * weight;
+            b += (color & 0xFF) * weight;
+
+            totalWeight += weight;
+        }
+
+        if (totalWeight == 0) {
+            return 0xFFFFFF; // default to white if no colors
+        }
+
+        r /= totalWeight;
+        g /= totalWeight;
+        b /= totalWeight;
+
+        int finalColor = ((int) r << 16) | ((int) g << 8) | (int) b;
+        return finalColor;
     }
 }

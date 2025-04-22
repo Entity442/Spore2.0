@@ -3,56 +3,69 @@ package com.Harbinger.Spore.Sentities.Organoids;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Sparticles;
 import com.Harbinger.Spore.Core.Ssounds;
+import com.Harbinger.Spore.Recipes.EntityContainer;
+import com.Harbinger.Spore.Recipes.WombRecipe;
+import com.Harbinger.Spore.Screens.AssimilationMenu;
 import com.Harbinger.Spore.Sentities.BaseEntities.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
-import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
-public class BiomassReformator extends Organoid implements Enemy {
-    private static final EntityDataAccessor<Integer> COUNTER = SynchedEntityData.defineId(BiomassReformator.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> BIOMASS = SynchedEntityData.defineId(BiomassReformator.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(BiomassReformator.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<BlockPos> LOCATION = SynchedEntityData.defineId(BiomassReformator.class, EntityDataSerializers.BLOCK_POS);
+public class Womb extends Organoid implements  MenuProvider {
+    private static final EntityDataAccessor<Integer> COUNTER = SynchedEntityData.defineId(Womb.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> BIOMASS = SynchedEntityData.defineId(Womb.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(Womb.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<BlockPos> LOCATION = SynchedEntityData.defineId(Womb.class, EntityDataSerializers.BLOCK_POS);
     private int breakCounter;
-
-    public BiomassReformator(EntityType<? extends PathfinderMob> type, Level level,TERRAIN terrain,BlockPos pos) {
+    private final List<String> attributeIDs = new ArrayList<>();
+    public Womb(EntityType<? extends PathfinderMob> type, Level level, TERRAIN terrain, BlockPos pos) {
         super(type, level);
         this.entityData.set(STATE,terrain.value);
         this.setLocation(pos);
     }
-    public BiomassReformator(EntityType<? extends PathfinderMob> type, Level level) {
+    public Womb(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         this.entityData.set(STATE,0);
         this.setLocation(BlockPos.ZERO);
     }
     private int eatingTicks = 0;
+    public List<String> getAttributeIDs() {
+        return attributeIDs;
+    }
 
     @Override
     public List<? extends String> getDropList() {
@@ -131,6 +144,11 @@ public class BiomassReformator extends Organoid implements Enemy {
         tag.putInt("LocationX", this.getLocation().getX());
         tag.putInt("LocationY", this.getLocation().getY());
         tag.putInt("LocationZ", this.getLocation().getZ());
+        ListTag teamTag = new ListTag();
+        for (String member : attributeIDs) {
+            teamTag.add(StringTag.valueOf(member));
+        }
+        tag.put("mutations", teamTag);
     }
 
     public boolean isEating(){
@@ -147,6 +165,11 @@ public class BiomassReformator extends Organoid implements Enemy {
         int j = tag.getInt("LocationY");
         int k = tag.getInt("LocationZ");
         this.setLocation(new BlockPos(i, j, k));
+        attributeIDs.clear();
+        ListTag teamTag = tag.getList("mutations", Tag.TAG_STRING);
+        for (int l = 0; l < teamTag.size(); l++) {
+            attributeIDs.add(teamTag.getString(l));
+        }
     }
     private void CallNearbyInfected(){
         if (!this.level.isClientSide) {
@@ -159,7 +182,20 @@ public class BiomassReformator extends Organoid implements Enemy {
          }
         }
     }
+    public Optional<WombRecipe> getCurrentRecipe(Entity entity) {
+        EntityContainer container = new EntityContainer(entity);
+        Optional<WombRecipe> recipe = this.level.getRecipeManager().getRecipeFor(WombRecipe.WombRecipeType.INSTANCE, container, level);
+        if (recipe.isPresent()) {
+            System.out.println("Found matching recipe: " + recipe.get().getId());
+        } else {
+            System.out.println("No matching recipe found.");
+        }
+        return recipe;
+    }
 
+    public void addMutation(WombRecipe recipe){
+        this.attributeIDs.add(recipe.getAttribute());
+    }
     private void AssimilateNearbyInfected(){
         if (!this.level.isClientSide) {
             AABB hitbox = this.getBoundingBox().inflate(0.1);
@@ -167,6 +203,8 @@ public class BiomassReformator extends Organoid implements Enemy {
             for (Entity en : entities) {
                 if (en instanceof Infected infected) {
                     this.setBiomass(this.getBiomass() + calculateAssimilation(infected) + infected.getKills());
+                    Optional<WombRecipe> recipe = getCurrentRecipe(infected);
+                    recipe.ifPresent(this::addMutation);
                     infected.discard();
                     if (this.level instanceof ServerLevel serverLevel) {
                         double x0 = this.getX() - (random.nextFloat() - 0.1) * 0.1D;
@@ -267,32 +305,52 @@ public class BiomassReformator extends Organoid implements Enemy {
         }
     }
 
-    private void Summon(Entity entity, boolean value){
-        if (Math.random() <=0.3f){this.entityData.set(STATE,this.random.nextInt(TERRAIN.values().length));}
-        List<? extends String> ev = this.getVariant().getList();
-        Random rand = new Random();
-            int randomIndex = rand.nextInt(ev.size());
-            ResourceLocation randomElement1 = new ResourceLocation(ev.get(randomIndex));
-            EntityType<?> randomElement = ForgeRegistries.ENTITY_TYPES.getValue(randomElement1);
-            assert randomElement != null;
-            Mob waveentity = (Mob) randomElement.create(level);
-            assert waveentity != null;
-            waveentity.setPos(entity.getX(), entity.getY(), entity.getZ());
-            if (waveentity instanceof Calamity calamity){
-                calamity.setSearchArea(this.getLocation());
-                if (value){
-                    calamity.setSecondsOnFire(3);
-                    calamity.setHealth(calamity.getMaxHealth() / 2);}
+    private void Summon(Entity entity, boolean value) {
+        if (Math.random() <= 0.3f) {
+            this.entityData.set(STATE, this.random.nextInt(TERRAIN.values().length));
+        }
+        List<? extends String> variantList = this.getVariant().getList();
+        if (variantList.isEmpty()) return;
+
+        ResourceLocation entityId = new ResourceLocation(variantList.get(this.random.nextInt(variantList.size())));
+        EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(entityId);
+        if (entityType == null) return;
+
+        Mob spawnedEntity = (Mob) entityType.create(level);
+        if (spawnedEntity == null) return;
+
+        spawnedEntity.setPos(entity.getX(), entity.getY(), entity.getZ());
+        if (spawnedEntity instanceof Calamity calamity) {
+            calamity.setSearchArea(this.getLocation());
+
+            for (String attrId : attributeIDs) {
+                ResourceLocation attrLocation = new ResourceLocation(attrId);
+                Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(attrLocation);
+                if (attribute != null) {
+                    AttributeInstance instance = calamity.getAttribute(attribute);
+                    if (instance != null){
+                        double e = instance.getValue();
+                        instance.setBaseValue(e+1);
+                    }
+                }
             }
-            if (this.level instanceof ServerLevel serverLevel){
+
+            if (value) {
+                calamity.setSecondsOnFire(3);
+                calamity.setHealth(calamity.getMaxHealth() / 2.0F);
+            }
+        }
+
+        if (this.level instanceof ServerLevel serverLevel) {
             double x0 = this.getX() - (random.nextFloat() - 0.1) * 0.1D;
             double y0 = this.getY() + (random.nextFloat() - 0.25) * 0.15D * 5;
             double z0 = this.getZ() + (random.nextFloat() - 0.1) * 0.1D;
             serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x0, y0, z0, 2, 0, 0, 0, 1);
-            waveentity.finalizeSpawn(serverLevel, level.getCurrentDifficultyAt(this.blockPosition()),MobSpawnType.MOB_SUMMONED,null,null);
-            }
-            this.discard();
-            level.addFreshEntity(waveentity);
+
+            spawnedEntity.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(this.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
+        }
+        level.addFreshEntity(spawnedEntity);
+        this.discard();
     }
 
     @Override
@@ -312,6 +370,18 @@ public class BiomassReformator extends Organoid implements Enemy {
         return TERRAIN.byId(this.entityData.get(STATE) & 255);
     }
 
+    @Override
+    public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
+        return new AssimilationMenu(i,inventory);
+    }
+    @Override
+    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if (player instanceof ServerPlayer serverPlayer  && serverPlayer.getAbilities().instabuild && !level.isClientSide){
+            NetworkHooks.openScreen(serverPlayer, this, this.blockPosition());
+            return InteractionResult.SUCCESS;
+        }
+        return super.mobInteract(player, hand);
+    }
     public enum TERRAIN{
         GROUND_LEVEL(0,SConfig.SERVER.reconstructor_terrain.get()),
         WATER_LEVEL(1,SConfig.SERVER.reconstructor_water.get()),

@@ -1,7 +1,6 @@
 package com.Harbinger.Spore.sEvents;
 
 import com.Harbinger.Spore.Core.Sentities;
-import com.Harbinger.Spore.Sentities.*;
 import com.Harbinger.Spore.Sentities.BasicInfected.*;
 import com.Harbinger.Spore.Sentities.Calamities.Gazenbrecher;
 import com.Harbinger.Spore.Sentities.Calamities.Hinderburg;
@@ -52,7 +51,7 @@ public class Attributes {
         event.put(Sentities.INF_HAZMAT.get(), InfectedHazmat.createAttributes().build());
         event.put(Sentities.SCAMPER.get(), Scamper.createAttributes().build());
         event.put(Sentities.MOUND.get(), Mound.createAttributes().build());
-        event.put(Sentities.RECONSTRUCTOR.get(), BiomassReformator.createAttributes().build());
+        event.put(Sentities.RECONSTRUCTOR.get(), Womb.createAttributes().build());
         event.put(Sentities.PROTO.get(), Proto.createAttributes().build());
         event.put(Sentities.VIGIL.get(), Vigil.createAttributes().build());
         event.put(Sentities.UMARMED.get(), Umarmer.createAttributes().build());
