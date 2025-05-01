@@ -78,6 +78,8 @@ public class Sitems {
             () -> new Innards( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> SICKLE_FRAGMENT = ITEMS.register("sickle_fragment",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> SPIKE = ITEMS.register("spike",
+            () -> new Item(new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> R_WING = ITEMS.register("r_wing",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> TUMOR = ITEMS.register("tumor",
@@ -416,6 +418,8 @@ public class Sitems {
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE_T)));
     public  static final RegistryObject<Item> ICE_CANISTER = ITEMS.register("ice_canister",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE_T)));
+    public  static final RegistryObject<Item> DOCUMENTS = ITEMS.register("documents",
+            () -> new Item(new Item.Properties().tab(ScreativeTab.SPORE_T)));
     public  static final RegistryObject<Item> AMETHYST_DUST = ITEMS.register("amethyst_dust",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE_T)));
     public  static final RegistryObject<Item> COMPOUND = ITEMS.register("compound",
@@ -478,6 +482,7 @@ public class Sitems {
     public static final RegistryObject<Item> ZOAHOLIC = Exceptions(Sblocks.ZOAHOLIC);
     public static final RegistryObject<Item> INCUBATOR = Exceptions(Sblocks.INCUBATOR);
     public static final RegistryObject<Item> SURGERY_TABLE = Exceptions(Sblocks.SURGERY_TABLE);
+    public static final RegistryObject<Item> CABINET = block(Sblocks.CABINET, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> LAB_BLOCK = block(Sblocks.LAB_BLOCK, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> LAB_BLOCK1 = block(Sblocks.LAB_BLOCK1, ScreativeTab.SPORE_T);
     public static final RegistryObject<Item> LAB_BLOCK2 = block(Sblocks.LAB_BLOCK2, ScreativeTab.SPORE_T);
