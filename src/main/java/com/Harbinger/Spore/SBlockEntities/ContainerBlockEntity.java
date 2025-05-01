@@ -20,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ContainerBlockEntity extends RandomizableContainerBlockEntity {
@@ -67,7 +68,7 @@ public class ContainerBlockEntity extends RandomizableContainerBlockEntity {
         }
     }
     @Override
-    protected NonNullList<ItemStack> getItems() {
+    public @NotNull NonNullList<ItemStack> getItems() {
         this.unpackLootTable(null);
         return stacks;
     }
