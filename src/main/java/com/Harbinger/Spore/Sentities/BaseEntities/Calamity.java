@@ -463,7 +463,7 @@ public class Calamity extends UtilityEntity implements Enemy, ArmorPersentageByp
             double z0 = this.getZ() + (random.nextFloat() - 0.1) * 1.2D;
             serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, x0, y0, z0, 4, 0, 0, 0, 1);
         }
-        this.gameEvent(GameEvent.ENTITY_DIE, source.getEntity());
+        super.die(source);
         this.discard();
         AABB aabb = this.getBoundingBox().inflate(2.5);
         for (BlockPos blockpos : BlockPos.betweenClosed(Mth.floor(aabb.minX), Mth.floor(aabb.minY), Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.floor(aabb.maxY), Mth.floor(aabb.maxZ))) {
@@ -486,7 +486,6 @@ public class Calamity extends UtilityEntity implements Enemy, ArmorPersentageByp
                 }
             }
         }
-        super.die(source);
     }
 
     private void SummonMound(Entity entity){
