@@ -188,7 +188,8 @@ public class Sitems {
             () -> new SporeSpawnEgg(Sentities.PLAGUED,78294644,SpawnEggType.EXPERIMENT));
     public  static final RegistryObject<Item> LACERATOR_SPAWNEGG = ITEMS.register("lacerator_spawnegg",
             () -> new SporeSpawnEgg(Sentities.LACERATOR,2412344,SpawnEggType.EXPERIMENT));
-
+    public  static final RegistryObject<Item> BIOBLOOB_SPAWNEGG = ITEMS.register("biobloob_spawnegg",
+            () -> new SporeSpawnEgg(Sentities.BIOBLOOB,2412344,SpawnEggType.EXPERIMENT));
 
     public  static final RegistryObject<Item> KNIGHT_SPAWNEGG = ITEMS.register("knight_spawnegg",
             () -> new SporeSpawnEgg(Sentities.KNIGHT,-7681208, SpawnEggType.EVOLVED));

@@ -7,6 +7,7 @@ import com.Harbinger.Spore.Sentities.Calamities.Hinderburg;
 import com.Harbinger.Spore.Sentities.Calamities.Howitzer;
 import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
+import com.Harbinger.Spore.Sentities.Experiments.Biobloob;
 import com.Harbinger.Spore.Sentities.Experiments.Lacerator;
 import com.Harbinger.Spore.Sentities.Experiments.Plagued;
 import com.Harbinger.Spore.Sentities.FallenMultipart.HowitzerArm;
@@ -87,6 +88,7 @@ public class Attributes {
         event.put(Sentities.HEVOKER.get(), Hevoker.createAttributes().build());
         event.put(Sentities.HEVOKER_ARM.get(), HyperClaw.createAttributes().build());
         event.put(Sentities.HVINDICATOR.get(), Hvindicator.createAttributes().build());
+        event.put(Sentities.BIOBLOOB.get(), Biobloob.createAttributes().build());
     }
 }
 

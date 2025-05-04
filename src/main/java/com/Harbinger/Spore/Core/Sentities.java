@@ -7,6 +7,7 @@ import com.Harbinger.Spore.Sentities.Calamities.Howitzer;
 import com.Harbinger.Spore.Sentities.Calamities.Sieger;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
 import com.Harbinger.Spore.Sentities.EvolvedInfected.Scavenger;
+import com.Harbinger.Spore.Sentities.Experiments.Biobloob;
 import com.Harbinger.Spore.Sentities.Experiments.Lacerator;
 import com.Harbinger.Spore.Sentities.Experiments.Plagued;
 import com.Harbinger.Spore.Sentities.FallenMultipart.HowitzerArm;
@@ -43,8 +44,6 @@ public class Sentities {
 
     public static final MobCategory INFECTED = MobCategory.create("infected","infected",SConfig.SERVER.mob_cap.get(),false,false,128);
     public static final MobCategory ORGANOID = MobCategory.create("organoid","organoid",20,false,false,64);
-
-    public  static  final List<Entity> INFECTED_ENTITIES = new ArrayList<>();
 
     public static final RegistryObject<EntityType<InfectedHuman>> INF_HUMAN = SPORE_ENTITIES.register("inf_human",
             () -> EntityType.Builder.of((EntityType<InfectedHuman> p_33002_, Level level) -> new InfectedHuman(level), INFECTED).sized(0.6f, 1.9f)
@@ -113,6 +112,10 @@ public class Sentities {
     public static final RegistryObject<EntityType<Plagued>> PLAGUED = SPORE_ENTITIES.register("plagued",
             () -> EntityType.Builder.of(Plagued::new, INFECTED).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "plagued").toString()));
+
+    public static final RegistryObject<EntityType<Biobloob>> BIOBLOOB = SPORE_ENTITIES.register("biobloob",
+            () -> EntityType.Builder.of(Biobloob::new, INFECTED).sized(2.6f, 1.9f)
+                    .build(new ResourceLocation(Spore.MODID, "biobloob").toString()));
 
     public static final RegistryObject<EntityType<Lacerator>> LACERATOR = SPORE_ENTITIES.register("lacerator",
             () -> EntityType.Builder.of(Lacerator::new, INFECTED).sized(0.6f, 1.9f)
