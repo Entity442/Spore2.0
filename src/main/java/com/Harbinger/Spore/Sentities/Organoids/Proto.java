@@ -65,6 +65,9 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
     public Proto(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
         setPersistenceRequired();
+        initializeValues();
+    }
+    protected void initializeValues(){
         this.weights = new double[INPUT_SIZE * OUTPUT_SIZE];
         for (int i = 0; i < weights.length; i++) {
             weights[i] = this.getRandom().nextDouble();
@@ -676,6 +679,9 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
     }
 
     public int decide(double[] inputs) {
+        if (weights == null || weights.length == 0){
+            initializeValues();
+        }
         if (inputs == null || inputs.length == 0){
             return 0;
         }
