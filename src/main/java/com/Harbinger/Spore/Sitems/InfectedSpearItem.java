@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class InfectedSpearItem extends SporeSwordBase {
     public InfectedSpearItem() {
-        super(SConfig.SERVER.spear_damage.get(), 2.3f, 2.4, SConfig.SERVER.spear_durability.get());
+        super(SConfig.SERVER.spear_damage.get(), 2.3f, 3, SConfig.SERVER.spear_durability.get());
     }
 
 
@@ -78,7 +78,7 @@ public class InfectedSpearItem extends SporeSwordBase {
 
 
             }
-        }
+    }
 
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entity) {
         hurtTool(stack,entity,1);

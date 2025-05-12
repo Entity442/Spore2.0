@@ -72,9 +72,10 @@ public class ScannerItem extends Item {
     }
 
     @Nullable
-    public AABB getScannerHitBox(Player player,double range){
-        Vec3 vec3 = (new Vec3(range, Mth.cos(player.getXRot() * 0.017453292F),0D)).yRot(-player.getYRot() * ((float)Math.PI / 180F) - ((float)Math.PI / 2F));
-        return player.getBoundingBox().expandTowards(vec3);
+    public AABB getScannerHitBox(Player player, double range) {
+        Vec3 lookVec = player.getLookAngle();
+        Vec3 endVec = player.position().add(lookVec.scale(range));
+        return new AABB(player.position(), endVec).inflate(1);
     }
 
     public void showInfo(ItemStack stack, LivingEntity entity, Player player){

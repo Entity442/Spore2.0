@@ -27,26 +27,26 @@ import net.minecraftforge.network.PlayMessages;
 
 import javax.annotation.Nullable;
 
-public class ThrownSpear extends AbstractArrow {
+public class ThrownKnife extends AbstractArrow {
     private static final EntityDataAccessor<Byte> ID_LOYALTY = SynchedEntityData.defineId(ThrownTrident.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> ID_FOIL = SynchedEntityData.defineId(ThrownTrident.class, EntityDataSerializers.BOOLEAN);
-    private ItemStack spearItem = new ItemStack(Sitems.INFECTED_SPEAR.get());
+    private ItemStack spearItem = new ItemStack(Sitems.KNIFE.get());
     private boolean dealtDamage;
     public int clientSideReturnTridentTickCount;
 
 
-    public ThrownSpear(Level p_37569_, LivingEntity p_37570_, ItemStack p_37571_) {
-        super(Sentities.THROWN_SPEAR.get(), p_37570_, p_37569_);
+    public ThrownKnife(Level p_37569_, LivingEntity p_37570_, ItemStack p_37571_) {
+        super(Sentities.THROWN_KNIFE.get(), p_37570_, p_37569_);
         this.spearItem = p_37571_.copy();
         this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(p_37571_));
         this.entityData.set(ID_FOIL, p_37571_.hasFoil());
     }
 
-    public ThrownSpear(PlayMessages.SpawnEntity spawnEntity, Level level) {
+    public ThrownKnife(PlayMessages.SpawnEntity spawnEntity, Level level) {
         super(Sentities.THROWN_SPEAR.get(),level);
     }
 
-    public ThrownSpear(EntityType<ThrownSpear> thrownSpearEntityType, Level level) {
+    public ThrownKnife(EntityType<ThrownKnife> thrownSpearEntityType, Level level) {
         super(thrownSpearEntityType,level);
     }
 
@@ -65,7 +65,7 @@ public class ThrownSpear extends AbstractArrow {
         int i = this.entityData.get(ID_LOYALTY);
         if (i > 0 && (this.dealtDamage || this.isNoPhysics()) && entity != null) {
             if (!this.isAcceptibleReturnOwner()) {
-                if (!this.level.isClientSide && this.pickup == AbstractArrow.Pickup.ALLOWED) {
+                if (!this.level.isClientSide && this.pickup == Pickup.ALLOWED) {
                     this.spawnAtLocation(this.getPickupItem(), 0.1F);
                 }
 
@@ -115,7 +115,7 @@ public class ThrownSpear extends AbstractArrow {
 
     protected void onHitEntity(EntityHitResult hit) {
         Entity entity = hit.getEntity();
-        float f = SConfig.SERVER.spear_damage.get() + (0.5F * EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS , this.spearItem));
+        float f = SConfig.SERVER.knife_damage.get() + (0.5F * EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS , this.spearItem));
         if (entity instanceof LivingEntity livingentity) {
             f += EnchantmentHelper.getDamageBonus(this.spearItem, livingentity.getMobType());
         }
@@ -183,7 +183,7 @@ public class ThrownSpear extends AbstractArrow {
 
     public void tickDespawn() {
         int i = this.entityData.get(ID_LOYALTY);
-        if (this.pickup != AbstractArrow.Pickup.ALLOWED || i <= 0) {
+        if (this.pickup != Pickup.ALLOWED || i <= 0) {
             super.tickDespawn();
         }
 

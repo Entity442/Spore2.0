@@ -430,7 +430,18 @@ public class HandlerEvents {
         }
 
     }
-
+    @SubscribeEvent
+    public static void drops(LootingLevelEvent event){
+        if (event.getDamageSource() == null){
+            return;
+        }
+        Entity entity = event.getDamageSource().getDirectEntity();
+        if (entity instanceof LivingEntity living){
+            if (living.getMainHandItem().getItem() instanceof LootModifierWeapon lootModifierWeapon){
+                event.setLootingLevel(lootModifierWeapon.getLootingLevel());
+            }
+        }
+    }
     @SubscribeEvent
     public static void FishingAnInfectedDrowned(ItemFishedEvent event){
         if (event != null){
@@ -556,6 +567,15 @@ public class HandlerEvents {
                 event.setAmount(recalculatedDamage);
             }
         }
+        if (living instanceof LivingEntity livingEntity && livingEntity.getMainHandItem().getItem() instanceof DamagePiercingModifier piercingModifier){
+            float original_damage = event.getAmount();
+            float recalculatedDamage = piercingModifier.getMinimalDamage(original_damage);
+            if (recalculatedDamage <= 0 || original_damage > recalculatedDamage){
+                return;
+            }else{
+                event.setAmount(recalculatedDamage);
+            }
+        }
         if (living instanceof Infected || living instanceof UtilityEntity && !(living instanceof Illusion)){
             LivingEntity livingEntity = event.getEntity();
             MobEffectInstance mobEffectInstance = livingEntity.getEffect(Seffects.MADNESS.get());
@@ -587,6 +607,7 @@ public class HandlerEvents {
                 event.getEntity().setSecondsOnFire(i);
             }
         }
+
         if (event.getSource().getEntity() instanceof Mob attacker){
             CompoundTag data = attacker.getPersistentData();
             if (data.contains("hivemind")) {

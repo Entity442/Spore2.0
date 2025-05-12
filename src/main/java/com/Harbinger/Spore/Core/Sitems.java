@@ -457,7 +457,8 @@ public class Sitems {
             () -> new ArmorSyringe(SporeArmorMutations.DROWNED));
     public  static final RegistryObject<Item> CHARRED_SYRINGE = ITEMS.register("charred_syringe",
             () -> new ArmorSyringe(SporeArmorMutations.CHARRED));
-
+    public  static final RegistryObject<Item> REAVER = ITEMS.register("reaver",
+            Reaver::new);
 
 
 

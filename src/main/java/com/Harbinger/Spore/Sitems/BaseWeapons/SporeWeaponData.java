@@ -98,8 +98,15 @@ public interface SporeWeaponData {
         CompoundTag tag = stack.getOrCreateTagElement(BASE_TAG);
         tag.putInt(MUTATION,variant.getId() & 255);
     }
-
+    default boolean doesExtraKnockBack(){return false;}
+    default boolean reversedKnockback(){return false;}
     default void doEntityHurtAfterEffects(ItemStack stack, LivingEntity victim, LivingEntity entity){
+        if (reversedKnockback()){
+            victim.knockback(1.2F, -Mth.sin(entity.getYRot() * ((float) Math.PI / 180F)), Mth.cos(entity.getYRot() * ((float) Math.PI / 180F)));
+        }
+        if (doesExtraKnockBack()){
+            victim.knockback(2.2F, Mth.sin(entity.getYRot() * ((float) Math.PI / 180F)), (-Mth.cos(entity.getYRot() * ((float) Math.PI / 180F))));
+        }
         if (getVariant(stack) == SporeToolsMutations.TOXIC){
             victim.addEffect(new MobEffectInstance(MobEffects.POISON,60,1));
         }
@@ -107,7 +114,9 @@ public interface SporeWeaponData {
             victim.addEffect(new MobEffectInstance(MobEffects.WITHER,60,1));
         }
         if (getVariant(stack) == SporeToolsMutations.CALCIFIED){
-            victim.knockback(1.5F, Mth.sin(entity.getYRot() * ((float) Math.PI / 180F)), (-Mth.cos(entity.getYRot() * ((float) Math.PI / 180F))));
+            double knockback = reversedKnockback() ? -Mth.sin(entity.getYRot() * ((float) Math.PI / 180F)) : Mth.sin(entity.getYRot() * ((float) Math.PI / 180F));
+            double knockback2 = reversedKnockback() ? Mth.cos(entity.getYRot() * ((float) Math.PI / 180F) * ((float) Math.PI / 180F)) : -Mth.cos(entity.getYRot() * ((float) Math.PI / 180F));
+            victim.knockback(1.5F, knockback, knockback2);
         }
         if (getVariant(stack) == SporeToolsMutations.VAMPIRIC && entity.getHealth() < entity.getMaxHealth()){
             entity.heal(2f);

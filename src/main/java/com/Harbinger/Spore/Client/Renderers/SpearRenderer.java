@@ -19,7 +19,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class SpearRenderer extends EntityRenderer<ThrownSpear> {
     public static final ResourceLocation Spear_LOCATION = new ResourceLocation(Spore.MODID,"textures/entity/infected_spear.png");
-    private final InfectedSpearModel model;
+    private final InfectedSpearModel<ThrownSpear> model;
 
     public SpearRenderer(EntityRendererProvider.Context context) {
         super(context);
