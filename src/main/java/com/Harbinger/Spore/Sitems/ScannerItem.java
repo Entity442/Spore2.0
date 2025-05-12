@@ -21,6 +21,7 @@ import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -78,109 +79,152 @@ public class ScannerItem extends Item {
         return new AABB(player.position(), endVec).inflate(1);
     }
 
-    public void showInfo(ItemStack stack, LivingEntity entity, Player player){
-        if (stack.getItem() instanceof ScannerItem){
-            if (entity instanceof Illusion){
-                player.displayClientMessage(Component.translatable("spore.scanner.line.15"), false);
-                return;
+    public void showInfo(ItemStack stack, LivingEntity entity, Player player) {
+        if (!(stack.getItem() instanceof ScannerItem)) return;
+
+        ItemStack offhand = player.getOffhandItem();
+        boolean writeToBook = offhand.is(Items.WRITABLE_BOOK);
+
+        List<String> lines = new ArrayList<>();
+
+        if (entity instanceof Illusion) {
+            sendScanMessage(player, lines, "spore.scanner.line.15");
+            return;
+        }
+        entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 40));
+        String name = entity.getCustomName() != null ? entity.getCustomName().getString() : Component.translatable("spore.scanner.line.1").getString();
+
+        lines.add("------------------");
+        lines.add(Component.translatable("spore.scanner.line.2").getString() + name);
+        lines.add(Component.translatable("spore.scanner.line.3").getString() + Component.translatable(entity.getType().getDescriptionId()).getString());
+        lines.add(Component.translatable("spore.scanner.line.4").getString() + entity.getHealth() + "/" + entity.getMaxHealth());
+
+        addExtraInfo(entity, lines);
+
+        String danger = showThreatLevel(entity);
+        if (danger != null) {
+            lines.add("------------------");
+            lines.add(Component.translatable("spore.scanner.line.5").getString() + Component.translatable(danger).getString());
+        }
+
+        addDrops(entity, lines);
+
+        if (writeToBook) {
+            writeLinesToBook(offhand, lines);
+        } else {
+            for (String line : lines) {
+                player.displayClientMessage(Component.literal(line), false);
             }
-            entity.addEffect(new MobEffectInstance(MobEffects.GLOWING,40));
-            String name = entity.getCustomName() != null ? entity.getCustomName().getString() : Component.translatable("spore.scanner.line.1").getString();
-            player.displayClientMessage(Component.literal("------------------"), false);
-            player.displayClientMessage(Component.literal(Component.translatable("spore.scanner.line.2").getString() + name), false);
-            player.displayClientMessage(Component.literal(Component.translatable("spore.scanner.line.3").getString() + Component.translatable(entity.getType().getDescriptionId()).getString()), false);
-            player.displayClientMessage(Component.literal(Component.translatable("spore.scanner.line.4").getString() + (double)entity.getHealth() + "/" + entity.getMaxHealth()), false);
-            showExtraInfo(entity,player);
-            if (showThreatLevel(entity) != null){
-                Component component = Component.translatable(showThreatLevel(entity));
-                player.displayClientMessage(Component.literal("------------------"), false);
-                player.displayClientMessage(Component.literal(Component.translatable("spore.scanner.line.5").getString()+component.getString()), false);
-            }
-            writeDrops(entity,player);
         }
     }
-    public String showThreatLevel(LivingEntity living){
-        if (living instanceof Calamity){
-            return  "spore.scanner.danger.calamity";
+
+    public String showThreatLevel(LivingEntity living) {
+        if (living instanceof Calamity) {
+            return "spore.scanner.danger.calamity";
         }
-        if (living instanceof Hyper){
+        if (living instanceof Hyper) {
             return "spore.scanner.danger.hyper";
         }
-        if (living instanceof EvolvedInfected){
+        if (living instanceof EvolvedInfected) {
             return "spore.scanner.danger.evolved";
         }
-        if (living instanceof Experiment){
+        if (living instanceof Experiment) {
             return "spore.scanner.danger.experiment";
         }
-        if (living instanceof Infected){
+        if (living instanceof Infected) {
             return "spore.scanner.danger.infected";
         }
-        if (living instanceof Organoid){
+        if (living instanceof Organoid) {
             return "spore.scanner.danger.organoid";
         }
-        if (living instanceof UtilityEntity){
+        if (living instanceof UtilityEntity) {
             return "spore.scanner.danger.utility";
         }
         return null;
     }
 
-    public void showExtraInfo(LivingEntity entity, Player player){
-        if (entity instanceof Infected infected){
-            player.displayClientMessage(Component.literal(Component.translatable("spore.scanner.line.6").getString() + infected.getKills()),false);
-            player.displayClientMessage(Component.literal(Component.translatable("spore.scanner.line.7").getString() + infected.getEvoPoints()),false);
-            if (infected.getEvolutionCoolDown() > 0){
-                player.displayClientMessage(Component.literal(Component.translatable("spore.scanner.line.8").getString() + infected.getEvolutionCoolDown() + "/" + SConfig.SERVER.evolution_age_human.get()),false);
-            }
-            if (infected.getHunger() > 0){
-                player.displayClientMessage(Component.literal(Component.translatable("spore.scanner.line.9").getString() + infected.getHunger() + "/" + (SConfig.SERVER.hunger.get())),false);
-            }
-            player.displayClientMessage(Component.literal(Component.translatable("spore.scanner.line.10").getString() + infected.getLinked()),false);
-            if (infected.getMutation() != null){
-                player.displayClientMessage(Component.translatable(infected.getMutation()),false);
-            }
-            if (infected instanceof Scamper scamper){
-                player.displayClientMessage(Component.literal(Component.translatable("spore.scanner.line.scamper").getString() + scamper.getAge() + "/" + SConfig.SERVER.scamper_age.get()),false);
-            }
-        }
-        if (entity instanceof UtilityEntity utilityEntity &&  utilityEntity.getMutation() != null){
-            player.displayClientMessage(Component.translatable(utilityEntity.getMutation()),false);
-        }
-        if (entity instanceof Mound mound){
-            player.displayClientMessage(Component.literal(Component.translatable("spore.scanner.line.10").getString() + mound.getLinked()),false);
-            player.displayClientMessage(Component.literal(Component.translatable("spore.scanner.line.11").getString() + mound.getAge()),false);
-            player.displayClientMessage(Component.literal(Component.translatable("spore.scanner.line.12").getString() + mound.getAgeCounter() + "/" + SConfig.SERVER.mound_age.get()),false);
-        }
-        if (entity instanceof Calamity calamity){
-            player.displayClientMessage(Component.literal(Component.translatable("spore.scanner.line.6").getString() + calamity.getKills()),false);
-        }
+    private void sendScanMessage(Player player, List<String> lines, String key) {
+        String msg = Component.translatable(key).getString();
+        lines.add(msg);
+        player.displayClientMessage(Component.literal(msg), false);
     }
-    public void writeDrops(LivingEntity living,Player player){
-        List<? extends String> itemDrops = null;
-        if (living instanceof Infected infected){
-            itemDrops = infected.getDropList();
-        }
-        if(living instanceof UtilityEntity utilityEntity){
-            itemDrops = utilityEntity.getDropList();
-        }
-        if (itemDrops == null || itemDrops.isEmpty()){
-            player.displayClientMessage(Component.translatable("spore.scanner.line.13"), false);
-        }else{
-            List<Item> drops = new ArrayList<>();
-            for (String string : itemDrops){
-                String[] split = string.split("\\|" );
-                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(split[0]));
-                if (item != null){
-                    drops.add(item);
-                }
+
+    private void addExtraInfo(LivingEntity entity, List<String> lines) {
+        if (entity instanceof Infected infected) {
+            lines.add(Component.translatable("spore.scanner.line.6").getString() + infected.getKills());
+            lines.add(Component.translatable("spore.scanner.line.7").getString() + infected.getEvoPoints());
+            if (infected.getEvolutionCoolDown() > 0) {
+                lines.add(Component.translatable("spore.scanner.line.8").getString() + infected.getEvolutionCoolDown() + "/" + SConfig.SERVER.evolution_age_human.get());
             }
-            player.displayClientMessage(Component.literal("------------------"), false);
-            player.displayClientMessage(Component.translatable("spore.scanner.line.14"), false);
-            for (Item item : drops){
-                player.displayClientMessage(Component.translatable(item.getDescriptionId()), false);
+            if (infected.getHunger() > 0) {
+                lines.add(Component.translatable("spore.scanner.line.9").getString() + infected.getHunger() + "/" + SConfig.SERVER.hunger.get());
+            }
+            lines.add(Component.translatable("spore.scanner.line.10").getString() + infected.getLinked());
+            if (infected.getMutation() != null) {
+                lines.add(Component.translatable(infected.getMutation()).getString());
+            }
+            if (infected instanceof Scamper scamper) {
+                lines.add(Component.translatable("spore.scanner.line.scamper").getString() + scamper.getAge() + "/" + SConfig.SERVER.scamper_age.get());
             }
         }
     }
 
+    private void addDrops(LivingEntity living, List<String> lines) {
+        List<? extends String> itemDrops = null;
+        if (living instanceof Infected infected) {
+            itemDrops = infected.getDropList();
+        } else if (living instanceof UtilityEntity utilityEntity) {
+            itemDrops = utilityEntity.getDropList();
+        }
+
+        if (itemDrops == null || itemDrops.isEmpty()) {
+            lines.add(Component.translatable("spore.scanner.line.13").getString());
+        } else {
+            lines.add("------------------");
+            lines.add(Component.translatable("spore.scanner.line.14").getString());
+            for (String string : itemDrops) {
+                String[] split = string.split("\\|");
+                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(split[0]));
+                if (item != null) {
+                    lines.add(Component.translatable(item.getDescriptionId()).getString());
+                }
+            }
+        }
+    }
+
+    private void writeLinesToBook(ItemStack bookStack, List<String> lines) {
+        var nbt = bookStack.getOrCreateTag();
+        var nbtPages = nbt.contains("pages", 9) ? nbt.getList("pages", 8) : new net.minecraft.nbt.ListTag(); // 8 = StringTag
+
+        List<String> pages = new ArrayList<>();
+        for (int i = 0; i < nbtPages.size(); i++) {
+            pages.add(nbtPages.getString(i));
+        }
+
+        StringBuilder lastPage = pages.isEmpty() ? new StringBuilder() : new StringBuilder(pages.remove(pages.size() - 1));
+
+        for (String line : lines) {
+            if (lastPage.length() + line.length() + 1 > 256) {
+                pages.add(lastPage.toString());
+                lastPage = new StringBuilder();
+            }
+            lastPage.append(line).append("\n");
+        }
+
+        if (!lastPage.isEmpty()) {
+            pages.add(lastPage.toString());
+        }
+        if (pages.size() > 50) {
+            pages = pages.subList(pages.size() - 50, pages.size());
+        }
+
+        net.minecraft.nbt.ListTag newPagesTag = new net.minecraft.nbt.ListTag();
+        for (String pageContent : pages) {
+            newPagesTag.add(net.minecraft.nbt.StringTag.valueOf(pageContent));
+        }
+
+        nbt.put("pages", newPagesTag);
+    }
     @Override
     public boolean overrideStackedOnOther(@NotNull ItemStack stack, Slot slot, @NotNull ClickAction clickAction, @NotNull Player player) {
         ItemStack itemStack = slot.getItem();
