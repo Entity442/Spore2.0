@@ -46,6 +46,12 @@
     "spore:specter_ambient"
   ]
 },
+  "bioblob" :{
+    "subtitle": "sounds.spore.growl",
+    "sounds": [
+      "spore:bioblob"
+    ]
+  },
   "hevoker_ambient" :{
     "subtitle": "sounds.spore.growl",
     "sounds": [
@@ -76,7 +82,6 @@
       "spore:surgery"
     ]
   },
-
   "construct_ambient" :{
     "subtitle": "sounds.spore.growl",
     "sounds": [
@@ -366,6 +371,21 @@
   "subtitle": "sounds.spore.machine",
   "sounds": [
     "spore:printing"
+  ]
+},"infected_weapon_throw" :{
+  "subtitle": "sounds.spore.weapon_use",
+  "sounds": [
+    "spore:infected_weapon_throw"
+  ]
+},"infected_weapon_hit_entity" :{
+  "subtitle": "sounds.spore.weapon_use",
+  "sounds": [
+    "spore:infected_weapon_hit_entity"
+  ]
+},"infected_weapon_hit_block" :{
+  "subtitle": "sounds.spore.weapon_use",
+  "sounds": [
+    "spore:infected_weapon_hit_block"
   ]
 }
 

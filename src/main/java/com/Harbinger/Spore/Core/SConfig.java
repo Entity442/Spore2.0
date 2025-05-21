@@ -362,8 +362,15 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Integer> greatsword_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> greatsword_damage;
 
+        public final ForgeConfigSpec.ConfigValue<Integer> cleaver_durability;
+        public final ForgeConfigSpec.ConfigValue<Integer> cleaver_damage;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> cleaver_drops;
+
         public final ForgeConfigSpec.ConfigValue<Integer> armads_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> armads_damage;
+
+        public final ForgeConfigSpec.ConfigValue<Integer> halberd_durability;
+        public final ForgeConfigSpec.ConfigValue<Integer> halberd_damage;
 
         public final ForgeConfigSpec.ConfigValue<Integer> knife_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> knife_damage;
@@ -1172,6 +1179,13 @@ public class SConfig {
             this.greatsword_durability = builder.comment("Default 400").define("Durability",400);
             this.greatsword_damage = builder.comment("Default 12").defineInRange("Damage", 12, 1, Integer.MAX_VALUE);
             builder.pop();
+            builder.push("Cleaver");
+            this.cleaver_durability = builder.comment("Default 400").define("Durability",400);
+            this.cleaver_damage = builder.comment("Default 14").defineInRange("Damage", 14, 1, Integer.MAX_VALUE);
+            this.cleaver_drops = builder.defineList("Decapitation",
+                    Lists.newArrayList("minecraft:skeleton|minecraft:skeleton_skull","minecraft:wither_skeleton|minecraft:wither_skeleton_skull",
+                            "minecraft:zombie|minecraft:zombie_head","minecraft:creeper|minecraft:creeper_head","minecraft:piglin|minecraft:piglin_head") , o -> o instanceof String);
+            builder.pop();
             builder.push("Crossbow");
             this.crossbow_durability = builder.comment("Default 350").define("Crossbow Durability",350);
             this.crossbow_arrow_damage_multiplier = builder.comment("Default 1.0").define("Crossbow Range Damage Modifier",1.0);
@@ -1181,9 +1195,13 @@ public class SConfig {
             this.bow_arrow_damage_multiplier = builder.comment("Default 1.0").define("Bow Range Damage Modifier",1.0);
             this.bow_melee_damage = builder.comment("Default 5").defineInRange("Damage", 5, 1, Integer.MAX_VALUE);
             builder.pop();
-            builder.push("Armads");
+            builder.push("BattleAxe");
             this.armads_durability = builder.comment("Default 600").define("Durability",600);
             this.armads_damage = builder.comment("Default 15").defineInRange("Damage", 15, 1, Integer.MAX_VALUE);
+            builder.pop();
+            builder.push("Halberd");
+            this.halberd_durability = builder.comment("Default 600").define("Durability",600);
+            this.halberd_damage = builder.comment("Default 11").defineInRange("Damage", 11, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Maul");
             this.maul_durability = builder.comment("Default 1000").define("Durability",1000);
