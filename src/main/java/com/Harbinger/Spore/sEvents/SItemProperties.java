@@ -2,6 +2,8 @@ package com.Harbinger.Spore.sEvents;
 
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sitems;
+import com.Harbinger.Spore.Sitems.InfectedCleaver;
+import com.Harbinger.Spore.Sitems.InfectedSickle;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -15,6 +17,8 @@ public class SItemProperties {
         makeTrident(Sitems.INFECTED_SPEAR.get());
         makeCrossbow(Sitems.INFECTED_CROSSBOW.get());
         makeDecayedLimbs(Sitems.DECAYED_LIMBS.get());
+        makeSickle(Sitems.SICKLE.get());
+        makeCleaver(Sitems.CLEAVER.get());
     }
     private static void makeBow(Item item) {
         ItemProperties.register(item, new ResourceLocation("pull"), (p_174635_, p_174636_, p_174637_, p_174638_) -> {
@@ -66,6 +70,16 @@ public class SItemProperties {
     private static void makeDecayedLimbs(Item item){
         ItemProperties.register(item, new ResourceLocation("decayed"), (p_174585_, p_174586_, p_174587_, p_174588_) -> {
             return p_174587_ instanceof Player player && player.hasEffect(Seffects.MADNESS.get()) ? 1.0F : 0.0F;
+        });
+    }
+    private static void makeSickle(Item item){
+        ItemProperties.register(item, new ResourceLocation("thrown"), (p_174585_, p_174586_, p_174587_, p_174588_) -> {
+            return p_174585_.getItem() instanceof InfectedSickle sickle && sickle.getThrownSickle(p_174585_) ? 1.0F : 0.0F;
+        });
+    }
+    private static void makeCleaver(Item item){
+        ItemProperties.register(item, new ResourceLocation("swipe"), (stack, p_174586_, player, p_174588_) -> {
+            return stack.getItem() instanceof InfectedCleaver && player != null && player.isUsingItem() ? 1.0F : 0.0F;
         });
     }
 }
