@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sitems;
 
 import com.Harbinger.Spore.Core.ScreativeTab;
+import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.BaseEntities.Calamity;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Organoid;
@@ -44,6 +45,7 @@ public class VigilEye extends Item {
     @Override
     public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int value) {
         super.releaseUsing(stack, level, livingEntity, value);
+        livingEntity.playSound(Ssounds.VIGIL_EYE_USE.get());
         if (!level.isClientSide){
             AABB searchbox = livingEntity.getBoundingBox().inflate(128);
             List<Entity> entities = level.getEntities(livingEntity,searchbox);

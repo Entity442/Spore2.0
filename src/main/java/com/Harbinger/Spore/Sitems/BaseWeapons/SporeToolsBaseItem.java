@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sitems.BaseWeapons;
 
 import com.Harbinger.Spore.Core.ScreativeTab;
 import com.Harbinger.Spore.Core.Sitems;
+import com.Harbinger.Spore.Core.Ssounds;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
@@ -29,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public class SporeToolsBaseItem extends Item implements IForgeItem ,SporeWeaponData{
     protected final double meleeDamage;
@@ -62,9 +64,8 @@ public class SporeToolsBaseItem extends Item implements IForgeItem ,SporeWeaponD
     }
 
     public float getDestroySpeed(ItemStack stack, BlockState blockState) {
-        return this.miningLevel;
+        return tooHurt(stack) ? this.miningLevel : 1.0F;
     }
-
 
     @Override
     public boolean isEnchantable(ItemStack p_41456_) {
@@ -76,7 +77,15 @@ public class SporeToolsBaseItem extends Item implements IForgeItem ,SporeWeaponD
         int luck = getLuck(stack);
         return luck > 0 ? luck : 1;
     }
-
+    @Override
+    public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
+        int durabilityLeft = stack.getMaxDamage() - stack.getDamageValue();
+        if (durabilityLeft-amount <= 11){
+            entity.playSound(Ssounds.INFECTED_GEAR_BREAK.get());
+        }
+        if (durabilityLeft < 10){return 0;}
+        return super.damageItem(stack, amount, entity, onBroken);
+    }
     @Override
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         if (!tooHurt(stack) && entity instanceof Player player){

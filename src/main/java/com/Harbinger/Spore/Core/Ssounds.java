@@ -30,6 +30,8 @@ public class Ssounds {
 
     public static final RegistryObject<SoundEvent> INF_DAMAGE = soundRegistry("inf_damage");
 
+    public static final RegistryObject<SoundEvent> BIOBLOB = soundRegistry("bioblob");
+
     public static final RegistryObject<SoundEvent> INF_GROWL = soundRegistry("inf_growl");
 
     public static final RegistryObject<SoundEvent> HOWLER_GROWL = soundRegistry("howler_growl");
@@ -139,6 +141,34 @@ public class Ssounds {
     public static final RegistryObject<SoundEvent> INFECTED_WEAPON_HIT_ENTITY = soundRegistry("infected_weapon_hit_entity");
 
     public static final RegistryObject<SoundEvent> INFECTED_WEAPON_HIT_BLOCK = soundRegistry("infected_weapon_hit_block");
+
+    public static final RegistryObject<SoundEvent> CDU_INSERT = soundRegistry("cdu_insert");
+
+    public static final RegistryObject<SoundEvent> CDU_AMBIENT = soundRegistry("cdu_ambient");
+
+    public static final RegistryObject<SoundEvent> CLEAVER_SPIN = soundRegistry("cleaver_spin");
+
+    public static final RegistryObject<SoundEvent> INFECTED_PICKAXE = soundRegistry("infected_pickaxe");
+
+    public static final RegistryObject<SoundEvent> REAVER_REAVE = soundRegistry("reaver_reave");
+
+    public static final RegistryObject<SoundEvent> SABER_LEAP = soundRegistry("saber_leap");
+
+    public static final RegistryObject<SoundEvent> SCANNER_ITEM = soundRegistry("scanner_item");
+
+    public static final RegistryObject<SoundEvent> SCANNER_EMPTY = soundRegistry("scanner_empty");
+
+    public static final RegistryObject<SoundEvent> SCANNER_MOB = soundRegistry("scanner_mob");
+
+    public static final RegistryObject<SoundEvent> VIGIL_EYE_USE = soundRegistry("vigil_eye_use");
+
+    public static final RegistryObject<SoundEvent> SYRINGE_SUCK = soundRegistry("syringe_suck");
+
+    public static final RegistryObject<SoundEvent> SYRINGE_INJECT = soundRegistry("syringe_inject");
+
+    public static final RegistryObject<SoundEvent> REAGENT = soundRegistry("reagent");
+
+    public static final RegistryObject<SoundEvent> INFECTED_GEAR_BREAK = soundRegistry("infected_gear_break");
 
     private Ssounds() {
     }

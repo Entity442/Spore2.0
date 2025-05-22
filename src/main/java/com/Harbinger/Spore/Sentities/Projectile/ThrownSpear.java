@@ -149,18 +149,13 @@ public class ThrownSpear extends AbstractArrow {
         float f1 = 1.0F;
         this.playSound(soundevent, f1, 1.0F);
     }
-    @Override
-    protected void onHitBlock(BlockHitResult result) {
-        super.onHitBlock(result);
-        this.playSound(Ssounds.INFECTED_WEAPON_HIT_BLOCK.get(), 1.0F, 1.0F);
-    }
 
     protected boolean tryPickup(Player p_150196_) {
         return super.tryPickup(p_150196_) || this.isNoPhysics() && this.ownedBy(p_150196_) && p_150196_.getInventory().add(this.getPickupItem());
     }
 
     protected SoundEvent getDefaultHitGroundSoundEvent() {
-        return SoundEvents.TRIDENT_HIT_GROUND;
+        return Ssounds.INFECTED_WEAPON_HIT_BLOCK.get();
     }
 
     public void playerTouch(Player p_37580_) {

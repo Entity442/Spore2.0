@@ -60,14 +60,16 @@ public class ThrownSickle extends AbstractArrow {
             this.dealtDamage = true;
         }
         Entity owner = this.getOwner();
-        if (owner == null || this.distanceTo(owner) > 30.0f) {
-            this.discard();
-            if (owner instanceof LivingEntity livingOwner) {
-                ItemStack stack = livingOwner.getMainHandItem();
+        if (owner instanceof LivingEntity living){
+            ItemStack stack = living.getMainHandItem();
+            if (this.distanceTo(living) > 30.0f || !(stack.getItem() instanceof InfectedSickle)){
                 if (stack.getItem() instanceof InfectedSickle sickle){
                     sickle.setThrownSickle(stack,false);
                 }
+                this.discard();
             }
+        }else {
+            this.discard();
         }
         super.tick();
     }
@@ -122,7 +124,6 @@ public class ThrownSickle extends AbstractArrow {
     @Override
     protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
-        this.playSound(Ssounds.INFECTED_WEAPON_HIT_BLOCK.get(), 1.0F, 1.0F);
         this.hookedBlockPos = result.getLocation();
         this.state = SickelState.HOOKED_BLOCK;
     }
@@ -132,7 +133,7 @@ public class ThrownSickle extends AbstractArrow {
     }
 
     protected SoundEvent getDefaultHitGroundSoundEvent() {
-        return SoundEvents.TRIDENT_HIT_GROUND;
+        return Ssounds.INFECTED_WEAPON_HIT_BLOCK.get();
     }
 
     public void playerTouch(Player p_37580_) {

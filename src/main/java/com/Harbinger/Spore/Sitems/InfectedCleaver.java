@@ -1,6 +1,7 @@
 package com.Harbinger.Spore.Sitems;
 
 import com.Harbinger.Spore.Core.SConfig;
+import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sitems.BaseWeapons.DeathRewardingWeapon;
 import com.Harbinger.Spore.Sitems.BaseWeapons.SporeSwordBase;
 import net.minecraft.client.Minecraft;
@@ -8,6 +9,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
@@ -77,6 +79,7 @@ public class InfectedCleaver extends SporeSwordBase implements DeathRewardingWea
     }
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        player.playNotifySound(Ssounds.CLEAVER_SPIN.get(), SoundSource.AMBIENT,1F,1F);
         player.startUsingItem(hand);
         return InteractionResultHolder.consume(player.getItemInHand(hand));
     }
@@ -113,6 +116,9 @@ public class InfectedCleaver extends SporeSwordBase implements DeathRewardingWea
             player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN,60,0));
             player.getCooldowns().addCooldown(this,80);
             player.stopUsingItem();
+        }
+        if (charge % 20 == 0){
+            player.playNotifySound(Ssounds.CLEAVER_SPIN.get(), SoundSource.AMBIENT,1F,1F);
         }
         super.onUseTick(level, entity, stack, count);
     }

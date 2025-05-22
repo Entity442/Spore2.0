@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sitems;
 
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.ScreativeTab;
+import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sentities.BaseEntities.*;
 import com.Harbinger.Spore.Sitems.BaseWeapons.LootModifierWeapon;
 import net.minecraft.core.BlockPos;
@@ -113,7 +114,8 @@ public class Reaver extends SwordItem implements LootModifierWeapon {
         BlockPos pos = livingEntity.getOnPos();
         if (!level.isClientSide && values != null && Math.random() < (values.value * 0.01)){
         ItemEntity item = new ItemEntity(level,pos.getX(),pos.getY(),pos.getZ(),values.stack);
-        level.addFreshEntity(item);}
+        level.addFreshEntity(item);
+        livingEntity.playSound(Ssounds.REAVER_REAVE.get());}
         return super.hurtEnemy(stack, livingEntity, victim);
     }
 }

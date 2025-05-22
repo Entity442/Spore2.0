@@ -3,6 +3,8 @@ package com.Harbinger.Spore.Sitems.Agents;
 import com.Harbinger.Spore.Core.ScreativeTab;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sitems;
+import com.Harbinger.Spore.Core.Ssounds;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -53,6 +55,7 @@ public abstract class AbstractSyringe extends Item {
     abstract void useSyringe(ItemStack stack,LivingEntity living);
 
     protected void addMycelium(LivingEntity living){
+        living.playSound(Ssounds.SYRINGE_INJECT.get(),1F,1F);
         living.addEffect(new MobEffectInstance(Seffects.MYCELIUM.get(),300,0));
     }
 }
