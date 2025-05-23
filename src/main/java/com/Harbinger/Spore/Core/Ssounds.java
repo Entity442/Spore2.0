@@ -170,6 +170,8 @@ public class Ssounds {
 
     public static final RegistryObject<SoundEvent> INFECTED_GEAR_BREAK = soundRegistry("infected_gear_break");
 
+    public static final RegistryObject<SoundEvent> INFECTED_GEAR_EQUIP = soundRegistry("infected_gear_equip");
+
     private Ssounds() {
     }
 }

@@ -4,6 +4,7 @@ package com.Harbinger.Spore.Sitems;
 import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sitems;
+import com.Harbinger.Spore.Core.Ssounds;
 import com.Harbinger.Spore.Sitems.BaseWeapons.SporeArmorMutations;
 import com.Harbinger.Spore.Sitems.BaseWeapons.SporeBaseArmor;
 import com.google.common.collect.Maps;
@@ -23,7 +24,7 @@ public class InfectedExoskeleton extends SporeBaseArmor {
         super(type, new int[]{
                 SConfig.SERVER.boots_durability.get(), SConfig.SERVER.pants_durability.get(), SConfig.SERVER.chestplate_durability.get(), SConfig.SERVER.helmet_durability.get()},new int[]{
                 SConfig.SERVER.boots_protection.get(), SConfig.SERVER.pants_protection.get(), SConfig.SERVER.chestplate_protection.get(), SConfig.SERVER.helmet_protection.get()
-        }, SConfig.SERVER.armor_toughness.get(),SConfig.SERVER.knockback_resistance.get(), SoundEvents.ARMOR_EQUIP_LEATHER,"Infected");
+        }, SConfig.SERVER.armor_toughness.get(),SConfig.SERVER.knockback_resistance.get(), Ssounds.INFECTED_GEAR_EQUIP.get(),"Infected");
     }
 
 
