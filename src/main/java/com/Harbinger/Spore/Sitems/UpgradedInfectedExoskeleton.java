@@ -105,11 +105,6 @@ public class UpgradedInfectedExoskeleton extends SporeBaseArmor {
             return true;
         }
 
-        @Nullable
-        public SoundEvent getEquipSound() {
-            return SoundEvents.ARMOR_EQUIP_ELYTRA;
-        }
-
         @Override
         public void onArmorTick(ItemStack stack, Level level, Player entity) {
             if (entity.horizontalCollision && entity.isCrouching()) {
