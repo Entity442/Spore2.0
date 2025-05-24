@@ -9,13 +9,11 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
@@ -128,19 +126,8 @@ public class ThrownSickle extends AbstractArrow {
         this.state = SickelState.HOOKED_BLOCK;
     }
 
-    protected boolean tryPickup(Player player) {
-        return super.tryPickup(player) || this.isNoPhysics() && this.ownedBy(player) && player.getInventory().add(this.getPickupItem());
-    }
-
     protected SoundEvent getDefaultHitGroundSoundEvent() {
         return Ssounds.INFECTED_WEAPON_HIT_BLOCK.get();
-    }
-
-    public void playerTouch(Player p_37580_) {
-        if (this.ownedBy(p_37580_) || this.getOwner() == null) {
-            super.playerTouch(p_37580_);
-        }
-
     }
 
     public SickelState getHookState() {
