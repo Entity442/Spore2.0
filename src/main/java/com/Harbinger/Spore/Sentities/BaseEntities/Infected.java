@@ -19,6 +19,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -410,8 +411,14 @@ public class Infected extends Monster{
         return false;
     }
     private static boolean furtherSpawnParameters(EntityType<? extends Infected> p_219014_,ServerLevelAccessor levelAccessor, MobSpawnType type, BlockPos pos, RandomSource source){
+        MinecraftServer server = levelAccessor.getServer();
+        if (server != null){
+            if (server.getPlayerList().getPlayers().isEmpty()){
+                return false;
+            }
+        }
         if (SConfig.SERVER.daytime_spawn.get()){
-            return checkAnyLightMonsterSpawnRules(p_219014_, levelAccessor, type, pos, source);
+            return checkAnyLightMonsterSpawnRules(p_219014_, levelAccessor, type, pos, source) && levelAccessor.canSeeSky(pos);
         }else
             return isDarkEnoughToSpawn(levelAccessor, pos, source) && checkMobSpawnRules(p_219014_, levelAccessor, type, pos, source);
     }

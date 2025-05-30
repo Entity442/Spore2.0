@@ -32,6 +32,12 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Boolean> should_starve;
         public final ForgeConfigSpec.ConfigValue<Boolean> higher_thinking;
 
+        public final ForgeConfigSpec.ConfigValue<Integer> max_infected_cap;
+        public final ForgeConfigSpec.ConfigValue<Integer> max_evolved_cap;
+        public final ForgeConfigSpec.ConfigValue<Integer> max_hyper_cap;
+        public final ForgeConfigSpec.ConfigValue<Integer> max_organoid_cap;
+        public final ForgeConfigSpec.ConfigValue<Integer> max_scent_cap;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> despawn_blacklist;
 
         public final ForgeConfigSpec.ConfigValue<Boolean> faw_target;
         public final ForgeConfigSpec.ConfigValue<Boolean> skulk_target;
@@ -361,6 +367,8 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<Integer> greatsword_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> greatsword_damage;
+        public final ForgeConfigSpec.ConfigValue<Integer> greatsword_armor;
+        public final ForgeConfigSpec.ConfigValue<Integer> greatsword_toughness;
 
         public final ForgeConfigSpec.ConfigValue<Integer> cleaver_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> cleaver_damage;
@@ -510,7 +518,15 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> gas_masks;
 
         public Server(ForgeConfigSpec.Builder builder) {
-
+            builder.push("Despawning system");
+            this.max_infected_cap = builder.define("Maximum number of regular infected",60);
+            this.max_evolved_cap = builder.define("Maximum number of evolved infected",35);
+            this.max_hyper_cap = builder.define("Maximum number of hyper infected",20);
+            this.max_organoid_cap = builder.define("Maximum number of organoids",40);
+            this.max_scent_cap = builder.define("Maximum number of scents",30);
+            this.despawn_blacklist = builder.defineList("Mobs that will not be despawned by the system",
+                    Lists.newArrayList("spore:proto","spore:gastgaber","spore:specter","spore:inf_construct","spore:scamper") , o -> o instanceof String);
+            builder.pop();
             builder.push("Compatibilities");
             this.faw_target = builder.comment("Default false").define("Should there be a compatibility with FAW?",false);
             this.skulk_target = builder.comment("Default false").define("Should there be a compatibility with Sculk Infection?",false);
@@ -1168,11 +1184,11 @@ public class SConfig {
             builder.pop();
             builder.push("Spear");
             this.spear_durability = builder.comment("Default 600").define("Durability",600);
-            this.spear_damage = builder.comment("Default 9").defineInRange("Damage", 9, 1, Integer.MAX_VALUE);
+            this.spear_damage = builder.comment("Default 11").defineInRange("Damage", 11, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Saber");
             this.saber_durability = builder.comment("Default 750").define("Durability",750);
-            this.saber_damage = builder.comment("Default 8").defineInRange("Damage", 8, 1, Integer.MAX_VALUE);
+            this.saber_damage = builder.comment("Default 10").defineInRange("Damage", 10, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Knife");
             this.knife_durability = builder.comment("Default 250").define("Durability",250);
@@ -1181,6 +1197,8 @@ public class SConfig {
             builder.push("GreatSword");
             this.greatsword_durability = builder.comment("Default 750").define("Durability",750);
             this.greatsword_damage = builder.comment("Default 12").defineInRange("Damage", 12, 1, Integer.MAX_VALUE);
+            this.greatsword_armor = builder.comment("Default 8").defineInRange("Armor", 8, 1, Integer.MAX_VALUE);
+            this.greatsword_toughness = builder.comment("Default 2").defineInRange("Toughness", 2, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Cleaver");
             this.cleaver_durability = builder.comment("Default 750").define("Durability",750);
@@ -1216,11 +1234,11 @@ public class SConfig {
             builder.pop();
             builder.push("Pickaxe");
             this.inf_pickaxe_durability = builder.comment("Default 1000").define("Durability",1000);
-            this.inf_pickaxe_damage = builder.comment("Default 10").defineInRange("Damage", 10, 1, Integer.MAX_VALUE);
+            this.inf_pickaxe_damage = builder.comment("Default 9").defineInRange("Damage", 9, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Sickle");
             this.sickle_durability = builder.comment("Default 600").define("Durability",600);
-            this.sickle_damage = builder.comment("Default 12").defineInRange("Damage", 12, 1, Integer.MAX_VALUE);
+            this.sickle_damage = builder.comment("Default 9").defineInRange("Damage", 9, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Reaver");
             this.reaver_damage = builder.comment("Default 6").define("Damage",6);
@@ -1242,15 +1260,15 @@ public class SConfig {
             builder.pop();
             builder.push("Combat Shovel");
             this.shovel_durability = builder.comment("Default 1000").define("Durability",1000);
-            this.shovel_damage = builder.comment("Default 8").defineInRange("Damage", 8, 1, Integer.MAX_VALUE);
+            this.shovel_damage = builder.comment("Default 9").defineInRange("Damage", 9, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Rapier");
             this.rapier_durability = builder.comment("Default 750").define("Durability",750);
-            this.rapier_damage = builder.comment("Default 10").defineInRange("Damage", 10, 1, Integer.MAX_VALUE);
+            this.rapier_damage = builder.comment("Default 9").defineInRange("Damage", 9, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.push("Mace");
             this.mace_durability = builder.comment("Default 600").define("Durability",600);
-            this.mace_damage = builder.comment("Default 9").defineInRange("Damage", 9, 1, Integer.MAX_VALUE);
+            this.mace_damage = builder.comment("Default 11").defineInRange("Damage", 11, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.pop();
             builder.push("Living Exoskeleton");
