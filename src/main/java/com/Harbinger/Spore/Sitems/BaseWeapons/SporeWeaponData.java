@@ -116,6 +116,7 @@ public interface SporeWeaponData {
         if (getVariant(stack) == SporeToolsMutations.CALCIFIED){
             double knockback = reversedKnockback() ? -Mth.sin(entity.getYRot() * ((float) Math.PI / 180F)) : Mth.sin(entity.getYRot() * ((float) Math.PI / 180F));
             double knockback2 = reversedKnockback() ? Mth.cos(entity.getYRot() * ((float) Math.PI / 180F) * ((float) Math.PI / 180F)) : -Mth.cos(entity.getYRot() * ((float) Math.PI / 180F));
+            victim.hurtMarked = true;
             victim.knockback(1.5F, knockback, knockback2);
         }
         if (getVariant(stack) == SporeToolsMutations.VAMPIRIC && entity.getHealth() < entity.getMaxHealth()){
