@@ -65,7 +65,6 @@ public class ClientModEvents {
         event.registerLayerDefinition(InfectedHazmatModel.LAYER_LOCATION, InfectedHazmatModel::createBodyLayer);
         event.registerLayerDefinition(ElytrumModel.LAYER_LOCATION, ElytrumModel::createBodyLayer);
         event.registerLayerDefinition(InfectedHazmatWithTank.LAYER_LOCATION, InfectedHazmatWithTank::createBodyLayer);
-        event.registerLayerDefinition(CoreModel.LAYER_LOCATION, CoreModel::createBodyLayer);
         event.registerLayerDefinition(MoundModel.LAYER_LOCATION, MoundModel::createBodyLayer);
         event.registerLayerDefinition(BraionmilBabe.LAYER_LOCATION, BraionmilBabe::createBodyLayer);
         event.registerLayerDefinition(InfectedHazmatCoat.LAYER_LOCATION, InfectedHazmatCoat::createBodyLayer);
@@ -130,6 +129,9 @@ public class ClientModEvents {
         event.registerLayerDefinition(ReconstructedMindModel.LAYER_LOCATION, ReconstructedMindModel::createBodyLayer);
         event.registerLayerDefinition(ExperimentDormantLayerModel.LAYER_LOCATION, ExperimentDormantLayerModel::createBodyLayer);
         event.registerLayerDefinition(BiobloobModel.LAYER_LOCATION, BiobloobModel::createBodyLayer);
+        event.registerLayerDefinition(TestBootModel.LAYER_LOCATION, TestBootModel::createBodyLayer);
+        event.registerLayerDefinition(PCI_Model.LAYER_LOCATION, PCI_Model::createBodyLayer);
+        event.registerLayerDefinition(PCI_ModelL.LAYER_LOCATION, PCI_ModelL::createBodyLayer);
 
         event.registerLayerDefinition(BombFunnelModel.LAYER_LOCATION, BombFunnelModel::createBodyLayer);
         event.registerLayerDefinition(MushroomExplosionTop.LAYER_LOCATION, MushroomExplosionTop::createBodyLayer);

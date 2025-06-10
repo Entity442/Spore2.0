@@ -81,6 +81,7 @@ public class InfectedCleaver extends SporeSwordBase implements DeathRewardingWea
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         player.playNotifySound(Ssounds.CLEAVER_SPIN.get(), SoundSource.AMBIENT,1F,1F);
         player.startUsingItem(hand);
+        this.hurtTool(player.getItemInHand(hand),player,1);
         return InteractionResultHolder.consume(player.getItemInHand(hand));
     }
 
@@ -121,8 +122,8 @@ public class InfectedCleaver extends SporeSwordBase implements DeathRewardingWea
         }
 
         if (count <= 2){
-            player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 60, 0));
-            player.getCooldowns().addCooldown(this, 80);
+            player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 200, 0));
+            player.getCooldowns().addCooldown(this, 200);
             player.stopUsingItem();
         }
 
@@ -132,5 +133,9 @@ public class InfectedCleaver extends SporeSwordBase implements DeathRewardingWea
 
         super.onUseTick(level, entity, stack, count);
     }
-
+    @Override
+    public void releaseUsing(ItemStack stack, Level level, LivingEntity living, int p_41415_) {
+        super.releaseUsing(stack, level, living, p_41415_);
+        if (living instanceof Player player){player.getCooldowns().addCooldown(this, 60);}
+    }
 }
