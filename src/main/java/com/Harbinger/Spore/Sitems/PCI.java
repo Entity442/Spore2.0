@@ -5,6 +5,7 @@ import com.Harbinger.Spore.Core.SConfig;
 import com.Harbinger.Spore.Core.ScreativeTab;
 import com.Harbinger.Spore.Core.Sitems;
 import com.Harbinger.Spore.Core.Ssounds;
+import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.player.LocalPlayer;
@@ -76,6 +77,7 @@ public class PCI extends Item implements CustomModelArmorData,Vanishable {
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (getCharge(stack) > 0 && attacker instanceof Player player){
             player.playNotifySound(Ssounds.PCI_INJECT.get(), SoundSource.AMBIENT,1f,1f);
+            if (target instanceof Infected infected && infected.getLinked()){infected.setLinked(false);}
         }
         stack.hurtAndBreak(1, attacker, e -> e.broadcastBreakEvent(attacker.getUsedItemHand()));
         return true;
