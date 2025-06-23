@@ -631,18 +631,14 @@ public class HandlerEvents {
         if (event.getSource().getEntity() instanceof Player player){
             ItemStack weapon = player.getMainHandItem();
             if (weapon.getItem() instanceof PCI pci && pci.getCharge(weapon)>0){
-                int damageMod = 2;
+                int damageMod = 3;
                 int charge = pci.getCharge(weapon);
                 LivingEntity target = event.getEntity();
-                float targetHealth = target.getHealth();
+                boolean freeze = event.getEntity().getType().is(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES);
+                float targetHealth = freeze ? target.getHealth()/damageMod : target.getHealth();
                 int freezeDamage = charge >= targetHealth ? (int) targetHealth : charge;
-                if (event.getEntity().getType().is(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)){
-                    event.setAmount(freezeDamage * damageMod);
-                    freezeDamage = freezeDamage/damageMod;
-                }else {
-                    event.setAmount(freezeDamage);
-                }
-                pci.setCharge(weapon, charge <= damageMod ? 0 : charge - freezeDamage);
+                event.setAmount(freeze ?freezeDamage * damageMod : freezeDamage);
+                pci.setCharge(weapon, charge - freezeDamage);
                 target.setTicksFrozen(600);
                 player.getCooldowns().addCooldown(pci, (int) Math.ceil(targetHealth / 5f) * 20);
             }

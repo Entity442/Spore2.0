@@ -67,7 +67,7 @@ public class PCI extends Item implements CustomModelArmorData,Vanishable {
     @Override
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         if (entity instanceof Player player){player.getCooldowns().addCooldown(this,20);}
-        if (entity.level.isClientSide && entity instanceof LocalPlayer player) {
+        if (entity.level.isClientSide && entity instanceof LocalPlayer player && !player.getCooldowns().isOnCooldown(this)) {
             PCIAnimationTracker.trigger(player);
         }
         return super.onEntitySwing(stack, entity);
@@ -75,6 +75,9 @@ public class PCI extends Item implements CustomModelArmorData,Vanishable {
 
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if (attacker instanceof Player player && player.getCooldowns().isOnCooldown(this)){
+            return false;
+        }
         if (getCharge(stack) > 0 && attacker instanceof Player player){
             player.playNotifySound(Ssounds.PCI_INJECT.get(), SoundSource.AMBIENT,1f,1f);
             if (target instanceof Infected infected && infected.getLinked()){infected.setLinked(false);}
