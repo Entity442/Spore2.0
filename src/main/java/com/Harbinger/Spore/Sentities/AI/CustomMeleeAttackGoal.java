@@ -19,7 +19,7 @@ public class CustomMeleeAttackGoal extends Goal {
     private double pathedTargetY;
     private double pathedTargetZ;
     private int ticksUntilNextPathRecalculation;
-    private int ticksUntilNextAttack;
+    protected int ticksUntilNextAttack;
     private final int attackInterval = 20;
     private long lastCanUseCheck;
     private static final long COOLDOWN_BETWEEN_CAN_USE_CHECKS = 20L;

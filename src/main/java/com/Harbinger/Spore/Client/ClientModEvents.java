@@ -132,6 +132,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(TestBootModel.LAYER_LOCATION, TestBootModel::createBodyLayer);
         event.registerLayerDefinition(PCI_Model.LAYER_LOCATION, PCI_Model::createBodyLayer);
         event.registerLayerDefinition(PCI_ModelL.LAYER_LOCATION, PCI_ModelL::createBodyLayer);
+        event.registerLayerDefinition(ProtectorModel.LAYER_LOCATION, ProtectorModel::createBodyLayer);
 
         event.registerLayerDefinition(BombFunnelModel.LAYER_LOCATION, BombFunnelModel::createBodyLayer);
         event.registerLayerDefinition(MushroomExplosionTop.LAYER_LOCATION, MushroomExplosionTop::createBodyLayer);
@@ -202,6 +203,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.NUCLEA.get(), NucleaRenderer::new);
         event.registerEntityRenderer(Sentities.HEVOKER.get(), HevokerRenderer::new);
         event.registerEntityRenderer(Sentities.HVINDICATOR.get(), HyperVindicatorRenderer::new);
+        event.registerEntityRenderer(Sentities.PROTECTOR.get(), ProtectorRenderer::new);
 
         event.registerEntityRenderer(Sentities.ACID_BALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.SPIT.get(), BulletRender::new);
@@ -222,6 +224,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.BIOBLOOB.get(), BiobloobRenderer::new);
         event.registerEntityRenderer(Sentities.THROWN_KNIFE.get(), KnifeRenderer::new);
         event.registerEntityRenderer(Sentities.THROWN_SICKEL.get(), SickleRenderer::new);
+        event.registerEntityRenderer(Sentities.THROWN_BOOMERANG.get(), ThrownBoomerangRenderer::new);
 
         event.registerBlockEntityRenderer(SblockEntities.OVERGROWN_SPAWNER.get(), new OvergrownSpawnerRenderer());
         event.registerBlockEntityRenderer(SblockEntities.BRAIN_REMNANTS.get(), new BrainRemnantsRenderer());

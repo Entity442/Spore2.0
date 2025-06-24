@@ -16,6 +16,8 @@
     "spore:rapier",
     "spore:combat_pickaxe",
     "spore:cleaver",
-    "spore:halberd"
+    "spore:halberd",
+    "spore:boomerang",
+    "spore:shield"
   ]
 }

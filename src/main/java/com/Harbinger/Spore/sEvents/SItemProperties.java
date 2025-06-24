@@ -3,6 +3,7 @@ package com.Harbinger.Spore.sEvents;
 import com.Harbinger.Spore.Core.Seffects;
 import com.Harbinger.Spore.Core.Sitems;
 import com.Harbinger.Spore.Sitems.InfectedCleaver;
+import com.Harbinger.Spore.Sitems.InfectedShield;
 import com.Harbinger.Spore.Sitems.InfectedSickle;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -19,6 +20,7 @@ public class SItemProperties {
         makeDecayedLimbs(Sitems.DECAYED_LIMBS.get());
         makeSickle(Sitems.SICKLE.get());
         makeCleaver(Sitems.CLEAVER.get());
+        makeShield(Sitems.SHIELD.get());
     }
     private static void makeBow(Item item) {
         ItemProperties.register(item, new ResourceLocation("pull"), (p_174635_, p_174636_, p_174637_, p_174638_) -> {
@@ -80,6 +82,11 @@ public class SItemProperties {
     private static void makeCleaver(Item item){
         ItemProperties.register(item, new ResourceLocation("swipe"), (stack, p_174586_, player, p_174588_) -> {
             return stack.getItem() instanceof InfectedCleaver && player != null && player.isUsingItem() ? 1.0F : 0.0F;
+        });
+    }
+    private static void makeShield(Item item){
+        ItemProperties.register(item, new ResourceLocation("use"), (stack, p_174586_, player, p_174588_) -> {
+            return stack.getItem() instanceof InfectedShield && player != null && player.isUsingItem() ? 1.0F : 0.0F;
         });
     }
 }

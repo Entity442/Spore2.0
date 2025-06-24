@@ -33,6 +33,7 @@ import java.util.UUID;
 public class PCI extends Item implements CustomModelArmorData,Vanishable {
     protected final UUID BONUS_DAMAGE_MODIFIER_UUID = UUID.fromString("035e66d6-5a74-402f-b64c-e61432ec39ba");
     protected final UUID BONUS_REACH_MODIFIER_UUID = UUID.fromString("d8c35ba5-f440-4335-92b2-3c8b1b703706");
+    protected final UUID ATTACK_SPEED_MODIFIER_UUID = UUID.fromString("61bb4d9f-d2ea-4aa3-9468-9dd25a47bca1");
     private static final String CHARGE = "charge";
     private static final ResourceLocation TEXTURE = new ResourceLocation("spore:textures/item/pci.png");
     private static final int RELOAD_TICKS = 60;
@@ -46,6 +47,7 @@ public class PCI extends Item implements CustomModelArmorData,Vanishable {
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE,new AttributeModifier(BONUS_DAMAGE_MODIFIER_UUID,"Tool modifier",SConfig.SERVER.pci_damage.get()-1, AttributeModifier.Operation.ADDITION));
         builder.put(ForgeMod.ATTACK_RANGE.get(), new AttributeModifier(BONUS_REACH_MODIFIER_UUID, "Tool modifier",2, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER_UUID, "Delay modifier", -2.4, AttributeModifier.Operation.ADDITION));
         return slot == EquipmentSlot.MAINHAND ? builder.build() : ImmutableMultimap.of();
     }
 
@@ -77,14 +79,18 @@ public class PCI extends Item implements CustomModelArmorData,Vanishable {
         if (attacker instanceof Player player && player.getCooldowns().isOnCooldown(this)){
             return false;
         }
-        if (getCharge(stack) > 0 && attacker instanceof Player player){
-            player.playNotifySound(Ssounds.PCI_INJECT.get(), SoundSource.AMBIENT,1f,1f);
+        if (getCharge(stack) > 0){
             if (target instanceof Infected infected && infected.getLinked()){infected.setLinked(false);}
+        }
+        if (attacker instanceof Player player){
+            playSound(player);
         }
         stack.hurtAndBreak(1, attacker, e -> e.broadcastBreakEvent(attacker.getUsedItemHand()));
         return true;
     }
-
+    public void playSound(Player player){
+        player.playNotifySound(Ssounds.PCI_INJECT.get(), SoundSource.AMBIENT,1f,1f);
+    }
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);

@@ -80,6 +80,8 @@ public class Sitems {
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> SPIKE = ITEMS.register("spike",
             () -> new Item(new Item.Properties().tab(ScreativeTab.SPORE)));
+    public  static final RegistryObject<Item> SHIELD_FRAGMENT = ITEMS.register("shield_fragment",
+            () -> new Item(new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> R_WING = ITEMS.register("r_wing",
             () -> new Item( new Item.Properties().tab(ScreativeTab.SPORE)));
     public  static final RegistryObject<Item> TUMOR = ITEMS.register("tumor",
@@ -229,6 +231,8 @@ public class Sitems {
 
     public  static final RegistryObject<Item> NUCLEA_SPAWNEGG = ITEMS.register("nuclea_spawnegg",
             () -> new SporeSpawnEgg(Sentities.NUCLEA,-265262544,SpawnEggType.EVOLVED));
+    public  static final RegistryObject<Item> PROT_SPAWNEGG = ITEMS.register("prot_spawnegg",
+            () -> new SporeSpawnEgg(Sentities.PROTECTOR,-265262544,SpawnEggType.EVOLVED));
 
     public  static final RegistryObject<Item> SCENT_SPAWNEGG = ITEMS.register("scent_spawnegg",
             () -> new SporeSpawnEgg(Sentities.SCENT,-1, SpawnEggType.EVOLVED));
@@ -347,6 +351,8 @@ public class Sitems {
             InfectedBoomerang::new);
     public  static final RegistryObject<Item> RAPIER = ITEMS.register("rapier",
             InfectedRapier::new);
+    public  static final RegistryObject<Item> SHIELD = ITEMS.register("shield",
+            InfectedShield::new);
     public  static final RegistryObject<Item> VIGIL_EYE = ITEMS.register("vigil_eye",
             VigilEye::new);
     public  static final RegistryObject<Item> SYMBIOTIC_REAGENT = ITEMS.register("symbiotic_reagent",

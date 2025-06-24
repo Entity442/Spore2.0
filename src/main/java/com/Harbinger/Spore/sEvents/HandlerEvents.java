@@ -34,6 +34,7 @@ import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -137,6 +138,9 @@ public class HandlerEvents {
         if (event != null && event.getEntity() != null) {
             if (event.getEntity() instanceof Proto && event.getLevel() instanceof ServerLevel serverLevel){
                 SporeSavedData.addHivemind(serverLevel);
+            }
+            if (event.getEntity() instanceof Protector protector){
+                SporeSavedData.addProtector(protector);
             }
             if (event.getEntity() instanceof PathfinderMob mob){
                 for (String string : SConfig.SERVER.attack.get()){
@@ -467,6 +471,9 @@ public class HandlerEvents {
     }
     @SubscribeEvent
     public static void DiscardProto(EntityLeaveLevelEvent event){
+        if (event.getEntity() instanceof Protector protector){
+            SporeSavedData.removeProtector(protector);
+        }
         if (event.getEntity() instanceof Proto && event.getLevel() instanceof ServerLevel level){
             SporeSavedData.removeHivemind(level);
         }
@@ -628,9 +635,10 @@ public class HandlerEvents {
 
     @SubscribeEvent
     public static void DefenseBypass(LivingDamageEvent event) {
-        if (event.getSource().getEntity() instanceof Player player){
+        Entity living = event.getSource().getEntity();
+        if (living instanceof Player player){
             ItemStack weapon = player.getMainHandItem();
-            if (weapon.getItem() instanceof PCI pci && pci.getCharge(weapon)>0){
+            if (weapon.getItem() instanceof PCI pci && pci.getCharge(weapon)>0 && !player.getCooldowns().isOnCooldown(pci)){
                 int damageMod = 3;
                 int charge = pci.getCharge(weapon);
                 LivingEntity target = event.getEntity();
@@ -641,24 +649,33 @@ public class HandlerEvents {
                 pci.setCharge(weapon, charge - freezeDamage);
                 target.setTicksFrozen(600);
                 player.getCooldowns().addCooldown(pci, (int) Math.ceil(targetHealth / 5f) * 20);
+                pci.playSound(player);
             }
         }
-        Entity living = event.getSource().getEntity();
+        if(event.getEntity() instanceof Infected victim && !(victim instanceof Protector)) {
+            LivingEntity attacker = living instanceof LivingEntity e ? e : null;
+            List<Protector> protectorList = SporeSavedData.protectorList();
+            if (!protectorList.isEmpty() && attacker != null){
+                for (Protector protector1 : protectorList){
+                    double d0 = protector1.distanceTo(attacker);
+                    if (protector1.isAlive() && d0 < 64f && !attacker.isSpectator()){
+                        protector1.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED,100,0));
+                        protector1.setTarget(attacker);
+                    }
+                }
+            }
+        }
         if (living instanceof ArmorPersentageBypass bypass){
             float original_damage = event.getAmount();
             float recalculatedDamage = bypass.amountOfDamage(original_damage);
-            if (recalculatedDamage <= 0 || original_damage > recalculatedDamage){
-                return;
-            }else{
+            if (recalculatedDamage >= 0 && original_damage < recalculatedDamage){
                 event.setAmount(recalculatedDamage);
             }
         }
         if (living instanceof LivingEntity livingEntity && livingEntity.getMainHandItem().getItem() instanceof DamagePiercingModifier piercingModifier){
             float original_damage = event.getAmount();
             float recalculatedDamage = piercingModifier.getMinimalDamage(original_damage);
-            if (recalculatedDamage <= 0 || original_damage > recalculatedDamage){
-                return;
-            }else{
+            if (recalculatedDamage >= 0 && original_damage < recalculatedDamage){
                 event.setAmount(recalculatedDamage);
             }
         }

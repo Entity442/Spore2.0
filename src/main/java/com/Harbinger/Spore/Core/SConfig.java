@@ -187,6 +187,10 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<Double> knight_damage;
         public final ForgeConfigSpec.ConfigValue<Double> knight_armor;
 
+        public final ForgeConfigSpec.ConfigValue<Double> protector_hp;
+        public final ForgeConfigSpec.ConfigValue<Double> protector_damage;
+        public final ForgeConfigSpec.ConfigValue<Double> protector_armor;
+
         public final ForgeConfigSpec.ConfigValue<Double> nuckelave_hp;
         public final ForgeConfigSpec.ConfigValue<Double> nuckelave_damage;
         public final ForgeConfigSpec.ConfigValue<Double> nuckelave_armor;
@@ -398,6 +402,9 @@ public class SConfig {
 
         public final ForgeConfigSpec.ConfigValue<Integer> scythe_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> scythe_damage;
+
+        public final ForgeConfigSpec.ConfigValue<Integer> shield_durability;
+        public final ForgeConfigSpec.ConfigValue<Integer> shield_damage;
 
         public final ForgeConfigSpec.ConfigValue<Integer> shovel_durability;
         public final ForgeConfigSpec.ConfigValue<Integer> shovel_damage;
@@ -629,7 +636,7 @@ public class SConfig {
                             "spore:bloater") , o -> o instanceof String);
             this.player_ev = builder.defineList("Infected Adventurer Evolutions",
                     Lists.newArrayList(
-                            "spore:nuclea") , o -> o instanceof String);
+                            "spore:nuclea","spore:protector") , o -> o instanceof String);
 
             this.evolution_age_human = builder.comment("Default 300").define("Evolution Timer in seconds",300);
             this.min_kills = builder.comment("Default 1").define("Minimum amount of kills to start the evolution",1);
@@ -1068,6 +1075,12 @@ public class SConfig {
             this.nuckelave_armor = builder.comment("Default 6").defineInRange("Sets Nuckelave Armor", 6, 1, Double.MAX_VALUE);
             builder.pop();
 
+            builder.push("Protector");
+            this.protector_hp = builder.comment("Default 50").defineInRange("Sets Protector Max health", 50, 1, Double.MAX_VALUE);
+            this.protector_damage = builder.comment("Default 8").defineInRange("Sets Protector Damage", 8, 1, Double.MAX_VALUE);
+            this.protector_armor = builder.comment("Default 12").defineInRange("Sets Protector Armor", 12, 1, Double.MAX_VALUE);
+            builder.pop();
+
             builder.push("Jagdhund");
             this.jagd_hp = builder.comment("Default 35").defineInRange("Sets Jagdhund Max health", 35, 1, Double.MAX_VALUE);
             this.jagd_damage = builder.comment("Default 7").defineInRange("Sets Jagdhund Damage", 7, 1, Double.MAX_VALUE);
@@ -1267,6 +1280,10 @@ public class SConfig {
             this.scythe_durability = builder.comment("Default 750").define("Durability",750);
             this.scythe_damage = builder.comment("Default 10").defineInRange("Damage", 10, 1, Integer.MAX_VALUE);
             builder.pop();
+            builder.push("Shield");
+            this.shield_durability = builder.comment("Default 1000").define("Durability",1000);
+            this.shield_damage = builder.comment("Default 5").defineInRange("Damage", 5, 1, Integer.MAX_VALUE);
+            builder.pop();
             builder.push("Combat Shovel");
             this.shovel_durability = builder.comment("Default 1000").define("Durability",1000);
             this.shovel_damage = builder.comment("Default 9").defineInRange("Damage", 9, 1, Integer.MAX_VALUE);
@@ -1412,6 +1429,7 @@ public class SConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> verwa_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> delusioner_loot;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> hindicator_loot;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> inf_protector_loot;
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> name;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> player_h;
@@ -1513,6 +1531,8 @@ public class SConfig {
 
             this.nucke_loot = builder.defineList("Nuckelave",
                     Lists.newArrayList("spore:mutated_fiber|80|3|12","spore:mutated_heart|25|1|1","spore:armor_fragment|80|3|8","spore:tumor|100|1|3") , o -> o instanceof String);
+            this.inf_protector_loot = builder.defineList("Protector",
+                    Lists.newArrayList("spore:mutated_fiber|80|3|12","spore:mutated_heart|25|1|1","spore:armor_fragment|80|3|8","spore:shield_fragment|100|1|4") , o -> o instanceof String);
 
 
             this.gastgaber_loot = builder.defineList("Gastgaber",
@@ -1610,7 +1630,7 @@ public class SConfig {
                     Lists.newArrayList(
                             "The_Harbinger69", "ABucketOfFriedChicken", "LoneGuy", "cheesepuff", "Sire_AwfulThe1st", "Azami",
                             "Deyvid", "Dany_Why", "Technoblade", "Ike", "Hypnotizd", "That_Insane_Guy", "JhonOK22", "Tabcaps", "WhisperFire26",
-                            "ButtonHatBoy", "Gistique", "BigXplosion", "Atomiclbomb", "Mad_Dog", "Ripley", "Nunny", "gregTheTyrant", "Joker_de_Coeur", "Slasher ",
+                            "ButtonHatBoy", "Gistique", "BigXplosion", "Atomiclbomb", "Mad_Dog", "Ripley", "gregTheTyrant", "Joker_de_Coeur",
                             "xXFuryXx", "Nova69", "Belladonna","Entity","Keymind","Whisper","Helldwin", "ExeedingSky74", "Flash62724 ", "Hank_o", "JWT114",
                             "DawnsSlayers", "Dr_Pilot_MOO", "NexouuZ", "Mr_Door12323", "PedroHenrry", "TVGuy", "ThatGardener", "TheCaramelGuy", "TokenOni420",
                             "lightigivhi") , o -> o instanceof String);

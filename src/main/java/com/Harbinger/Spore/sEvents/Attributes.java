@@ -89,6 +89,7 @@ public class Attributes {
         event.put(Sentities.HEVOKER_ARM.get(), HyperClaw.createAttributes().build());
         event.put(Sentities.HVINDICATOR.get(), Hvindicator.createAttributes().build());
         event.put(Sentities.BIOBLOOB.get(), Biobloob.createAttributes().build());
+        event.put(Sentities.PROTECTOR.get(), Protector.createAttributes().build());
     }
 }
 
