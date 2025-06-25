@@ -52,6 +52,7 @@ public class ThrownSickle extends AbstractArrow {
         this.entityData.define(ID_FOIL, false);
     }
 
+    public ItemStack getSpearItem(){return spearItem;}
     public void tick() {
         if (this.state == SickelState.HOOKED_IN_ENTITY && hookedEntity != null && hookedEntity.isAlive()) {
             this.setPos(hookedEntity.getX(), hookedEntity.getY() + (hookedEntity.getBbHeight() * 0.5), hookedEntity.getZ());

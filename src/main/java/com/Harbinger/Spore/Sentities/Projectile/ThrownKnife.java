@@ -50,7 +50,7 @@ public class ThrownKnife extends AbstractArrow {
     public ThrownKnife(EntityType<ThrownKnife> thrownSpearEntityType, Level level) {
         super(thrownSpearEntityType,level);
     }
-
+    public ItemStack getSpearItem(){return spearItem;}
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(ID_LOYALTY, (byte)0);
