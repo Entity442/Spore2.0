@@ -2,6 +2,7 @@ package com.Harbinger.Spore.Sentities.Projectile;
 
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Fluids.BileLiquid;
+import com.Harbinger.Spore.Sitems.BaseWeapons.SporeWeaponData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -131,9 +132,12 @@ public class ThrownSpear extends AbstractArrow {
             }
 
             if (entity instanceof LivingEntity livingEntity) {
-                if (entity1 instanceof LivingEntity) {
-                    EnchantmentHelper.doPostHurtEffects(livingEntity, entity1);
-                    EnchantmentHelper.doPostDamageEffects((LivingEntity)entity1, livingEntity);
+                if (entity1 instanceof LivingEntity owner) {
+                    EnchantmentHelper.doPostHurtEffects(livingEntity, owner);
+                    EnchantmentHelper.doPostDamageEffects(owner, livingEntity);
+                    if (this.spearItem.getItem() instanceof SporeWeaponData data){
+                        data.abstractMutationBuffs(livingEntity,owner,this.spearItem,data);
+                    }
                 }
                 if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT , this.spearItem) > 0) {
                     int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, this.spearItem);

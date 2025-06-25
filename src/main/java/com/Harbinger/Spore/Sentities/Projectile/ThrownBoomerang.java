@@ -134,7 +134,7 @@ public class ThrownBoomerang extends AbstractArrow {
                     EnchantmentHelper.doPostHurtEffects(living, ownerLiving);
                     EnchantmentHelper.doPostDamageEffects(ownerLiving, living);
                     if (this.boomerang.getItem() instanceof SporeWeaponData data){
-                        abstractMutationBuffs(living,ownerLiving,this.boomerang,data);
+                        data.abstractMutationBuffs(living,ownerLiving,this.boomerang,data);
                     }
                 }
 
@@ -210,26 +210,6 @@ public class ThrownBoomerang extends AbstractArrow {
         }
         if (stack.getEnchantmentLevel(Senchantments.CRYOGENIC_ASPECT.get()) > 0) {
             target.setTicksFrozen(target.getTicksFrozen() + 300);
-        }
-    }
-    public static void abstractMutationBuffs(LivingEntity victim , LivingEntity owner , ItemStack stack,SporeWeaponData data){
-        if (data.getVariant(stack) == SporeToolsMutations.TOXIC){
-            victim.addEffect(new MobEffectInstance(MobEffects.POISON,60,1));
-        }
-        if (data.getVariant(stack) == SporeToolsMutations.ROTTEN){
-            victim.addEffect(new MobEffectInstance(MobEffects.WITHER,60,1));
-        }
-        if (data.getVariant(stack) == SporeToolsMutations.VAMPIRIC && owner.getHealth() < owner.getMaxHealth()){
-            owner.heal(2f);
-        }
-        if (data.getVariant(stack) == SporeToolsMutations.BEZERK && Math.random() < 0.3){
-            if (Math.random() < 0.5){
-                owner.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED,60,0));
-            } else if (Math.random() < 0.5) {
-                owner.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST,60,0));
-            }else {
-                owner.addEffect(new MobEffectInstance(MobEffects.SATURATION,60,0));
-            }
         }
     }
 }
