@@ -2,6 +2,8 @@ package com.Harbinger.Spore.Sentities.Projectile;
 
 import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Fluids.BileLiquid;
+import com.Harbinger.Spore.Sitems.BaseWeapons.SporeToolsMutations;
+import com.Harbinger.Spore.Sitems.BaseWeapons.SporeWeaponData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -10,6 +12,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -36,6 +39,12 @@ public class ThrownBoomerang extends AbstractArrow {
         super(Sentities.THROWN_BOOMERANG.get(), owner, level);
         this.boomerang = stack.copy();
         this.entityData.set(ID_FOIL, stack.hasFoil());
+    }
+    public int getColorValue(ItemStack stack){
+        if (stack.getItem() instanceof SporeWeaponData data){
+            return data.getVariant(stack).getColor();
+        }
+        return 0;
     }
 
     public ItemStack getBoomerang(){return boomerang;}
@@ -124,6 +133,9 @@ public class ThrownBoomerang extends AbstractArrow {
                 if (owner instanceof LivingEntity ownerLiving) {
                     EnchantmentHelper.doPostHurtEffects(living, ownerLiving);
                     EnchantmentHelper.doPostDamageEffects(ownerLiving, living);
+                    if (this.boomerang.getItem() instanceof SporeWeaponData data){
+                        abstractMutationBuffs(living,ownerLiving,this.boomerang,data);
+                    }
                 }
 
                 if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, boomerang) > 0) {
@@ -198,6 +210,26 @@ public class ThrownBoomerang extends AbstractArrow {
         }
         if (stack.getEnchantmentLevel(Senchantments.CRYOGENIC_ASPECT.get()) > 0) {
             target.setTicksFrozen(target.getTicksFrozen() + 300);
+        }
+    }
+    public static void abstractMutationBuffs(LivingEntity victim , LivingEntity owner , ItemStack stack,SporeWeaponData data){
+        if (data.getVariant(stack) == SporeToolsMutations.TOXIC){
+            victim.addEffect(new MobEffectInstance(MobEffects.POISON,60,1));
+        }
+        if (data.getVariant(stack) == SporeToolsMutations.ROTTEN){
+            victim.addEffect(new MobEffectInstance(MobEffects.WITHER,60,1));
+        }
+        if (data.getVariant(stack) == SporeToolsMutations.VAMPIRIC && owner.getHealth() < owner.getMaxHealth()){
+            owner.heal(2f);
+        }
+        if (data.getVariant(stack) == SporeToolsMutations.BEZERK && Math.random() < 0.3){
+            if (Math.random() < 0.5){
+                owner.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED,60,0));
+            } else if (Math.random() < 0.5) {
+                owner.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST,60,0));
+            }else {
+                owner.addEffect(new MobEffectInstance(MobEffects.SATURATION,60,0));
+            }
         }
     }
 }

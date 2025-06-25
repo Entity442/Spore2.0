@@ -31,8 +31,11 @@ public class SurgeryCraftingCategory implements IRecipeCategory<SurgeryRecipe> {
     public static final ResourceLocation TEXTURE = new ResourceLocation(Spore.MODID,
             "textures/gui/surgery_table_gui.png");
     public final TagKey<Item> stringLikeItem = ItemTags.create(new ResourceLocation("spore:stitches"));
-    public Ingredient stiches = Ingredient.of(new ItemStack(ForgeRegistries.ITEMS.tags().getTag(stringLikeItem).getRandomElement(RandomSource.create()).orElse(Items.STRING)));
-
+    public final Ingredient stiches = Ingredient.of(
+            ForgeRegistries.ITEMS.tags().getTag(stringLikeItem).stream()
+                    .map(ItemStack::new)
+                    .toArray(ItemStack[]::new)
+    );
     public static final RecipeType<SurgeryRecipe> SURGERY_TYPE =
             new RecipeType<>(UID, SurgeryRecipe.class);
 
