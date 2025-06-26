@@ -38,11 +38,12 @@ public class ThrownSpear extends AbstractArrow {
     public int clientSideReturnTridentTickCount;
 
 
-    public ThrownSpear(Level p_37569_, LivingEntity p_37570_, ItemStack p_37571_) {
+    public ThrownSpear(Level p_37569_, LivingEntity p_37570_, ItemStack stack,int color) {
         super(Sentities.THROWN_SPEAR.get(), p_37570_, p_37569_);
-        this.spearItem = p_37571_.copy();
-        this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(p_37571_));
-        this.entityData.set(ID_FOIL, p_37571_.hasFoil());
+        this.spearItem = stack.copy();
+        this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(stack));
+        this.entityData.set(ID_FOIL, stack.hasFoil());
+        this.entityData.set(COLOR, color);
     }
 
     public ThrownSpear(PlayMessages.SpawnEntity spawnEntity, Level level) {
