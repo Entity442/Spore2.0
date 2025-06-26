@@ -1,9 +1,7 @@
 package com.Harbinger.Spore.Client.Renderers;
 
 import com.Harbinger.Spore.Client.Models.InfectedSpearModel;
-import com.Harbinger.Spore.ExtremelySusThings.Utilities;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownKnife;
-import com.Harbinger.Spore.Sitems.BaseWeapons.SporeWeaponData;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -30,19 +28,14 @@ public class KnifeRenderer extends EntityRenderer<ThrownKnife> {
     }
 
     public void render(ThrownKnife knife, float p_116112_, float p_116113_, PoseStack stack, MultiBufferSource p_116115_, int p_116116_) {
-        float r = 1;
-        float g = 1;
-        float b = 1;
-        if (knife.getSpearItem().getItem() instanceof SporeWeaponData data){
-            int[] colors = Utilities.computeRGB(data.getVariant(knife.getSpearItem()).getColor());
-            r = colors[0];
-            g = colors[1];
-            b = colors[2];
-        }
+        int color = knife.getColor();
+        float r = (float) (color >> 16 & 255) / 255.0F;;
+        float g = (float) (color >> 8 & 255) / 255.0F;;
+        float b = (float) (color & 255) / 255.0F;;
         stack.pushPose();
         stack.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(p_116113_, knife.yRotO, knife.getYRot()) - 90.0F));
         stack.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(p_116113_, knife.xRotO, knife.getXRot()) + 90.0F));
-        stack.scale(0.5f,0.5f,0.5f);
+        stack.scale(0.4f,0.4f,0.4f);
         VertexConsumer vertexconsumer = ItemRenderer.getFoilBufferDirect(p_116115_, this.model.renderType(this.getTextureLocation(knife)), false, knife.isFoil());
         this.model.renderToBuffer(stack, vertexconsumer, p_116116_, OverlayTexture.NO_OVERLAY, r, g, b, 1.0F);
         stack.popPose();

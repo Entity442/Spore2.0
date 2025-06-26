@@ -31,26 +31,23 @@ import javax.annotation.Nullable;
 
 public class ThrownBoomerang extends AbstractArrow {
     private static final EntityDataAccessor<Boolean> ID_FOIL = SynchedEntityData.defineId(ThrownBoomerang.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> COLOR = SynchedEntityData.defineId(ThrownBoomerang.class, EntityDataSerializers.INT);
     private ItemStack boomerang = new ItemStack(Sitems.BOOMERANG.get());
     private boolean dealtDamage;
     private int returnTick;
 
-    public ThrownBoomerang(Level level, LivingEntity owner, ItemStack stack) {
+    public ThrownBoomerang(Level level, LivingEntity owner, ItemStack stack,int color) {
         super(Sentities.THROWN_BOOMERANG.get(), owner, level);
         this.boomerang = stack.copy();
         this.entityData.set(ID_FOIL, stack.hasFoil());
-    }
-    public int getColorValue(ItemStack stack){
-        if (stack.getItem() instanceof SporeWeaponData data){
-            return data.getVariant(stack).getColor();
-        }
-        return 0;
+        this.entityData.set(COLOR,color);
     }
 
     public ItemStack getBoomerang(){return boomerang;}
     public ThrownBoomerang(Level level) {
         this(Sentities.THROWN_BOOMERANG.get(), level);
     }
+    public int getColor(){return entityData.get(COLOR);}
 
     public ThrownBoomerang(EntityType<ThrownBoomerang> type, Level level) {
         super(type, level);
@@ -60,6 +57,7 @@ public class ThrownBoomerang extends AbstractArrow {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(ID_FOIL, false);
+        this.entityData.define(COLOR, 0);
     }
 
     @Override
@@ -180,6 +178,7 @@ public class ThrownBoomerang extends AbstractArrow {
             this.boomerang = ItemStack.of(tag.getCompound("Boomerang"));
         }
         this.dealtDamage = tag.getBoolean("DealtDamage");
+        entityData.set(COLOR,tag.getInt("color"));
     }
 
     @Override
@@ -187,6 +186,7 @@ public class ThrownBoomerang extends AbstractArrow {
         super.addAdditionalSaveData(tag);
         tag.put("Boomerang", this.boomerang.save(new CompoundTag()));
         tag.putBoolean("DealtDamage", this.dealtDamage);
+        tag.putInt("color", this.entityData.get(COLOR));
     }
 
     @Override

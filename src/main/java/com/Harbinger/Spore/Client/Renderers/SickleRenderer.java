@@ -1,9 +1,7 @@
 package com.Harbinger.Spore.Client.Renderers;
 
 import com.Harbinger.Spore.Client.Models.SickleModel;
-import com.Harbinger.Spore.ExtremelySusThings.Utilities;
 import com.Harbinger.Spore.Sentities.Projectile.ThrownSickle;
-import com.Harbinger.Spore.Sitems.BaseWeapons.SporeWeaponData;
 import com.Harbinger.Spore.Spore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -36,15 +34,10 @@ public class SickleRenderer extends EntityRenderer<ThrownSickle> {
 
     @Override
     public void render(ThrownSickle sickle, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int light) {
-        float r = 1;
-        float g = 1;
-        float b = 1;
-        if (sickle.getSpearItem().getItem() instanceof SporeWeaponData data){
-            int[] colors = Utilities.computeRGB(data.getVariant(sickle.getSpearItem()).getColor());
-            r = colors[0];
-            g = colors[1];
-            b = colors[2];
-        }
+        int color = sickle.getColor();
+        float r = (float) (color >> 16 & 255) / 255.0F;;
+        float g = (float) (color >> 8 & 255) / 255.0F;;
+        float b = (float) (color & 255) / 255.0F;;
         poseStack.pushPose();
         poseStack.translate(0,-1,0);
         poseStack.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(partialTicks, sickle.yRotO, sickle.getYRot())));
@@ -71,7 +64,7 @@ public class SickleRenderer extends EntityRenderer<ThrownSickle> {
     }
 
     private void renderConnection(ThrownSickle parent , Entity to, PoseStack stack,
-                                      MultiBufferSource buffer, float partialTick,float r,float g ,float b) {
+                                  MultiBufferSource buffer, float partialTick,float r,float g ,float b) {
         Vec3 start = parent.getPosition(partialTick).add(parent.getDeltaMovement().normalize().scale(-0.3));
         Vec3 vec3 = (new Vec3(0.2, 1.35, 0.6)).yRot(-to.getYRot() * ((float)Math.PI / 180F) - ((float)Math.PI / 2F));
         Vec3 end = to.getPosition(partialTick).add(vec3.x,vec3.y,vec3.z);
