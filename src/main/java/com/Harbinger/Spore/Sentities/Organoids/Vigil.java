@@ -4,8 +4,12 @@ import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Sentities.BaseEntities.Infected;
 import com.Harbinger.Spore.Sentities.BaseEntities.Organoid;
 import com.Harbinger.Spore.Sentities.BaseEntities.UtilityEntity;
+import com.Harbinger.Spore.Sentities.EvolvedInfected.Busser;
 import com.Harbinger.Spore.Sentities.Signal;
 import com.Harbinger.Spore.Sentities.Utility.ScentEntity;
+import com.Harbinger.Spore.Sentities.VariantKeeper;
+import com.Harbinger.Spore.Sentities.Variants.VigilVariants;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -34,17 +38,22 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.SignBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Vigil extends Organoid{
+public class Vigil extends Organoid implements VariantKeeper {
     private static final EntityDataAccessor<Integer> TRIGGER = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> WAVE_SIZE = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> TIMER = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> STALKER = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData.defineId(Vigil.class, EntityDataSerializers.INT);
     private int summon_counter;
     @Nullable
     private Mob proto;
@@ -64,7 +73,7 @@ public class Vigil extends Organoid{
         this.entityData.define(WAVE_SIZE, 0);
         this.entityData.define(TIMER, 0);
         this.entityData.define(TRIGGER, 0);
-        this.entityData.define(STALKER, false);
+        this.entityData.define(DATA_ID_TYPE_VARIANT, 0);
     }
     @Override
     public int getEmerge_tick(){
@@ -84,6 +93,11 @@ public class Vigil extends Organoid{
             if (this.isStalker() && this.getTarget() != null){
                 this.ReEmerge();
             }else{
+                if (getVariant() == VigilVariants.TROLL && level instanceof ServerLevel serverLevel){
+                    if (getLastHurtByMob() instanceof Player || this.getTarget() instanceof Player){
+                        this.pickAndPlaceMessage(serverLevel,this.getOnPos().above());
+                    }
+                }
                 this.discard();
                 this.TimeToLeave();
             }
@@ -109,11 +123,7 @@ public class Vigil extends Organoid{
         entityData.set(WAVE_SIZE,i);
     }
     public int getTimer(){return entityData.get(TIMER);}
-    public void setStalker(boolean i){
-        refreshDimensions();
-        entityData.set(STALKER,i);
-    }
-    public boolean isStalker(){return entityData.get(STALKER);}
+    public boolean isStalker(){return getVariant() == VigilVariants.STALKER;}
     @Override
     public boolean isNoAi() {
         return this.isBurrowing() || this.isEmerging();
@@ -143,7 +153,7 @@ public class Vigil extends Organoid{
         tag.putInt("trigger",entityData.get(TRIGGER));
         tag.putInt("timer",entityData.get(TIMER));
         tag.putInt("wave_size",entityData.get(WAVE_SIZE));
-        tag.putBoolean("stalker",entityData.get(STALKER));
+        tag.putInt("Variant", this.getTypeVariant());
     }
 
     @Override
@@ -152,7 +162,7 @@ public class Vigil extends Organoid{
         entityData.set(TRIGGER, tag.getInt("trigger"));
         entityData.set(TIMER, tag.getInt("timer"));
         entityData.set(WAVE_SIZE, tag.getInt("wave_size"));
-        entityData.set(STALKER, tag.getBoolean("stalker"));
+        this.entityData.set(DATA_ID_TYPE_VARIANT, tag.getInt("Variant"));
     }
 
     @Override
@@ -208,6 +218,88 @@ public class Vigil extends Organoid{
     }
     public void setProto(@Nullable Mob proto) {
         this.proto = proto;
+    }
+
+    public VigilVariants getVariant() {
+        return VigilVariants.byId(this.getTypeVariant() & 255);
+    }
+
+    @Override
+    public int getTypeVariant() {
+        return this.entityData.get(DATA_ID_TYPE_VARIANT);
+    }
+
+    @Override
+    public void setVariant(int i) {
+        if (i > VigilVariants.values().length || i < 0){
+            this.entityData.set(DATA_ID_TYPE_VARIANT, 0);
+        }else {
+            this.entityData.set(DATA_ID_TYPE_VARIANT, i);
+        }
+    }
+
+    @Override
+    public int amountOfMutations() {
+        return VigilVariants.values().length;
+    }
+    public void pickAndPlaceMessage(ServerLevel serverLevel, BlockPos pos) {
+        if (pos.equals(BlockPos.ZERO) || !serverLevel.getBlockState(pos).isAir()) {
+            return;
+        }
+
+        String key = "spore.proto.message." + random.nextInt(10);
+        Component translated = Component.translatable(key);
+        String[] words = translated.getString().split(" ");
+
+        List<String> lines = new ArrayList<>();
+        StringBuilder currentLine = new StringBuilder();
+
+        for (String word : words) {
+            if (currentLine.length() + word.length() + 1 <= 15) {
+                if (!currentLine.isEmpty()) currentLine.append(" ");
+                currentLine.append(word);
+            } else {
+                lines.add(currentLine.toString());
+                currentLine = new StringBuilder(word);
+                if (lines.size() == 4) break;
+            }
+        }
+
+        if (lines.size() < 4 && !currentLine.isEmpty()) {
+            lines.add(currentLine.toString());
+        }
+
+        // Ensure the array is exactly 4 lines (sign limit)
+        while (lines.size() < 4) {
+            lines.add("");
+        }
+
+        placeSignWithText(serverLevel, pos, lines.toArray(new String[0]));
+    }
+
+    public void placeSignWithText(ServerLevel world, BlockPos pos, String[] lines) {
+        BlockState signState = Blocks.OAK_SIGN.defaultBlockState();
+        world.setBlockAndUpdate(pos, signState);
+
+        BlockEntity be = world.getBlockEntity(pos);
+        if (!(be instanceof SignBlockEntity sign)) return;
+
+        int maxLines = Math.min(lines.length, 4);
+        for (int i = 0; i < maxLines; i++) {
+            String centered = centerLine(lines[i], 15);
+            sign.setMessage(i, Component.literal(centered));
+        }
+
+        sign.setChanged();
+    }
+    private String centerLine(String text, int width) {
+        if (text.length() >= width) return text.substring(0, width);
+        int pad = (width - text.length()) / 2;
+        return " ".repeat(pad) + text;
+    }
+
+    private void setVariant(VigilVariants variant) {
+        this.entityData.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }
 
     private static class WatchTargetGoat extends Goal{
@@ -399,7 +491,8 @@ public class Vigil extends Organoid{
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_146746_, DifficultyInstance p_146747_,
                                         MobSpawnType p_146748_, @Nullable SpawnGroupData p_146749_,
                                         @Nullable CompoundTag p_146750_) {
-        setStalker(Math.random() < 0.3f);
+        VigilVariants variant = Util.getRandom(VigilVariants.values(), this.random);
+        setVariant(variant);
         return super.finalizeSpawn(p_146746_, p_146747_, p_146748_, p_146749_, p_146750_);
     }
 
@@ -413,8 +506,8 @@ public class Vigil extends Organoid{
 
     @Override
     public String getMutation() {
-        if (isStalker()){
-            return "spore.entity.variant.stalker";
+        if (getTypeVariant() != 0){
+            return this.getVariant().getName();
         }
         return super.getMutation();
     }

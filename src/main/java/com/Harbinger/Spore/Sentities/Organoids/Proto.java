@@ -177,6 +177,7 @@ public class Proto extends Organoid implements CasingGenerator, FoliageSpread {
                     int z = random.nextInt(-30,30);
                     Vigil vigil = new Vigil(Sentities.VIGIL.get(),this.level);
                     vigil.randomTeleport(en.getX() + x,en.getY(),en.getZ() + z,false);
+                    vigil.setVariant(2);
                     vigil.setProto(this);
                     vigil.tickEmerging();
                     level.addFreshEntity(vigil);
