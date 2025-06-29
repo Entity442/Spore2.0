@@ -467,6 +467,16 @@
   "sounds": [
     "spore:pci_inject"
   ]
+},"shield_bash" :{
+  "subtitle": "sounds.spore.weapon_use",
+  "sounds": [
+    "spore:shield_bash"
+  ]
+},"tumoroid_explosion" :{
+  "subtitle": "sounds.spore.tumor",
+  "sounds": [
+    "spore:tumoroid_nuke"
+  ]
 }
 
 }
