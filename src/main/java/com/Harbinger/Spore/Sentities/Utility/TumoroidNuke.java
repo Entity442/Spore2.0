@@ -126,7 +126,7 @@ public class TumoroidNuke extends UtilityEntity{
             if (fire && this.level instanceof ServerLevel serverLevel){
                 Utilities.convertBlocks(serverLevel,this,this.getOnPos(),14, Blocks.FIRE.defaultBlockState());
             }
-            this.playSound(Ssounds.HINDEN_NUKE.get());
+            this.playSound(Ssounds.TUMOROID_EXPLOSION.get());
             this.discard();
         }
     }
