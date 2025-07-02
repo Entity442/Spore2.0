@@ -1,9 +1,6 @@
 package com.Harbinger.Spore.Sitems;
 
-import com.Harbinger.Spore.Core.SConfig;
-import com.Harbinger.Spore.Core.Seffects;
-import com.Harbinger.Spore.Core.Senchantments;
-import com.Harbinger.Spore.Core.Sitems;
+import com.Harbinger.Spore.Core.*;
 import com.Harbinger.Spore.Fluids.BileLiquid;
 import com.Harbinger.Spore.Sitems.BaseWeapons.SporeToolsMutations;
 import com.Harbinger.Spore.Sitems.BaseWeapons.SporeWeaponData;
@@ -49,7 +46,7 @@ public class InfectedCrossbow extends CrossbowItem implements SporeWeaponData {
     private boolean startSoundPlayed = false;
     private boolean midLoadSoundPlayed = false;
     public InfectedCrossbow() {
-        super(new Item.Properties().durability(SConfig.SERVER.crossbow_durability.get()));
+        super(new Item.Properties().durability(SConfig.SERVER.crossbow_durability.get()).tab(ScreativeTab.SPORE));
         Sitems.BIOLOGICAL_ITEMS.add(this);
         Sitems.TINTABLE_ITEMS.add(this);
     }

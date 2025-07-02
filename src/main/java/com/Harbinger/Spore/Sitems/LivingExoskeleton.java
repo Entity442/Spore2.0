@@ -20,7 +20,7 @@ import net.minecraft.world.level.Level;
 import java.util.Map;
 
 public class LivingExoskeleton extends SporeBaseArmor {
-    protected final ResourceLocation TEXTURE = new ResourceLocation("spore:textures/armor/test.png");
+    protected final ResourceLocation TEXTURE = new ResourceLocation("spore:textures/armor/flesh_armor_set.png");
     public LivingExoskeleton(EquipmentSlot slot) {
         super(slot, new int[]{
                 SConfig.SERVER.boots_durability2.get(), SConfig.SERVER.pants_durability2.get(), SConfig.SERVER.chestplate_durability2.get(), SConfig.SERVER.helmet_durability2.get()},new int[]{
