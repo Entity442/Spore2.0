@@ -506,10 +506,6 @@ public class Howitzer extends Calamity implements TrueCalamity, RangedAttackMob 
         return Ssounds.HOWITZER_AMBIENT.get();
     }
 
-    protected SoundEvent getHurtSound(DamageSource p_34327_) {
-        return Ssounds.INF_DAMAGE.get();
-    }
-
     protected SoundEvent getDeathSound() {
         return Ssounds.INF_DAMAGE.get();
     }

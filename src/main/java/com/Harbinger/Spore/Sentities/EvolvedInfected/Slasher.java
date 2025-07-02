@@ -99,11 +99,7 @@ public class Slasher extends EvolvedInfected implements ArmorPersentageBypass, V
         return Ssounds.INF_VILLAGER_AMBIENT.get();
     }
 
-    protected SoundEvent getHurtSound(DamageSource p_34327_) {
-        return Ssounds.INF_VILLAGER_DAMAGE.get();
-    }
-
-    protected SoundEvent getDeathSound() {
+   protected SoundEvent getDeathSound() {
         return Ssounds.INF_VILLAGER_DEATH.get();
     }
 

@@ -17,6 +17,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -493,6 +494,9 @@ public class Calamity extends UtilityEntity implements Enemy, ArmorPersentageByp
         mound.moveTo(entity.getX(),entity.getY(),entity.getZ());
         mound.setMaxAge(4);
         entity.level.addFreshEntity(mound);
+    }
+    protected SoundEvent getHurtSound(DamageSource p_34327_) {
+        return Ssounds.EVOLVE_HURT.get();
     }
 
     @Nullable

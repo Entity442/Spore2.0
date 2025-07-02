@@ -182,6 +182,7 @@ public class Ssounds {
 
     public static final RegistryObject<SoundEvent> INF_PILLAGER_AMBIENT = soundRegistry("pillager_ambient");
 
+    public static final RegistryObject<SoundEvent> EVOLVE_HURT = soundRegistry("evolve_hurt");
 
     private Ssounds() {
     }
