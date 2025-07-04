@@ -157,7 +157,7 @@ public class InfectedPlayer extends Infected implements RangedAttackMob, ArmedIn
     }
 
     protected SoundEvent getAmbientSound() {
-        return Ssounds.INF_GROWL.get();
+        return Ssounds.ADVENTURER_AMBIENT.get();
     }
 
     protected SoundEvent getHurtSound(DamageSource p_34327_) {

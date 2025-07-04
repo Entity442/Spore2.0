@@ -66,7 +66,7 @@ public class Thorn extends EvolvedInfected {
     }
 
     protected SoundEvent getAmbientSound() {
-        return Ssounds.INF_GROWL.get();
+        return Ssounds.HUSK_AMBIENT.get();
     }
     protected SoundEvent getDeathSound() {
         return Ssounds.INF_DAMAGE.get();

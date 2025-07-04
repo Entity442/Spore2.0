@@ -418,10 +418,6 @@ public class Vigil extends Organoid implements VariantKeeper {
         return Ssounds.VIGIL_AMBIENT.get();
     }
 
-    protected SoundEvent getHurtSound(DamageSource p_34327_) {
-        return Ssounds.INF_DAMAGE.get();
-    }
-
     protected SoundEvent getDeathSound() {
         return Ssounds.INF_DAMAGE.get();
     }

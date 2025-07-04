@@ -12,6 +12,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -113,7 +114,7 @@ public class InfectedShield extends SporeToolsBaseItem {
                 Vec3 direction = target.position().subtract(player.position()).normalize();
                 target.hurtMarked = true;
                 target.knockback(getVariant(stack) == SporeToolsMutations.CALCIFIED ? 2.5f : 1.5F, -direction.x, -direction.z);
-                player.doHurtTarget(target);
+                target.hurt(DamageSource.GENERIC,SConfig.SERVER.shield_damage.get());
                 abstractEffects(stack,target);
                 if (getVariant(stack) == SporeToolsMutations.TOXIC){
                     target.addEffect(new MobEffectInstance(MobEffects.POISON, 200,0));

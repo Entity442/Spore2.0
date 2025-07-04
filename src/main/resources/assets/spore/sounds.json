@@ -71,6 +71,29 @@
       "spore:hindicator_ambient"
     ]
   },
+  "adventurer_ambient" :{
+    "subtitle": "sounds.spore.growl",
+    "sounds": [
+      "spore:adventurer_ambient1",
+      "spore:adventurer_ambient2",
+      "spore:adventurer_ambient3"
+    ]
+  },
+  "trader_ambient" :{
+    "subtitle": "sounds.spore.growl",
+    "sounds": [
+      "spore:trader_ambient1",
+      "spore:trader_ambient2",
+      "spore:trader_ambient3"
+    ]
+  },
+  "organoid_damage" :{
+    "subtitle": "sounds.spore.growl",
+    "sounds": [
+      "spore:organoid_damage1",
+      "spore:organoid_damage2"
+    ]
+  },
   "forgotten_patient" :{
     "subtitle": "sounds.spore.forgotten_patient",
     "sounds": [
@@ -93,6 +116,44 @@
     "subtitle": "sounds.spore.growl",
     "sounds": [
       "spore:construct_ambient"
+    ]
+  },
+  "witch_ambient" :{
+    "subtitle": "sounds.spore.growl",
+    "sounds": [
+      "spore:witch_ambient1",
+      "spore:witch_ambient2",
+      "spore:witch_ambient3"
+    ]
+  },
+  "drowned_ambient" :{
+    "subtitle": "sounds.spore.growl",
+    "sounds": [
+      "spore:drowned_ambient1",
+      "spore:drowned_ambient2",
+      "spore:drowned_ambient3"
+    ]
+  },
+  "husk_ambient" :{
+    "subtitle": "sounds.spore.growl",
+    "sounds": [
+      "spore:husk_ambient1",
+      "spore:husk_ambient2",
+      "spore:husk_ambient3"
+    ]
+  },
+  "vindicator_ambient" :{
+    "subtitle": "sounds.spore.growl",
+    "sounds": [
+      "spore:vindicator_ambient"
+    ]
+  },
+  "scamper_ambient" :{
+    "subtitle": "sounds.spore.growl",
+    "sounds": [
+      "spore:scamper_ambient1",
+      "spore:scamper_ambient2",
+      "spore:scamper_ambient3"
     ]
   },
   "scavenger_screech" :{

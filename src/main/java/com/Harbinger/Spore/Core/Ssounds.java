@@ -184,6 +184,22 @@ public class Ssounds {
 
     public static final RegistryObject<SoundEvent> EVOLVE_HURT = soundRegistry("evolve_hurt");
 
+    public static final RegistryObject<SoundEvent> ADVENTURER_AMBIENT = soundRegistry("adventurer_ambient");
+
+    public static final RegistryObject<SoundEvent> TRADER_AMBIENT = soundRegistry("trader_ambient");
+
+    public static final RegistryObject<SoundEvent> WITCH_AMBIENT = soundRegistry("witch_ambient");
+
+    public static final RegistryObject<SoundEvent> DROWNED_AMBIENT = soundRegistry("drowned_ambient");
+
+    public static final RegistryObject<SoundEvent> HUSK_AMBIENT = soundRegistry("husk_ambient");
+
+    public static final RegistryObject<SoundEvent> VINDICATOR_AMBIENT = soundRegistry("vindicator_ambient");
+
+    public static final RegistryObject<SoundEvent> SCAMPER_AMBIENT = soundRegistry("scamper_ambient");
+
+    public static final RegistryObject<SoundEvent> ORGANOID_DAMAGE = soundRegistry("organoid_damage");
+
     private Ssounds() {
     }
 }
