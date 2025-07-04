@@ -10,6 +10,7 @@ import com.Harbinger.Spore.Sentities.EvolvedInfected.*;
 import com.Harbinger.Spore.Sentities.Experiments.Biobloob;
 import com.Harbinger.Spore.Sentities.Experiments.Lacerator;
 import com.Harbinger.Spore.Sentities.Experiments.Plagued;
+import com.Harbinger.Spore.Sentities.Experiments.Saugling;
 import com.Harbinger.Spore.Sentities.FallenMultipart.HowitzerArm;
 import com.Harbinger.Spore.Sentities.FallenMultipart.Licker;
 import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
@@ -90,6 +91,8 @@ public class Attributes {
         event.put(Sentities.HVINDICATOR.get(), Hvindicator.createAttributes().build());
         event.put(Sentities.BIOBLOOB.get(), Biobloob.createAttributes().build());
         event.put(Sentities.PROTECTOR.get(), Protector.createAttributes().build());
+        event.put(Sentities.INEBRIATER.get(), Inebriator.createAttributes().build());
+        event.put(Sentities.SAUGLING.get(), Saugling.createAttributes().build());
     }
 }
 

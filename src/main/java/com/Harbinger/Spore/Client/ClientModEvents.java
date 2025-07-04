@@ -134,6 +134,8 @@ public class ClientModEvents {
         event.registerLayerDefinition(PCI_Model.LAYER_LOCATION, PCI_Model::createBodyLayer);
         event.registerLayerDefinition(PCI_ModelL.LAYER_LOCATION, PCI_ModelL::createBodyLayer);
         event.registerLayerDefinition(ProtectorModel.LAYER_LOCATION, ProtectorModel::createBodyLayer);
+        event.registerLayerDefinition(InebriaterModel.LAYER_LOCATION, InebriaterModel::createBodyLayer);
+        event.registerLayerDefinition(SauglingModel.LAYER_LOCATION, SauglingModel::createBodyLayer);
 
         event.registerLayerDefinition(BombFunnelModel.LAYER_LOCATION, BombFunnelModel::createBodyLayer);
         event.registerLayerDefinition(MushroomExplosionTop.LAYER_LOCATION, MushroomExplosionTop::createBodyLayer);
@@ -205,6 +207,8 @@ public class ClientModEvents {
         event.registerEntityRenderer(Sentities.HEVOKER.get(), HevokerRenderer::new);
         event.registerEntityRenderer(Sentities.HVINDICATOR.get(), HyperVindicatorRenderer::new);
         event.registerEntityRenderer(Sentities.PROTECTOR.get(), ProtectorRenderer::new);
+        event.registerEntityRenderer(Sentities.SAUGLING.get(), SauglingRenderer::new);
+        event.registerEntityRenderer(Sentities.INEBRIATER.get(), InebriatorRenderer::new);
 
         event.registerEntityRenderer(Sentities.ACID_BALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(Sentities.SPIT.get(), BulletRender::new);

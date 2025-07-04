@@ -10,6 +10,7 @@ import com.Harbinger.Spore.Sentities.EvolvedInfected.Scavenger;
 import com.Harbinger.Spore.Sentities.Experiments.Biobloob;
 import com.Harbinger.Spore.Sentities.Experiments.Lacerator;
 import com.Harbinger.Spore.Sentities.Experiments.Plagued;
+import com.Harbinger.Spore.Sentities.Experiments.Saugling;
 import com.Harbinger.Spore.Sentities.FallenMultipart.HowitzerArm;
 import com.Harbinger.Spore.Sentities.FallenMultipart.Licker;
 import com.Harbinger.Spore.Sentities.FallenMultipart.SiegerTail;
@@ -80,6 +81,14 @@ public class Sentities {
     public static final RegistryObject<EntityType<InfectedWitch>> INF_WITCH = SPORE_ENTITIES.register("inf_witch",
             () -> EntityType.Builder.of(InfectedWitch::new, INFECTED).sized(0.6f, 1.9f)
                     .build(new ResourceLocation(Spore.MODID, "inf_witch").toString()));
+
+    public static final RegistryObject<EntityType<Inebriator>> INEBRIATER = SPORE_ENTITIES.register("inebriater",
+            () -> EntityType.Builder.of(Inebriator::new, INFECTED).sized(0.6f, 1.8f)
+                    .build(new ResourceLocation(Spore.MODID, "inebriater").toString()));
+
+    public static final RegistryObject<EntityType<Saugling>> SAUGLING = SPORE_ENTITIES.register("saugling",
+            () -> EntityType.Builder.of(Saugling::new, INFECTED).sized(0.9f, 0.9f)
+                    .build(new ResourceLocation(Spore.MODID, "saugling").toString()));
 
     public static final RegistryObject<EntityType<Leaper>> LEAPER = SPORE_ENTITIES.register("leaper",
             () -> EntityType.Builder.of(Leaper::new, INFECTED).sized(0.6f, 2.3f)
