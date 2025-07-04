@@ -124,7 +124,7 @@ public class Saugling extends Experiment {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(2, new HideInChestGoal(this,this.getChestPos()));
+        this.goalSelector.addGoal(2, new HideInChestGoal(this));
         this.goalSelector.addGoal(3, new LeapAtTargetGoal(this,0.4F));
         this.goalSelector.addGoal(4, new CustomMeleeAttackGoal(this, 1.5, false) {
             @Override
@@ -189,33 +189,31 @@ public class Saugling extends Experiment {
     }
     public static class HideInChestGoal extends Goal {
         private final Saugling mob;
-        private final BlockPos targetChest;
 
-        public HideInChestGoal(Saugling mob, BlockPos targetChest) {
+        public HideInChestGoal(Saugling mob) {
             this.mob = mob;
-            this.targetChest = targetChest;
             this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
         }
 
         @Override
         public boolean canUse() {
             if (mob.isHidden() || mob.getTarget() != null) return false;
-            return targetChest != BlockPos.ZERO && mob.getSetTicksOut() <= 0;
+            return mob.getChestPos() != BlockPos.ZERO && mob.getSetTicksOut() <= 0;
         }
 
         @Override
         public void start() {
-            if (targetChest != null && targetChest != BlockPos.ZERO) {
-                mob.setChestPos(targetChest);
-                mob.getNavigation().moveTo(targetChest.getX(), targetChest.getY(), targetChest.getZ(), 1.0);
+            if (mob.getChestPos() != null && mob.getChestPos() != BlockPos.ZERO) {
+                mob.setChestPos(mob.getChestPos());
+                mob.getNavigation().moveTo(mob.getChestPos().getX(), mob.getChestPos().getY(), mob.getChestPos().getZ(), 1.0);
             }
 
         }
 
         @Override
         public void tick() {
-            if (targetChest != null && targetChest != BlockPos.ZERO) {
-                if (mob.position().distanceToSqr(Vec3.atCenterOf(targetChest)) < 1.5) {
+            if (mob.getChestPos() != null && mob.getChestPos() != BlockPos.ZERO) {
+                if (mob.position().distanceToSqr(Vec3.atCenterOf(mob.getChestPos())) < 1.5) {
                     mob.hideInChest();
                 }
             }
