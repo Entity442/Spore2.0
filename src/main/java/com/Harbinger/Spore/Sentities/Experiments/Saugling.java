@@ -124,7 +124,7 @@ public class Saugling extends Experiment {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(2, new HideInChestGoal(this));
+        this.goalSelector.addGoal(2, new HideInChestGoal(this,this.getChestPos()));
         this.goalSelector.addGoal(3, new LeapAtTargetGoal(this,0.4F));
         this.goalSelector.addGoal(4, new CustomMeleeAttackGoal(this, 1.5, false) {
             @Override
@@ -147,9 +147,21 @@ public class Saugling extends Experiment {
         }
         this.setDeltaMovement($$1.x, $$1.y, $$1.z);
     }
+    private BlockPos findNearbyChest() {
+        BlockPos mobPos = this.blockPosition();
+        for (BlockPos pos : BlockPos.betweenClosed(mobPos.offset(-8, -2, -8), mobPos.offset(8, 2, 8))) {
+            if (this.level.getBlockState(pos).is(Blocks.CHEST)) {
+                return pos.immutable();
+            }
+        }
+        return BlockPos.ZERO;
+    }
     @Override
     public void aiStep() {
         super.aiStep();
+        if (tickCount % 60 == 0){
+            setChestPos(findNearbyChest());
+        }
         if (setTicksOut > 0){
             --setTicksOut;
         }
@@ -177,18 +189,18 @@ public class Saugling extends Experiment {
     }
     public static class HideInChestGoal extends Goal {
         private final Saugling mob;
-        private BlockPos targetChest;
+        private final BlockPos targetChest;
 
-        public HideInChestGoal(Saugling mob) {
+        public HideInChestGoal(Saugling mob, BlockPos targetChest) {
             this.mob = mob;
+            this.targetChest = targetChest;
             this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
         }
 
         @Override
         public boolean canUse() {
             if (mob.isHidden() || mob.getTarget() != null) return false;
-            targetChest = findNearbyChest();
-            return targetChest != null && mob.getSetTicksOut() <= 0;
+            return targetChest != BlockPos.ZERO && mob.getSetTicksOut() <= 0;
         }
 
         @Override
@@ -207,21 +219,6 @@ public class Saugling extends Experiment {
                     mob.hideInChest();
                 }
             }
-        }
-
-        private BlockPos findNearbyChest() {
-            BlockPos mobPos = mob.blockPosition();
-            for (BlockPos pos : BlockPos.betweenClosed(mobPos.offset(-8, -2, -8), mobPos.offset(8, 2, 8))) {
-                if (mob.level.getBlockState(pos).is(Blocks.CHEST)) {
-                    return pos.immutable();
-                }
-            }
-            return BlockPos.ZERO;
-        }
-
-        @Override
-        public boolean requiresUpdateEveryTick() {
-            return true;
         }
     }
     public void hideInChest() {
