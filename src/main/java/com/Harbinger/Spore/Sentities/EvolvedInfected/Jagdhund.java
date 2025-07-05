@@ -148,6 +148,11 @@ public class Jagdhund extends EvolvedInfected {
     }
 
     @Override
+    public boolean isInvisible() {
+        return isUnderground();
+    }
+
+    @Override
     public boolean canDrownInFluidType(FluidType type) {
         return super.canDrownInFluidType(type) && !isUnderground();
     }

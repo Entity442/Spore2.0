@@ -133,7 +133,10 @@ public class Saugling extends Experiment {
         });
         this.goalSelector.addGoal(5, new RandomStrollGoal(this, 0.8));
     }
-
+    @Override
+    public boolean isInvisible() {
+        return isHidden();
+    }
     @Override
     public boolean isNoAi() {
         return isHidden();
